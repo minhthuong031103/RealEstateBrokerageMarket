@@ -11,6 +11,7 @@ const options: AuthOptions = {
   session: {
     strategy: 'jwt',
   },
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     DiscordProvider({
       clientId: String(process.env.DISCORD_CLIENT_ID),
