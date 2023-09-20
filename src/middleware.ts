@@ -14,7 +14,9 @@ export default withAuth(
       //rewrite means redirect to the url but the url shown will still be the same before
     }
   },
+
   {
+    secret: process.env.SECRET,
     callbacks: {
       authorized: ({ token }) => {
         console.log(token);
