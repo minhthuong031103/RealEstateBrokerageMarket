@@ -16,7 +16,7 @@ export default withAuth(
   },
 
   {
-    secret: process.env.SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
       authorized: ({ token }) => {
         console.log(token);
