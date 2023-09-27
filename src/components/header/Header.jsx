@@ -20,7 +20,6 @@ import {
 import AuthSvg from '@/assets/AuthSvg';
 import { MobileNav } from './MobileNavBar';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { CartSheet } from '../CartSheet';
 import { Badge } from '../ui/badge';
 import Logo from '../logo';
 const NavigationMenuDemo = ({ session }) => {
@@ -55,7 +54,6 @@ const NavigationMenuDemo = ({ session }) => {
     >
       <MobileNav />
       <div className="hidden lg:flex py-2  ">
-        {' '}
         <Logo />
         <NavigationMenu.Root className="NavigationMenuRoot">
           <NavigationMenu.List className="NavigationMenuList">
@@ -228,10 +226,9 @@ const NavigationMenuDemo = ({ session }) => {
                 }
               </Button>
             </Link>
-            <CartSheet />
+
             <DropdownMenu>
               <DropdownMenuTrigger>
-                {' '}
                 <Avatar>
                   <AvatarImage src={user.avatar} />
                   <AvatarFallback>CN</AvatarFallback>
