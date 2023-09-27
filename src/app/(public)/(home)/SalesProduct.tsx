@@ -1,14 +1,17 @@
+'use client';
+
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import React from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { Swiper } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 // import ProductCard from '@/components/ProductCard';
 import { Balancer } from 'react-wrap-balancer';
-function NewArrivals() {
+import { ProductCard } from '@/components/ProductCard';
+function NewArrivals({ allProducts }) {
   return (
     <section className="lg:px-10 px-5 py-10 mt-20 md:mt-25 lg:mb-40">
       <div className=" mx-auto flex flex-col space-y-4 text-center">
@@ -61,25 +64,31 @@ function NewArrivals() {
             navigation={true}
             breakpoints={{
               700: {
-                slidesPerView: 2,
+                slidesPerView: 1,
                 spaceBetween: 10,
               },
               900: {
-                slidesPerView: 3,
+                slidesPerView: 2,
                 spaceBetween: 10,
               },
               1100: {
-                slidesPerView: 4,
+                slidesPerView: 3,
                 spaceBetween: 20,
               },
               1300: {
-                slidesPerView: 5,
-                spaceBetween: 10,
+                slidesPerView: 3,
+                spaceBetween: 20,
               },
             }}
             modules={[Navigation]}
             className="w-full h-auto overflow-visible relative"
-          ></Swiper>
+          >
+            {allProducts?.map((product, index) => (
+              <SwiperSlide key={index}>
+                <ProductCard product={product} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </section>
       </div>
     </section>

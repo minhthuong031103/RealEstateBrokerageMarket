@@ -16,11 +16,12 @@ function HomeBanner() {
         showThumbs={false}
         showStatus={false}
       >
-        <div className="h-[300px] lg:h-[700px] w-full">
+        <div className="h-[300px] lg:h-[600px] w-full rounded-2xl ">
           <Image
-            src="https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_1423,c_limit/b3e44fd7-df8f-449a-a2c7-48bb948518ab/men-s-shoes-clothing-accessories.png"
+            src="https://wallpapers.com/images/hd/house-corner-architecture-7vl0mtz3dfxod0fd.webp"
             alt="Auth background"
             layout="fill"
+            className="rounded-2xl"
             objectFit="cover"
             priority
             quality={100}
@@ -44,6 +45,7 @@ function HomeBanner() {
             alt="Auth background"
             layout="fill"
             objectFit="cover"
+            className="rounded-2xl"
             priority
             quality={100}
           />
@@ -65,6 +67,7 @@ function HomeBanner() {
             alt="Auth background"
             layout="fill"
             objectFit="cover"
+            className="rounded-2xl"
             priority
             quality={100}
           />

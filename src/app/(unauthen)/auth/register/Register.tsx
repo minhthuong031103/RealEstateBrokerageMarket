@@ -72,8 +72,8 @@ const Register = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      email: '',
+      name: payload?.name,
+      email: payload?.email,
       password: '',
       confirmPassword: '',
     },

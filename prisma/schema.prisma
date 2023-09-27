@@ -18,22 +18,29 @@ model User {
   password          String
   role              String?           @default("user") // You can customize roles as needed
   avatar            String?           @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1") // Store the avatar image URL
-  wishlists         Wishlist[]
+  // wishlists         Wishlist[]
 
 }
 
-model Wishlist {
-  id       Int       @id @default(autoincrement())
-  userId   Int
-  user     User      @relation(fields: [userId], references: [id])
-  products Product[]
-  @@index([userId])
+// model Wishlist {
+//   id       Int       @id @default(autoincrement())
+//   userId   Int
+//   user     User      @relation(fields: [userId], references: [id])
+//   products Product[]
+//   @@index([userId])
 
-}
+// }
 
 
 
 model Product {
   id          Int         @id @default(autoincrement())
-  wishLists   Wishlist[]
+  name        String
+  description    String
+  price         Float
+  thumbnail       String        @db.LongText
+  images          String        @db.LongText  
 }
+
+
+

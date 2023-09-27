@@ -1,3 +1,4 @@
+import { postRequest } from '@/lib/fetch';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { toast } from 'react-hot-toast';
@@ -5,25 +6,18 @@ import { toast } from 'react-hot-toast';
 export const useAuth = () => {
   const router = useRouter();
   const onRegister = useCallback(async (data, callback) => {
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      }),
+    const res = await postRequest({
+      endPoint: '/api/auth/register',
+      formData: { name: data.name, email: data.email, password: data.password },
+      isFormData: false,
     });
 
-    const response = await res.json();
-    callback?.();
-    if (response?.message === 'User already exists') {
-      toast.error(response.message);
+    callback?.(res);
+    if (res?.message === 'User already exists') {
+      toast.error(res.message);
     }
-    if (response?.message === 'User created') {
-      toast.success(response.message);
+    if (res?.message === 'User created') {
+      toast.success(res.message);
       router.push('/auth/login');
     }
   }, []);

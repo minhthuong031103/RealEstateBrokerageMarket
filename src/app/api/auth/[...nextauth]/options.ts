@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 const options: AuthOptions = {
   //SIGN IN CHAY TRUOC JWT, TRONG SIGNIN SE RETURN 1 THANG USER, JWT CHAY TRUOC SESSION
   // Configure one or more authentication providers
+
   session: {
     strategy: 'jwt',
   },
@@ -58,6 +59,7 @@ const options: AuthOptions = {
         if (!user) throw new Error('Email or password is incorrect');
         if (user.password !== password)
           throw new Error('Email or password is incorrect');
+
         return {
           name: user.name,
           email: user.email,
@@ -72,17 +74,41 @@ const options: AuthOptions = {
   ],
 
   callbacks: {
+    async signIn(params) {
+      console.log('paramssssssssssssssssssssssssssssssssssssssssssssss: ');
+      console.log(params);
+      if (params?.user?.email) {
+        const userFind = await prisma.user.findUnique({
+          where: {
+            email: params?.user?.email,
+          },
+        });
+
+        if (!userFind) {
+          const payload = jwt.sign(
+            { email: params?.user?.email, name: params?.user?.name },
+            process.env.NEXT_PUBLIC_JWT_SECRET,
+            { expiresIn: '1h' }
+          );
+          return `/auth/register/?payload=${payload}`;
+        } else return true;
+      }
+
+      return true;
+    },
     //first it run the jwt function, the jwt function will return the token , then in the session function we can access the token
     async jwt({ token, user }) {
       console.log('user in jwt: ');
       console.log(user);
+      if (!user) return token; //if no user, token is from jwt function
 
       //user is from the oauth config or in the credentials setting options
-      if (user?.role) {
-        token.role = user.role;
-        token.id = user.id;
-        token.avatar = user.avatar;
-      }
+      //if token==null , session will not run
+      token.role = user.role;
+      token.id = user.id;
+      token.avatar = user.avatar;
+      token.name = user.name;
+      token.email = user.email;
 
       //return final token
       return token;
@@ -101,27 +127,6 @@ const options: AuthOptions = {
         (session.user as { avatar: string }).avatar = token.avatar as string;
       }
       return session;
-    },
-    async signIn(params) {
-      console.log('paramssssssssssssssssssssssssssssssssssssssssssssss: ');
-      console.log(params);
-      if (params?.user?.email) {
-        const userFind = await prisma.user.findUnique({
-          where: {
-            email: params?.user?.email,
-          },
-        });
-        if (!userFind) {
-          const payload = jwt.sign(
-            { email: params?.user?.email, name: params?.user?.name },
-            process.env.NEXT_PUBLIC_JWT_SECRET,
-            { expiresIn: '1h' }
-          );
-          return `/auth/register/?payload=${payload}`;
-        } else return true;
-      }
-
-      return true;
     },
   },
   pages: {
