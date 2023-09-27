@@ -7,6 +7,7 @@ function Logo() {
     <Link className="w-[200px]" href={'/'}>
       <div className="items-center w-full flex flex-row gap-2">
         <Image
+          alt="UIT-ESTATE"
           src={
             'https://utfs.io/f/2d7566c9-a715-4a1e-8d05-140479024390_shoes%20(1).png'
           }

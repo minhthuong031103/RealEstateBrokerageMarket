@@ -5,13 +5,9 @@ import React, { useEffect, useState } from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { CaretDownIcon } from '@radix-ui/react-icons';
 import './styles.css';
-import { Button } from '../new-york/button';
+import { Button } from '../ui/button';
 import Link from 'next/link';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@components/new-york/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar';
 import { signOut } from 'next-auth/react';
 import {
   DropdownMenu,
@@ -20,12 +16,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/new-york/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import AuthSvg from '@/assets/AuthSvg';
 import { MobileNav } from './MobileNavBar';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { CartSheet } from '../CartSheet';
-import { Badge } from '../new-york/badge';
+import { Badge } from '../ui/badge';
 import Logo from '../logo';
 const NavigationMenuDemo = ({ session }) => {
   const [user] = useState(session?.user);

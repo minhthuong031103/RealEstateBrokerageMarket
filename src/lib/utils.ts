@@ -68,3 +68,26 @@ export const verifyJwt = (token: string) => {
   }
   return { email, name };
 };
+
+export const convertTimeStamps = (time: any) => {
+  return (Date.parse(time) / 1000).toString();
+};
+
+export const convertTimeStampToDate = (time: any) => {
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  } as const;
+  const date = new Date(time * 1000); // multiply by 1000 to convert seconds to milliseconds
+  const formattedDate = date.toLocaleDateString('en-US', options);
+  return formattedDate;
+};
+
+export const combineDateTime = (date: Date, time: string): Date => {
+  const [hours, minutes] = time.split(':').map(Number);
+  const newDate = new Date(date);
+  newDate.setHours(hours, minutes);
+  return newDate;
+};

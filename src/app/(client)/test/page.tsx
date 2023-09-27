@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/new-york/button';
+import { Button } from '@/components/ui/button';
 import { useTest } from '@/hooks/useTest';
 import React from 'react';
 

@@ -1,13 +1,13 @@
 'use client';
 
-import { Button } from '@/components/new-york/button';
+import { Button } from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/new-york/sheet';
+} from '@/components/ui/sheet';
 import { currencyFormat, parseJSON } from '@/lib/utils';
 import React, { useState } from 'react';
 import { IoMdHeartEmpty } from 'react-icons/io';

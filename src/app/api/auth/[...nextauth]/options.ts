@@ -3,7 +3,6 @@ import DiscordProvider from 'next-auth/providers/discord';
 import GithubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import prisma from '@/lib/prisma';
-import logger from '@/services/logger';
 import jwt from 'jsonwebtoken';
 const options: AuthOptions = {
   //SIGN IN CHAY TRUOC JWT, TRONG SIGNIN SE RETURN 1 THANG USER, JWT CHAY TRUOC SESSION
@@ -17,7 +16,6 @@ const options: AuthOptions = {
       clientId: String(process.env.DISCORD_CLIENT_ID),
       clientSecret: String(process.env.DISCORD_CLIENT_SECRET),
       async profile(profile) {
-        logger.info(profile);
         //cai profile nay se truyen xuong jwt function
         return {
           id: profile.id,
@@ -33,7 +31,6 @@ const options: AuthOptions = {
       clientSecret: String(process.env.GITHUB_CLIENT_SECRET),
       async profile(profile) {
         console.log('inside prfileeeeeeeeeeeeeee');
-        logger.info(profile);
         //cai profile nay se truyen xuong jwt function
 
         return {

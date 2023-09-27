@@ -7,9 +7,9 @@ import {
   regexPasswordSpecial,
   regexPasswordUpperCase,
 } from '@/lib/utils';
-import { Button } from '@/components/new-york/button';
-import { Input } from '@/components/new-york/input';
-import { Label } from '@/components/new-york/label';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
@@ -21,7 +21,7 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from '@/components/new-york/form';
+} from '@/components/ui/form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 

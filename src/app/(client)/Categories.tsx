@@ -1,4 +1,4 @@
-import { AspectRatio } from '@/components/new-york/aspect-ratio';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 import Image from 'next/image';
 import React from 'react';
 import { Balancer } from 'react-wrap-balancer';

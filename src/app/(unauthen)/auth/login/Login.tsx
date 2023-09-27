@@ -4,9 +4,9 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 import { Icons } from '@/assets/Icons';
-import { Button } from '@/components/new-york/button';
-import { Input } from '@/components/new-york/input';
-import { Label } from '@/components/new-york/label';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import Loader from '@/components/Loader';
@@ -20,7 +20,7 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from '@/components/new-york/form';
+} from '@/components/ui/form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 

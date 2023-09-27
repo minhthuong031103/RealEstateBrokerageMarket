@@ -5,10 +5,10 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/new-york/accordion';
-import { Button } from '@/components/new-york/button';
-import { ScrollArea } from '@/components/new-york/scroll-area';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/new-york/sheet';
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 import { CommonSvg } from '@/assets/CommonSvg';

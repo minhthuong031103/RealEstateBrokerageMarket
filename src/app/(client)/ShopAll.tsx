@@ -1,4 +1,4 @@
-import { Button } from '@/components/new-york/button';
+import { Button } from '@/components/ui/button';
 import React from 'react';
 import { Balancer } from 'react-wrap-balancer';
 
