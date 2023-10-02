@@ -10,21 +10,22 @@ import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar';
 import { signOut } from 'next-auth/react';
 import {
+  Dropdown,
+  DropdownTrigger,
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+  DropdownItem,
+  DropdownSection,
+} from '@nextui-org/react';
 import AuthSvg from '@/assets/AuthSvg';
 import { MobileNav } from './MobileNavBar';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { Badge } from '../ui/badge';
 import Logo from '../logo';
+import BackDropCus from '../backdropCus/backdropCus';
 const NavigationMenuDemo = ({ session }) => {
   const [user] = useState(session?.user);
   const [show, setShow] = useState('translate-y-0');
+  const [isUserOpen, setIsUserOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   useEffect(() => {
     window.addEventListener('scroll', controlNavbar);
@@ -53,7 +54,9 @@ const NavigationMenuDemo = ({ session }) => {
     `}
     >
       <MobileNav />
-      <div className="hidden lg:flex py-2  ">
+
+      <div className="hidden lg:flex py-2 items-center justify-center  ">
+        {isUserOpen ? <BackDropCus isOpen={isUserOpen} /> : null}
         <Logo />
         <NavigationMenu.Root className="NavigationMenuRoot">
           <NavigationMenu.List className="NavigationMenuList">
@@ -209,6 +212,7 @@ const NavigationMenuDemo = ({ session }) => {
             <NavigationMenu.Viewport className="NavigationMenuViewport" />
           </div>
         </NavigationMenu.Root>
+        <Button className="w-48 h-6 text-sm">Dành cho đối tác</Button>
         {user ? (
           <div className="flex flex-row gap-5 items-center justify-center">
             <Link href={'/favorite'}>
@@ -226,8 +230,50 @@ const NavigationMenuDemo = ({ session }) => {
                 }
               </Button>
             </Link>
+            <div className="w-full h-full">
+              <Dropdown
+                shouldBlockScroll={true}
+                onOpenChange={(open) => {
+                  setIsUserOpen(open);
+                }}
+                closeOnSelect={true}
+                onClose={() => {
+                  setIsUserOpen(false);
+                }}
+                isOpen={isUserOpen}
+              >
+                <DropdownTrigger>
+                  <Avatar>
+                    <AvatarImage src={user.avatar} />
+                    <AvatarFallback>Guest</AvatarFallback>
+                  </Avatar>
+                </DropdownTrigger>
+                <DropdownMenu>
+                  <DropdownSection title={`${user?.name}`}>
+                    <DropdownItem>Profile</DropdownItem>
+                    <DropdownItem>
+                      <Link href={'/admin/add-product'}>Add Product</Link>
+                    </DropdownItem>
+                    <DropdownItem>Team</DropdownItem>
+                    <DropdownItem>
+                      <div className="flex flex-row gap-2 items-center h-8  ">
+                        <div className="">{AuthSvg.signIn()}</div>
+                        <Button
+                          variant="text"
+                          onClick={() =>
+                            signOut({ callbackUrl: '/auth/login' })
+                          }
+                        >
+                          Log out
+                        </Button>
+                      </div>
+                    </DropdownItem>
+                  </DropdownSection>
+                </DropdownMenu>
+              </Dropdown>
+            </div>
 
-            <DropdownMenu>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger>
                 <Avatar>
                   <AvatarImage src={user.avatar} />
@@ -250,7 +296,7 @@ const NavigationMenuDemo = ({ session }) => {
                   Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
           </div>
         ) : (
           <Button className="w-[70px] h-8">

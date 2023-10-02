@@ -16,9 +16,7 @@ const metadata: Metadata = {
   description: 'Real Estate By UIT',
   openGraph: {
     images: [
-      'https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_1423,c_limit/16b3442b-cfbb-4be0-8541-682a26631f15/nike-just-do-it.png',
-      'https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_1423,c_limit/b3e44fd7-df8f-449a-a2c7-48bb948518ab/men-s-shoes-clothing-accessories.png',
-      'https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_1423,c_limit/481ae448-c295-48cb-b593-fbb80821d102/jordan.png',
+      'https://wallpapers.com/images/hd/house-corner-architecture-7vl0mtz3dfxod0fd.webp"',
     ],
   },
 };

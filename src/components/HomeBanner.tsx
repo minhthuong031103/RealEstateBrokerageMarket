@@ -78,7 +78,7 @@ function HomeBanner() {
         </div>
         <div>
           <Image
-            src="https://images.unsplash.com/photo-1550676225-d5449d638cbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            src="https://images.unsplash.com/photo-1633035952988-197dc0939770?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1931&q=80"
             alt="Auth background"
             layout="fill"
             objectFit="cover"
