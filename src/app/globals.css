@@ -56,6 +56,35 @@
 .productCarousel .control-arrow {
   display: none;
 }
+
+/**
+ * Button.module.css
+ *
+ * @format
+ */
+
+.buttonCus {
+  transition: transform 0.3s ease;
+}
+
+.buttonCus:active {
+  transform: scale(0.95);
+}
+/** @format */
+
+.animate-out {
+  animation: fadeOut 0.2s ease;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.8;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .productCarousel.carousel-root {
     flex-direction: column;

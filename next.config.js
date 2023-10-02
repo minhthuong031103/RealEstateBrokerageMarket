@@ -45,6 +45,16 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'wallpapers.com',
                 port: ''
+            },
+            {
+                protocol: 'https',
+                hostname: 'images.unsplash.com',
+                port: ''
+            },
+            {
+                protocol: 'https',
+                hostname: 'plus.unsplash.com',
+                port: ''
             }
         ],
     },

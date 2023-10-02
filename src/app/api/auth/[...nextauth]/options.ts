@@ -2,27 +2,40 @@ import { AuthOptions } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import GithubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
 import prisma from '@/lib/prisma';
 import jwt from 'jsonwebtoken';
 const options: AuthOptions = {
   //SIGN IN CHAY TRUOC JWT, TRONG SIGNIN SE RETURN 1 THANG USER, JWT CHAY TRUOC SESSION
   // Configure one or more authentication providers
-
   session: {
     strategy: 'jwt',
   },
-  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     DiscordProvider({
       clientId: String(process.env.DISCORD_CLIENT_ID),
       clientSecret: String(process.env.DISCORD_CLIENT_SECRET),
       async profile(profile) {
+        console.log('profile in discord: ', profile);
         //cai profile nay se truyen xuong jwt function
+        const user = await prisma.user.findUnique({
+          where: {
+            email: profile.email,
+          },
+        });
+        if (!user)
+          return {
+            name: profile.username,
+            email: profile.email,
+            id: -1,
+          };
         return {
-          id: profile.id,
-          name: profile.global_name,
-          email: profile.email,
-          avatar: profile.picture,
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+          role: user.role,
+          isVerified: user.isEmailVerified,
         };
       },
     }),
@@ -33,15 +46,62 @@ const options: AuthOptions = {
       async profile(profile) {
         console.log('inside prfileeeeeeeeeeeeeee');
         //cai profile nay se truyen xuong jwt function
-
+        const user = await prisma.user.findUnique({
+          where: {
+            email: profile.email,
+          },
+        });
+        if (!user)
+          return {
+            name: profile.name,
+            email: profile.email,
+            id: -1,
+          };
         return {
-          id: profile.id,
-          name: profile.name,
-          email: profile.email,
-          avatar: profile.avatar_url,
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+          role: user.role,
+          isVerified: user.isEmailVerified,
         };
       },
     }),
+    GoogleProvider({
+      clientId: String(process.env.GOOGLE_CLIENT_ID),
+      clientSecret: String(process.env.GOOGLE_CLIENT_SECRET),
+      authorization: {
+        params: {
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
+        },
+      },
+      async profile(profile) {
+        console.log('inside prfileeeeeeeeeeeeeee');
+        //cai profile nay se truyen xuong jwt function
+        const user = await prisma.user.findUnique({
+          where: {
+            email: profile.email,
+          },
+        });
+        if (!user)
+          return {
+            name: profile.name,
+            email: profile.email,
+            id: -1,
+          };
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+          role: user.role,
+          isVerified: user.isEmailVerified,
+        };
+      },
+    }),
+
     CredentialsProvider({
       name: 'Credentials',
       async authorize(credentials) {
@@ -66,6 +126,7 @@ const options: AuthOptions = {
           role: user.role,
           id: user.id,
           avatar: user.avatar,
+          isVerified: user.isEmailVerified,
         };
       },
     }),
@@ -77,38 +138,34 @@ const options: AuthOptions = {
     async signIn(params) {
       console.log('paramssssssssssssssssssssssssssssssssssssssssssssss: ');
       console.log(params);
-      if (params?.user?.email) {
-        const userFind = await prisma.user.findUnique({
-          where: {
-            email: params?.user?.email,
-          },
-        });
-
-        if (!userFind) {
-          const payload = jwt.sign(
-            { email: params?.user?.email, name: params?.user?.name },
-            process.env.NEXT_PUBLIC_JWT_SECRET,
-            { expiresIn: '1h' }
-          );
-          return `/auth/register/?payload=${payload}`;
-        } else return true;
+      if (!params?.user?.id || parseInt(params?.user?.id) === -1) {
+        const payload = jwt.sign(
+          { email: params?.user?.email, name: params?.user?.name },
+          process.env.NEXT_PUBLIC_JWT_SECRET,
+          { expiresIn: '1h' }
+        );
+        return `/auth/register/?payload=${payload}`;
       }
 
       return true;
     },
     //first it run the jwt function, the jwt function will return the token , then in the session function we can access the token
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       console.log('user in jwt: ');
+      console.log(token);
       console.log(user);
-      if (!user) return token; //if no user, token is from jwt function
-
+      if (trigger === 'update') {
+        return { ...token, ...session.user };
+      }
+      if (user) {
+        token.role = user.role;
+        token.id = user.id;
+        token.avatar = user.avatar;
+        token.name = user.name;
+        token.email = user.email;
+        token.isEmailVerified = user.isVerified;
+      }
       //user is from the oauth config or in the credentials setting options
-      //if token==null , session will not run
-      token.role = user.role;
-      token.id = user.id;
-      token.avatar = user.avatar;
-      token.name = user.name;
-      token.email = user.email;
 
       //return final token
       return token;
@@ -125,6 +182,9 @@ const options: AuthOptions = {
         (session.user as { name: string }).name = token.name as string;
         (session.user as { role: string }).role = token.role as string;
         (session.user as { avatar: string }).avatar = token.avatar as string;
+        (session.user as { email: string }).email = token.email as string;
+        (session.user as { isEmailVerified: boolean }).isEmailVerified =
+          token.isEmailVerified as boolean;
       }
       return session;
     },

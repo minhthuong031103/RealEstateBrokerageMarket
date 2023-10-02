@@ -16,7 +16,7 @@ function AuthCarousel() {
       >
         <div className="h-screen w-full">
           <Image
-            src="https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_1423,c_limit/16b3442b-cfbb-4be0-8541-682a26631f15/nike-just-do-it.png"
+            src="https://images.unsplash.com/photo-1618220179428-22790b461013?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1854&q=80"
             alt="Auth background"
             layout="fill"
             objectFit="cover"
@@ -27,9 +27,10 @@ function AuthCarousel() {
           <div className="absolute bottom-20 z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                &ldquo;This library has saved me countless hours of work and
-                helped me deliver stunning designs to my clients faster than
-                ever before.&rdquo;
+                &ldquo;Nền tảng này đã cách mạng hóa cách tôi xử lý các giao
+                dịch bất động sản. Với giao diện liền mạch và các tính năng mạnh
+                mẽ, tôi có thể quản lý tài sản, khách hàng và hợp đồng một cách
+                dễ dàng và chuyên nghiệp chưa từng có.&rdquo;
               </p>
               <footer className="text-sm">Sofia Davis</footer>
             </blockquote>
@@ -38,7 +39,7 @@ function AuthCarousel() {
         </div>
         <div>
           <Image
-            src="https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_706,c_limit/3a1d0f80-4fcd-453e-9fa0-7f19dc8e6d8a/nike-just-do-it.png"
+            src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1780&q=80"
             alt="Auth background"
             layout="fill"
             objectFit="cover"
@@ -49,17 +50,16 @@ function AuthCarousel() {
           <div className="absolute bottom-20 z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                &ldquo;This library has saved me countless hours of work and
-                helped me deliver stunning designs to my clients faster than
-                ever before.&rdquo;
+                &ldquo;Trong một ngành mà thời gian là điều cốt yếu, dịch vụ
+                trang web bất động sản này đã là cứu cánh cho tôi.&rdquo;
               </p>
-              <footer className="text-sm">Sofia Davis</footer>
+              <footer className="text-sm">Anthony James</footer>
             </blockquote>
           </div>
         </div>
         <div>
           <Image
-            src="https://freight.cargo.site/w/1920/q/94/i/1a52c93151b28b124e56b9e3b3b5cc4bc3f5c1aff4d972542fb260f4633b7012/Guidelines.png"
+            src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80"
             alt="Auth background"
             layout="fill"
             objectFit="cover"
@@ -70,11 +70,13 @@ function AuthCarousel() {
           <div className="absolute bottom-20 z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                &ldquo;This library has saved me countless hours of work and
-                helped me deliver stunning designs to my clients faster than
-                ever before.&rdquo;
+                &ldquo;Điều hướng thị trường bất động sản chưa bao giờ dễ dàng
+                hơn nhờ nền tảng đáng kinh ngạc này. Thiết kế thân thiện với
+                người dùng và các tính năng toàn diện của nó cho phép tôi quản
+                lý mọi khía cạnh của hoạt động kinh doanh bất động sản của mình
+                một cách dễ dàng.&rdquo;
               </p>
-              <footer className="text-sm">Sofia Davis</footer>
+              <footer className="text-sm">Michael Jordan</footer>
             </blockquote>
           </div>
         </div>

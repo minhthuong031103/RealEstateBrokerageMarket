@@ -1,12 +1,14 @@
 import { ReduxProvider } from '@/redux/Provider';
 import './globals.css';
 import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
+import AuthProvider from '../../context/AuthProvider';
 
-const poppins = Poppins({
+const montserrat = Montserrat({
   subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
+  variable: '--font-mont',
+  weight: '500',
 });
 
 const metadata: Metadata = {
@@ -24,11 +26,18 @@ const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body className={poppins.className}>
-        <ReduxProvider>
-          <Toaster />
-          {children}
-        </ReduxProvider>
+      <head>
+        <link rel="icon" href="/logoEstate.png" />
+      </head>
+      <body
+        className={`${montserrat.variable} ${montserrat.style.fontWeight} font-mont`}
+      >
+        <AuthProvider>
+          <ReduxProvider>
+            <Toaster />
+            {children}
+          </ReduxProvider>
+        </AuthProvider>
       </body>
     </html>
   );

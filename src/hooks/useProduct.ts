@@ -2,9 +2,13 @@ import { getRequest } from '@/lib/fetch';
 
 export const useProduct = () => {
   const onGetAllProducts = async () => {
-    const res = await getRequest({ endPoint: '/api/product/all' });
-
-    return res;
+    try {
+      const res = await getRequest({ endPoint: '/api/product/all' });
+      console.log(res);
+      return res;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return { onGetAllProducts };

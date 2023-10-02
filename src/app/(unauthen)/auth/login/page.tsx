@@ -19,10 +19,10 @@ const LoginPage = async () => {
           <div className="mx-auto h-full flex w-full flex-col justify-center space-y-6 ">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
-                Welcome back!
+                Chào mừng!
               </h1>
               <p className="text-sm text-muted-foreground">
-                Explore the entirely new collection of fashion
+                Đăng nhập để kết nối với cộng đồng UIT Estate
               </p>
             </div>
             <Login providers={providers} />

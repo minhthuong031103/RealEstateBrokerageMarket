@@ -1,13 +1,18 @@
 import type { Config } from 'tailwindcss';
+import { nextui } from '@nextui-org/react';
 
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
+      fontFamily: {
+        mont: ['var(--font-mont)'],
+      },
       colors: {
         border: '#e4e4e7',
         input: '#e4e4e7',
@@ -65,6 +70,10 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
+    nextui(),
+  ],
 };
 export default config;

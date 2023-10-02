@@ -26,10 +26,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 const formSchema = z.object({
   email: z.string().min(1, {
-    message: 'Email is required',
+    message: 'Vui lòng nhập Email',
   }),
   password: z.string().min(1, {
-    message: 'Password is required',
+    message: 'Vui lòng nhập Password',
   }),
 });
 const Login = ({ className }: { className?: string; providers: unknown }) => {
@@ -56,12 +56,15 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
       redirect: false,
     });
     setIsLoading(false);
+
     if (res?.error) {
       toast.error(res?.error);
+
       return;
     }
 
-    if (!res?.error) router.replace('/');
+    console.log(res);
+    if (!res?.error) router.refresh();
     setIsLoading(false);
     console.log(res);
   }
@@ -88,7 +91,7 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input placeholder="Enter Username" {...field} />
+                          <Input placeholder="Nhập email của bạn" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -124,7 +127,7 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
                             value={field.value}
                             onChange={field.onChange}
                             id="password"
-                            placeholder="Enter your password"
+                            placeholder="Nhập mật khẩu"
                             type={show.showPass ? 'text' : 'password'}
                             autoCapitalize="none"
                             autoComplete="password"
@@ -138,7 +141,7 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
                 </div>
               </div>
 
-              <Button type="submit">Sign in</Button>
+              <Button type="submit">Đăng nhập</Button>
             </div>
           </form>
         </Form>
@@ -149,14 +152,15 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
           </div>
           <div className="relative flex justify-center text-xs uppercase">
             <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
+              Hoặc tiếp tục với
             </span>
           </div>
         </div>
-        <div className="w-full flex gap-6">
+        <div className="w-full flex flex-wrap md:flex-nowrap gap-6">
           <Button
-            className="w-1/2 "
+            className="w-full "
             onClick={() => {
+              setIsLoading(true);
               signIn('github');
             }}
             variant="outline"
@@ -168,8 +172,9 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
             Github
           </Button>
           <Button
-            className="w-1/2"
+            className="w-full"
             onClick={() => {
+              setIsLoading(true);
               signIn('discord');
             }}
             variant="outline"
@@ -180,13 +185,27 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
             </div>{' '}
             Discord
           </Button>
+          <Button
+            className="w-full"
+            onClick={() => {
+              setIsLoading(true);
+              signIn('google');
+            }}
+            variant="outline"
+            disabled={isLoading}
+          >
+            <div>
+              <Icons.google className="mr-2 h-4 w-4" />
+            </div>{' '}
+            Google
+          </Button>
         </div>
       </div>
 
       <p className="mt-10 px-8 text-center text-sm text-muted-foreground">
-        Don't have an account?{' '}
+        Chưa có tài khoản?{' '}
         <Link className="font-bold underline text-black" href="/auth/register">
-          Register
+          Đăng ký
         </Link>
       </p>
     </div>

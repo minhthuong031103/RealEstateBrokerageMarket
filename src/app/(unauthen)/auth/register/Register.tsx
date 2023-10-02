@@ -72,8 +72,8 @@ const Register = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: payload?.name,
-      email: payload?.email,
+      name: payload.name || '',
+      email: payload.email || '',
       password: '',
       confirmPassword: '',
     },
@@ -117,21 +117,6 @@ const Register = ({
             <div className="grid gap-6">
               <div className="gap-8 flex flex-col">
                 <div className="flex flex-col gap-3 ">
-                  <Label>Name</Label>
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input placeholder="Enter Username" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="flex flex-col gap-3 ">
                   <Label>Email</Label>
                   <FormField
                     name="email"
@@ -139,7 +124,12 @@ const Register = ({
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input placeholder="Enter Email" {...field} />
+                          <Input
+                            type="email"
+                            placeholder="Nhập Email của bạn"
+                            autoComplete="username"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -147,7 +137,26 @@ const Register = ({
                   />
                 </div>
                 <div className="flex flex-col gap-3 ">
-                  <Label>Password</Label>
+                  <Label>Họ và tên</Label>
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="Nhập họ và tên của bạn"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex flex-col gap-3 ">
+                  <Label>Mật khẩu</Label>
                   <FormField
                     control={form.control}
                     name="password"
@@ -156,7 +165,7 @@ const Register = ({
                         <FormItem>
                           <FormControl>
                             <Input
-                              placeholder="Enter your password"
+                              placeholder="Nhập mật khẩu"
                               type={show.password ? 'text' : 'password'}
                               value={field.value}
                               onChange={field.onChange}
@@ -186,7 +195,7 @@ const Register = ({
                   />
                 </div>
                 <div className="flex flex-col gap-3 ">
-                  <Label>Confirm password</Label>
+                  <Label>Mật khẩu xác nhận</Label>
                   <FormField
                     control={form.control}
                     name="confirmPassword"
@@ -195,7 +204,7 @@ const Register = ({
                         <FormItem>
                           <FormControl>
                             <Input
-                              placeholder="Enter your password"
+                              placeholder="Xác nhận mật khẩu"
                               type={show.confirmPassword ? 'text' : 'password'}
                               value={field.value}
                               onChange={field.onChange}
@@ -227,16 +236,16 @@ const Register = ({
               </div>
 
               <Button type="submit" className="">
-                Sign Up
+                Đăng ký
               </Button>
             </div>
           </form>
         </Form>
       </div>
       <p className=" mt-10 text-center text-sm text-muted-foreground">
-        Already have an account?{' '}
+        Đã có tài khoản?{' '}
         <Link className=" font-bold underline text-black" href="/auth/login">
-          Sign in
+          Đăng nhập
         </Link>
       </p>
     </div>
