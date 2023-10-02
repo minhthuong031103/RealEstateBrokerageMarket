@@ -8,27 +8,28 @@ import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { Balancer } from 'react-wrap-balancer';
+import { Button } from '@/components/ui/button';
 
 const productCollections = [
   {
-    title: 'FootBall',
+    title: 'Đất',
     image:
-      'https://static.nike.com/a/images/f_auto/dpr_3.0,cs_srgb/h_400,c_limit/2c048b8b-97b5-4919-9fd0-ad85c469b545/nike-football.jpg',
+      'https://images.unsplash.com/photo-1670992826591-96951fe6c7e5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80',
   },
   {
-    title: 'BasketBall',
+    title: 'Nhà ở',
     image:
-      'https://static.nike.com/a/images/f_auto/dpr_3.0,cs_srgb/w_342,c_limit/3aa7f8f6-d54e-40bd-8822-f6d87c0cbb60/jordan-brand-launches-tatum-1-signature-shoe.jpg',
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80',
   },
   {
-    title: 'Running',
+    title: 'Chung Cư',
     image:
-      'https://static.nike.com/a/images/f_auto/dpr_3.0,cs_srgb/h_500,c_limit/x0vxyo4swzcoitrfxlj7/nike-basketball.jpg',
+      'https://images.unsplash.com/photo-1633035327410-a6ecbc8e6db8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1854&q=80',
   },
   {
-    title: 'Training and Gym',
+    title: 'Tất cả',
     image:
-      'https://static.nike.com/a/images/f_auto/dpr_1.3,cs_srgb/w_945,c_limit/d7a055b4-6dff-4e9e-90fe-de00e6eab13c/should-you-do-cardio-before-or-after-weight-training.jpg',
+      'https://images.unsplash.com/photo-1615634364452-8daf3851f2f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80',
   },
 ];
 
@@ -41,10 +42,10 @@ function ShopByCollection() {
     >
       <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
         <h2 className="text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">
-          Shop by collection
+          Lựa chọn loại bất động sản
         </h2>
         <Balancer className="max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-          Explore our collection and find the best products for you
+          Tìm kiếm bất động sản phù hợp với bạn
         </Balancer>
       </div>
       <Swiper
@@ -87,7 +88,7 @@ function ShopByCollection() {
         {productCollections?.map((collection) => (
           <SwiperSlide className="h-full relative mb-16 overflow-visible">
             <div className="group relative overflow-hidden rounded-md">
-              <AspectRatio ratio={5 / 6}>
+              <AspectRatio ratio={5 / 5}>
                 <Image
                   src={collection.image}
                   alt={'Jordan'}
@@ -98,9 +99,11 @@ function ShopByCollection() {
                 />
               </AspectRatio>
               <div className="px-5 absolute inset-0 z-20 flex items-center justify-center">
-                <h3 className="text-3xl font-medium capitalize text-slate-100 md:text-2xl">
-                  {collection.title}
-                </h3>
+                <Button className="w-28">
+                  <h3 className="text-lg font-medium capitalize text-slate-100 md:text-xl">
+                    {collection.title}
+                  </h3>
+                </Button>
               </div>
             </div>
           </SwiperSlide>
