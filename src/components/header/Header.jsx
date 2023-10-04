@@ -22,6 +22,22 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { Badge } from '../ui/badge';
 import Logo from '../logo';
 import BackDropCus from '../backdropCus/backdropCus';
+
+const avatarNav = [
+  {
+    name: 'Hồ sơ',
+    href: '/profile',
+  },
+  {
+    name: 'Thêm sản phẩm',
+    href: '/admin/add-product',
+  },
+  {
+    name: 'Team',
+    href: '/admin/add-product',
+  },
+];
+
 const NavigationMenuDemo = ({ session }) => {
   const [user] = useState(session?.user);
   const [show, setShow] = useState('translate-y-0');
@@ -250,11 +266,12 @@ const NavigationMenuDemo = ({ session }) => {
                 </DropdownTrigger>
                 <DropdownMenu>
                   <DropdownSection title={`${user?.name}`}>
-                    <DropdownItem>Profile</DropdownItem>
-                    <DropdownItem>
-                      <Link href={'/admin/add-product'}>Add Product</Link>
-                    </DropdownItem>
-                    <DropdownItem>Team</DropdownItem>
+                    {avatarNav.map((item, index) => (
+                      <DropdownItem key={index}>
+                        <Link href={item.href}>{item.name}</Link>
+                      </DropdownItem>
+                    ))}
+
                     <DropdownItem>
                       <div className="flex flex-row gap-2 items-center h-8  ">
                         <div className="">{AuthSvg.signIn()}</div>

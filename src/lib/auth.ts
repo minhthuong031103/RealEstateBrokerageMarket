@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 export async function mustBeLoggedIn() {
   const session = await getServerSession(options);
   console.log('session: ', session);
-  if (!session || !session?.user?.isEmailVerified) {
+  if (!session) {
     redirect('/auth/login');
   }
 }
