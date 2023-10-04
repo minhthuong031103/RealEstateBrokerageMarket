@@ -2,7 +2,7 @@
 
 import { ScrollArea } from '@components/ui/scroll-area';
 import { X } from 'lucide-react';
-import { Button } from '@components/ui/button';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 function DialogCustom({
@@ -68,14 +68,13 @@ function DialogCustom({
   return (
     isVisible && (
       <div className="w-full h-full">
-        `
         <div
           className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm ${
             isModalOpen ? `animate-in fade-in-0` : ''
           }  ${isClosing ? 'animate-out fade-out-0 ' : ''}
   `}
         ></div>
-        `
+
         <div
           className={cn(
             `fixed left-[50%] top-[50%] z-50 max-w-full translate-x-[-50%] 
