@@ -7,14 +7,19 @@ import FeaturedProduct from './FeaturedProduct';
 import SalesProduct from './SalesProduct';
 import ShopAll from './ShopAll';
 import { useProduct } from '@/hooks/useProduct';
+import { PartnersContainer } from '@/components/estate/PartnersComp';
+import Partners from '@/components/estate/Partners';
+import { SubscriptionContainer } from '@/components/estate/Subscription';
 
 const page = async () => {
   const { onGetAllProducts } = useProduct();
   const allProducts = await onGetAllProducts();
+  const p = new Partners();
   return (
     <div className="mt-10 flex h-full w-full flex-col">
       <HomeBanner />
-
+      <PartnersContainer partners={p.getData()} />
+      <SubscriptionContainer />
       <ShopAll />
       {/* <Image
         src={
