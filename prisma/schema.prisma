@@ -9,21 +9,71 @@ datasource db {
 }
 
 model User {
-  id               Int     @id @default(autoincrement())
+  id               Int       @id @default(autoincrement())
   name             String
-  email            String  @unique
+  email            String    @unique
   password         String
   diaChi           String?
-  role             String? @default("user")
-  avatar           String? @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
+  role             String?   @default("user")
+  avatar           String?   @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
   anhChanDung      String?
-  isEmailVerified  Boolean @default(false)
+  isEmailVerified  Boolean   @default(false)
   otp              String?
-  luot             Int?    @default(0)
-  luotChuyenNghiep Int?    @default(0)
-  luotVip          Int?    @default(0)
+  luot             Int?      @default(0)
+  luotChuyenNghiep Int?      @default(0)
+  luotVip          Int?      @default(0)
   duyetDoiTac      String?
+  BaiViets         BaiViet[]
 }
+
+// enum TrangThaiPhapLy {
+//   DA_CO_SO
+//   CHUA_CO_SO
+// }
+// enum Huong {
+//   DONG
+//   TAY
+//   NAM
+//   BAC
+//   DONG_BAC
+//   DONG_NAM
+//   TAY_BAC
+//   TAY_NAM
+// }
+// enum TinhTrangNoiThat {
+//   CAO_CAP
+//   DAY_DU
+//   CO_BAN
+//   KHONG_CO
+// }
+// enum LoaiBDS {
+//   CAN_HO
+//   NHA_O
+//   DAT
+//   VAN_PHONG
+// }
+// enum LoaiCanHo {
+//   CHUNG_CU
+//   DUPLEX
+//   PENTHOUSE
+// }
+// enum LoaiNhaO {
+//   MAT_PHO
+//   NGO_HEM
+//   BIET_THU
+// }
+// enum LoaiDat {
+//   THO_CU
+//   NEN_DU_AN
+//   CONG_NGHIEP
+//   NONG_NGHIEP
+// }
+// enum LoaiVanPhong {
+//   VAN_PHONG
+//   MAT_BANG_KINH_DOANH
+//   SHOPHOUSE
+//   OFFICETEL
+// }
 
 model LoaiBDS {
   id       Int       @id @default(autoincrement())
@@ -59,37 +109,43 @@ model BaiViet {
   id        Int      @id @default(autoincrement())
   tieuDe    String
   sanPhamId Int      @unique
+  sanPham   SanPham  @relation(fields: [sanPhamId], references: [id])
   nhan      String
   trangThai String   @default("Chờ duyệt")
   ngayDang  DateTime @default(now())
   userId    Int
-  sanPham   SanPham  @relation(fields: [sanPhamId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  //Bai viet la chu so huu cua san pham
 
   @@index([userId])
 }
 
 model SanPham {
-  id                Int              @id @default(autoincrement())
-  gia               Float
-  isChothue         Boolean          @default(false)
-  diaChi            String
-  dienTich          Float
-  chieuDai          Float
-  chieuRong         Float
-  hinhAnhSanPham    String?          @db.LongText
-  hinhAnhGiayTo     String?          @db.LongText
-  video             String?          @db.LongText
-  trinhTrangPhapLy  String
-  loaiBDSId         Int
-  chiTietCanHoId    Int?             @unique
-  chiTietNhaOId     Int?             @unique
-  chiTietDatId      Int?             @unique
+  id               Int      @id @default(autoincrement())
+  gia              Float
+  isChothue        Boolean  @default(false)
+  diaChi           String
+  dienTich         Float
+  chieuDai         Float
+  chieuRong        Float
+  hinhAnhSanPham   String?  @db.LongText
+  hinhAnhGiayTo    String?  @db.LongText
+  video            String?  @db.LongText
+  trinhTrangPhapLy String
+  loaiBDSId        Int
+  loaiBDS          LoaiBDS  @relation(fields: [loaiBDSId], references: [id])
+  baiViet          BaiViet?
+
+  chiTietCanHoId Int?          @unique
+  chiTietCanHo   ChiTietCanHo? @relation(fields: [chiTietCanHoId], references: [id])
+
+  chiTietNhaOId Int?         @unique
+  chiTietNhaO   ChiTietNhaO? @relation(fields: [chiTietNhaOId], references: [id])
+
+  chiTietDatId Int?        @unique
+  chiTietDat   ChiTietDat? @relation(fields: [chiTietDatId], references: [id])
+
   chiTietVanPhongId Int?             @unique
-  loaiBDS           LoaiBDS          @relation(fields: [loaiBDSId], references: [id])
-  baiViet           BaiViet?
-  chiTietCanHo      ChiTietCanHo?    @relation(fields: [chiTietCanHoId], references: [id])
-  chiTietNhaO       ChiTietNhaO?     @relation(fields: [chiTietNhaOId], references: [id])
-  chiTietDat        ChiTietDat?      @relation(fields: [chiTietDatId], references: [id])
   chiTietVanPhong   ChiTietVanPhong? @relation(fields: [chiTietVanPhongId], references: [id])
 
   @@index([loaiBDSId])
@@ -106,9 +162,11 @@ model ChiTietCanHo {
   hoanThanh         DateTime
   suaChuaLanCuoi    DateTime
   huongBanCong      String
+  huongCuaChinh     String
   loaiCanHoId       Int
   loaiCanHo         LoaiCanHo @relation(fields: [loaiCanHoId], references: [id])
-  sanPham           SanPham?
+
+  sanPham SanPham?
 
   @@index([loaiCanHoId])
 }
@@ -116,6 +174,7 @@ model ChiTietCanHo {
 model ChiTietNhaO {
   id               Int      @id @default(autoincrement())
   loaiNhaOId       Int
+  loaiNhaO         LoaiNhaO @relation(fields: [loaiNhaOId], references: [id])
   tinhTrangNoiThat String
   hinhAnhThietKe   String?
   soPhongNgu       Int
@@ -126,18 +185,19 @@ model ChiTietNhaO {
   dienTichGarage   Float?
   dienTichHoBoi    Float?
   soTang           Int
-  loaiNhaO         LoaiNhaO @relation(fields: [loaiNhaOId], references: [id])
-  sanPham          SanPham?
+
+  sanPham SanPham?
 
   @@index([loaiNhaOId])
 }
 
 model ChiTietDat {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   loaiDatId Int
+  loaiDat   LoaiDat @relation(fields: [loaiDatId], references: [id])
   huongDat  String
-  loaiDat   LoaiDat  @relation(fields: [loaiDatId], references: [id])
-  sanPham   SanPham?
+
+  sanPham SanPham?
 
   @@index([loaiDatId])
 }
@@ -145,14 +205,15 @@ model ChiTietDat {
 model ChiTietVanPhong {
   id               Int          @id @default(autoincrement())
   loaiVanPhongId   Int
+  loaiVanPhong     LoaiVanPhong @relation(fields: [loaiVanPhongId], references: [id])
   huongVanphong    String
   tinhTrangNoiThat String
   huongCuaChinh    String
   soTang           Int
   hoanThanh        DateTime
   suaChuaLanCuoi   DateTime
-  loaiVanPhong     LoaiVanPhong @relation(fields: [loaiVanPhongId], references: [id])
-  sanPham          SanPham?
+
+  sanPham SanPham?
 
   @@index([loaiVanPhongId])
 }
