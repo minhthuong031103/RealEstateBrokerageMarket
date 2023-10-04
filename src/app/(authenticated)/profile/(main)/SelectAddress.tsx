@@ -3,8 +3,12 @@
 import React, { useEffect } from 'react';
 import { Select, SelectItem } from '@nextui-org/react';
 import { getRequest } from '@/lib/fetch';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import DialogCustom from '@/components/ui/dialogCustom';
+import { Button } from '@/components/ui/button';
 
-export const SelectAddress = () => {
+export const SelectAddress = ({ addressValue, setAddressValue }) => {
   const [selectedProvince, setSelectedProvince] = React.useState(new Set([]));
   const [selectedDistrict, setSelectedDistrict] = React.useState(new Set([]));
   const [selectedWard, setSelectedWard] = React.useState(new Set([]));
@@ -20,6 +24,12 @@ export const SelectAddress = () => {
   const [provinces, setProvince] = React.useState([]);
   const [districts, setDistrict] = React.useState([]);
   const [wards, setWard] = React.useState([]);
+
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const [streetValue, setStreetValue] = React.useState('');
+  const [houseNumberValue, setHouseNumberValue] = React.useState('');
+
   useEffect(() => {
     async function getProvince() {
       setIsLoadingProvince(true);
@@ -69,85 +79,182 @@ export const SelectAddress = () => {
   const isProvinceValid = selectedProvince.size > 0;
   const isDistrictValid = selectedDistrict.size > 0;
   const isWardValid = selectedWard.size > 0;
+  console.log(provinces);
+  console.log(selectedWard);
+  console.log(selectedProvince);
+  const onSubmit = () => {
+    const valuesArrayProvince = Array.from(selectedProvince);
+    const provinceCode = valuesArrayProvince[0];
+    const provinceValue = provinces.find(
+      (province) => province.code == provinceCode
+    )?.name;
 
+    const valuesArrayDistrict = Array.from(selectedDistrict);
+    const districtCode = valuesArrayDistrict[0];
+    const districtValue = districts.find(
+      (district) => district.code == districtCode
+    )?.name;
+
+    const valuesArrayWard = Array.from(selectedWard);
+    const wardCode = valuesArrayWard[0];
+    const wardValue = wards.find((ward) => ward.code == wardCode)?.name;
+    console.log(
+      provinceValue,
+      districtValue,
+      wardValue,
+      streetValue,
+      houseNumberValue
+    );
+    setAddressValue(
+      `${houseNumberValue}, ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
+    );
+    setIsModalOpen(false);
+  };
   return (
-    <div className="flex flex-col gap-y-6">
-      <div className="flex flex-row gap-x-6 ">
-        <Select
-          isRequired
-          key={'province'}
-          radius={'md'}
-          label="Thành phố, tỉnh thành"
-          isInvalid={isProvinceValid || !provinceTouched ? false : true}
-          errorMessage={
-            isProvinceValid || !provinceTouched
-              ? ''
-              : 'Vui lòng chọn thành phố, tỉnh thành'
-          }
-          autoFocus={false}
-          placeholder="Chọn thành phố, tỉnh thành"
-          selectedKeys={selectedProvince}
-          isLoading={isLoadingProvince}
-          onSelectionChange={setSelectedProvince}
-          className="w-full lg:w-[50%]"
-          onClose={() => setProvinceTouched(true)}
+    <div className="flex flex-col gap-y-6 w-full px-3">
+      <Label className="font-bold text-lg">Địa chỉ bất động sản</Label>
+      {isModalOpen ? (
+        <DialogCustom
+          onClose={() => {
+            setIsModalOpen(false);
+          }}
+          isModalOpen={isModalOpen}
+          className="w-full "
         >
-          {provinces?.map((province) => (
-            <SelectItem key={province.code} value={province.code}>
-              {province.name}
-            </SelectItem>
-          ))}
-        </Select>
-        <Select
-          isRequired
-          key={'district'}
-          radius={'md'}
-          label="Quận, huyện"
-          isInvalid={isDistrictValid || !districtTouched ? false : true}
-          errorMessage={
-            isDistrictValid || !districtTouched
-              ? ''
-              : 'Vui lòng chọn quận, huyện'
-          }
-          autoFocus={false}
-          placeholder="Chọn quận, huyện"
-          selectedKeys={selectedDistrict}
-          isLoading={isLoadingDistrict}
-          onSelectionChange={setSelectedDistrict}
-          className="w-full lg:w-[50%]"
-          onClose={() => setDistrictTouched(true)}
-        >
-          {districts?.map((district) => (
-            <SelectItem key={district.code} value={district.code}>
-              {district.name}
-            </SelectItem>
-          ))}
-        </Select>
-      </div>
+          <div className="flex flex-col gap-y-6 w-full px-1">
+            <Select
+              isRequired
+              key={'province'}
+              radius={'md'}
+              label="Thành phố, tỉnh thành"
+              isInvalid={isProvinceValid || !provinceTouched ? false : true}
+              errorMessage={
+                isProvinceValid || !provinceTouched
+                  ? ''
+                  : 'Vui lòng chọn thành phố, tỉnh thành'
+              }
+              autoFocus={false}
+              placeholder="Chọn thành phố, tỉnh thành"
+              selectedKeys={selectedProvince}
+              isLoading={isLoadingProvince}
+              onSelectionChange={setSelectedProvince}
+              className="w-full "
+              onClose={() => setProvinceTouched(true)}
+            >
+              {provinces?.map((province) => (
+                <SelectItem key={province.code} value={province.code}>
+                  {province.name}
+                </SelectItem>
+              ))}
+            </Select>
+            <Select
+              isRequired
+              key={'district'}
+              radius={'md'}
+              label="Quận, huyện"
+              isInvalid={isDistrictValid || !districtTouched ? false : true}
+              errorMessage={
+                isDistrictValid || !districtTouched
+                  ? ''
+                  : 'Vui lòng chọn quận, huyện'
+              }
+              autoFocus={false}
+              placeholder="Chọn quận, huyện"
+              selectedKeys={selectedDistrict}
+              isLoading={isLoadingDistrict}
+              onSelectionChange={setSelectedDistrict}
+              className="w-full "
+              onClose={() => setDistrictTouched(true)}
+            >
+              {districts?.map((district) => (
+                <SelectItem key={district.code} value={district.code}>
+                  {district.name}
+                </SelectItem>
+              ))}
+            </Select>
+            <Select
+              isRequired
+              key={'ward'}
+              radius={'md'}
+              label="Xã, phường"
+              isInvalid={isWardValid || !wardTouched ? false : true}
+              errorMessage={
+                isWardValid || !wardTouched ? '' : 'Vui lòng chọn xã, phường'
+              }
+              autoFocus={false}
+              placeholder="Chọn xã, phường"
+              selectedKeys={selectedWard}
+              isLoading={isLoadingWard}
+              onSelectionChange={setSelectedWard}
+              className="w-full "
+              onClose={() => setWardTouched(true)}
+            >
+              {wards?.map((ward) => (
+                <SelectItem key={ward.code} value={ward.code}>
+                  {ward.name}
+                </SelectItem>
+              ))}
+            </Select>
 
-      <Select
-        isRequired
-        key={'ward'}
-        radius={'md'}
-        label="Xã, phường"
-        isInvalid={isWardValid || !wardTouched ? false : true}
-        errorMessage={
-          isWardValid || !wardTouched ? '' : 'Vui lòng chọn xã, phường'
-        }
-        autoFocus={false}
-        placeholder="Chọn xã, phường"
-        selectedKeys={selectedWard}
-        isLoading={isLoadingWard}
-        onSelectionChange={setSelectedWard}
+            <Input
+              value={streetValue}
+              onChange={(e) => {
+                setStreetValue(e.target.value);
+              }}
+              className="w-full "
+              placeholder="Tên đường"
+            />
+            <Input
+              value={houseNumberValue}
+              onChange={(e) => {
+                setHouseNumberValue(e.target.value);
+              }}
+              className="w-full "
+              placeholder="Số nhà"
+            />
+            <div className="w-full flex items-center justify-center">
+              <Button
+                disabled={
+                  !isProvinceValid ||
+                  !isDistrictValid ||
+                  !isWardValid ||
+                  !streetValue ||
+                  !houseNumberValue
+                }
+                onClick={onSubmit}
+                className="w-[50%]"
+              >
+                Xác nhận
+              </Button>
+            </div>
+          </div>
+        </DialogCustom>
+      ) : null}
+
+      {/* <Input
         className="w-full lg:w-[50%]"
-        onClose={() => setWardTouched(true)}
+        placeholder="Địa chỉ"
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+        onFocus={() => {
+          setIsModalOpen(true);
+        }}
+      /> */}
+      <Button
+        className="w-36"
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
       >
-        {wards?.map((ward) => (
-          <SelectItem key={ward.code} value={ward.code}>
-            {ward.name}
-          </SelectItem>
-        ))}
-      </Select>
+        Chọn địa chỉ
+      </Button>
+      <Input
+        value={addressValue}
+        className=""
+        disabled={true}
+        placeholder="Địa chỉ"
+      />
     </div>
   );
 };
