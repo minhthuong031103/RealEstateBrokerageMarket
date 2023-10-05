@@ -3,6 +3,7 @@ import React from 'react';
 import { getProviders } from 'next-auth/react';
 
 import Login from './Login';
+import { alreadyLoggedIn } from '@/lib/auth';
 
 export const metadata: Metadata = {
   title: 'Authentication',
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 
 const LoginPage = async () => {
   const providers = await getProviders();
-
+  await alreadyLoggedIn();
   return (
     <>
       <div className="p-12 relative h-screen w-full ">

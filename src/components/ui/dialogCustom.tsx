@@ -105,7 +105,7 @@ function DialogCustom({
                   <X className="h-4 w-4" />
                 </Button>
               </div>
-              <div className="w-full h-full">{children}</div>
+              <div className="w-full h-full py-3">{children}</div>
             </ScrollArea>
           </div>
         </div>

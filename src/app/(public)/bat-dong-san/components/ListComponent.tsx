@@ -1,21 +1,21 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { useBatDongSan } from "@/hooks/useBatDongSan";
-import { useEffect, useState } from "react";
-import { HiSortAscending } from "react-icons/hi";
-import { ListItemComponent } from "./ListItemComponent";
+'use client';
+import { Button } from '@/components/ui/button';
+import { useBatDongSan } from '@/hooks/useBatDongSan';
+import { useEffect, useState } from 'react';
+import { HiSortAscending } from 'react-icons/hi';
+import { ListItemComponent } from './ListItemComponent';
 
 export function ListComponent() {
   const [listProperties, setListProperties] = useState([]);
   useEffect(() => {
     const getBatDongSan = async () => {
-      const result = await fetchBatDongSanAll();
+      const result = await fetchAllBatDongSan();
       setListProperties(result as any);
       return result;
     };
     getBatDongSan();
   }, []);
-  const { fetchBatDongSanAll } = useBatDongSan();
+  const { fetchAllBatDongSan } = useBatDongSan();
   return (
     <div className="mr-6">
       <div className="flex justify-between p-4 rounded-xl bg-white border-[1px] shadow-sm">
@@ -24,11 +24,11 @@ export function ListComponent() {
         </div>
         <div className="flex flex-row">
           <p className="text-[14px] text-neutral-800 flex my-auto mr-2 font-semibold">
-            Sắp xếp theo ngày đăng:{" "}
+            Sắp xếp theo ngày đăng:{' '}
           </p>
           <Button
-            variant={"outline"}
-            size={"sm"}
+            variant={'outline'}
+            size={'sm'}
             className="bg-white text-neutral-800 text-base hover:bg-gray-100 hover:text-neutral active:scale-75 transition ease-in-out duration-200"
           >
             <HiSortAscending />

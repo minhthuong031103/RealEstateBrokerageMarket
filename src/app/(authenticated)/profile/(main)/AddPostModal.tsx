@@ -3,17 +3,19 @@
 import { Button } from '@/components/ui/button';
 
 import React from 'react';
-import { SelectAddress } from './SelectAddress';
 import DialogCustom from '@/components/ui/dialogCustom';
 import { Label } from '@/components/ui/label';
 import { SelectDanhMuc } from './SelectDanhMuc';
+import { BaiVietForm } from './(components)/BaiVietForm';
 // import * as z from 'zod';
 
 // const formSchema = z.object({});
 export const AddPostModal = () => {
   const [open, setOpen] = React.useState(false);
-  const [addressValue, setAddressValue] = React.useState('');
-  // const [danhMucBatDongSan, setDanhMucBatDongSan] = React.useState('');
+
+  const [danhMucValue, setDanhMucValue] = React.useState(null);
+  const [thue, setThue] = React.useState(false);
+  const [ban, setBan] = React.useState(false);
   const [isWarningClose, setIsWarningClose] = React.useState(false);
   return (
     <div className="w-full h-full">
@@ -28,28 +30,36 @@ export const AddPostModal = () => {
       {open ? (
         <DialogCustom
           isWarningOnClose={true}
-          className="w-full lg:w-[80%] h-[95%]"
+          className="w-full lg:w-[80%] h-[80%] lg:h-[95%]"
           onClose={() => {
             setIsWarningClose(true);
           }}
           isModalOpen={open}
         >
-          <SelectAddress
-            setAddressValue={setAddressValue}
-            addressValue={addressValue}
-          />
-          <SelectDanhMuc />
+          <div className="flex flex-col gap-y-6 w-full h-full px-1">
+            <SelectDanhMuc
+              setThue={setThue}
+              setBan={setBan}
+              thue={thue}
+              ban={ban}
+              setDanhMucValue={setDanhMucValue}
+            />
+
+            {danhMucValue && (thue || ban) ? (
+              <BaiVietForm danhMucValue={danhMucValue} />
+            ) : null}
+          </div>
         </DialogCustom>
       ) : null}
       {isWarningClose ? (
         <DialogCustom
-          className="w-[80%] lg:w-[30%] h-[50%] "
+          className="w-[90%] lg:w-[30%] h-[40%] lg:h-[50%] "
           onClose={() => {
             setIsWarningClose(false);
           }}
           isModalOpen={isWarningClose}
         >
-          <div className="flex flex-col items-center justify-between h-full py-12">
+          <div className="flex flex-col items-center justify-between h-full lg:py-12">
             <Label className="mb-24 font-bold text-lg">
               Bạn có muốn đóng cửa sổ này không?
             </Label>
@@ -59,7 +69,9 @@ export const AddPostModal = () => {
                 className="w-[30%] mr-4"
                 onClick={() => {
                   setOpen(false);
-                  setAddressValue('');
+                  setDanhMucValue(null);
+                  setThue(false);
+                  setBan(false);
                   setIsWarningClose(false);
                 }}
               >
