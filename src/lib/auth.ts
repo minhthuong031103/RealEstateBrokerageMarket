@@ -18,7 +18,7 @@ export async function getSession() {
 export async function alreadyLoggedIn() {
   const session = await getServerSession(options);
   console.log('sessionnnnn: ', session);
-  if (session && session?.user?.isEmailVerified) {
+  if (session) {
     redirect('/');
   }
 }

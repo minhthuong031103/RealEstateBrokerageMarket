@@ -58,3 +58,75 @@ export const StringToLoaiBDSMap = {
   'Nhà trọ': 'NHÀ_TRỌ',
   Khác: 'KHÁC',
 };
+
+export const Huong = [
+  {
+    name: 'Đông',
+    value: 'Đông',
+  },
+  {
+    name: 'Tây',
+    value: 'Tây',
+  },
+  {
+    name: 'Nam',
+    value: 'Nam',
+  },
+  {
+    name: 'Bắc',
+    value: 'Bắc',
+  },
+  {
+    name: 'Đông Bắc',
+    value: 'Đông Bắc',
+  },
+  {
+    name: 'Tây Bắc',
+    value: 'Tây Bắc',
+  },
+  {
+    name: 'Đông Nam',
+    value: 'Đông Nam',
+  },
+  {
+    name: 'Tây Nam',
+    value: 'Tây Nam',
+  },
+];
+
+export const TinhTrangNoiThat = [
+  {
+    name: 'Cao cấp',
+    value: 'Cao cấp',
+  },
+  {
+    name: 'Đầy đủ',
+    value: 'Đầy đủ',
+  },
+  {
+    name: 'Cơ bản',
+    value: 'Cơ bản',
+  },
+  {
+    name: 'Không có',
+    value: 'Không có',
+  },
+];
+export const noiThat = [
+  { value: 1 },
+  { value: 2 },
+  { value: 3 },
+  { value: 4 },
+  { value: 5 },
+  { value: 6 },
+  { value: 7 },
+  { value: 8 },
+  { value: 9 },
+  { value: 10 },
+];
+
+export const TinhTrangPhapLy = [
+  { value: 'Đã có sổ' },
+  { value: 'Chưa có sổ' },
+  { value: 'Đang chờ sổ' },
+];
