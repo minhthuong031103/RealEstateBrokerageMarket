@@ -46,7 +46,7 @@ export const AddPostModal = () => {
             />
 
             {danhMucValue && (thue || ban) ? (
-              <BaiVietForm danhMucValue={danhMucValue} />
+              <BaiVietForm danhMucValue={danhMucValue} isChoThue={thue} />
             ) : null}
           </div>
         </DialogCustom>

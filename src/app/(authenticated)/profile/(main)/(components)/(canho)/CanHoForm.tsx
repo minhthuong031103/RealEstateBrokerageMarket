@@ -6,20 +6,21 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { SelectNoiThat } from '../SelectNoiThat';
 import { HuongCanHo } from './HuongCanHo';
+import { Button } from '@/components/ui/button';
 
 const canHoSchema = z.object({
   chieuDai: z.string().nonempty({ message: 'Chiều dài không được để trống' }),
   chieuRong: z.string().nonempty({ message: 'Chiều rộng không được để trống' }),
 });
 
-export const CanHoForm = () => {
-  const [phongNgu, setPhongNgu] = React.useState();
-  const [phongTam, setPhongTam] = React.useState();
-  const [noiThat, setNoiThat] = React.useState();
-  const [huongBanCong, setHuongBanCong] = React.useState();
-  const [huongCuaChinh, setHuongCuaChinh] = React.useState();
-  const [soTang, setSoTang] = React.useState();
-  console.log(phongNgu, phongTam);
+export const CanHoForm = ({
+  setPhongNgu,
+  setPhongTam,
+  setNoiThat,
+  setHuongBanCong,
+  setHuongCuaChinh,
+  setSoTang,
+}) => {
   const form = useForm<z.infer<typeof canHoSchema>>({
     resolver: zodResolver(canHoSchema),
   });

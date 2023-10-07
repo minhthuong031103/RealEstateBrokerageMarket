@@ -1,5 +1,3 @@
-
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,98 +9,83 @@ datasource db {
 }
 
 model User {
-  id               Int       @id @default(autoincrement())
-  name             String
-  email            String    @unique
-  password         String
-  diaChi           String?
-  role             String?   @default("user")
-  avatar           String?   @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
-  anhChanDung      String?
-  isEmailVerified  Boolean   @default(false)
-  otp              String?
-  luot             Int?      @default(0)
-  luotChuyenNghiep Int?      @default(0)
-  luotVip          Int?      @default(0)
-  directMessages         DirectMessage[]
-  conversationsInitiated Conversation[]    @relation("userOne")
-  conversationsReceived  Conversation[]    @relation("userTwo")
-    seenMessages           SeenMessage[]
-  duyetDoiTac      String?
-  BaiViets         BaiViet[]
+  id                   Int             @id @default(autoincrement())
+  name                 String
+  email                String          @unique
+  phoneNumber          String
+  password             String
+  diaChi               String?
+  role                 String?         @default("user")
+  avatar               String?         @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
+  isEmailVerified      Boolean         @default(false)
+  otp                  String?
+  anhCCCDTruoc         String?
+  anhCCCDSau           String?
+  anhGiayPhepKinhDoanh String?
+  anhChanDung          String?
+  luot                 Int?            @default(0)
+  luotChuyenNghiep     Int?            @default(0)
+  luotVip              Int?            @default(0)
+  duyetDoiTac          String?
+  directMessages       DirectMessage[]
+  seenMessages         SeenMessage[]
+  BaiViets             BaiViet[]
 }
 
 model LoaiBDS {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
-  loaiHinhs LoaiHinh[]  // One-to-many relationship with LoaiHinh
-  // Remove direct relationship with ChiTietBDS
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  loaiHinhs LoaiHinh[]
 }
+
 model BaiViet {
-  id        Int      @id @default(autoincrement())
-  tieuDe    String
-
-  nhan      String
-  trangThai String   @default("Chờ duyệt")
-  ngayDang  DateTime @default(now())
-  userId    Int
- 
-  user      User     @relation(fields: [userId], references: [id])
-  gia               Float
-  isChothue         Boolean          @default(false)
-  diaChi            String
-  dienTich          Float            
-  chieuDai          Float
-  chieuRong         Float
-  hinhAnhSanPham    String?          @db.LongText
-  hinhAnhGiayTo     String?          @db.LongText
-  video             String?          @db.LongText
-  tinhTrangPhapLy  String?
-  loaiHinhId Int
-  loaiHinh           LoaiHinh          @relation(fields: [loaiHinhId], references: [id])     
-  hinhAnhThietKe    String?
-  soPhongNgu        Int?
-  soPhongTam        Int?
-  soTang            Int?
-  tinhTrangNoiThat String?
-  danhSachTienNghi  String?    @db.LongText
-  hoanThanh         DateTime?
-  suaChuaLanCuoi    DateTime?
-  huongBanCong      String?
-  huongCuaChinh     String?
-  dienTichGarage   Float?
-  dienTichHoBoi    Float?
-  huongDat  String?
-  huongVanphong    String?
-
+  id                  Int       @id @default(autoincrement())
+  tieuDe              String
+  moTa                String
+  nhan                String
+  trangThai           String    @default("Chờ duyệt")
+  ngayDang            DateTime  @default(now())
+  userId              Int
+  gia                 Float
+  isChothue           Boolean   @default(false)
+  diaChi              String
+  dienTich            Float
+  chieuDai            Float
+  chieuRong           Float
+  hinhAnhSanPham      String?   @db.LongText
+  hinhAnhGiayTo       String?   @db.LongText
+  video               String?   @db.LongText
+  tinhTrangPhapLy     String?
+  loaiHinhId          Int
+  soTang              Int?
+  huongBanCong        String?
+  soPhongNgu          Int?
+  soPhongTam          Int?
+  hinhAnhBanVeThietKe String?
+  tinhTrangNoiThat    String?
+  danhSachTienNghi    String?   @db.LongText
+  hoanThanh           DateTime?
+  suaChuaLanCuoi      DateTime?
+  huongCuaChinh       String?
+  dienTichGarage      Float?
+  dienTichHoBoi       Float?
+  coNhaKho            Boolean?
+  huongDat            String?
+  user                User      @relation(fields: [userId], references: [id])
+  loaiHinh            LoaiHinh  @relation(fields: [loaiHinhId], references: [id])
 
   @@index([loaiHinhId])
   @@index([userId])
 }
-model LoaiHinh {
-id       Int       @id @default(autoincrement())
-  name     String   
-  loaiBDSId Int
-  loaiBDS           LoaiBDS          @relation(fields: [loaiBDSId], references: [id])
-  baiViets BaiViet[]
 
+model LoaiHinh {
+  id        Int       @id @default(autoincrement())
+  name      String      @unique
+  loaiBDSId Int
+  loaiBDS   LoaiBDS   @relation(fields: [loaiBDSId], references: [id])
+  baiViets  BaiViet[]
 
   @@index([loaiBDSId])
-
-}
-
-model Conversation {
-  id             String          @id @default(uuid())
-  userOneId      Int
-  userTwoId      Int
-  lastMessageAt  DateTime        @default(now())
-  lastMessage    String?
-  userOne        User            @relation("userOne", fields: [userOneId], references: [id], onDelete: Cascade)
-  userTwo        User            @relation("userTwo", fields: [userTwoId], references: [id], onDelete: Cascade)
-  directMessages DirectMessage[]
-
-  @@unique([userOneId, userTwoId])
-  @@index([userTwoId])
 }
 
 model DirectMessage {
@@ -115,7 +98,6 @@ model DirectMessage {
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
   user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  conversation   Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   seenBy         SeenMessage[]
 
   @@index([userId])
@@ -134,3 +116,71 @@ model SeenMessage {
   @@index([directMessageId])
 }
 
+model Banners {
+  id          Int     @id @default(autoincrement())
+  bannerIndex Int     @unique
+  anhBanner   String?
+}
+
+model Favourites {
+  id     Int @id @default(autoincrement())
+  userId Int
+  postId Int
+
+  @@index([userId, postId])
+}
+
+model Notification {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  noiDung     String
+  anhThongBao String?  @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
+  daDoc       Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Office {
+  id          Int     @id @default(autoincrement())
+  nameOffice  String
+  email       String  @unique
+  password    String
+  logo        String? @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
+  aboutUs     String
+  policy      String
+  address     String
+  phoneNumber String
+  anhGiayPhep String?
+}
+
+model PaymentHistory {
+  id               Int      @id @default(autoincrement())
+  userId           Int
+  packId           Int
+  giaTriThanhToan  Float
+  noiDungThanhToan String
+  createdAt        DateTime @default(now())
+
+  @@index([packId])
+  @@index([userId])
+}
+
+model Revenues {
+  id                 Int   @id @default(autoincrement())
+  thang              Int
+  nam                Int
+  incomeCoBan        Float
+  incomeChuyenNghiep Float
+  incomeVip          Float
+  luotCoBan          Int
+  luotChuyenNghiep   Int
+  luotVip            Int
+}
+
+model ServicePack {
+  id         Int     @id @default(autoincrement())
+  tenGoi     String
+  giaGoi     Float
+  chiTietGoi String? @db.LongText
+}
