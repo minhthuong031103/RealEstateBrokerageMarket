@@ -4,13 +4,13 @@ import { Balancer } from 'react-wrap-balancer';
 import ShopByCollection from './ShopByCollection';
 import Categories from './Categories';
 import FeaturedProduct from './FeaturedProduct';
-import SalesProduct from './SalesProduct';
 import ShopAll from './ShopAll';
-import { useProduct } from '@/hooks/useProduct';
+// import { useProduct } from '@/hooks/useProduct';
+// import SalesProduct from './SalesProduct';
 
 const page = async () => {
-  const { onGetAllProducts } = useProduct();
-  const allProducts = await onGetAllProducts();
+  // const { onGetAllProducts } = useProduct();
+  // const allProducts = await onGetAllProducts();
   return (
     <div className="mt-10 flex h-full w-full flex-col">
       <HomeBanner />
@@ -30,7 +30,7 @@ const page = async () => {
       /> */}
 
       <ShopByCollection />
-      <SalesProduct allProducts={allProducts} />
+      {/* <SalesProduct allProducts={allProducts} /> */}
       {/* 
       <Image
         src={

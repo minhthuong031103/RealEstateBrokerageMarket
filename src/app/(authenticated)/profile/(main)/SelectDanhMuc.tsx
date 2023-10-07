@@ -1,61 +1,72 @@
-// 'use client'
+'use client';
 
-// import { Label } from '@/components/ui/label'
-// import { Select, SelectItem } from '@nextui-org/react'
-// import React, { useEffect } from 'react'
+import { useBatDongSan } from '@/hooks/useBatDongSan';
+import { Select, SelectItem } from '@nextui-org/react';
+import React, { useEffect } from 'react';
+import { Checkbox } from '@nextui-org/react';
 
-// export const SelectDanhMuc = () => {
+export const SelectDanhMuc = ({
+  setDanhMucValue,
+  setThue,
+  setBan,
+  thue,
+  ban,
+}) => {
+  const [selectedDanhMuc, setSelectedDanhMuc] = React.useState(new Set([]));
+  const [danhMucTouched, setDanhMucTouched] = React.useState(false);
+  const [isLoadingDanhMuc, setIsLoadingDanhMuc] = React.useState(false);
+  const [danhMuc, setDanhMuc] = React.useState([]);
+  const { fetchAllDanhMuc } = useBatDongSan();
+  useEffect(() => {
+    async function getDanhMuc() {
+      setIsLoadingDanhMuc(true);
+      const res = await fetchAllDanhMuc();
 
-// const [selectedDanhMuc, setSelectedDanhMuc] = React.useState(new Set([]));
-// const [danhMucTouched, setDanhMucTouched] = React.useState(false);
-// const [isLoadingDanhMuc, setIsLoadingDanhMuc] = React.useState(false);
-// const [danhMuc, setDanhMuc] = React.useState([]);
-// useEffect(()=>{
-//     async function getDanhMuc() {
-//         setIsLoadingDanhMuc(true);
-//         const res = await getRequest({
-//           endPoint: 'https://provinces.open-api.vn/api/p/',
-//         });
-
-//         setDanhMuc(res);
-//         setIsLoadingDanhMuc(false);
-//       }
-//       getDanhMuc();
-// })
-
-//     const isProvinceValid = selectedDanhMuc.size > 0
-//   return (
-//     <div><Label>Danh mục bất động sản</Label>
-//     <Select
-//         isRequired
-//         key={'danhmuc'}
-//         radius={'md'}
-//         label="Danh mục bất động sản"
-//         isInvalid={isProvinceValid || !provinceTouched ? false : true}
-//         errorMessage={
-//           isProvinceValid || !provinceTouched
-//             ? ''
-//             : 'Vui lòng chọn danh mục'
-//         }
-//         autoFocus={false}
-//         placeholder="Chọn danh mục bất động sản"
-//         selectedKeys={selectedProvince}
-//         isLoading={isLoadingProvince}
-//         onSelectionChange={setSelectedProvince}
-//         className="w-full "
-//         onClose={() => setProvinceTouched(true)}
-//       >
-//         {provinces?.map((province) => (
-//           <SelectItem key={province.code} value={province.code}>
-//             {province.name}
-//           </SelectItem>
-//         ))}
-//       </Select></div>
-//   )
-// }
-
-import React from 'react';
-
-export const SelectDanhMuc = () => {
-  return <div>SelectDanhMuc</div>;
+      setDanhMuc(res);
+      setIsLoadingDanhMuc(false);
+    }
+    getDanhMuc();
+  }, []);
+  useEffect(() => {
+    if (selectedDanhMuc) {
+      const danhMucValueArray = Array.from(selectedDanhMuc);
+      setDanhMucValue(danhMucValueArray?.[0]);
+    }
+  }, [selectedDanhMuc]);
+  const isProvinceValid = selectedDanhMuc.size > 0;
+  return (
+    <div className="flex flex-col h-full gap-y-6">
+      <Select
+        isRequired
+        key={'danhmuc'}
+        radius={'md'}
+        label="Danh mục bất động sản"
+        isInvalid={isProvinceValid || !danhMucTouched ? false : true}
+        errorMessage={
+          isProvinceValid || !danhMucTouched ? '' : 'Vui lòng chọn danh mục'
+        }
+        autoFocus={false}
+        placeholder="Chọn danh mục bất động sản"
+        selectedKeys={selectedDanhMuc}
+        isLoading={isLoadingDanhMuc}
+        onSelectionChange={setSelectedDanhMuc}
+        onClose={() => setDanhMucTouched(true)}
+        className="max-w-xs"
+      >
+        {danhMuc?.map((danhmuc) => (
+          <SelectItem key={danhmuc.name} value={danhmuc.name}>
+            {danhmuc.name}
+          </SelectItem>
+        ))}
+      </Select>
+      <div className="flex flex-row gap-2">
+        <Checkbox isDisabled={thue} isSelected={ban} onValueChange={setBan}>
+          Bán
+        </Checkbox>
+        <Checkbox isDisabled={ban} isSelected={thue} onValueChange={setThue}>
+          Thuê
+        </Checkbox>
+      </div>
+    </div>
+  );
 };

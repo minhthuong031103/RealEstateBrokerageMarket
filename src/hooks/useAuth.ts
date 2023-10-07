@@ -50,7 +50,6 @@ export const useAuth = () => {
       });
       callback?.();
       router.push(`/auth/register/otp?payload=${response.payload}`);
-      toast.success('OTP has been sent to your email');
     }
   };
 

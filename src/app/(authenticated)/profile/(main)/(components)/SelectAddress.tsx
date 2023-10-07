@@ -13,6 +13,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
   const [selectedDistrict, setSelectedDistrict] = React.useState(new Set([]));
   const [selectedWard, setSelectedWard] = React.useState(new Set([]));
 
+  const [diaChiTouched, setDiaChiTouched] = React.useState(false);
   const [provinceTouched, setProvinceTouched] = React.useState(false);
   const [districtTouched, setDistrictTouched] = React.useState(false);
   const [wardTouched, setWardTouched] = React.useState(false);
@@ -79,9 +80,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
   const isProvinceValid = selectedProvince.size > 0;
   const isDistrictValid = selectedDistrict.size > 0;
   const isWardValid = selectedWard.size > 0;
-  console.log(provinces);
-  console.log(selectedWard);
-  console.log(selectedProvince);
+
   const onSubmit = () => {
     const valuesArrayProvince = Array.from(selectedProvince);
     const provinceCode = valuesArrayProvince[0];
@@ -111,12 +110,13 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
     setIsModalOpen(false);
   };
   return (
-    <div className="flex flex-col gap-y-6 w-full px-3">
-      <Label className="font-bold text-lg">Địa chỉ bất động sản</Label>
+    <div className="flex flex-col gap-y-3 w-full ">
+      <Label className="font-bold ">Địa chỉ bất động sản</Label>
       {isModalOpen ? (
         <DialogCustom
           onClose={() => {
             setIsModalOpen(false);
+            setDiaChiTouched(true);
           }}
           isModalOpen={isModalOpen}
           className="w-full "
@@ -241,20 +241,25 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
           setIsModalOpen(true);
         }}
       /> */}
-      <Button
-        className="w-36"
+      <Select
+        isRequired
+        isOpen={false}
+        label="Địa chỉ bất động sản"
+        placeholder="Chọn địa chỉ"
+        selectedKeys={addressValue !== '' ? [addressValue] : null}
+        isInvalid={addressValue !== '' || !diaChiTouched ? false : true}
+        errorMessage={
+          addressValue !== '' || !diaChiTouched ? '' : 'Vui lòng chọn địa chỉ'
+        }
+        className="max-w-xs lg:max-w-lg"
         onClick={() => {
           setIsModalOpen(true);
         }}
       >
-        Chọn địa chỉ
-      </Button>
-      <Input
-        value={addressValue}
-        className=""
-        disabled={true}
-        placeholder="Địa chỉ"
-      />
+        <SelectItem key={addressValue} value={addressValue}>
+          {addressValue}
+        </SelectItem>
+      </Select>
     </div>
   );
 };
