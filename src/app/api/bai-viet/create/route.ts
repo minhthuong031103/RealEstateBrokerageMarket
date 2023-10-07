@@ -27,5 +27,7 @@ export async function POST(req: Request) {
     },
   });
   console.log(baiViet);
-  console.log(body);
+  if (baiViet) {
+    return new Response(JSON.stringify(baiViet), { status: 200 });
+  }
 }
