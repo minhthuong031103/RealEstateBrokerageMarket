@@ -23,6 +23,7 @@ export async function POST(req: Request) {
         email: body.email,
         name: body.name,
         password: body.password,
+        phoneNumber: '1231',
       },
     });
     if (create) {
