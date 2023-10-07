@@ -1,6 +1,5 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { useBatDongSan } from '@/hooks/useBatDongSan';
 import { useEffect, useState } from 'react';
 import { HiSortAscending } from 'react-icons/hi';
 import { ListItemComponent } from './ListItemComponent';
@@ -9,13 +8,14 @@ export function ListComponent() {
   const [listProperties, setListProperties] = useState([]);
   useEffect(() => {
     const getBatDongSan = async () => {
-      const result = await fetchAllBatDongSan();
+      // const result = await fetchAllBatDongSan();
+      const result = [];
       setListProperties(result as any);
       return result;
     };
     getBatDongSan();
   }, []);
-  const { fetchAllBatDongSan } = useBatDongSan();
+  // const { fetchAllBatDongSan } = useBatDongSan();
   return (
     <div className="mr-6">
       <div className="flex justify-between p-4 rounded-xl bg-white border-[1px] shadow-sm">
