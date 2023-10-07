@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import toast from 'react-hot-toast';
 import { useBaiViet } from '@/hooks/useBaiViet';
 
-export const BaiVietForm = ({ danhMucValue, isChothue }) => {
+export const BaiVietForm = ({ danhMucValue, isChoThue }) => {
   const [addressValue, setAddressValue] = React.useState('');
   const [loaiHinhValue, setLoaiHinhValue] = React.useState(null);
   const [chieuDai, setChieuDai] = React.useState();
@@ -81,7 +81,7 @@ export const BaiVietForm = ({ danhMucValue, isChothue }) => {
       suaChuaLanCuoi: new Date(),
       huongCuaChinh: huongCuaChinh,
       soTang: soTang ? parseInt(soTang) : null,
-      isChothue,
+      isChoThue,
     };
 
     await onCreateBaiViet(baiViet);

@@ -14,6 +14,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
   const [selectedWard, setSelectedWard] = React.useState(new Set([]));
 
   const [diaChiTouched, setDiaChiTouched] = React.useState(false);
+  console.log(setDiaChiTouched);
   const [provinceTouched, setProvinceTouched] = React.useState(false);
   const [districtTouched, setDistrictTouched] = React.useState(false);
   const [wardTouched, setWardTouched] = React.useState(false);
@@ -114,10 +115,11 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
       <Label className="font-bold ">Địa chỉ bất động sản</Label>
       {isModalOpen ? (
         <DialogCustom
-          onClose={() => {
-            setIsModalOpen(false);
-            setDiaChiTouched(true);
-          }}
+          // onClose={() => {
+          //   setIsModalOpen(false);
+          //   setDiaChiTouched(true);
+          // }}
+          setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
           className="w-full "
         >

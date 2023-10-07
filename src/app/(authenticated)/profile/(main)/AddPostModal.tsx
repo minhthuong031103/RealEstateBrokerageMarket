@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 import React from 'react';
 import DialogCustom from '@/components/ui/dialogCustom';
-import { Label } from '@/components/ui/label';
+// import { Label } from '@/components/ui/label';
 import { SelectDanhMuc } from './SelectDanhMuc';
 import { BaiVietForm } from './(components)/BaiVietForm';
 // import * as z from 'zod';
@@ -16,7 +16,6 @@ export const AddPostModal = () => {
   const [danhMucValue, setDanhMucValue] = React.useState(null);
   const [thue, setThue] = React.useState(false);
   const [ban, setBan] = React.useState(false);
-  const [isWarningClose, setIsWarningClose] = React.useState(false);
   return (
     <div className="w-full h-full">
       <Button
@@ -29,12 +28,10 @@ export const AddPostModal = () => {
 
       {open ? (
         <DialogCustom
-          isWarningOnClose={true}
           className="w-full lg:w-[80%] h-[80%] lg:h-[95%]"
-          onClose={() => {
-            setIsWarningClose(true);
-          }}
+          setIsModalOpen={setOpen}
           isModalOpen={open}
+          warningOnClose={true}
         >
           <div className="flex flex-col gap-y-6 w-full h-full px-1">
             <SelectDanhMuc
@@ -51,12 +48,10 @@ export const AddPostModal = () => {
           </div>
         </DialogCustom>
       ) : null}
-      {isWarningClose ? (
+      {/* {isWarningClose ? (
         <DialogCustom
           className="w-[90%] lg:w-[30%] h-[40%] lg:h-[50%] "
-          onClose={() => {
-            setIsWarningClose(false);
-          }}
+          setIsModalOpen={setIsWarningClose}
           isModalOpen={isWarningClose}
         >
           <div className="flex flex-col items-center justify-between h-full lg:py-12">
@@ -88,7 +83,7 @@ export const AddPostModal = () => {
             </div>
           </div>
         </DialogCustom>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };
