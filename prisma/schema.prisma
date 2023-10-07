@@ -80,7 +80,7 @@ model BaiViet {
 
 model LoaiHinh {
   id        Int       @id @default(autoincrement())
-  name      String      @unique
+  name      String    @unique
   loaiBDSId Int
   loaiBDS   LoaiBDS   @relation(fields: [loaiBDSId], references: [id])
   baiViets  BaiViet[]

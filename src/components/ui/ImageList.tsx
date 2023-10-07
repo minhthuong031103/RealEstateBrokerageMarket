@@ -3,9 +3,9 @@
 import { Zoom } from '@components/ui/zoom-image';
 import { ScrollArea } from '@components/ui/scroll-area';
 import { ImageCus } from '@components/ui/ImageCus';
-export const ImageList = ({ files, width, height }) => {
+export const ImageList = ({ files, width, height, scrollWidth, scrollHeight }) => {
   return (
-    <ScrollArea className="h-72">
+    <ScrollArea className={`h-${scrollHeight} w-${scrollWidth}`}>
       <div className="flex items-center gap-2 flex-wrap">
         {files.map((file, i) => {
           return (
