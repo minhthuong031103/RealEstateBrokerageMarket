@@ -1,8 +1,7 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { PlusIcon } from 'lucide-react';
+import { AddPostModal } from './AddPostModal';
 
 export function SearchBarAndCreate() {
   return (
@@ -12,9 +11,7 @@ export function SearchBarAndCreate() {
         type="text"
         placeholder="Tìm kiếm bất động sản theo tên"
       />
-      <Button className="w-full md:w-2/6">
-        <PlusIcon className="mr-2" /> Đăng tin bất động sản mới
-      </Button>
+      <AddPostModal />
     </div>
   );
 }
