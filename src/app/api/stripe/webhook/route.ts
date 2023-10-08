@@ -6,6 +6,9 @@ import type Stripe from 'stripe';
 export async function POST(request: Request) {
   const body = await request.text();
   const signature = headers().get('Stripe-Signature') ?? '';
+  const signature1 = headers().get('stripe-signature') ?? '';
+  console.log(signature);
+  console.log(signature1);
 
   let event: Stripe.Event;
 
@@ -71,3 +74,9 @@ export async function POST(request: Request) {
 
   return new Response(null, { status: 200 });
 }
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
