@@ -5,11 +5,14 @@ import type Stripe from 'stripe';
 
 export async function POST(request: Request) {
   const body = await request.text();
+
   const signature = headers().get('Stripe-Signature') ?? '';
 
   let event: Stripe.Event;
 
   try {
+    console.log('body', body);
+    console.log('signature', signature);
     event = stripe.webhooks.constructEvent(
       body,
       signature,
