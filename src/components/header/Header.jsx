@@ -268,21 +268,18 @@ const NavigationMenuDemo = ({ session }) => {
                   <DropdownSection title={`${user?.name}`}>
                     {avatarNav.map((item, index) => (
                       <DropdownItem key={index}>
-                        <Link href={item.href}>{item.name}</Link>
+                        <Link className="w-full" href={item.href}>
+                          {item.name}
+                        </Link>
                       </DropdownItem>
                     ))}
 
-                    <DropdownItem>
+                    <DropdownItem
+                      onClick={() => signOut({ callbackUrl: '/auth/login' })}
+                    >
                       <div className="flex flex-row gap-2 items-center h-8  ">
                         <div className="">{AuthSvg.signIn()}</div>
-                        <Button
-                          variant="text"
-                          onClick={() =>
-                            signOut({ callbackUrl: '/auth/login' })
-                          }
-                        >
-                          Log out
-                        </Button>
+                        <div>Logout</div>
                       </div>
                     </DropdownItem>
                   </DropdownSection>
@@ -316,9 +313,9 @@ const NavigationMenuDemo = ({ session }) => {
             </DropdownMenu> */}
           </div>
         ) : (
-          <Button className="w-[70px] h-8">
-            <Link href={'/auth/login'}>Login</Link>
-          </Button>
+          <Link href={'/auth/login'}>
+            <Button className="w-[70px] h-8">Login</Button>
+          </Link>
         )}
       </div>
     </div>
