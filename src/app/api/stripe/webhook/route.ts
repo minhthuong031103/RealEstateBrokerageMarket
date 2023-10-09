@@ -6,16 +6,13 @@ import type Stripe from 'stripe';
 export async function POST(request: Request) {
   const body = await request.text();
   const signature = headers().get('Stripe-Signature') ?? '';
-  const signature1 = headers().get('stripe-signature') ?? '';
-  console.log(signature);
-  console.log(signature1);
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(
       body,
-      signature1,
+      signature,
       process.env.STRIPE_WEBHOOK_SECRET || ''
     );
   } catch (err) {
@@ -37,7 +34,8 @@ export async function POST(request: Request) {
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string
     );
-
+    console.log('metadataaaaaaaaaaaaaaaaaaaaaaaaa');
+    console.log(session.metadata.userId);
     await prisma.user.update({
       where: {
         id: parseInt(session.metadata.userId),

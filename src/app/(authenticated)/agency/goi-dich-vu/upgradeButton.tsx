@@ -13,6 +13,7 @@ const UpgradeButton = () => {
       formData: {},
     });
     console.log(res);
+    window.location.href = res.url ?? '/dashboard/billing';
   };
 
   return (
