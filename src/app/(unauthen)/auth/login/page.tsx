@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import React from 'react';
-import { getProviders } from 'next-auth/react';
 
 import Login from './Login';
 import { alreadyLoggedIn } from '@/lib/auth';
@@ -11,7 +10,6 @@ export const metadata: Metadata = {
 };
 
 const LoginPage = async () => {
-  const providers = await getProviders();
   await alreadyLoggedIn();
   return (
     <>
@@ -26,7 +24,7 @@ const LoginPage = async () => {
                 Đăng nhập để kết nối với cộng đồng UIT Estate
               </p>
             </div>
-            <Login providers={providers} />
+            <Login />
           </div>
         </div>
       </div>

@@ -22,11 +22,12 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { Badge } from '../ui/badge';
 import Logo from '../logo';
 import BackDropCus from '../backdropCus/backdropCus';
+import { useRouter } from 'next/navigation';
 
 const avatarNav = [
   {
     name: 'Hồ sơ',
-    href: '/profile',
+    href: '/agency',
   },
   {
     name: 'Thêm sản phẩm',
@@ -43,6 +44,7 @@ const NavigationMenuDemo = ({ session }) => {
   const [show, setShow] = useState('translate-y-0');
   const [isUserOpen, setIsUserOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const router = useRouter();
   useEffect(() => {
     window.addEventListener('scroll', controlNavbar);
     return () => {
@@ -267,10 +269,14 @@ const NavigationMenuDemo = ({ session }) => {
                 <DropdownMenu>
                   <DropdownSection title={`${user?.name}`}>
                     {avatarNav.map((item, index) => (
-                      <DropdownItem key={index}>
-                        <Link className="w-full" href={item.href}>
-                          {item.name}
-                        </Link>
+                      <DropdownItem
+                        onClick={() => {
+                          router.push(item.href);
+                        }}
+                        className="w-full"
+                        key={index}
+                      >
+                        {item.name}
                       </DropdownItem>
                     ))}
 

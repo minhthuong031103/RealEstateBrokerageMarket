@@ -13,7 +13,7 @@ const UpgradeButton = () => {
       formData: {},
     });
     console.log(res);
-    window.location.href = res.url ?? '/dashboard/billing';
+    window.location.href = res.url ?? '/agency/goi-dich-vu';
   };
 
   return (
@@ -22,7 +22,7 @@ const UpgradeButton = () => {
         onSubmit();
       }}
     >
-      Upgrade now <ArrowRight className="w-5 h-5 ml-1.5" />
+      Quản lý gói đăng ký <ArrowRight className="w-5 h-5 ml-1.5" />
     </Button>
   );
 };

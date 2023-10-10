@@ -74,5 +74,5 @@ export async function POST(request: Request) {
     });
   }
 
-  return new Response(null, { status: 200 });
+  return new Response(JSON.stringify('ok'), { status: 200 });
 }

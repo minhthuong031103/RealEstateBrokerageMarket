@@ -1,4 +1,3 @@
-import { PLANS } from '@/config/stripe';
 // import { db } from '@/db'
 // import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import Stripe from 'stripe';
@@ -16,7 +15,6 @@ export async function getUserSubscriptionPlan() {
 
   if (!user.id) {
     return {
-      ...PLANS[0],
       isSubscribed: false,
       isCanceled: false,
       stripeCurrentPeriodEnd: null,
@@ -31,7 +29,6 @@ export async function getUserSubscriptionPlan() {
 
   if (!dbUser) {
     return {
-      ...PLANS[0],
       isSubscribed: false,
       isCanceled: false,
       stripeCurrentPeriodEnd: null,
@@ -44,16 +41,19 @@ export async function getUserSubscriptionPlan() {
       dbUser.stripeCurrentPeriodEnd.getTime() + 86_400_000 > Date.now()
   );
 
-  const plan = isSubscribed
-    ? PLANS.find((plan) => plan.price.priceIds.test === dbUser.stripePriceId)
-    : null;
-
   let isCanceled = false;
+  let plan = {};
   if (isSubscribed && dbUser.stripeSubscriptionId) {
-    const stripePlan = await stripe.subscriptions.retrieve(
+    const userSubscription = await stripe.subscriptions.retrieve(
       dbUser.stripeSubscriptionId
     );
-    isCanceled = stripePlan.cancel_at_period_end;
+    const products = await stripe.products.list();
+    // const plans = await stripe.plans.list();
+    //plan is parent of product
+    console.log('sub', userSubscription);
+    console.log('Products', products);
+    isCanceled = userSubscription.cancel_at_period_end;
+    plan = userSubscription.plan;
   }
 
   return {
