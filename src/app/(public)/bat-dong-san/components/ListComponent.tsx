@@ -26,8 +26,6 @@ export function ListComponent({ searchProps }: props) {
   });
   const ref = React.useRef(null);
 
-  console.log(data);
-
   //Set page state when change review page index
   const onPageChange = (page) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });

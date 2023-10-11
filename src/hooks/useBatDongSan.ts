@@ -112,6 +112,10 @@ export const useBatDongSan = () => {
     return res;
   };
 
+  const fetchBatDongSanTheoId = async (id) => {
+    const res = await getRequest({endPoint: `/api/bat-dong-san/chi-tiet-bat-dong-san?id=${id}`})
+    return res;
+  }
 
  const fetchAllDanhMuc = async () => {
     const res = await getRequest({ endPoint: '/api/bat-dong-san/danh-muc' });
@@ -129,6 +133,7 @@ export const useBatDongSan = () => {
 
   return {
     fetchAllBatDongSan,
+    fetchBatDongSanTheoId,
     fetchAllDanhMuc,
     fetchLoaiHinhTheoDanhMuc,
   };

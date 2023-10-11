@@ -1,10 +1,5 @@
-import Hello from "./hello";
+import { ChiTietComponent } from "./components/ChiTietComponent";
 
 export default function page({ params }) {
-  return (
-    <div>
-      <div>{params.id}</div>
-      <Hello />
-    </div>
-  );
+  return <ChiTietComponent id={params.id} />;
 }

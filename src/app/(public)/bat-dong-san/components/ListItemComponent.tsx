@@ -13,7 +13,7 @@ import Link from "next/link";
 import { parseJSON } from "@/lib/utils";
 export function ListItemComponent({ item }) {
   return (
-    <Link href={`/chi-tiet-bat-dong-san/${1}`}>
+    <Link href={`/chi-tiet-bat-dong-san/${item?.id}`}>
       <Card className="hover:shadow-2xl transition ease-in-out duration-200 hover:scale-[1.01] h-full">
         <CardContent>
           <div className="mt-6 rounded-sm relative">
