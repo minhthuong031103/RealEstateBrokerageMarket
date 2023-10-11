@@ -10,10 +10,11 @@ import Image from "next/image";
 import {} from "react-icons/bi";
 import { IoLocationOutline } from "react-icons/io5";
 import Link from "next/link";
+import { parseJSON } from "@/lib/utils";
 export function ListItemComponent({ item }) {
   return (
     <Link href={`/chi-tiet-bat-dong-san/${1}`}>
-      <Card className="hover:shadow-2xl transition ease-in-out duration-200 hover:scale-[1.01]">
+      <Card className="hover:shadow-2xl transition ease-in-out duration-200 hover:scale-[1.01] h-full">
         <CardContent>
           <div className="mt-6 rounded-sm relative">
             <Carousel
@@ -23,36 +24,50 @@ export function ListItemComponent({ item }) {
               showThumbs={false}
               showStatus={false}
             >
-              {item?.sanPham?.hinhAnhSanPham}
-              <div className="lg:h-[180px] xl:h-[200px] md:h-[480px] h-[280px]">
-                <Image
-                  src="https://wallpapers.com/images/hd/house-corner-architecture-7vl0mtz3dfxod0fd.webp"
-                  alt="Auth background"
-                  layout="fill"
-                  className="rounded-xl"
-                  objectFit="cover"
-                  priority
-                  quality={100}
-                />
-                <div className="absolute inset-0 bg-black opacity-10" />
-              </div>
+              {parseJSON(item?.hinhAnhSanPham)?.map((item) => (
+                <div className="lg:h-[180px] xl:h-[200px] md:h-[480px] h-[280px]">
+                  <Image
+                    src={item?.url}
+                    alt="Auth background"
+                    layout="fill"
+                    className="rounded-xl"
+                    objectFit="cover"
+                    priority
+                    quality={100}
+                  />
+                  <div className="absolute inset-0 bg-black opacity-10" />
+                </div>
+              ))}
             </Carousel>
-            <BranchPost type={"Nổi bật"}></BranchPost>
+            <div className="flex flex-row gap-2 absolute top-4 left-6">
+              <HinhThuc type={item?.isChothue}></HinhThuc>
+              <BranchPost type={item?.nhan}></BranchPost>
+            </div>
             <p className="font-semibold text-[24px] text-white absolute bottom-4 left-6   ">
-              {item.sanPham.gia} đ
+              {item?.gia} đ
             </p>
           </div>
           <div className="mt-6 space-y-2 mb-6">
-            <div className="text-red-500 text-sm">Chung cư</div>
+            <div className="text-red-500 text-sm">{item?.loaiHinh?.name}</div>
             <div className="text-neutral-600 text-base">{item?.tieuDe}</div>
-            <div className="text-neutral-500 text-sm">
-              <IoLocationOutline className="text-base float-left" />
-              Làng Chung cư Việt Kiều châu Âu, Mỗ Lao, Hà Đông, Hà Nội
+            <div className="text-neutral-500 text-sm leading-6">
+              <IoLocationOutline className="text-base float-left mr-1" />
+              {item?.diaChi}
             </div>
-            <div className="text-neutral-500 text-sm flex justify-between flex-wrap">
-              <p>Phòng ngủ: 6</p>
-              <p>Phòng tắm: 4</p>
-              <p>DT: 500m2</p>
+            <div className="text-neutral-500 text-sm flex justify-between gap-4 flex-wrap">
+              {item?.loaiHinh?.loaiBDS?.id === 1 ||
+              item?.loaiHinh?.loaiBDS?.id === 3 ? (
+                <p>Phòng ngủ: {item?.soPhongNgu}</p>
+              ) : (
+                <></>
+              )}
+              {item?.loaiHinh?.loaiBDS?.id === 1 ||
+              item?.loaiHinh?.loaiBDS?.id === 3 ? (
+                <p>Phòng tắm: {item?.soPhongTam}</p>
+              ) : (
+                <></>
+              )}
+              <p>DT: {item?.dienTich}m2</p>
             </div>
           </div>
           <Separator />
@@ -60,15 +75,15 @@ export function ListItemComponent({ item }) {
         <CardFooter className="flex justify-between flex-wrap gap-x-2">
           <div className="flex flex-row">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage src={item?.user?.avatar} />
               <AvatarFallback>A</AvatarFallback>
             </Avatar>
             <p className="ml-2 text-gray-500 text-[14px] mt-auto mb-auto">
-              Nguyễn Văn A
+              {item?.user?.name}
             </p>
           </div>
           <p className="ml-2 text-gray-500 text-[14px] float-right">
-            5 tháng trước
+            {TinhThoiGian(item?.ngayDang)}
           </p>
         </CardFooter>
       </Card>
@@ -77,13 +92,39 @@ export function ListItemComponent({ item }) {
 }
 
 function BranchPost(type) {
-  return type === "Nổi bật" ? (
-    <p className="bg-emerald-500 w-[82px] h-[24px] rounded-md text-white text-[14px] text-center py-2 absolute top-4 left-6">
+  return type?.type === "Yêu thích" ? (
+    <p className="bg-emerald-500 w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
+      Yêu thích
+    </p>
+  ) : type?.type === "Nổi bật" ? (
+    <p className="bg-red-500 w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
       Nổi bật
     </p>
   ) : (
-    <p className="bg-red-500 w-[82px] h-[24px] rounded-md text-white text-[14px] text-center py-2 absolute top-4 left-6">
-      Yêu thích
+    <></>
+  );
+}
+
+function HinhThuc(type) {
+  return (
+    <p className="bg-[#3E4C66] w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
+      {type?.type === false ? "Đăng bán" : "Cho thuê"}
     </p>
   );
+}
+
+function TinhThoiGian(type) {
+  const time = new Date(type).toLocaleDateString("en-GB").split("/");
+  const year = new Date().getFullYear() - parseInt(time[2]);
+  const month = new Date().getMonth() + 1 - parseInt(time[1]);
+  const day = new Date().getDate() - parseInt(time[0]);
+  if (year !== 0) {
+    return year + " năm trước";
+  } else if (month !== 0) {
+    return month + " tháng trước";
+  } else if (day !== 0) {
+    return day + " ngày trước";
+  } else {
+    return "Hôm nay";
+  }
 }
