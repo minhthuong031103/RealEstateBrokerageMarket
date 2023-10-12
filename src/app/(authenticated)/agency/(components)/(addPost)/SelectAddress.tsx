@@ -3,7 +3,6 @@
 import React, { useEffect } from 'react';
 import { Select, SelectItem } from '@nextui-org/react';
 import { getRequest } from '@/lib/fetch';
-import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import DialogCustom from '@/components/ui/dialogCustom';
 import { Button } from '@/components/ui/button';
@@ -111,8 +110,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
     setIsModalOpen(false);
   };
   return (
-    <div className="flex flex-col gap-y-3 w-full ">
-      <Label className="font-bold ">Địa chỉ bất động sản</Label>
+    <div className="flex flex-col w-full ">
       {isModalOpen ? (
         <DialogCustom
           // onClose={() => {
@@ -121,7 +119,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
           // }}
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
-          className="w-full "
+          className="w-[50%] "
         >
           <div className="flex flex-col gap-y-6 w-full px-1">
             <Select

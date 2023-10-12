@@ -36,7 +36,7 @@ const page = async ({ searchParams }: { searchParams: any }) => {
           pass: 'upnilkyofuyzkhla',
         },
       });
-      transporter.sendMail({
+      await transporter.sendMail({
         from: '"UIT_Sport" <playground.dev001@gmail.com>',
         to: email,
         subject: 'Email Verification OTP',

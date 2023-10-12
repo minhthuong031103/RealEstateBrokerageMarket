@@ -28,7 +28,7 @@ export const AddPostModal = () => {
 
       {open ? (
         <DialogCustom
-          className="w-full lg:w-[80%] h-[80%] lg:h-[95%]"
+          className="w-full lg:w-[80%] h-[80%] lg:h-[95%] flex items-center justify-center"
           setIsModalOpen={setOpen}
           isModalOpen={open}
           warningOnClose={true}
