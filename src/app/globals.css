@@ -112,3 +112,8 @@
     @apply rounded-md lg:rounded-2xl;
   }
 }
+
+.no-scroll {
+  overflow: hidden;
+  padding-right: var(--scrollbar-width);
+}

@@ -30,7 +30,7 @@ export const Otp = ({ email }) => {
   const handleResend = () => {
     setCanResend(false);
     setCounter(30);
-    onSendAgain(email, () => {});
+    onSendAgain(email);
     // handle resend OTP here
   };
   if (isLoading)

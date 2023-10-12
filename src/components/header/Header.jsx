@@ -22,11 +22,12 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { Badge } from '../ui/badge';
 import Logo from '../logo';
 import BackDropCus from '../backdropCus/backdropCus';
+import { useRouter } from 'next/navigation';
 
 const avatarNav = [
   {
     name: 'Hồ sơ',
-    href: '/profile',
+    href: '/agency',
   },
   {
     name: 'Thêm sản phẩm',
@@ -43,6 +44,7 @@ const NavigationMenuDemo = ({ session }) => {
   const [show, setShow] = useState('translate-y-0');
   const [isUserOpen, setIsUserOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const router = useRouter();
   useEffect(() => {
     window.addEventListener('scroll', controlNavbar);
     return () => {
@@ -267,22 +269,23 @@ const NavigationMenuDemo = ({ session }) => {
                 <DropdownMenu>
                   <DropdownSection title={`${user?.name}`}>
                     {avatarNav.map((item, index) => (
-                      <DropdownItem key={index}>
-                        <Link href={item.href}>{item.name}</Link>
+                      <DropdownItem
+                        onClick={() => {
+                          router.push(item.href);
+                        }}
+                        className="w-full"
+                        key={index}
+                      >
+                        {item.name}
                       </DropdownItem>
                     ))}
 
-                    <DropdownItem>
+                    <DropdownItem
+                      onClick={() => signOut({ callbackUrl: '/auth/login' })}
+                    >
                       <div className="flex flex-row gap-2 items-center h-8  ">
                         <div className="">{AuthSvg.signIn()}</div>
-                        <Button
-                          variant="text"
-                          onClick={() =>
-                            signOut({ callbackUrl: '/auth/login' })
-                          }
-                        >
-                          Log out
-                        </Button>
+                        <div>Logout</div>
                       </div>
                     </DropdownItem>
                   </DropdownSection>
@@ -316,9 +319,9 @@ const NavigationMenuDemo = ({ session }) => {
             </DropdownMenu> */}
           </div>
         ) : (
-          <Button className="w-[70px] h-8">
-            <Link href={'/auth/login'}>Login</Link>
-          </Button>
+          <Link href={'/auth/login'}>
+            <Button className="w-[70px] h-8">Login</Button>
+          </Link>
         )}
       </div>
     </div>
