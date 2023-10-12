@@ -27,6 +27,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <head>
         <link rel="icon" href="/logoEstate.png" />
+        <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
       </head>
       <body
         className={`${montserrat.variable} ${montserrat.style.fontWeight} font-mont`}

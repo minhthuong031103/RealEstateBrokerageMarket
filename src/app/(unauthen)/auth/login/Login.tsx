@@ -32,7 +32,7 @@ const formSchema = z.object({
     message: 'Vui lòng nhập Password',
   }),
 });
-const Login = ({ className }: { className?: string; providers: unknown }) => {
+const Login = ({ className }: { className?: string }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [show, setShow] = React.useState({
@@ -64,7 +64,7 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
     }
 
     console.log(res);
-    if (!res?.error) router.refresh();
+    if (!res?.error) router.push('/');
     setIsLoading(false);
     console.log(res);
   }
