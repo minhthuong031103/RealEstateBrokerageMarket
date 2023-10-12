@@ -5,12 +5,14 @@ import { postRequest } from '@/lib/fetch';
 import { ArrowRight } from 'lucide-react';
 import React from 'react';
 
-const UpgradeButton = () => {
+const UpgradeButton = ({ product }) => {
   const onSubmit = async () => {
     const res = await postRequest({
       endPoint: '/api/stripe/checkout-session',
       isFormData: false,
-      formData: {},
+      formData: {
+        product,
+      },
     });
     console.log(res);
     window.location.href = res.url ?? '/agency/goi-dich-vu';

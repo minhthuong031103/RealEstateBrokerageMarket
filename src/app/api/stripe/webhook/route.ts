@@ -11,8 +11,6 @@ export async function POST(request: Request) {
   let event: Stripe.Event;
 
   try {
-    console.log('body', body);
-    console.log('signature', signature);
     event = stripe.webhooks.constructEvent(
       body,
       signature.toString(),
@@ -33,13 +31,26 @@ export async function POST(request: Request) {
       status: 200,
     });
   }
+  console.log(event.type);
 
+  //this is new subscription
   if (event.type === 'checkout.session.completed') {
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string
     );
+    const product = await stripe.products.retrieve(
+      session.metadata.productId as string
+    );
+    console.log('product in webhook', product);
+
     console.log('metadataaaaaaaaaaaaaaaaaaaaaaaaa');
     console.log(session.metadata.userId);
+    console.log(session);
+
+    const user = await prisma.user.findUnique({
+      where: { id: parseInt(session.metadata.userId) },
+    });
+    if (!user) return new Response(null, { status: 200 });
     await prisma.user.update({
       where: {
         id: parseInt(session.metadata.userId),
@@ -51,16 +62,35 @@ export async function POST(request: Request) {
         stripeCurrentPeriodEnd: new Date(
           subscription.current_period_end * 1000
         ),
+
+        ...(product?.metadata?.luot && {
+          luot: user.luot + parseInt(product?.metadata?.luot),
+        }),
+        ...(product?.metadata?.luotChuyenNghiep && {
+          luotChuyenNghiep:
+            user.luotChuyenNghiep +
+            parseInt(product?.metadata?.luotChuyenNghiep),
+        }),
+        ...(product?.metadata?.luotVip && {
+          luotVip: user.luotVip + parseInt(product?.metadata?.luotVip),
+        }),
+
+        giamGia: product?.metadata?.giamGia
+          ? parseInt(product?.metadata?.giamGia)
+          : 0,
       },
     });
   }
 
+  //this is renew subscription
   if (event.type === 'invoice.payment_succeeded') {
     // Retrieve the subscription details from Stripe.
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string
     );
-
+    console.log('metadataaaaaaaaaaaaaaaaaaaaaaaaa');
+    console.log(session.metadata.userId);
+    console.log(session);
     await prisma.user.update({
       where: {
         stripeSubscriptionId: subscription.id,
