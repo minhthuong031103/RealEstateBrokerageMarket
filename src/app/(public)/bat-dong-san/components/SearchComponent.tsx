@@ -32,6 +32,7 @@ import { HiOutlineOfficeBuilding } from "react-icons/hi";
 import { AiOutlineCompass } from "react-icons/ai";
 import { TbBed } from "react-icons/tb";
 import { PiBathtub } from "react-icons/pi";
+import { RangeSelector } from "./RangeSelector";
 
 const types = [
   { label: "Căn hộ", value: "Căn hộ" },
@@ -94,10 +95,6 @@ const formSchema = z.object({
   huongDat: z.string({}),
   soPhongNgu: z.string({}),
   soPhongTam: z.string({}),
-  minPrice: z.string({}),
-  maxPrice: z.string({}),
-  minSquare: z.string({}),
-  maxSquare: z.string({}),
 });
 type props = {
   setSearchProps: Dispatch<SetStateAction<searchType>>;
@@ -106,6 +103,8 @@ type props = {
 export function SearchComponent({ setSearchProps }: props) {
   const { fetchAllDanhMuc } = useBatDongSan();
   const [addressValue, setAddressValue] = useState("");
+  const [priceRange, setPriceRange] = useState<number[]>([0, 10000]);
+  const [squareRange, setSquareRange] = useState<number[]>([0, 5000]);
 
   useEffect(() => {
     const getBatDongSan = async () => {
@@ -167,10 +166,6 @@ export function SearchComponent({ setSearchProps }: props) {
       huongDat: "",
       soPhongNgu: "",
       soPhongTam: "",
-      minPrice: "",
-      maxPrice: "",
-      minSquare: "",
-      maxSquare: "",
     },
   });
   // 2. Define a submit handler.
@@ -193,10 +188,10 @@ export function SearchComponent({ setSearchProps }: props) {
       huongDat: values.huongDat,
       soPhongNgu: values.soPhongNgu,
       soPhongTam: values.soPhongTam,
-      minPrice: values.minPrice,
-      maxPrice: values.maxPrice,
-      minSquare: values.minSquare,
-      maxSquare: values.maxSquare,
+      minPrice: priceRange[0].toString(),
+      maxPrice: priceRange[1].toString(),
+      minSquare: squareRange[0].toString(),
+      maxSquare: squareRange[1].toString(),
     });
   }
   return (
@@ -685,98 +680,22 @@ export function SearchComponent({ setSearchProps }: props) {
                     <></>
                   )}
 
-                  <div className="flex flex-row justify-between gap-x-4">
-                    <FormField
-                      control={form.control}
-                      name="minPrice"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              variant="bordered"
-                              radius="sm"
-                              type="number"
-                              className="h-[52px]"
-                              label="Giá nhỏ nhất"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="maxPrice"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <div>
-                              <Input
-                                variant="bordered"
-                                radius="sm"
-                                type={"number"}
-                                className="h-[52px]"
-                                label="Giá cao nhất"
-                                {...field}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div className="flex flex-row justify-between gap-x-4">
-                    <FormField
-                      control={form.control}
-                      name="minSquare"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <div>
-                              <Input
-                                variant="bordered"
-                                radius="sm"
-                                type={"number"}
-                                className="h-[52px]"
-                                label="Diện tích > m2"
-                                {...field}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="maxSquare"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <div>
-                              <Input
-                                variant="bordered"
-                                radius="sm"
-                                type={"number"}
-                                className="h-[52px]"
-                                label="Diện tích < m2"
-                                {...field}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                  <RangeSelector
+                    range={priceRange}
+                    setRange={setPriceRange}
+                    type={"Phạm vi giá thành"}
+                  />
+                  <RangeSelector
+                    range={squareRange}
+                    setRange={setSquareRange}
+                    type={"Phạm vi diện tích"}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
           <Button className="w-[90%] bg-red-400" type="submit">
-            Submit
+            Tìm kiếm
           </Button>
         </form>
       </Form>

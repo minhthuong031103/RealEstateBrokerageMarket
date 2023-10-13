@@ -76,7 +76,6 @@ export function ListComponent({ searchProps }: props) {
       </div>
       <div className="flex justify-center p-6">
         <Pagination
-          color="success"
           showControls
           total={data?.totalPages}
           initialPage={1}

@@ -7,10 +7,21 @@ import { Separator } from "@/components/ui/separator";
 
 import { Carousel } from "react-responsive-carousel";
 import Image from "next/image";
-import {} from "react-icons/bi";
+import { BiHome } from "react-icons/bi";
 import { IoLocationOutline } from "react-icons/io5";
 import Link from "next/link";
 import { parseJSON } from "@/lib/utils";
+import { GiIsland } from "react-icons/gi";
+import { HiOutlineOfficeBuilding } from "react-icons/hi";
+import { MdApartment } from "react-icons/md";
+
+const CURRENCY_FORMAT = new Intl.NumberFormat(undefined, {
+  currency: "VND",
+  style: "currency",
+});
+export function formatCurrency(value: number) {
+  return CURRENCY_FORMAT.format(value);
+}
 export function ListItemComponent({ item }) {
   return (
     <Link href={`/chi-tiet-bat-dong-san/${item?.id}`}>
@@ -18,8 +29,8 @@ export function ListItemComponent({ item }) {
         <CardContent>
           <div className="mt-6 rounded-sm relative">
             <Carousel
-              autoPlay={true}
-              infiniteLoop={true}
+              autoPlay={false}
+              infiniteLoop={false}
               showIndicators={false}
               showThumbs={false}
               showStatus={false}
@@ -44,11 +55,23 @@ export function ListItemComponent({ item }) {
               <BranchPost type={item?.nhan}></BranchPost>
             </div>
             <p className="font-semibold text-[24px] text-white absolute bottom-4 left-6   ">
-              {item?.gia} đ
+              {formatCurrency(item?.gia)}
             </p>
           </div>
           <div className="mt-6 space-y-2 mb-6">
-            <div className="text-red-500 text-sm">{item?.loaiHinh?.name}</div>
+            <div className="text-red-500 text-sm flex flex-row gap-1">
+              {item?.loaiHinh?.loaiBDS?.name === "Căn hộ" ? (
+                <MdApartment />
+              ) : item?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
+                <BiHome />
+              ) : item?.loaiHinh?.loaiBDS?.name === "Văn phòng" ? (
+                <HiOutlineOfficeBuilding />
+              ) : (
+                <GiIsland />
+              )}
+              {" - "}
+              {item?.loaiHinh?.name}
+            </div>
             <div className="text-neutral-600 text-base">{item?.tieuDe}</div>
             <div className="text-neutral-500 text-sm leading-6">
               <IoLocationOutline className="text-base float-left mr-1" />
@@ -93,7 +116,7 @@ export function ListItemComponent({ item }) {
 
 function BranchPost(type) {
   return type?.type === "Yêu thích" ? (
-    <p className="bg-emerald-500 w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
+    <p className="bg-blue-500 w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
       Yêu thích
     </p>
   ) : type?.type === "Nổi bật" ? (
@@ -107,9 +130,17 @@ function BranchPost(type) {
 
 function HinhThuc(type) {
   return (
-    <p className="bg-[#3E4C66] w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
-      {type?.type === false ? "Đăng bán" : "Cho thuê"}
-    </p>
+    <>
+      {type?.type === true ? (
+        <p className="bg-emerald-500 w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
+          Cho thuê
+        </p>
+      ) : (
+        <p className="bg-[#ff9b36] w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
+          Đăng bán
+        </p>
+      )}
+    </>
   );
 }
 
