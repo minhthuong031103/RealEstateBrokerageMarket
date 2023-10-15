@@ -12,7 +12,17 @@ type props = {
 export const RangeSelector = ({ range, setRange, type }: props) => {
   return (
     <div className="flex flex-col gap-4 my-2">
-      <div>{type}</div>
+      <div>
+        {type}
+        {" Đơn vị: "}
+        {type === "Phạm vi giá thành" ? (
+          "VNĐ"
+        ) : (
+          <>
+            m<sup>2</sup>
+          </>
+        )}
+      </div>
       {type === "Phạm vi giá thành" ? (
         <Slider
           defaultValue={range}

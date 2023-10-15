@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { BatDongSanNoiBat } from "./BatDongSanNoiBat";
-import { CacLoaiHinhBatDongSan } from "./CacLoaiHinhBatDongSan";
+import { BatDongSanNoiBat } from "../../../bat-dong-san/components/BatDongSanNoiBat";
 import { ListComponent } from "./ListComponent";
-import { SearchComponent } from "./SearchComponent";
+import { SearchComponent } from "../../../bat-dong-san/components/SearchComponent";
+import { DoiTacInfo } from "./DoiTacInfo";
 
 export interface searchType {
   searchWord: string;
@@ -25,18 +25,18 @@ export interface searchType {
   minSquare: string;
   maxSquare: string;
 }
-export function LayoutBatDongSan() {
+export function LayoutBatDongSanCuaDoiTac({ id }) {
   const [searchProps, setSearchProps] = useState<searchType>();
   return (
     <>
       <div className="flex flex-col gap-6 lg:gap-0 lg:flex-row pt-8 pb-8">
         <div className="basis-[35%] flex flex-col gap-4">
+          <DoiTacInfo id={id} />
           <SearchComponent setSearchProps={setSearchProps} />
           <BatDongSanNoiBat />
-          <CacLoaiHinhBatDongSan />
         </div>
         <div className="basis-[65%]">
-          <ListComponent searchProps={searchProps} />
+          <ListComponent searchProps={searchProps} id={id} />
         </div>
       </div>
     </>

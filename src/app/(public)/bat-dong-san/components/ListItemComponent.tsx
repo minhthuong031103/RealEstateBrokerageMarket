@@ -56,6 +56,11 @@ export function ListItemComponent({ item }) {
             </div>
             <p className="font-semibold text-[24px] text-white absolute bottom-4 left-6   ">
               {formatCurrency(item?.gia)}
+              {item?.isChothue === true ? (
+                <p className="text-[20px] font-normal"> /Tháng</p>
+              ) : (
+                <></>
+              )}
             </p>
           </div>
           <div className="mt-6 space-y-2 mb-6">
@@ -130,17 +135,9 @@ function BranchPost(type) {
 
 function HinhThuc(type) {
   return (
-    <>
-      {type?.type === true ? (
-        <p className="bg-emerald-500 w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
-          Cho thuê
-        </p>
-      ) : (
-        <p className="bg-[#ff9b36] w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
-          Đăng bán
-        </p>
-      )}
-    </>
+    <p className="bg-[#3E4C66] w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
+      {type?.type === false ? "Đăng bán" : "Cho thuê"}
+    </p>
   );
 }
 

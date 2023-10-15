@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { BatDongSanNoiBat } from "./BatDongSanNoiBat";
-import { CacLoaiHinhBatDongSan } from "./CacLoaiHinhBatDongSan";
-import { ListComponent } from "./ListComponent";
-import { SearchComponent } from "./SearchComponent";
+import { BatDongSanNoiBat } from "../../components/BatDongSanNoiBat";
+import { CacLoaiHinhBatDongSan } from "../../components/CacLoaiHinhBatDongSan";
+import { ListComponent } from "../../components/ListComponent";
+import { SearchComponent } from "../../components/SearchComponent";
 
 export interface searchType {
   searchWord: string;
@@ -25,8 +25,27 @@ export interface searchType {
   minSquare: string;
   maxSquare: string;
 }
-export function LayoutBatDongSan() {
-  const [searchProps, setSearchProps] = useState<searchType>();
+export function LayoutBatDongSanTheoType({ type }) {
+  const [searchProps, setSearchProps] = useState<searchType>({
+    searchWord: "",
+    location: "",
+    type: type,
+    branch: "",
+    isRent: "",
+    loaiCanHo: "",
+    loaiNhaO: "",
+    loaiVanPhong: "",
+    loaiDatDai: "",
+    huongBanCong: "",
+    huongCuaChinh: "",
+    huongDat: "",
+    soPhongNgu: "",
+    soPhongTam: "",
+    minPrice: "",
+    maxPrice: "",
+    minSquare: "",
+    maxSquare: "",
+  });
   return (
     <>
       <div className="flex flex-col gap-6 lg:gap-0 lg:flex-row pt-8 pb-8">

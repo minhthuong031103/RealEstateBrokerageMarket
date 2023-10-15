@@ -62,7 +62,14 @@ export function ChiTietComponent({ id }) {
               <h4 className="text-gray-500">{chiTietBDS?.diaChi}</h4>
             </div>
             <div className="text-[28px] text-neutral-700 font-medium my-auto flex flex-row lg:w-[40%] lg:justify-end w-full justify-between space-x-6">
-              <p>{formatCurrency(chiTietBDS?.gia)}</p>
+              <p>
+                {formatCurrency(chiTietBDS?.gia)}
+                {chiTietBDS?.isChothue === true ? (
+                  <p className="text-[24px] font-normal"> /Tháng</p>
+                ) : (
+                  <></>
+                )}
+              </p>
               <div>
                 <LikeShareGroup />
               </div>
