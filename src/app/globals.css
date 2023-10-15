@@ -117,3 +117,5 @@
   overflow: hidden;
   padding-right: var(--scrollbar-width);
 }
+
+@import '~@uploadthing/react/styles.css';

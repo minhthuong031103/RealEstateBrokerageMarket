@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SelectAddress } from './SelectAddress';
 import { LoaiHinh } from './LoaiHinh';
 import { CanHoForm } from './(canho)/CanHoForm';
@@ -13,8 +13,19 @@ import { MoTaChiTiet } from './MoTaChiTiet';
 import { Button } from '@/components/ui/button';
 import toast from 'react-hot-toast';
 import { useBaiViet } from '@/hooks/useBaiViet';
+import { VideoUploader } from '@/components/videoUpload/VideoUploader';
+import { FileDialog } from '@/components/ui/FileDialog';
+import { generateReactHelpers } from '@uploadthing/react/hooks';
+import { OurFileRouter } from '@/app/api/uploadthing/core';
+import DialogCustom from '@/components/ui/dialogCustom';
+import { Spinner } from '@nextui-org/react';
+import { ImageList } from '@/components/ui/ImageList';
 
-export const BaiVietForm = ({ danhMucValue, isChoThue }) => {
+const { useUploadThing } = generateReactHelpers<OurFileRouter>();
+
+export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
+  const { startUpload } = useUploadThing('imageUploader');
+
   const [addressValue, setAddressValue] = React.useState('');
   const [loaiHinhValue, setLoaiHinhValue] = React.useState(null);
   const [chieuDai, setChieuDai] = React.useState();
@@ -31,10 +42,17 @@ export const BaiVietForm = ({ danhMucValue, isChoThue }) => {
   const [soTang, setSoTang] = React.useState();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [isInValid, setIsInValid] = React.useState(false);
-
+  const [productImageFiles, setProductImagesFile] = React.useState([]);
+  const [phapLyImageFiles, setPhapLyImageFiles] = React.useState([]);
+  const [videoUrl, setVideoUrl] = React.useState();
   const { onCreateBaiViet } = useBaiViet();
 
   const onSubmit = async () => {
+    console.log(productImageFiles);
+    console.log(phapLyImageFiles);
+    if (productImageFiles.length <= 0) {
+      toast.error('Vui lòng chọn hình ảnh sản phẩm');
+    }
     if (
       !addressValue ||
       !loaiHinhValue ||
@@ -61,7 +79,30 @@ export const BaiVietForm = ({ danhMucValue, isChoThue }) => {
         return;
       }
     }
+    setIsSubmitting(true);
 
+    // let productImages;
+    // let phapLyImages;
+    const [productImages, phapLyImages] = await Promise.all([
+      startUpload([...productImageFiles]).then((res) => {
+        const formattedImages = res?.map((image) => ({
+          id: image.key,
+          name: image.key.split('_')[1] ?? image.key,
+          url: image.url,
+        }));
+        return formattedImages ?? null;
+      }),
+      startUpload([...phapLyImageFiles]).then((res) => {
+        const formattedImages = res?.map((image) => ({
+          id: image.key,
+          name: image.key.split('_')[1] ?? image.key,
+          url: image.url,
+        }));
+        return formattedImages ?? null;
+      }),
+    ]);
+
+    console.log(productImages, phapLyImages);
     const baiViet = {
       diaChi: addressValue,
       loaiHinh: loaiHinhValue,
@@ -81,10 +122,17 @@ export const BaiVietForm = ({ danhMucValue, isChoThue }) => {
       suaChuaLanCuoi: new Date(),
       huongCuaChinh: huongCuaChinh,
       soTang: soTang ? parseInt(soTang) : null,
-      isChoThue,
+      hinhAnhSanPham: productImages ? JSON.stringify([...productImages]) : null,
+      hinhAnhGiayTo: phapLyImages ? JSON.stringify([...phapLyImages]) : null,
+      isChothue: isChoThue,
+      video: videoUrl,
     };
 
-    await onCreateBaiViet(baiViet);
+    const success = await onCreateBaiViet(baiViet);
+    setIsSubmitting(false);
+    if (success) {
+      setOpen(false);
+    }
   };
   return (
     <div className="w-full h-full flex flex-col space-y-6">
@@ -102,7 +150,11 @@ export const BaiVietForm = ({ danhMucValue, isChoThue }) => {
         setChieuDai={setChieuDai}
         setChieuRong={setChieuRong}
       />
-      <GiayToPhapLy setPhapLy={setPhapLy} />
+      <GiayToPhapLy
+        phapLyImageFiles={phapLyImageFiles}
+        setPhapLyImageFiles={setPhapLyImageFiles}
+        setPhapLy={setPhapLy}
+      />
 
       {/* <CanHoForm /> */}
       <CanHoForm
@@ -116,10 +168,36 @@ export const BaiVietForm = ({ danhMucValue, isChoThue }) => {
       {/* <CanHoForm /> */}
 
       <GiaBan giaBan={giaBan} setGiaBan={setGiaBan} />
+      <div className="flex flex-col gap-y-3 max-w-xs lg:max-w-lg">
+        <div className="font-bold text-sm">Hình ảnh bài viết</div>
+        <FileDialog
+          name="images"
+          maxFiles={8}
+          maxSize={1024 * 1024 * 4}
+          files={productImageFiles}
+          setFiles={setProductImagesFile}
+          disabled={false}
+        />
+        {productImageFiles?.length ? (
+          <ImageList
+            className={'w-full h-32'}
+            files={productImageFiles}
+            height={32}
+            width={32}
+          />
+        ) : null}
+      </div>
+      <div className="max-w-xs lg:max-w-2xl flex flex-col gap-y-3w">
+        <div className="text-sm font-bold">Video bất động sản</div>
+        <VideoUploader videoUrl={videoUrl} setVideoUrl={setVideoUrl} />
+      </div>
       <TieuDe tieuDe={tieuDe} setTieuDe={setTieude} />
       <MoTaChiTiet moTa={moTa} setMota={setMoTa} />
+
+      {/* <VideoUploader /> */}
       <div className="w-full flex items-center justify-center pt-10">
         <Button
+          disabled={isSubmitting}
           onClick={() => {
             onSubmit();
           }}
@@ -128,6 +206,20 @@ export const BaiVietForm = ({ danhMucValue, isChoThue }) => {
           Đăng bài
         </Button>
       </div>
+      {isSubmitting && (
+        <DialogCustom
+          className="w-[90%] lg:w-[50%] h-fit items-center justify-center"
+          isModalOpen={isSubmitting}
+          notShowClose={true}
+        >
+          <div className="flex flex-col gap-3 items-center justify-center">
+            <Spinner size="lg" />
+            <div className="text-center font-semibold text-xs sm:text-sm">
+              Bài viết đang được đăng lên hệ thống, vui lòng chờ trong giây lát
+            </div>
+          </div>
+        </DialogCustom>
+      )}
     </div>
   );
 };

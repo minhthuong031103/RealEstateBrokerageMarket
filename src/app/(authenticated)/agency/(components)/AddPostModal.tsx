@@ -43,47 +43,15 @@ export const AddPostModal = () => {
             />
 
             {danhMucValue && (thue || ban) ? (
-              <BaiVietForm danhMucValue={danhMucValue} isChoThue={thue} />
+              <BaiVietForm
+                danhMucValue={danhMucValue}
+                isChoThue={thue}
+                setOpen={setOpen}
+              />
             ) : null}
           </div>
         </DialogCustom>
       ) : null}
-      {/* {isWarningClose ? (
-        <DialogCustom
-          className="w-[90%] lg:w-[30%] h-[40%] lg:h-[50%] "
-          setIsModalOpen={setIsWarningClose}
-          isModalOpen={isWarningClose}
-        >
-          <div className="flex flex-col items-center justify-between h-full lg:py-12">
-            <Label className="mb-24 font-bold text-lg">
-              Bạn có muốn đóng cửa sổ này không?
-            </Label>
-            <div className="flex items-center justify-center w-full">
-              <Button
-                variant={'destructive'}
-                className="w-[30%] mr-4"
-                onClick={() => {
-                  setOpen(false);
-                  setDanhMucValue(null);
-                  setThue(false);
-                  setBan(false);
-                  setIsWarningClose(false);
-                }}
-              >
-                Có
-              </Button>
-              <Button
-                className="w-[30%]"
-                onClick={() => {
-                  setIsWarningClose(false);
-                }}
-              >
-                Không
-              </Button>
-            </div>
-          </div>
-        </DialogCustom>
-      ) : null} */}
     </div>
   );
 };

@@ -120,6 +120,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
           className="w-[50%] "
+          isChild={true}
         >
           <div className="flex flex-col gap-y-6 w-full px-1">
             <Select
