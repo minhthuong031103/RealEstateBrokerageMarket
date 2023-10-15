@@ -13,6 +13,7 @@ import { MoTaChiTiet } from './MoTaChiTiet';
 import { Button } from '@/components/ui/button';
 import toast from 'react-hot-toast';
 import { useBaiViet } from '@/hooks/useBaiViet';
+import { VideoUploader } from '@/components/videoUpload/VideoUploader';
 
 export const BaiVietForm = ({ danhMucValue, isChoThue }) => {
   const [addressValue, setAddressValue] = React.useState('');
@@ -118,6 +119,7 @@ export const BaiVietForm = ({ danhMucValue, isChoThue }) => {
       <GiaBan giaBan={giaBan} setGiaBan={setGiaBan} />
       <TieuDe tieuDe={tieuDe} setTieuDe={setTieude} />
       <MoTaChiTiet moTa={moTa} setMota={setMoTa} />
+      <VideoUploader />
       <div className="w-full flex items-center justify-center pt-10">
         <Button
           onClick={() => {

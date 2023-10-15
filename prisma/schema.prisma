@@ -26,13 +26,13 @@ model User {
   luot                   Int?            @default(0)
   luotChuyenNghiep       Int?            @default(0)
   luotVip                Int?            @default(0)
-  giamGia                Int?            @default(0)
   duyetDoiTac            String?
   stripeCurrentPeriodEnd DateTime?       @map("stripe_current_period_end")
   stripeCustomerId       String?         @unique @map("stripe_customer_id")
   stripePriceId          String?         @map("stripe_price_id")
   stripeSubscriptionId   String?         @unique @map("stripe_subscription_id")
   createdAt              DateTime        @default(now())
+  giamGia                Int?            @default(0)
   directMessages         DirectMessage[]
   seenMessages           SeenMessage[]
   BaiViets               BaiViet[]
