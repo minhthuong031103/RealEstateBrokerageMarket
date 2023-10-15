@@ -4,7 +4,13 @@ import { useBatDongSan } from "@/hooks/useBatDongSan";
 import { useState } from "react";
 import { HiSortAscending } from "react-icons/hi";
 import { ListItemComponent } from "./ListItemComponent";
-import { Pagination } from "@nextui-org/react";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Pagination,
+} from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { searchType } from "./LayoutBatDongSan";
@@ -33,6 +39,7 @@ export function ListComponent({ searchProps }: props) {
   };
 
   const [isDefault, setIsDefault] = useState(true);
+  const [isDefaultPrice, setIsDefaultPrice] = useState(true);
 
   const sort = () => {
     if (isDefault) {
@@ -49,6 +56,17 @@ export function ListComponent({ searchProps }: props) {
       });
     setIsDefault((prev) => !prev);
   };
+  const sortPrice = () => {
+    if (isDefaultPrice) {
+      data?.data.sort((a, b) => {
+        return b?.gia - a?.gia;
+      });
+    } else
+      data?.data.sort((a, b) => {
+        return a?.gia - b?.gia;
+      });
+    setIsDefaultPrice((prev) => !prev);
+  };
   return (
     <div ref={ref} className="mr-6">
       <div className="flex justify-between p-4 rounded-xl bg-white border-[1px] shadow-sm">
@@ -57,16 +75,27 @@ export function ListComponent({ searchProps }: props) {
         </div>
         <div className="flex flex-row">
           <p className="text-[14px] text-neutral-800 flex my-auto mr-2 font-semibold">
-            Sắp xếp theo ngày đăng:{" "}
+            Sắp xếp :{" "}
           </p>
-          <Button
-            variant={"outline"}
-            size={"sm"}
-            className="bg-white text-neutral-800 text-base hover:bg-gray-100 hover:text-neutral active:scale-75 transition ease-in-out duration-200"
-            onClick={sort}
-          >
-            <HiSortAscending />
-          </Button>
+          <Dropdown>
+            <DropdownTrigger>
+              <Button
+                variant={"outline"}
+                size={"sm"}
+                className="bg-white text-neutral-800 text-base hover:bg-gray-100 hover:text-neutral active:scale-75 transition ease-in-out duration-200"
+              >
+                <HiSortAscending />
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Filter">
+              <DropdownItem key={"day"} color={"default"} onClick={sort}>
+                Theo ngày đăng
+              </DropdownItem>
+              <DropdownItem key={"price"} color={"default"} onClick={sortPrice}>
+                Theo giá
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
