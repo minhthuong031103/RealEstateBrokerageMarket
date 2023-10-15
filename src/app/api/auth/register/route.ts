@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       const payload = jwt.sign(
         { email: body.email, name: body.name },
         process.env.NEXT_PUBLIC_JWT_SECRET,
-        { expiresIn: '1h' }
+        { expiresIn: '5s' }
       );
       return new Response(
         JSON.stringify({
