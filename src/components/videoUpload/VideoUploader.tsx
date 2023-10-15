@@ -1,103 +1,83 @@
 'use client';
 
-import * as z from 'zod';
-import axios from 'axios';
-import MuxPlayer from '@mux/mux-player-react';
-import { Pencil, PlusCircle, Video } from 'lucide-react';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
-// import { Chapter, MuxData } from '@prisma/client';
-// import Image from 'next/image';
+import ReactPlayer from 'react-player';
 
 import { Button } from '@/components/ui/button';
 import { VideoUploadInput } from '@/components/videoUpload/VideoUploadInput';
+import { postRequest } from '@/lib/fetch';
 
 interface ChapterVideoFormProps {
   // initialData: Chapter & { muxData?: MuxData | null };
   initialData?: { videoUrl: string; muxData?: any };
   courseId?: string;
   chapterId?: string;
+  videoUrl: string;
+  setVideoUrl: any;
+  videoKey: any;
+  setVideoKey: any;
 }
 
-const formSchema = z.object({
-  videoUrl: z.string().min(1),
-});
-
 export const VideoUploader = ({
-  initialData,
-  courseId,
-  chapterId,
+  videoUrl,
+  setVideoUrl,
 }: ChapterVideoFormProps) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const parts = videoUrl?.split('/');
 
-  const toggleEdit = () => setIsEditing((current) => !current);
+  // Get the last part of the URL, which contains the key
+  const keyPart = parts?.[parts.length - 1];
 
-  const router = useRouter();
-
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      await axios.patch(
-        `/api/courses/${courseId}/chapters/${chapterId}`,
-        values
-      );
-      toast.success('Chapter updated');
-      toggleEdit();
-      router.refresh();
-    } catch {
-      toast.error('Something went wrong');
-    }
+  // If you want to remove any query parameters, you can split by '?' and take the first part
+  const videoKey = keyPart?.split('?')[0];
+  const onDelete = async () => {
+    const res = await postRequest({
+      endPoint: '/api/bai-viet/deleteVideo',
+      formData: { videoKey },
+      isFormData: false,
+    });
+    console.log(res);
+    setVideoUrl(null);
   };
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
-      <div className="font-medium flex items-center justify-between">
-        Chapter video
-        <Button onClick={toggleEdit} variant="ghost">
-          {isEditing && <>Cancel</>}
-          {!isEditing && !initialData?.videoUrl && (
-            <>
-              <PlusCircle className="h-4 w-4 mr-2" />
-              Add a video
-            </>
-          )}
-          {!isEditing && initialData?.videoUrl && (
-            <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Edit video
-            </>
-          )}
-        </Button>
-      </div>
-      {!isEditing &&
-        (!initialData?.videoUrl ? (
-          <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
-            <Video className="h-10 w-10 text-slate-500" />
-          </div>
-        ) : (
+    <div className="mt-6 relative ">
+      {/* {!isEditing &&
+        (!initialData?.videoUrl ? null : (
           <div className="relative aspect-video mt-2">
             <MuxPlayer playbackId={initialData?.muxData?.playbackId || ''} />
           </div>
-        ))}
-      {isEditing && (
+        ))} */}
+      {videoUrl && (
+        <div className=" mb-3 lg:mb-9 ">
+          <Button
+            onClick={onDelete}
+            variant={'destructive'}
+            className="absolute right-0 "
+          >
+            Xóa
+          </Button>
+        </div>
+      )}
+      {videoUrl && (
+        <div className=" mt-2 px-2 ">
+          <ReactPlayer
+            width={window.innerWidth > 768 ? 600 : 290}
+            url={videoUrl}
+            controls={true}
+          />
+        </div>
+      )}
+      {!videoUrl && (
         <div>
           <VideoUploadInput
             endpoint="chapterVideo"
-            onChange={(url) => {
-              if (url) {
-                onSubmit({ videoUrl: url });
-              }
+            onChange={(video) => {
+              setVideoUrl(video.url);
             }}
           />
           <div className="text-xs text-muted-foreground mt-4">
-            Upload this chapter&apos;s video
+            Video có thể mất một khoảng thời gian để được xử lý. Xin vui lòng
+            chờ đợi
           </div>
-        </div>
-      )}
-      {initialData?.videoUrl && !isEditing && (
-        <div className="text-xs text-muted-foreground mt-2">
-          Videos can take a few minutes to process. Refresh the page if video
-          does not appear.
         </div>
       )}
     </div>

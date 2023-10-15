@@ -54,7 +54,7 @@ model BaiViet {
   ngayDang            DateTime    @default(now())
   userId              Int
   gia                 Float
-  isChothue           Boolean     @default(false)
+  isChoThue           Boolean     @default(false)
   diaChi              String
   dienTich            Float
   chieuDai            Float
