@@ -130,3 +130,9 @@ export const TinhTrangPhapLy = [
   { value: 'Chưa có sổ' },
   { value: 'Đang chờ sổ' },
 ];
+
+export const MuaLeConst = [
+  { value: 'Luợt bán' },
+  { value: 'Lượt nổi bật' },
+  { value: 'Lượt yêu thích' },
+];

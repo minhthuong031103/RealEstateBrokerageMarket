@@ -32,6 +32,11 @@ export const AddPostModal = () => {
           setIsModalOpen={setOpen}
           isModalOpen={open}
           warningOnClose={true}
+          callBack={() => {
+            setThue(false);
+            setBan(false);
+            setDanhMucValue(null);
+          }}
         >
           <div className="flex flex-col gap-y-6 w-full h-full px-1">
             <SelectDanhMuc
