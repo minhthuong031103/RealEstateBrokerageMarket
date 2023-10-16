@@ -33,7 +33,7 @@ export const CacLoaiHinhBatDongSan = () => {
       <div>Danh mục bất động sản</div>
       <div className="flex flex-col gap-4">
         {listLoaiHinh?.map((item, index) => (
-          <Link href={`/bat-dong-san/${item?.id}`}>
+          <Link href={`/bat-dong-san/loai-bat-dong-san/${item?.id}`}>
             <div className="flex flex-row flex-wrap justify-between hover:text-red-500 text-sm">
               <div className="flex flex-row gap-1">
                 <MdArrowRight className="text-xl" />

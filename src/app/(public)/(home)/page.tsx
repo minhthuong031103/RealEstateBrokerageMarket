@@ -1,18 +1,16 @@
-import React from 'react';
-import HomeBanner from '@/components/HomeBanner';
-import { Balancer } from 'react-wrap-balancer';
-import ShopByCollection from './ShopByCollection';
-import Categories from './Categories';
-import FeaturedProduct from './FeaturedProduct';
-import ShopAll from './ShopAll';
-// import { useProduct } from '@/hooks/useProduct';
-// import SalesProduct from './SalesProduct';
+import React from "react";
+import HomeBanner from "@/components/HomeBanner";
+import { Balancer } from "react-wrap-balancer";
+import ShopByCollection from "./ShopByCollection";
+import Categories from "./Categories";
+import FeaturedProduct from "./FeaturedProduct";
+import ShopAll from "./ShopAll";
+import SearchHome from "./components/SearchHome";
 
 const page = async () => {
-  // const { onGetAllProducts } = useProduct();
-  // const allProducts = await onGetAllProducts();
   return (
-    <div className="mt-10 flex h-full w-full flex-col">
+    <div className="mt-0 flex h-full w-full flex-col">
+      <SearchHome />
       <HomeBanner />
 
       <ShopAll />

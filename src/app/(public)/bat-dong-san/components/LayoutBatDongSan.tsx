@@ -1,6 +1,6 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BatDongSanNoiBat } from "./BatDongSanNoiBat";
 import { CacLoaiHinhBatDongSan } from "./CacLoaiHinhBatDongSan";
 import { ListComponent } from "./ListComponent";
@@ -28,6 +28,34 @@ export interface searchType {
 }
 export function LayoutBatDongSan() {
   const [searchProps, setSearchProps] = useState<searchType>();
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const searchParams = new URLSearchParams(url.search);
+    const tukhoa = searchParams?.get("tukhoa");
+    const diachi = searchParams?.get("diachi");
+    const loaibds = searchParams?.get("loaibds");
+    const hinhthuc = searchParams?.get("hinhthuc");
+    setSearchProps({
+      searchWord: tukhoa || "",
+      location: diachi || "",
+      type: loaibds || "",
+      branch: "",
+      isRent: hinhthuc || "",
+      loaiCanHo: "",
+      loaiNhaO: "",
+      loaiVanPhong: "",
+      loaiDatDai: "",
+      huongBanCong: "",
+      huongCuaChinh: "",
+      huongDat: "",
+      soPhongNgu: "",
+      soPhongTam: "",
+      minPrice: "",
+      maxPrice: "",
+      minSquare: "",
+      maxSquare: "",
+    });
+  }, []);
   return (
     <>
       <div className="flex flex-col gap-6 lg:gap-0 lg:flex-row pt-8 pb-8">
