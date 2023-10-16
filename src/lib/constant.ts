@@ -130,3 +130,9 @@ export const TinhTrangPhapLy = [
   { value: 'Chưa có sổ' },
   { value: 'Đang chờ sổ' },
 ];
+
+export const MuaLeConst = [
+  { value: 'Luợt đăng bài', price: 20000 },
+  { value: 'Lượt nổi bật', price: 30000 },
+  { value: 'Lượt yêu thích', price: 50000 },
+];

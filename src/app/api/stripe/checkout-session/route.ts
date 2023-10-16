@@ -4,16 +4,15 @@ import { getUserSubscriptionPlan, stripe } from '@/lib/stripe';
 
 export async function POST(request: Request) {
   const session = await getSession();
-  if (!session) return { status: 401, body: { message: 'Unauthorized' } };
+  if (!session) return new Response('Unauthorized', { status: 401 });
   const user = await prisma.user.findUnique({
     where: { id: session?.user.id },
   });
   const billing_url = `${process.env.NEXT_PUBLIC_SITE_URL}/agency/goi-dich-vu`;
-  if (!user) return { status: 401, body: { message: 'Unauthorized' } };
+  if (!user) return new Response('Unauthorized', { status: 401 });
 
   const body = await request.json();
-  if (!body?.product?.id)
-    return { status: 400, body: { message: 'Bad Request' } };
+  if (!body?.product?.id) return new Response('Unauthorized', { status: 401 });
   const subscriptionPlan = await getUserSubscriptionPlan();
 
   //handle if the user already has a subscription

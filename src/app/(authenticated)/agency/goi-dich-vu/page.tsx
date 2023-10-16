@@ -15,6 +15,7 @@ import { cn, currencyFormat } from '@/lib/utils';
 import { CheckIcon } from 'lucide-react';
 import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
+import { MuaLe } from './MuaLe';
 
 const page = async () => {
   const currentlyPlan = await getUserSubscriptionPlan();
@@ -76,6 +77,7 @@ const page = async () => {
           Bạn hiện có <span className="font-bold"> {user?.luotVip}</span> lượt
           đăng bài viết <span className="font-bold"> Yêu thích</span>.
         </p>
+        <MuaLe />
         <p>
           {currentlyPlan.isCanceled
             ? `Gói đăng ký của bạn đã được hủy và sẽ hết hạn vào ${new Date(
