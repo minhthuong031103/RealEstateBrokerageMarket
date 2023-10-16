@@ -71,7 +71,10 @@ export function ChiTietComponent({ id }) {
                 )}
               </p>
               <div>
-                <LikeShareGroup userIdOfWriter={chiTietBDS?.userId} />
+                <LikeShareGroup
+                  userIdOfWriter={chiTietBDS?.userId}
+                  postId={parseInt(id)}
+                />
               </div>
             </div>
           </div>

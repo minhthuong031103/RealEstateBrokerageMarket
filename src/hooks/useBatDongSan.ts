@@ -1,4 +1,5 @@
 import { getRequest, postRequest } from '@/lib/fetch';
+import toast from 'react-hot-toast';
 
 export const useBatDongSan = () => {
   const fetchAllBatDongSan = async (page,props) => {
@@ -226,6 +227,33 @@ export const useBatDongSan = () => {
     return res;
   };
 
+  const checkTonTaiYeuThich = async (userId, postId)=>{
+    const res = await getRequest({endPoint: `/api/bat-dong-san/bat-dong-san-yeu-thich/kiem-tra-ton-tai?userId=${userId}&postId=${postId}`});
+    return res;
+  }
+
+  const themVaoYeuThich = async (data) => {
+    const res = await postRequest({
+      endPoint: '/api/bat-dong-san/bat-dong-san-yeu-thich/them',
+      isFormData: false,
+      formData: data,
+    });
+    if (res) {
+      toast.success('Đã thêm vào danh sách yêu thích');
+    }
+  };
+
+  const xoaKhoiYeuThich = async (data) => {
+    const res = await postRequest({
+      endPoint: '/api/bat-dong-san/bat-dong-san-yeu-thich/xoa',
+      isFormData: false,
+      formData: data,
+    });
+    if (res) {
+      toast.success('Đã xóa khỏi danh sách yêu thích');
+    }
+  };
+
   const fetchBatDongSanNoiBat = async () => {
     const res = await getRequest({endPoint: `api/bat-dong-san/bat-dong-san-noi-bat`})
     return res;
@@ -256,6 +284,9 @@ export const useBatDongSan = () => {
     fetchBatDongSanTheoId,
     fetchBatDongSanNoiBat,
     fetchAllBatDongSanYeuThich,
+    checkTonTaiYeuThich,
+    themVaoYeuThich,
+    xoaKhoiYeuThich,
     fetchAllDanhMuc,
     fetchLoaiHinhTheoDanhMuc,
   };
