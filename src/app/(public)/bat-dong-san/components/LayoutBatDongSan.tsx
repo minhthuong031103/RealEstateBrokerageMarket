@@ -1,4 +1,5 @@
 "use client";
+import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { BatDongSanNoiBat } from "./BatDongSanNoiBat";
 import { CacLoaiHinhBatDongSan } from "./CacLoaiHinhBatDongSan";
@@ -36,6 +37,7 @@ export function LayoutBatDongSan() {
           <CacLoaiHinhBatDongSan />
         </div>
         <div className="basis-[65%]">
+          <Separator className="lg:hidden h-[6px] mt-4 mb-8 w-[96%] text-gray-500 rounded-md" />
           <ListComponent searchProps={searchProps} />
         </div>
       </div>

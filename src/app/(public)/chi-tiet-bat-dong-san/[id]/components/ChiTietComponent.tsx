@@ -71,7 +71,7 @@ export function ChiTietComponent({ id }) {
                 )}
               </p>
               <div>
-                <LikeShareGroup />
+                <LikeShareGroup userIdOfWriter={chiTietBDS?.userId} />
               </div>
             </div>
           </div>

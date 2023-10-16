@@ -19,7 +19,7 @@ export const DoiTacInfo = ({ id }) => {
   }, []);
   return (
     <div className="p-8 mr-6 rounded-xl bg-white border-[1px] shadow-sm space-y-4">
-      <div className="flex flex-row gap-4 mt-4">
+      <div className="flex flex-row gap-4 mt-4 flex-wrap">
         <img
           src={doiTacInformation?.avatar}
           className="rounded-md h-[180px] w-[180px] lg:w-[90px] lg:h-[90px]"
@@ -28,7 +28,7 @@ export const DoiTacInfo = ({ id }) => {
           <div className="font-semibold text-[16px] mt-2">
             {doiTacInformation?.name}
           </div>
-          <div className="text-[14px] mt-2 overflow-hidden">
+          <div className="text-[14px] mt-2">
             <div className="flex flex-row gap-2 w-full">
               <AiOutlinePhone className="py-auto" />
               {doiTacInformation?.phoneNumber}

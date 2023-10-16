@@ -108,7 +108,6 @@ export const useBatDongSan = () => {
       }
     }
     const res = await getRequest({ endPoint: endPointUrl });
-    console.log(endPointUrl)
     return res;
   };
 
@@ -219,7 +218,11 @@ export const useBatDongSan = () => {
       }
     }
     const res = await getRequest({ endPoint: endPointUrl });
-    console.log(endPointUrl)
+    return res;
+  };
+
+  const fetchAllBatDongSanYeuThich = async (userId) => {
+    const res = await getRequest({ endPoint: `/api/bat-dong-san/bat-dong-san-yeu-thich?userId=${userId}` });
     return res;
   };
 
@@ -252,6 +255,7 @@ export const useBatDongSan = () => {
     fetchAllBatDongSanCuaDoiTac,
     fetchBatDongSanTheoId,
     fetchBatDongSanNoiBat,
+    fetchAllBatDongSanYeuThich,
     fetchAllDanhMuc,
     fetchLoaiHinhTheoDanhMuc,
   };
