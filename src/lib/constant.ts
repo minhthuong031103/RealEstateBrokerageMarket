@@ -132,7 +132,7 @@ export const TinhTrangPhapLy = [
 ];
 
 export const MuaLeConst = [
-  { value: 'Luợt bán' },
-  { value: 'Lượt nổi bật' },
-  { value: 'Lượt yêu thích' },
+  { value: 'Luợt đăng bài', price: 20000 },
+  { value: 'Lượt nổi bật', price: 30000 },
+  { value: 'Lượt yêu thích', price: 50000 },
 ];

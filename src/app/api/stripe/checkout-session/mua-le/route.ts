@@ -26,6 +26,9 @@ export async function POST(request: Request) {
           type: body.type,
           amount: body.amount,
           giamGia: body.giamGia,
+          luot: body?.luot,
+          luotChuyenNghiep: body?.luotChuyenNghiep,
+          luotVip: body?.luotVip,
         },
       });
       console.log(
