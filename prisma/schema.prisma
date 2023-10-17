@@ -12,7 +12,7 @@ model User {
   id                     Int             @id @default(autoincrement())
   name                   String
   email                  String          @unique
-  phoneNumber            String
+  phoneNumber            String?
   password               String
   diaChi                 String?
   role                   String?         @default("user")
@@ -36,6 +36,8 @@ model User {
   directMessages         DirectMessage[]
   seenMessages           SeenMessage[]
   BaiViets               BaiViet[]
+  Revenues               Revenue[]
+  Favourite              Favourite?
 }
 
 model LoaiBDS {
@@ -137,8 +139,9 @@ model Banners {
 
 model Favourite {
   id        Int       @id @default(autoincrement())
-  userId    Int
+  userId    Int       @unique
   createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id])
   baiViets  BaiViet[]
 
   @@index([userId])
@@ -180,16 +183,18 @@ model PaymentHistory {
   @@index([userId])
 }
 
-model Revenues {
-  id                 Int   @id @default(autoincrement())
-  thang              Int
-  nam                Int
-  incomeCoBan        Float
-  incomeChuyenNghiep Float
-  incomeVip          Float
-  luotCoBan          Int
-  luotChuyenNghiep   Int
-  luotVip            Int
+
+
+model Revenue {
+  id               Int            @id @default(autoincrement())
+  serviceName      String
+  number           Int
+  amount           Float
+  createdAt        DateTime       @default(now())
+  userId           Int
+  user             User           @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
 
 model ServicePack {

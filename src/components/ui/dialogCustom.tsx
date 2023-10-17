@@ -1,4 +1,4 @@
-/** @format */
+'use client';
 
 import { ScrollArea } from '@components/ui/scroll-area';
 import { X } from 'lucide-react';
@@ -13,13 +13,17 @@ function DialogCustom({
   warningOnClose,
   className,
   callBack,
+  isChild,
+  notShowClose,
 }: {
   isModalOpen: boolean;
-  setIsModalOpen: (value: boolean) => void;
+  setIsModalOpen?: (value: boolean) => void;
   warningOnClose?: boolean;
   children: React.ReactNode;
   className?: string;
   callBack?: () => void;
+  isChild?: boolean;
+  notShowClose?: boolean;
 }) {
   const [isVisible, setIsVisible] = useState(isModalOpen);
   const [isClosing, setIsClosing] = useState(false);
@@ -50,11 +54,12 @@ function DialogCustom({
     if (isModalOpen) {
       document.body.classList.add('no-scroll');
     } else {
+      if (isChild) return;
       document.body.classList.remove('no-scroll');
     }
-
     return () => {
       // Re-enable scrolling when the component unmounts
+      if (isChild) return;
       document.body.classList.remove('no-scroll');
     };
   }, [isModalOpen]);
@@ -128,11 +133,13 @@ function DialogCustom({
           >
             <div className="h-full w-full ">
               <ScrollArea className="h-full w-full px-3">
-                <div className="flex items-end justify-end mb-3">
-                  <Button variant={'outline'} onClick={handleClose}>
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
+                {!notShowClose ? (
+                  <div className="flex items-end justify-end mb-3">
+                    <Button variant={'outline'} onClick={handleClose}>
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ) : null}
                 <div className="w-full h-full py-3">
                   {/* CHILDREN */}
                   {children}
