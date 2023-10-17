@@ -23,7 +23,6 @@ export const GiayToPhapLy = ({
   return (
     <div className="flex flex-col gap-y-3">
       <Select
-        isRequired
         key={'phaply'}
         radius={'md'}
         label="Tình trạng pháp lý"
@@ -49,7 +48,7 @@ export const GiayToPhapLy = ({
       <div className="font-bold text-sm">Hình ảnh pháp lý </div>
       {phapLyImageFiles?.length ? (
         <ImageList
-          className={'w-full h-32'}
+          className={'w-full h-36'}
           files={phapLyImageFiles}
           height={32}
           width={32}

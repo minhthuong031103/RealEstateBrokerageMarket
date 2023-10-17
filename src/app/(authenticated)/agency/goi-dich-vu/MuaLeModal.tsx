@@ -91,7 +91,6 @@ export const MuaLeModal = ({ setIsModalOpen, isModalOpen }) => {
         ) : (
           <div className="flex flex-col justify-between gap-y-6 h-full px-1">
             <Select
-              isRequired
               key={'sanpham'}
               radius={'md'}
               label="Sản phẩm"
