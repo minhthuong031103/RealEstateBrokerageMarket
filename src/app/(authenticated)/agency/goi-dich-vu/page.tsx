@@ -25,6 +25,7 @@ const page = async () => {
     const plan = plans.data.find((plan) => plan.product === productId);
     return plan ? plan.amount : Infinity; // Return Infinity if no price is found so that product goes to the end of the sorted array
   };
+
   const user = await prisma.user.findUnique({
     where: {
       email: session?.user?.email,

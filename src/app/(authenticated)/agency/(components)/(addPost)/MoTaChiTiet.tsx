@@ -6,7 +6,7 @@ import { Card, CardBody } from '@nextui-org/react';
 export const MoTaChiTiet = ({ moTa, setMota }) => {
   return (
     <div className="flex flex-col gap-3 max-w-xs lg:max-w-2xl ">
-      <Label>
+      <Label className="font-bold text-sm">
         Mô tả chi tiết <span className="text-red-500">*</span>
       </Label>
       <Card>
