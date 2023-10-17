@@ -1,6 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@nextui-org/react";
+import { Select, SelectItem } from "@nextui-org/react";
+
 import {
   Form,
   FormControl,
@@ -14,68 +17,48 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { IoLocationOutline } from "react-icons/io5";
-import {
-  CaretSortIcon,
-  CheckIcon,
-  MagnifyingGlassIcon,
-} from "@radix-ui/react-icons";
-import { useState } from "react";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useBatDongSan } from "@/hooks/useBatDongSan";
+import { searchType } from "./LayoutBatDongSan";
+import { PickLocation } from "./PickLocation";
+import { BiBuildingHouse, BiLabel, BiSolidLayerPlus } from "react-icons/bi";
+import { GiReceiveMoney } from "react-icons/gi";
+import { BsHouses } from "react-icons/bs";
+import { HiOutlineOfficeBuilding } from "react-icons/hi";
+import { AiOutlineCompass } from "react-icons/ai";
+import { TbBed } from "react-icons/tb";
+import { PiBathtub } from "react-icons/pi";
+import { RangeSelector } from "./RangeSelector";
 
 const types = [
-  { label: "Căn hộ", value: "1" },
-  { label: "Nhà ở", value: "2" },
-  { label: "Văn phòng", value: "3" },
-  { label: "Đất đai", value: "4" },
+  { label: "Căn hộ", value: "Căn hộ" },
+  { label: "Nhà ở", value: "Nhà ở" },
+  { label: "Văn phòng", value: "Văn phòng" },
+  { label: "Đất", value: "Đất" },
 ] as const;
 
 const branches = [
-  { label: "Thông thường", value: "1" },
-  { label: "Yêu thích", value: "2" },
-  { label: "Nổi bật", value: "3" },
+  { label: "Thông thường", value: "Thông thường" },
+  { label: "Yêu thích", value: "Yêu thích" },
+  { label: "Nổi bật", value: "Nổi bật" },
 ] as const;
 
 const isRents = [
   { label: "Cho thuê", value: "true" },
-  { label: "Cần bán", value: "false" },
+  { label: "Đăng bán", value: "false" },
 ] as const;
 
-const loaiCanHos = [
-  { label: "Chung cư", value: "1" },
-  { label: "Duplex", value: "2" },
-  { label: "Penthouse", value: "3" },
-] as const;
+const loaiCanHos = [];
 
-const loaiNhaOs = [
-  { label: "Mặt phố", value: "1" },
-  { label: "Ngỏ hẻm", value: "2" },
-  { label: "Biệt thự", value: "3" },
-] as const;
+const loaiNhaOs = [];
 
-const loaiVanPhongs = [
-  { label: "Văn phòng", value: "1" },
-  { label: "Mặt bằng kinh doanh", value: "2" },
-  { label: "Shophouse", value: "3" },
-  { label: "Officetel", value: "4" },
-] as const;
+const loaiVanPhongs = [];
 
-const loaiDatDais = [
-  { label: "Thổ cư", value: "1" },
-  { label: "Nền dự án", value: "2" },
-  { label: "Công nghiệp", value: "3" },
-  { label: "Nông nghiệp", value: "4" },
-] as const;
+const loaiDatDais = [];
 
 const huongs = [
   { label: "Đông", value: "Đông" },
@@ -100,7 +83,6 @@ const soPhongs = [
 
 const formSchema = z.object({
   searchWord: z.string({}),
-  location: z.string({}),
   type: z.string({}),
   branch: z.string({}),
   isRent: z.string({}),
@@ -114,14 +96,64 @@ const formSchema = z.object({
   soPhongNgu: z.string({}),
   soPhongTam: z.string({}),
 });
-export function SearchComponent() {
+type props = {
+  setSearchProps: Dispatch<SetStateAction<searchType>>;
+};
+
+export function SearchComponent({ setSearchProps }: props) {
+  const { fetchAllDanhMuc } = useBatDongSan();
+  const [addressValue, setAddressValue] = useState("");
+  const [priceRange, setPriceRange] = useState<number[]>([0, 10000]);
+  const [squareRange, setSquareRange] = useState<number[]>([0, 5000]);
+
+  useEffect(() => {
+    const getBatDongSan = async () => {
+      await fetchAllDanhMuc().then((data) => {
+        data?.map((item) => {
+          if (item?.id === 1) {
+            //can ho
+            item?.loaiHinhs?.map((itemChild) => {
+              loaiCanHos.push({
+                label: itemChild?.name,
+                value: itemChild?.name,
+              });
+            });
+          } else if (item?.id === 2) {
+            //dat
+            item?.loaiHinhs?.map((itemChild) => {
+              loaiDatDais.push({
+                label: itemChild?.name,
+                value: itemChild?.name,
+              });
+            });
+          } else if (item?.id === 3) {
+            //nha o
+            item?.loaiHinhs?.map((itemChild) => {
+              loaiNhaOs.push({
+                label: itemChild?.name,
+                value: itemChild?.name,
+              });
+            });
+          } else {
+            //van phong
+            item?.loaiHinhs?.map((itemChild) => {
+              loaiVanPhongs.push({
+                label: itemChild?.name,
+                value: itemChild?.name,
+              });
+            });
+          }
+        });
+      });
+    };
+    getBatDongSan();
+  }, []);
   // 1. Define your form.
   const [typeNumber, setTypeNumber] = useState("0");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       searchWord: "",
-      location: "",
       type: "",
       branch: "",
       isRent: "",
@@ -141,9 +173,29 @@ export function SearchComponent() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+    setSearchProps({
+      searchWord: values.searchWord,
+      location: addressValue,
+      type: values.type,
+      branch: values.branch,
+      isRent: values.isRent,
+      loaiCanHo: values.loaiCanHo,
+      loaiNhaO: values.loaiNhaO,
+      loaiVanPhong: values.loaiVanPhong,
+      loaiDatDai: values.loaiDatDai,
+      huongBanCong: values.huongBanCong,
+      huongCuaChinh: values.huongCuaChinh,
+      huongDat: values.huongDat,
+      soPhongNgu: values.soPhongNgu,
+      soPhongTam: values.soPhongTam,
+      minPrice: priceRange[0].toString(),
+      maxPrice: priceRange[1].toString(),
+      minSquare: squareRange[0].toString(),
+      maxSquare: squareRange[1].toString(),
+    });
   }
   return (
-    <div className="p-8 mr-8 rounded-xl bg-white border-[1px] shadow-sm">
+    <div className="p-8 mr-6 rounded-xl bg-white border-[1px] shadow-sm">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -155,7 +207,9 @@ export function SearchComponent() {
                   <div>
                     <Input
                       className="h-[52px]"
-                      placeholder="Nhập từ khóa"
+                      variant="bordered"
+                      radius="sm"
+                      label="Nhập từ khóa"
                       {...field}
                     />
                     <MagnifyingGlassIcon className="h-6 w-6 opacity-50 float-right -mt-9 mr-4" />
@@ -165,78 +219,52 @@ export function SearchComponent() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="location"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <div>
-                    <Input
-                      className="h-[52px] p-4"
-                      placeholder="Vị trí"
-                      {...field}
-                    />
-                    <IoLocationOutline className="h-6 w-6 opacity-50 float-right -mt-9 mr-4" />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
+          <div>
+            <PickLocation
+              addressValue={addressValue}
+              setAddressValue={setAddressValue}
+            />
+          </div>
+
           <FormField
             control={form.control}
             name="type"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        size={"sm"}
-                        className={cn(
-                          "h-[52px] justify-between",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value
-                          ? types.find((type) => type.value === field.value)
-                              ?.label
-                          : "Loại bất động sản"}
-                        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="hidden lg:block">
-                    <Command>
-                      <CommandGroup>
-                        {types.map((type) => (
-                          <CommandItem
-                            className="h-[52px] w-full"
-                            value={type.label}
-                            key={type.value}
-                            onSelect={() => {
-                              form.setValue("type", type.value);
-                              setTypeNumber(type.value);
-                            }}
-                          >
-                            {type.label}
-                            <CheckIcon
-                              className={cn(
-                                "ml-auto h-4 w-4",
-                                type.value === field.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
+                <FormControl>
+                  <div className="mr-6">
+                    <Select
+                      label="Loại bất động sản"
+                      className="h-[52px]"
+                      variant="bordered"
+                      radius="sm"
+                      size="sm"
+                      selectorIcon={<BiBuildingHouse />}
+                      {...field}
+                    >
+                      {types.map((type) => (
+                        <SelectItem
+                          key={type.value}
+                          value={type.value}
+                          onClick={() => {
+                            setTypeNumber(
+                              type.value === "Căn hộ"
+                                ? "1"
+                                : type.value === "Nhà ở"
+                                ? "2"
+                                : type.value === "Văn phòng"
+                                ? "3"
+                                : "4"
+                            );
+                          }}
+                        >
+                          {type.label}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  </div>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -246,54 +274,25 @@ export function SearchComponent() {
             name="isRent"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        size={"sm"}
-                        className={cn(
-                          "h-[52px] justify-between",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value
-                          ? isRents.find(
-                              (isRent) => isRent.value === field.value
-                            )?.label
-                          : "Hình thức"}
-                        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="hidden lg:block">
-                    <Command>
-                      <CommandGroup>
-                        {isRents.map((isRent) => (
-                          <CommandItem
-                            className="h-[52px] w-full"
-                            value={isRent.label}
-                            key={isRent.value}
-                            onSelect={() => {
-                              form.setValue("isRent", isRent.value);
-                            }}
-                          >
-                            {isRent.label}
-                            <CheckIcon
-                              className={cn(
-                                "ml-auto h-4 w-4",
-                                isRent.value === field.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
+                <FormControl>
+                  <div className="mr-6">
+                    <Select
+                      label="Hình thức"
+                      className="h-[52px] w-[100%]"
+                      variant="bordered"
+                      radius="sm"
+                      size="sm"
+                      selectorIcon={<GiReceiveMoney />}
+                      {...field}
+                    >
+                      {isRents.map((isRent) => (
+                        <SelectItem key={isRent.value} value={isRent.value}>
+                          {isRent.label}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  </div>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -303,61 +302,34 @@ export function SearchComponent() {
             name="branch"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        size={"sm"}
-                        className={cn(
-                          "h-[52px] justify-between",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value
-                          ? branches.find(
-                              (branch) => branch.value === field.value
-                            )?.label
-                          : "Nhãn"}
-                        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="hidden lg:block">
-                    <Command>
-                      <CommandGroup>
-                        {branches.map((branch) => (
-                          <CommandItem
-                            className="h-[52px] w-full"
-                            value={branch.label}
-                            key={branch.value}
-                            onSelect={() => {
-                              form.setValue("branch", branch.value);
-                            }}
-                          >
-                            {branch.label}
-                            <CheckIcon
-                              className={cn(
-                                "ml-auto h-4 w-4",
-                                branch.value === field.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
+                <FormControl>
+                  <div className="mr-6">
+                    <Select
+                      label="Nhãn"
+                      className="h-[52px]"
+                      variant="bordered"
+                      radius="sm"
+                      size="sm"
+                      selectorIcon={<BiLabel />}
+                      {...field}
+                    >
+                      {branches.map((branch) => (
+                        <SelectItem key={branch.value} value={branch.value}>
+                          {branch.label}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  </div>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger className="ml-2">Lọc thêm</AccordionTrigger>
+              <AccordionTrigger className="ml-3 mr-3">
+                Lọc thêm
+              </AccordionTrigger>
               <AccordionContent>
                 <div className="space-y-6">
                   {typeNumber === "1" ? (
@@ -366,58 +338,29 @@ export function SearchComponent() {
                       name="loaiCanHo"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <FormControl>
-                                <Button
-                                  variant="outline"
-                                  role="combobox"
-                                  size={"sm"}
-                                  className={cn(
-                                    "h-[52px] justify-between",
-                                    !field.value && "text-muted-foreground"
-                                  )}
-                                >
-                                  {field.value
-                                    ? loaiCanHos.find(
-                                        (loaiCanHo) =>
-                                          loaiCanHo.value === field.value
-                                      )?.label
-                                    : "Loại căn hộ"}
-                                  <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                </Button>
-                              </FormControl>
-                            </PopoverTrigger>
-                            <PopoverContent className="hidden lg:block">
-                              <Command>
-                                <CommandGroup>
-                                  {loaiCanHos.map((loaiCanHo) => (
-                                    <CommandItem
-                                      className="h-[52px] w-full"
-                                      value={loaiCanHo.label}
-                                      key={loaiCanHo.value}
-                                      onSelect={() => {
-                                        form.setValue(
-                                          "loaiCanHo",
-                                          loaiCanHo.value
-                                        );
-                                      }}
-                                    >
-                                      {loaiCanHo.label}
-                                      <CheckIcon
-                                        className={cn(
-                                          "ml-auto h-4 w-4",
-                                          loaiCanHo.value === field.value
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                        )}
-                                      />
-                                    </CommandItem>
-                                  ))}
-                                </CommandGroup>
-                              </Command>
-                            </PopoverContent>
-                          </Popover>
+                          <FormControl>
+                            <div className="mr-6">
+                              <Select
+                                label="Loại căn hộ"
+                                className="h-[52px]"
+                                variant="bordered"
+                                radius="sm"
+                                size="sm"
+                                selectorIcon={<BsHouses />}
+                                {...field}
+                              >
+                                {loaiCanHos.map((loaiCanHo, index) => (
+                                  <SelectItem
+                                    key={loaiCanHo?.value}
+                                    value={loaiCanHo?.value}
+                                    defaultChecked={index === 0}
+                                  >
+                                    {loaiCanHo?.value}
+                                  </SelectItem>
+                                ))}
+                              </Select>
+                            </div>
+                          </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -428,58 +371,29 @@ export function SearchComponent() {
                       name="loaiNhaO"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <FormControl>
-                                <Button
-                                  variant="outline"
-                                  role="combobox"
-                                  size={"sm"}
-                                  className={cn(
-                                    "h-[52px] justify-between",
-                                    !field.value && "text-muted-foreground"
-                                  )}
-                                >
-                                  {field.value
-                                    ? loaiNhaOs.find(
-                                        (loaiNhaO) =>
-                                          loaiNhaO.value === field.value
-                                      )?.label
-                                    : "Loại nhà ở"}
-                                  <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                </Button>
-                              </FormControl>
-                            </PopoverTrigger>
-                            <PopoverContent className="hidden lg:block">
-                              <Command>
-                                <CommandGroup>
-                                  {loaiNhaOs.map((loaiNhaO) => (
-                                    <CommandItem
-                                      className="h-[52px] w-full"
-                                      value={loaiNhaO.label}
-                                      key={loaiNhaO.value}
-                                      onSelect={() => {
-                                        form.setValue(
-                                          "loaiNhaO",
-                                          loaiNhaO.value
-                                        );
-                                      }}
-                                    >
-                                      {loaiNhaO.label}
-                                      <CheckIcon
-                                        className={cn(
-                                          "ml-auto h-4 w-4",
-                                          loaiNhaO.value === field.value
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                        )}
-                                      />
-                                    </CommandItem>
-                                  ))}
-                                </CommandGroup>
-                              </Command>
-                            </PopoverContent>
-                          </Popover>
+                          <FormControl>
+                            <div className="mr-6">
+                              <Select
+                                label="Loại nhà ở"
+                                className="h-[52px]"
+                                variant="bordered"
+                                radius="sm"
+                                size="sm"
+                                selectorIcon={<BsHouses />}
+                                {...field}
+                              >
+                                {loaiNhaOs.map((loaiNhaO, index) => (
+                                  <SelectItem
+                                    key={loaiNhaO?.value}
+                                    value={loaiNhaO?.value}
+                                    defaultChecked={index === 0}
+                                  >
+                                    {loaiNhaO?.value}
+                                  </SelectItem>
+                                ))}
+                              </Select>
+                            </div>
+                          </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -490,58 +404,29 @@ export function SearchComponent() {
                       name="loaiVanPhong"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <FormControl>
-                                <Button
-                                  variant="outline"
-                                  role="combobox"
-                                  size={"sm"}
-                                  className={cn(
-                                    "h-[52px] justify-between",
-                                    !field.value && "text-muted-foreground"
-                                  )}
-                                >
-                                  {field.value
-                                    ? loaiVanPhongs.find(
-                                        (loaiVanPhong) =>
-                                          loaiVanPhong.value === field.value
-                                      )?.label
-                                    : "Loại văn phòng"}
-                                  <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                </Button>
-                              </FormControl>
-                            </PopoverTrigger>
-                            <PopoverContent className="hidden lg:block">
-                              <Command>
-                                <CommandGroup>
-                                  {loaiVanPhongs.map((loaiVanPhong) => (
-                                    <CommandItem
-                                      className="h-[52px] w-full"
-                                      value={loaiVanPhong.label}
-                                      key={loaiVanPhong.value}
-                                      onSelect={() => {
-                                        form.setValue(
-                                          "loaiVanPhong",
-                                          loaiVanPhong.value
-                                        );
-                                      }}
-                                    >
-                                      {loaiVanPhong.label}
-                                      <CheckIcon
-                                        className={cn(
-                                          "ml-auto h-4 w-4",
-                                          loaiVanPhong.value === field.value
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                        )}
-                                      />
-                                    </CommandItem>
-                                  ))}
-                                </CommandGroup>
-                              </Command>
-                            </PopoverContent>
-                          </Popover>
+                          <FormControl>
+                            <div className="mr-6">
+                              <Select
+                                label="Loại văn phòng"
+                                className="h-[52px]"
+                                variant="bordered"
+                                radius="sm"
+                                size="sm"
+                                selectorIcon={<HiOutlineOfficeBuilding />}
+                                {...field}
+                              >
+                                {loaiVanPhongs.map((loaiVanPhong, index) => (
+                                  <SelectItem
+                                    key={loaiVanPhong?.value}
+                                    value={loaiVanPhong?.value}
+                                    defaultChecked={index === 0}
+                                  >
+                                    {loaiVanPhong?.value}
+                                  </SelectItem>
+                                ))}
+                              </Select>
+                            </div>
+                          </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -552,58 +437,29 @@ export function SearchComponent() {
                       name="loaiDatDai"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <FormControl>
-                                <Button
-                                  variant="outline"
-                                  role="combobox"
-                                  size={"sm"}
-                                  className={cn(
-                                    "h-[52px] justify-between",
-                                    !field.value && "text-muted-foreground"
-                                  )}
-                                >
-                                  {field.value
-                                    ? loaiDatDais.find(
-                                        (loaiDatDai) =>
-                                          loaiDatDai.value === field.value
-                                      )?.label
-                                    : "Loại đất đai"}
-                                  <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                </Button>
-                              </FormControl>
-                            </PopoverTrigger>
-                            <PopoverContent className="hidden lg:block">
-                              <Command>
-                                <CommandGroup>
-                                  {loaiDatDais.map((loaiDatDai) => (
-                                    <CommandItem
-                                      className="h-[52px] w-full"
-                                      value={loaiDatDai.label}
-                                      key={loaiDatDai.value}
-                                      onSelect={() => {
-                                        form.setValue(
-                                          "loaiDatDai",
-                                          loaiDatDai.value
-                                        );
-                                      }}
-                                    >
-                                      {loaiDatDai.label}
-                                      <CheckIcon
-                                        className={cn(
-                                          "ml-auto h-4 w-4",
-                                          loaiDatDai.value === field.value
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                        )}
-                                      />
-                                    </CommandItem>
-                                  ))}
-                                </CommandGroup>
-                              </Command>
-                            </PopoverContent>
-                          </Popover>
+                          <FormControl>
+                            <div className="mr-6">
+                              <Select
+                                label="Loại đất đai"
+                                className="h-[52px]"
+                                variant="bordered"
+                                radius="sm"
+                                size="sm"
+                                selectorIcon={<BiSolidLayerPlus />}
+                                {...field}
+                              >
+                                {loaiDatDais.map((loaiDatDai, index) => (
+                                  <SelectItem
+                                    key={loaiDatDai?.value}
+                                    value={loaiDatDai?.value}
+                                    defaultChecked={index === 0}
+                                  >
+                                    {loaiDatDai?.label}
+                                  </SelectItem>
+                                ))}
+                              </Select>
+                            </div>
+                          </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -612,63 +468,34 @@ export function SearchComponent() {
                     <></>
                   )}
                   {typeNumber === "1" ? (
-                    <div>
+                    <div className="space-y-6">
                       <FormField
                         control={form.control}
                         name="huongBanCong"
                         render={({ field }) => (
                           <FormItem className="flex flex-col">
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant="outline"
-                                    role="combobox"
-                                    size={"sm"}
-                                    className={cn(
-                                      "h-[52px] justify-between",
-                                      !field.value && "text-muted-foreground"
-                                    )}
-                                  >
-                                    {field.value
-                                      ? huongs.find(
-                                          (huong) => huong.value === field.value
-                                        )?.label
-                                      : "Hướng ban công"}
-                                    <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent className="hidden lg:block">
-                                <Command>
-                                  <CommandGroup>
-                                    {huongs.map((huongBanCong) => (
-                                      <CommandItem
-                                        className="h-[52px] w-full"
-                                        value={huongBanCong.label}
-                                        key={huongBanCong.value}
-                                        onSelect={() => {
-                                          form.setValue(
-                                            "huongBanCong",
-                                            huongBanCong.value
-                                          );
-                                        }}
-                                      >
-                                        {huongBanCong.label}
-                                        <CheckIcon
-                                          className={cn(
-                                            "ml-auto h-4 w-4",
-                                            huongBanCong.value === field.value
-                                              ? "opacity-100"
-                                              : "opacity-0"
-                                          )}
-                                        />
-                                      </CommandItem>
-                                    ))}
-                                  </CommandGroup>
-                                </Command>
-                              </PopoverContent>
-                            </Popover>
+                            <FormControl>
+                              <div className="mr-6">
+                                <Select
+                                  label="Hướng ban công"
+                                  className="h-[52px]"
+                                  variant="bordered"
+                                  radius="sm"
+                                  size="sm"
+                                  selectorIcon={<AiOutlineCompass />}
+                                  {...field}
+                                >
+                                  {huongs.map((huong) => (
+                                    <SelectItem
+                                      key={huong?.value}
+                                      value={huong?.value}
+                                    >
+                                      {huong?.label}
+                                    </SelectItem>
+                                  ))}
+                                </Select>
+                              </div>
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -678,57 +505,31 @@ export function SearchComponent() {
                         name="huongCuaChinh"
                         render={({ field }) => (
                           <FormItem className="flex flex-col">
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant="outline"
-                                    role="combobox"
-                                    size={"sm"}
-                                    className={cn(
-                                      "h-[52px] justify-between",
-                                      !field.value && "text-muted-foreground"
-                                    )}
+                            <FormItem className="flex flex-col">
+                              <FormControl>
+                                <div className="mr-6">
+                                  <Select
+                                    label="Hướng cửa chính"
+                                    className="h-[52px]"
+                                    variant="bordered"
+                                    radius="sm"
+                                    size="sm"
+                                    selectorIcon={<AiOutlineCompass />}
+                                    {...field}
                                   >
-                                    {field.value
-                                      ? huongs.find(
-                                          (huong) => huong.value === field.value
-                                        )?.label
-                                      : "Hướng cửa chính"}
-                                    <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent className="hidden lg:block">
-                                <Command>
-                                  <CommandGroup>
-                                    {huongs.map((huongCuaChinh) => (
-                                      <CommandItem
-                                        className="h-[52px] w-full"
-                                        value={huongCuaChinh.label}
-                                        key={huongCuaChinh.value}
-                                        onSelect={() => {
-                                          form.setValue(
-                                            "huongCuaChinh",
-                                            huongCuaChinh.value
-                                          );
-                                        }}
+                                    {huongs.map((huong) => (
+                                      <SelectItem
+                                        key={huong?.value}
+                                        value={huong?.value}
                                       >
-                                        {huongCuaChinh.label}
-                                        <CheckIcon
-                                          className={cn(
-                                            "ml-auto h-4 w-4",
-                                            huongCuaChinh.value === field.value
-                                              ? "opacity-100"
-                                              : "opacity-0"
-                                          )}
-                                        />
-                                      </CommandItem>
+                                        {huong?.label}
+                                      </SelectItem>
                                     ))}
-                                  </CommandGroup>
-                                </Command>
-                              </PopoverContent>
-                            </Popover>
+                                  </Select>
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -740,57 +541,31 @@ export function SearchComponent() {
                       name="huongCuaChinh"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <FormControl>
-                                <Button
-                                  variant="outline"
-                                  role="combobox"
-                                  size={"sm"}
-                                  className={cn(
-                                    "h-[52px] justify-between",
-                                    !field.value && "text-muted-foreground"
-                                  )}
+                          <FormItem className="flex flex-col">
+                            <FormControl>
+                              <div className="mr-6">
+                                <Select
+                                  label="Hướng cửa chính"
+                                  className="h-[52px]"
+                                  variant="bordered"
+                                  radius="sm"
+                                  size="sm"
+                                  selectorIcon={<AiOutlineCompass />}
+                                  {...field}
                                 >
-                                  {field.value
-                                    ? huongs.find(
-                                        (huong) => huong.value === field.value
-                                      )?.label
-                                    : "Hướng cửa chính"}
-                                  <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                </Button>
-                              </FormControl>
-                            </PopoverTrigger>
-                            <PopoverContent className="hidden lg:block">
-                              <Command>
-                                <CommandGroup>
-                                  {huongs.map((huongCuaChinh) => (
-                                    <CommandItem
-                                      className="h-[52px] w-full"
-                                      value={huongCuaChinh.label}
-                                      key={huongCuaChinh.value}
-                                      onSelect={() => {
-                                        form.setValue(
-                                          "huongCuaChinh",
-                                          huongCuaChinh.value
-                                        );
-                                      }}
+                                  {huongs.map((huong) => (
+                                    <SelectItem
+                                      key={huong?.value}
+                                      value={huong?.value}
                                     >
-                                      {huongCuaChinh.label}
-                                      <CheckIcon
-                                        className={cn(
-                                          "ml-auto h-4 w-4",
-                                          huongCuaChinh.value === field.value
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                        )}
-                                      />
-                                    </CommandItem>
+                                      {huong?.label}
+                                    </SelectItem>
                                   ))}
-                                </CommandGroup>
-                              </Command>
-                            </PopoverContent>
-                          </Popover>
+                                </Select>
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -801,57 +576,31 @@ export function SearchComponent() {
                       name="huongDat"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <FormControl>
-                                <Button
-                                  variant="outline"
-                                  role="combobox"
-                                  size={"sm"}
-                                  className={cn(
-                                    "h-[52px] justify-between",
-                                    !field.value && "text-muted-foreground"
-                                  )}
+                          <FormItem className="flex flex-col">
+                            <FormControl>
+                              <div className="mr-6">
+                                <Select
+                                  label="Hướng đất"
+                                  className="h-[52px]"
+                                  variant="bordered"
+                                  radius="sm"
+                                  size="sm"
+                                  selectorIcon={<AiOutlineCompass />}
+                                  {...field}
                                 >
-                                  {field.value
-                                    ? huongs.find(
-                                        (huong) => huong.value === field.value
-                                      )?.label
-                                    : "Hướng đất"}
-                                  <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                </Button>
-                              </FormControl>
-                            </PopoverTrigger>
-                            <PopoverContent className="hidden lg:block">
-                              <Command>
-                                <CommandGroup>
-                                  {huongs.map((huongDat) => (
-                                    <CommandItem
-                                      className="h-[52px] w-full"
-                                      value={huongDat.label}
-                                      key={huongDat.value}
-                                      onSelect={() => {
-                                        form.setValue(
-                                          "huongDat",
-                                          huongDat.value
-                                        );
-                                      }}
+                                  {huongs.map((huong) => (
+                                    <SelectItem
+                                      key={huong?.value}
+                                      value={huong?.value}
                                     >
-                                      {huongDat.label}
-                                      <CheckIcon
-                                        className={cn(
-                                          "ml-auto h-4 w-4",
-                                          huongDat.value === field.value
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                        )}
-                                      />
-                                    </CommandItem>
+                                      {huong?.label}
+                                    </SelectItem>
                                   ))}
-                                </CommandGroup>
-                              </Command>
-                            </PopoverContent>
-                          </Popover>
+                                </Select>
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -866,58 +615,31 @@ export function SearchComponent() {
                         name="soPhongNgu"
                         render={({ field }) => (
                           <FormItem className="flex flex-col">
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant="outline"
-                                    role="combobox"
-                                    size={"sm"}
-                                    className={cn(
-                                      "h-[52px] justify-between",
-                                      !field.value && "text-muted-foreground"
-                                    )}
+                            <FormItem className="flex flex-col">
+                              <FormControl>
+                                <div className="mr-6">
+                                  <Select
+                                    label="Số phòng ngủ"
+                                    className="h-[52px]"
+                                    variant="bordered"
+                                    radius="sm"
+                                    size="sm"
+                                    selectorIcon={<TbBed />}
+                                    {...field}
                                   >
-                                    {field.value
-                                      ? soPhongs.find(
-                                          (soPhong) =>
-                                            soPhong.value === field.value
-                                        )?.label
-                                      : "Số phòng ngủ"}
-                                    <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent className="hidden lg:block">
-                                <Command>
-                                  <CommandGroup>
                                     {soPhongs.map((soPhong) => (
-                                      <CommandItem
-                                        className="h-[52px] w-full"
-                                        value={soPhong.label}
-                                        key={soPhong.value}
-                                        onSelect={() => {
-                                          form.setValue(
-                                            "soPhongNgu",
-                                            soPhong.value
-                                          );
-                                        }}
+                                      <SelectItem
+                                        key={soPhong?.value}
+                                        value={soPhong?.value}
                                       >
-                                        {soPhong.label}
-                                        <CheckIcon
-                                          className={cn(
-                                            "ml-auto h-4 w-4",
-                                            soPhong.value === field.value
-                                              ? "opacity-100"
-                                              : "opacity-0"
-                                          )}
-                                        />
-                                      </CommandItem>
+                                        {soPhong?.label}
+                                      </SelectItem>
                                     ))}
-                                  </CommandGroup>
-                                </Command>
-                              </PopoverContent>
-                            </Popover>
+                                  </Select>
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -927,58 +649,28 @@ export function SearchComponent() {
                         name="soPhongTam"
                         render={({ field }) => (
                           <FormItem className="flex flex-col">
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant="outline"
-                                    role="combobox"
-                                    size={"sm"}
-                                    className={cn(
-                                      "h-[52px] justify-between",
-                                      !field.value && "text-muted-foreground"
-                                    )}
-                                  >
-                                    {field.value
-                                      ? soPhongs.find(
-                                          (soPhong) =>
-                                            soPhong.value === field.value
-                                        )?.label
-                                      : "Số phòng tắm"}
-                                    <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent className="hidden lg:block">
-                                <Command>
-                                  <CommandGroup>
-                                    {soPhongs.map((soPhong) => (
-                                      <CommandItem
-                                        className="h-[52px] w-full"
-                                        value={soPhong.label}
-                                        key={soPhong.value}
-                                        onSelect={() => {
-                                          form.setValue(
-                                            "soPhongTam",
-                                            soPhong.value
-                                          );
-                                        }}
-                                      >
-                                        {soPhong.label}
-                                        <CheckIcon
-                                          className={cn(
-                                            "ml-auto h-4 w-4",
-                                            soPhong.value === field.value
-                                              ? "opacity-100"
-                                              : "opacity-0"
-                                          )}
-                                        />
-                                      </CommandItem>
-                                    ))}
-                                  </CommandGroup>
-                                </Command>
-                              </PopoverContent>
-                            </Popover>
+                            <FormControl>
+                              <div className="mr-6">
+                                <Select
+                                  label="Số phòng tắm"
+                                  className="h-[52px]"
+                                  variant="bordered"
+                                  radius="sm"
+                                  size="sm"
+                                  selectorIcon={<PiBathtub />}
+                                  {...field}
+                                >
+                                  {soPhongs.map((soPhong) => (
+                                    <SelectItem
+                                      key={soPhong?.value}
+                                      value={soPhong?.value}
+                                    >
+                                      {soPhong?.label}
+                                    </SelectItem>
+                                  ))}
+                                </Select>
+                              </div>
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -988,92 +680,22 @@ export function SearchComponent() {
                     <></>
                   )}
 
-                  <div className="flex flex-row justify-between gap-x-4">
-                    <FormField
-                      control={form.control}
-                      name="searchWord"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <div>
-                              <Input
-                                type={"number"}
-                                className="h-[52px]"
-                                placeholder="Giá nhỏ nhất"
-                                {...field}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="searchWord"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <div>
-                              <Input
-                                type={"number"}
-                                className="h-[52px]"
-                                placeholder="Giá cao nhất"
-                                {...field}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div className="flex flex-row justify-between gap-x-4">
-                    <FormField
-                      control={form.control}
-                      name="searchWord"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <div>
-                              <Input
-                                type={"number"}
-                                className="h-[52px]"
-                                placeholder="Diện tích > m2"
-                                {...field}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="searchWord"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <div>
-                              <Input
-                                type={"number"}
-                                className="h-[52px]"
-                                placeholder="Diện tích < m2"
-                                {...field}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                  <RangeSelector
+                    range={priceRange}
+                    setRange={setPriceRange}
+                    type={"Phạm vi giá thành"}
+                  />
+                  <RangeSelector
+                    range={squareRange}
+                    setRange={setSquareRange}
+                    type={"Phạm vi diện tích"}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
           <Button className="w-[90%] bg-red-400" type="submit">
-            Submit
+            Tìm kiếm
           </Button>
         </form>
       </Form>

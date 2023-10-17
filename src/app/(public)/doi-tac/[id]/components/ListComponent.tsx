@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useBatDongSan } from "@/hooks/useBatDongSan";
 import { useState } from "react";
 import { HiSortAscending } from "react-icons/hi";
-import { ListItemComponent } from "./ListItemComponent";
+import { ListItemComponent } from "../../../bat-dong-san/components/ListItemComponent";
 import {
   Dropdown,
   DropdownItem,
@@ -13,20 +13,22 @@ import {
 } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { searchType } from "./LayoutBatDongSan";
+import { searchType } from "./LayoutBatDongSanCuaDoiTac";
 type props = {
   searchProps: searchType | unknown;
+  id: number;
 };
 
-export function ListComponent({ searchProps }: props) {
+export function ListComponent({ searchProps, id }: props) {
   const [currentPage, setCurrentPage] = useState(1);
-  const { fetchAllBatDongSan } = useBatDongSan();
+  const { fetchAllBatDongSanCuaDoiTac } = useBatDongSan();
   const { data } = useQuery({
     queryKey: [
       ["bat-dong-san", currentPage],
       ["props", searchProps],
+      ["iduser", id],
     ],
-    queryFn: () => fetchAllBatDongSan(currentPage, searchProps),
+    queryFn: () => fetchAllBatDongSanCuaDoiTac(currentPage, searchProps, id),
     staleTime: 60 * 1000 * 1,
     keepPreviousData: true,
   });

@@ -5,6 +5,7 @@ export async function GET(request: Request) {
   const searchParams = new URLSearchParams(url.search);
   const page = parseInt(searchParams?.get('page')); // Retrieves the value of the 'skip' parameter
   const limit = parseInt(searchParams?.get('limit')); // Retrieves the value of the 'limit' parameter
+  const userId = parseInt(searchParams?.get('userId'));
   const searchWord = searchParams.get('searchWord');
   const location = searchParams.get('location');
   const type = searchParams.get('type');
@@ -58,6 +59,12 @@ export async function GET(request: Request) {
       diaChi: {
         contains: location || '',
       },
+      ...(userId !== null 
+      ? {
+        userId: {
+          equals: userId || 1
+        },
+      }:{}),
 
       ...(isRent !== null
         ? {

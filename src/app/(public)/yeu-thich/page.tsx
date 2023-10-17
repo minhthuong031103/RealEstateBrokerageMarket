@@ -1,4 +1,4 @@
-import { LayoutBatDongSan } from "./components/LayoutBatDongSan";
+import { LayoutBatDongSanYeuThich } from "./components/LayoutBatDongSanYeuThich";
 
 async function page() {
   return (
@@ -6,14 +6,12 @@ async function page() {
       <div className="ml-4">
         <div className="container pt-[48px]">
           <div>
-            <h2 className="text-gray-500">
-              Trang chủ / Danh sách bất động sản
-            </h2>
+            <h2 className="text-gray-500">Trang chủ / Danh sách yêu thích</h2>
             <h1 className="text-[32px] text-neutral-700 font-semibold mt-4">
-              Danh sách bất động sản
+              Danh sách yêu thích của bạn
             </h1>
           </div>
-          <LayoutBatDongSan />
+          <LayoutBatDongSanYeuThich />
         </div>
       </div>
     </div>

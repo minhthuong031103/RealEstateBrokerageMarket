@@ -1,6 +1,6 @@
-import { LayoutBatDongSan } from "./components/LayoutBatDongSan";
+import { LayoutBatDongSanTheoType } from "./components/LayoutBatDongSanTheoType";
 
-async function page() {
+async function page({ params }) {
   return (
     <div className="container mx-auto lg:px-[52px]">
       <div className="ml-4">
@@ -13,7 +13,7 @@ async function page() {
               Danh sách bất động sản
             </h1>
           </div>
-          <LayoutBatDongSan />
+          <LayoutBatDongSanTheoType id={params.loaiId} />
         </div>
       </div>
     </div>
