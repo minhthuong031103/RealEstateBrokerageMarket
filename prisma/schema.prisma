@@ -9,52 +9,61 @@ datasource db {
 }
 
 model User {
-  id                   Int             @id @default(autoincrement())
-  name                 String
-  email                String          @unique
-  phoneNumber          String
-  password             String
-  diaChi               String?
-  role                 String?         @default("user")
-  avatar               String?         @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
-  isEmailVerified      Boolean         @default(false)
-  otp                  String?
-  anhCCCDTruoc         String?
-  anhCCCDSau           String?
-  anhGiayPhepKinhDoanh String?
-  anhChanDung          String?
-  luot                 Int?            @default(0)
-  luotChuyenNghiep     Int?            @default(0)
-  luotVip              Int?            @default(0)
-  duyetDoiTac          String?
-  directMessages       DirectMessage[]
-  seenMessages         SeenMessage[]
-  BaiViets             BaiViet[]
+  id                     Int             @id @default(autoincrement())
+  name                   String
+  email                  String          @unique
+  phoneNumber            String?
+  password               String
+  diaChi                 String?
+  role                   String?         @default("user")
+  avatar                 String?         @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
+  isEmailVerified        Boolean         @default(false)
+  otp                    String?
+  anhCCCDTruoc           String?
+  anhCCCDSau             String?
+  anhGiayPhepKinhDoanh   String?
+  anhChanDung            String?
+  luot                   Int?            @default(0)
+  luotChuyenNghiep       Int?            @default(0)
+  luotVip                Int?            @default(0)
+  duyetDoiTac            String?
+  stripeCurrentPeriodEnd DateTime?       @map("stripe_current_period_end")
+  stripeCustomerId       String?         @unique @map("stripe_customer_id")
+  stripePriceId          String?         @map("stripe_price_id")
+  stripeSubscriptionId   String?         @unique @map("stripe_subscription_id")
+  createdAt              DateTime        @default(now())
+  giamGia                Int?            @default(0)
+  directMessages         DirectMessage[]
+  seenMessages           SeenMessage[]
+  BaiViets               BaiViet[]
+  Revenues               Revenue[]
+  Favourite              Favourite?
 }
 
 model LoaiBDS {
   id        Int        @id @default(autoincrement())
   name      String     @unique
+  createdAt DateTime   @default(now())
   loaiHinhs LoaiHinh[]
 }
 
 model BaiViet {
-  id                  Int       @id @default(autoincrement())
+  id                  Int         @id @default(autoincrement())
   tieuDe              String
   moTa                String
   nhan                String
-  trangThai           String    @default("Chờ duyệt")
-  ngayDang            DateTime  @default(now())
+  trangThai           String      @default("Chờ duyệt")
+  ngayDang            DateTime    @default(now())
   userId              Int
   gia                 Float
-  isChothue           Boolean   @default(false)
+  isChothue           Boolean     @default(false)
   diaChi              String
   dienTich            Float
   chieuDai            Float
   chieuRong           Float
-  hinhAnhSanPham      String?   @db.LongText
-  hinhAnhGiayTo       String?   @db.LongText
-  video               String?   @db.LongText
+  hinhAnhSanPham      String?     @db.LongText
+  hinhAnhGiayTo       String?     @db.LongText
+  video               String?     @db.LongText
   tinhTrangPhapLy     String?
   loaiHinhId          Int
   soTang              Int?
@@ -63,7 +72,7 @@ model BaiViet {
   soPhongTam          Int?
   hinhAnhBanVeThietKe String?
   tinhTrangNoiThat    String?
-  danhSachTienNghi    String?   @db.LongText
+  danhSachTienNghi    String?     @db.LongText
   hoanThanh           DateTime?
   suaChuaLanCuoi      DateTime?
   huongCuaChinh       String?
@@ -71,8 +80,11 @@ model BaiViet {
   dienTichHoBoi       Float?
   coNhaKho            Boolean?
   huongDat            String?
-  user                User      @relation(fields: [userId], references: [id])
-  loaiHinh            LoaiHinh  @relation(fields: [loaiHinhId], references: [id])
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime?   @updatedAt
+  user                User        @relation(fields: [userId], references: [id])
+  loaiHinh            LoaiHinh    @relation(fields: [loaiHinhId], references: [id])
+  Favorites           Favourite[]
 
   @@index([loaiHinhId])
   @@index([userId])
@@ -82,6 +94,7 @@ model LoaiHinh {
   id        Int       @id @default(autoincrement())
   name      String    @unique
   loaiBDSId Int
+  createdAt DateTime  @default(now())
   loaiBDS   LoaiBDS   @relation(fields: [loaiBDSId], references: [id])
   baiViets  BaiViet[]
 
@@ -109,6 +122,7 @@ model SeenMessage {
   userId          Int
   directMessageId String
   seenAt          DateTime?
+  createdAt       DateTime      @default(now())
   user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   directMessage   DirectMessage @relation(fields: [directMessageId], references: [id], onDelete: Cascade)
 
@@ -117,17 +131,20 @@ model SeenMessage {
 }
 
 model Banners {
-  id          Int     @id @default(autoincrement())
-  bannerIndex Int     @unique
+  id          Int      @id @default(autoincrement())
+  bannerIndex Int      @unique
   anhBanner   String?
+  createdAt   DateTime @default(now())
 }
 
-model Favourites {
-  id     Int @id @default(autoincrement())
-  userId Int
-  postId Int
+model Favourite {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id])
+  baiViets  BaiViet[]
 
-  @@index([userId, postId])
+  @@index([userId])
 }
 
 model Notification {
@@ -166,16 +183,18 @@ model PaymentHistory {
   @@index([userId])
 }
 
-model Revenues {
-  id                 Int   @id @default(autoincrement())
-  thang              Int
-  nam                Int
-  incomeCoBan        Float
-  incomeChuyenNghiep Float
-  incomeVip          Float
-  luotCoBan          Int
-  luotChuyenNghiep   Int
-  luotVip            Int
+
+
+model Revenue {
+  id               Int            @id @default(autoincrement())
+  serviceName      String
+  number           Int
+  amount           Float
+  createdAt        DateTime       @default(now())
+  userId           Int
+  user             User           @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
 
 model ServicePack {
@@ -183,4 +202,13 @@ model ServicePack {
   tenGoi     String
   giaGoi     Float
   chiTietGoi String? @db.LongText
+}
+
+model BaiVietToFavourite {
+  A Int
+  B Int
+
+  @@unique([A, B], map: "_BaiVietToFavourite_AB_unique")
+  @@index([B], map: "_BaiVietToFavourite_B_index")
+  @@map("_BaiVietToFavourite")
 }

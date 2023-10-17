@@ -3,14 +3,21 @@ import toast from 'react-hot-toast';
 
 export const useBaiViet = () => {
   const onCreateBaiViet = async (data) => {
-    const res = await postRequest({
-      endPoint: '/api/bai-viet/create',
-      isFormData: false,
-      formData: data,
-    });
-    console.log(res);
-    if (res) {
-      toast.success('Đăng bài thành công');
+    try {
+      const res = await postRequest({
+        endPoint: '/api/bai-viet/create',
+        isFormData: false,
+        formData: data,
+      });
+      console.log(res);
+      if (res) {
+        toast.success('Đăng bài thành công');
+      }
+      return true;
+    } catch (e) {
+      console.log(e);
+      toast.error('Đăng bài thất bại');
+      return false;
     }
   };
 
