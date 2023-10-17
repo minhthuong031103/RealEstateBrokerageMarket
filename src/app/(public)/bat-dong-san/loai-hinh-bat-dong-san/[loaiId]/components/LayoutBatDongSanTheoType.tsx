@@ -1,10 +1,10 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
 import { useEffect, useState } from "react";
-import { BatDongSanNoiBat } from "./BatDongSanNoiBat";
-import { CacLoaiHinhBatDongSan } from "./CacLoaiHinhBatDongSan";
-import { ListComponent } from "./ListComponent";
-import { SearchComponent } from "./SearchComponent";
+import { BatDongSanNoiBat } from "../../../components/BatDongSanNoiBat";
+import { CacLoaiHinhBatDongSan } from "../../../components/CacLoaiHinhBatDongSan";
+import { ListComponent } from "../../../components/ListComponent";
+import { SearchComponent } from "../../../components/SearchComponent";
 
 export interface searchType {
   searchWord: string;
@@ -26,25 +26,27 @@ export interface searchType {
   minSquare: string;
   maxSquare: string;
 }
-export function LayoutBatDongSan() {
+export function LayoutBatDongSanTheoType({ id }) {
   const [searchProps, setSearchProps] = useState<searchType>();
-  const url = new URL(window.location.href);
-  const searchParams = new URLSearchParams(url.search);
-  const tukhoa = searchParams?.get("tukhoa");
-  const diachi = searchParams?.get("diachi");
-  const loaibds = searchParams?.get("loaibds");
-  const hinhthuc = searchParams?.get("hinhthuc");
+  const type =
+    id === "1"
+      ? "Căn hộ"
+      : id === "2"
+      ? "Đất"
+      : id === "3"
+      ? "Nhà ở"
+      : "Văn phòng";
   useEffect(() => {
     setProps();
   }, []);
 
   const setProps = () => {
     setSearchProps({
-      searchWord: tukhoa || "",
-      location: diachi || "",
-      type: loaibds || "",
+      searchWord: "",
+      location: "",
+      type: type,
       branch: "",
-      isRent: hinhthuc || "",
+      isRent: "",
       loaiCanHo: "",
       loaiNhaO: "",
       loaiVanPhong: "",

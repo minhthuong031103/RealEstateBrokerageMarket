@@ -3,6 +3,13 @@ import prisma from '@/lib/prisma';
 
 export async function GET() {
   const bds=await prisma.baiViet.findMany({
+    include: {
+      loaiHinh: {
+        include: {
+          loaiBDS: true,
+        },
+      },
+    },
     where: {
         nhan: {
             contains: "Nổi bật"
