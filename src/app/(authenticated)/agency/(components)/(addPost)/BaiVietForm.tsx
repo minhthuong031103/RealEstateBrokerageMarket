@@ -21,6 +21,7 @@ import DialogCustom from '@/components/ui/dialogCustom';
 import { Spinner } from '@nextui-org/react';
 import { ImageList } from '@/components/ui/ImageList';
 import { DatePicker } from '@/components/ui/date-picker';
+import { Nhan } from './Nhan';
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
@@ -224,6 +225,7 @@ export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
         <div className="text-sm font-bold">Video bất động sản</div>
         <VideoUploader videoUrl={videoUrl} setVideoUrl={setVideoUrl} />
       </div>
+      <Nhan />
       <TieuDe tieuDe={tieuDe} setTieuDe={setTieude} />
       <MoTaChiTiet moTa={moTa} setMota={setMoTa} />
 

@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { CommonSvg } from '@/assets/CommonSvg';
 import { currencyFormat } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
+import { useSession } from 'next-auth/react';
 export const MuaLeModal = ({ setIsModalOpen, isModalOpen }) => {
   const [selectedType, setSelectedType] = React.useState(new Set([]));
   const [typeTouched, setTypeTouched] = React.useState(false);
@@ -21,6 +22,7 @@ export const MuaLeModal = ({ setIsModalOpen, isModalOpen }) => {
   const [stripePromise, setStripePromise] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [quantity, setQuantity] = React.useState(1);
+  const sessionUser = useSession();
   useEffect(() => {
     const getConfig = async () => {
       const res = await getRequest({
@@ -55,6 +57,7 @@ export const MuaLeModal = ({ setIsModalOpen, isModalOpen }) => {
     const session = await postRequest({
       endPoint: '/api/stripe/checkout-session/mua-le',
       formData: {
+        userId: sessionUser?.data?.user?.id,
         type: phapLyValueArray?.[0],
         amount,
         giamGia: 20,
