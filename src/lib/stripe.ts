@@ -47,11 +47,7 @@ export async function getUserSubscriptionPlan() {
     const userSubscription = await stripe.subscriptions.retrieve(
       dbUser.stripeSubscriptionId
     );
-    const products = await stripe.products.list();
-    // const plans = await stripe.plans.list();
-    //plan is parent of product
-    console.log('sub', userSubscription);
-    console.log('Products', products);
+
     isCanceled = userSubscription.cancel_at_period_end;
     plan = userSubscription.plan;
   }
@@ -63,5 +59,6 @@ export async function getUserSubscriptionPlan() {
     stripeCustomerId: dbUser.stripeCustomerId,
     isSubscribed,
     isCanceled,
+    userId: dbUser.id,
   };
 }

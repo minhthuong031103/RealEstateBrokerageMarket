@@ -120,10 +120,10 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
           className="w-[50%] "
+          isChild={true}
         >
           <div className="flex flex-col gap-y-6 w-full px-1">
             <Select
-              isRequired
               key={'province'}
               radius={'md'}
               label="Thành phố, tỉnh thành"
@@ -148,7 +148,6 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
               ))}
             </Select>
             <Select
-              isRequired
               key={'district'}
               radius={'md'}
               label="Quận, huyện"
@@ -173,7 +172,6 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
               ))}
             </Select>
             <Select
-              isRequired
               key={'ward'}
               radius={'md'}
               label="Xã, phường"
@@ -242,7 +240,6 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
         }}
       /> */}
       <Select
-        isRequired
         isOpen={false}
         label="Địa chỉ bất động sản"
         placeholder="Chọn địa chỉ"

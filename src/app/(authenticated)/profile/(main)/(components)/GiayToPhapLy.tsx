@@ -17,7 +17,6 @@ export const GiayToPhapLy = ({ setPhapLy }) => {
   return (
     <div>
       <Select
-        isRequired
         key={'phaply'}
         radius={'md'}
         label="Tình trạng pháp lý"

@@ -5,14 +5,13 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import Loader from '@/components/Loader';
 import { useSession } from 'next-auth/react';
-import toast from 'react-hot-toast';
 
 export const Otp = ({ email }) => {
   console.log(email);
   const [otp, setOtp] = useState('');
   const [counter, setCounter] = useState(30);
   const [canResend, setCanResend] = useState(false);
-  const { onSendAgain, onVerifyOtp } = useAuth();
+  const { onSendAgain, onVerifyOtp, onFirstSend } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const { update, data: session } = useSession();
   useEffect(() => {
@@ -25,7 +24,7 @@ export const Otp = ({ email }) => {
     return () => clearTimeout(timer);
   }, [counter, canResend]);
   useEffect(() => {
-    toast.success('OTP has been sent to your email');
+    onFirstSend(email);
   }, []);
   const handleResend = () => {
     setCanResend(false);

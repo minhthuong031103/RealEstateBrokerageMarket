@@ -3,12 +3,15 @@
 import { TinhTrangNoiThat, noiThat } from '@/lib/constant';
 import { Select, SelectItem } from '@nextui-org/react';
 import React, { useEffect } from 'react';
+import { DanhSachTienNghi } from './DanhSachTienNghi';
 
 export const SelectNoiThat = ({
   setPhongNgu,
   setPhongTam,
   setNoiThat,
   setSoTang,
+  danhSachTienNghi,
+  setDanhSachTienNghi,
 }) => {
   const [selectedPhongNgu, setSelectedPhongNgu] = React.useState(new Set([]));
   const [phongNguTouched, setPhongNguTouched] = React.useState(false);
@@ -58,7 +61,6 @@ export const SelectNoiThat = ({
     <div className="flex flex-col gap-y-6 max-w-xs lg:max-w-lg ">
       <div className="flex flex-col lg:flex-row h-full gap-6 justify-between max-w-xs lg:max-w-lg ">
         <Select
-          isRequired
           key={'phongngu'}
           radius={'md'}
           label="Số phòng ngủ"
@@ -83,7 +85,6 @@ export const SelectNoiThat = ({
         </Select>
 
         <Select
-          isRequired
           key={'phongtam'}
           radius={'md'}
           label="Số phòng tắm"
@@ -108,7 +109,6 @@ export const SelectNoiThat = ({
         </Select>
       </div>
       <Select
-        isRequired
         key={'noithat'}
         radius={'md'}
         label="Nội thất"
@@ -131,7 +131,6 @@ export const SelectNoiThat = ({
       </Select>
 
       <Select
-        isRequired
         key={'sotang'}
         radius={'md'}
         label="Số tầng"
@@ -152,6 +151,10 @@ export const SelectNoiThat = ({
           </SelectItem>
         ))}
       </Select>
+      <DanhSachTienNghi
+        danhSachTienNghi={danhSachTienNghi}
+        setDanhSachTienNghi={setDanhSachTienNghi}
+      />
     </div>
   );
 };

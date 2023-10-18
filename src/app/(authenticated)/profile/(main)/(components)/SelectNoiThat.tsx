@@ -58,7 +58,6 @@ export const SelectNoiThat = ({
     <div className="flex flex-col gap-y-6 max-w-xs lg:max-w-lg ">
       <div className="flex flex-col lg:flex-row h-full gap-6 justify-between max-w-xs lg:max-w-lg ">
         <Select
-          isRequired
           key={'phongngu'}
           radius={'md'}
           label="Số phòng ngủ"
@@ -83,7 +82,6 @@ export const SelectNoiThat = ({
         </Select>
 
         <Select
-          isRequired
           key={'phongtam'}
           radius={'md'}
           label="Số phòng tắm"
@@ -108,7 +106,6 @@ export const SelectNoiThat = ({
         </Select>
       </div>
       <Select
-        isRequired
         key={'noithat'}
         radius={'md'}
         label="Nội thất"
@@ -131,7 +128,6 @@ export const SelectNoiThat = ({
       </Select>
 
       <Select
-        isRequired
         key={'sotang'}
         radius={'md'}
         label="Số tầng"

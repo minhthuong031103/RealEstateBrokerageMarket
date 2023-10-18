@@ -36,7 +36,7 @@ interface FileDialogProps<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > extends React.HTMLAttributes<HTMLDivElement> {
   name: TName;
-  setValue: UseFormSetValue<TFieldValues>;
+  setValue?: UseFormSetValue<TFieldValues>;
   accept?: Accept;
   maxSize?: number;
   maxFiles?: number;
@@ -93,7 +93,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
 
   // Register files to react-hook-form
   React.useEffect(() => {
-    setValue(name, files as PathValue<TFieldValues, Path<TFieldValues>>);
+    setValue?.(name, files as PathValue<TFieldValues, Path<TFieldValues>>);
   }, [files]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -120,14 +120,14 @@ export function FileDialog<TFieldValues extends FieldValues>({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" disabled={disabled}>
-          Upload Images
-          <span className="sr-only">Upload Images</span>
+        <Button className={className} variant="outline" disabled={disabled}>
+          Tải ảnh lên
+          <span className="sr-only">Tải ảnh lên</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
         <p className="absolute left-5 top-4 text-base font-medium text-muted-foreground">
-          Upload your images
+          Tải ảnh của bạn lên
         </p>
 
         {(files && files?.length < maxFiles) || !files ? (
@@ -160,22 +160,21 @@ export function FileDialog<TFieldValues extends FieldValues>({
                 <div className="grid place-items-center gap-1 sm:px-5">
                   <Icons.upload className="h-8 w-8 text-muted-foreground" />
                   <p className="mt-2 text-base font-medium text-muted-foreground">
-                    Drag {`'n'`} drop file here, or click to select file
+                    Kéo và thả ảnh vào đây hoặc click để tải ảnh lên
                   </p>
                   <p className="text-sm text-slate-500">
-                    Please upload file with size less than{' '}
+                    Vui lòng chọn file có kích thước nhỏ hơn{' '}
                     {formatBytes(maxSize)}
                   </p>
                 </div>
               )}
             </div>
             <p className="text-center text-sm font-medium text-muted-foreground">
-              You can upload up to {maxFiles}{' '}
-              {maxFiles === 1 ? 'file' : 'files'}
+              Bạn có thể tải lên {maxFiles} {maxFiles === 1 ? 'file' : 'files'}
             </p>
           </div>
         ) : null}
-        <ScrollArea className="h-[300px] mt-10">
+        <ScrollArea className="h-[300px] mt-10 px-3">
           {files?.length ? (
             <div className="grid gap-5">
               {files?.map((file, i) => (
@@ -199,8 +198,8 @@ export function FileDialog<TFieldValues extends FieldValues>({
             onClick={() => setFiles([])}
           >
             <Icons.trash className="mr-2 h-4 w-4 text-primary" />
-            Remove All
-            <span className="sr-only">Remove all</span>
+            Xóa tất cả
+            <span className="sr-only">Xóa tất cả</span>
           </Button>
         ) : null}
       </DialogContent>
@@ -258,7 +257,7 @@ function FileCard({ i, file, files, setFiles }: FileCardProps) {
     document.addEventListener('keydown', handleKeydown);
     return () => document.removeEventListener('keydown', handleKeydown);
   }, [onCrop]);
-
+  console.log(file?.type.startsWith('image'));
   return (
     <div className="relative flex items-center justify-between gap-2.5">
       <div className="flex items-center gap-2">
@@ -269,7 +268,7 @@ function FileCard({ i, file, files, setFiles }: FileCardProps) {
         />
         <div className="flex flex-col">
           <p className="line-clamp-1 text-sm font-medium text-muted-foreground">
-            {file.name}
+            {file.name.length > 30 ? file.name.slice(0, 30) + '...' : file.name}
           </p>
           <p className="text-xs text-slate-500">
             {(file.size / 1024 / 1024).toFixed(2)}MB
@@ -277,80 +276,79 @@ function FileCard({ i, file, files, setFiles }: FileCardProps) {
         </div>
       </div>
       <div className="flex items-center gap-2">
-        {file?.type?.startsWith('image') ||
-          (file != null && (
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
-              <DialogTrigger asChild>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  className="h-7 w-7"
-                >
-                  <Icons.crop
-                    className="h-4 w-4 text-primary"
-                    aria-hidden="true"
-                  />
-                  <span className="sr-only">Crop image</span>
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <p className="absolute left-5 top-4 text-base font-medium text-muted-foreground">
-                  Crop image
-                </p>
-                <div className="mt-8 grid place-items-center space-y-5">
-                  <Cropper
-                    ref={cropperRef}
-                    className="h-[450px] w-[450px] object-cover"
-                    zoomTo={0.5}
-                    initialAspectRatio={1 / 1}
-                    preview=".img-preview"
-                    src={file.preview}
-                    viewMode={1}
-                    minCropBoxHeight={10}
-                    minCropBoxWidth={10}
-                    background={false}
-                    responsive={true}
-                    autoCropArea={1}
-                    checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
-                    guides={true}
-                  />
-                  <div className="flex items-center justify-center space-x-2">
-                    <Button
-                      aria-label="Crop image"
-                      type="button"
-                      size="sm"
-                      className="h-8"
-                      onClick={() => {
-                        onCrop();
-                        setIsOpen(false);
-                      }}
-                    >
-                      <Icons.crop className="mr-2 h-3.5 w-3.5 text-primary" />
-                      Crop Image
-                    </Button>
-                    <Button
-                      aria-label="Reset crop"
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      className="h-8"
-                      onClick={() => {
-                        cropperRef.current?.cropper.reset();
-                        setCropData(null);
-                      }}
-                    >
-                      <Icons.reset
-                        className="mr-2 h-3.5 w-3.5 text-primary"
-                        aria-hidden="true"
-                      />
-                      Reset Crop
-                    </Button>
-                  </div>
+        {file !== null && (
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                className="h-7 w-7"
+              >
+                <Icons.crop
+                  className="h-4 w-4 text-primary"
+                  aria-hidden="true"
+                />
+                <span className="sr-only"> Cắt ảnh</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <p className="absolute left-5 top-4 text-base font-medium text-muted-foreground">
+                Cắt ảnh
+              </p>
+              <div className="mt-8 grid place-items-center space-y-5">
+                <Cropper
+                  ref={cropperRef}
+                  className="h-[450px] w-[450px] object-cover"
+                  zoomTo={0.5}
+                  initialAspectRatio={1 / 1}
+                  preview=".img-preview"
+                  src={file.preview}
+                  viewMode={1}
+                  minCropBoxHeight={10}
+                  minCropBoxWidth={10}
+                  background={false}
+                  responsive={true}
+                  autoCropArea={1}
+                  checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
+                  guides={true}
+                />
+                <div className="flex items-center justify-center space-x-2">
+                  <Button
+                    aria-label="Crop image"
+                    type="button"
+                    size="sm"
+                    className="h-8"
+                    onClick={() => {
+                      onCrop();
+                      setIsOpen(false);
+                    }}
+                  >
+                    <Icons.crop className="mr-2 h-3.5 w-3.5 text-secondary-50" />
+                    Cắt ảnh
+                  </Button>
+                  <Button
+                    aria-label="Reset crop"
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-8"
+                    onClick={() => {
+                      cropperRef.current?.cropper.reset();
+                      setCropData(null);
+                    }}
+                  >
+                    <Icons.reset
+                      className="mr-2 h-3.5 w-3.5 text-primary"
+                      aria-hidden="true"
+                    />
+                    Bỏ thay đổi
+                  </Button>
                 </div>
-              </DialogContent>
-            </Dialog>
-          ))}
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
         <Button
           type="button"
           variant="outline"

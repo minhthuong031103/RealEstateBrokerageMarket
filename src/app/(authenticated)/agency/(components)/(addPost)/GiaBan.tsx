@@ -21,7 +21,6 @@ export const GiaBan = ({ giaBan, setGiaBan }) => {
   return (
     <div className="flex flex-col lg:flex-row gap-6 max-w-xs lg:max-w-lg ">
       <Input
-        isRequired
         label="Giá bán"
         isInvalid={giaBan !== '' ? false : true}
         errorMessage={`${giaBan !== '' ? '' : 'Vui lòng nhập giá bán'}`}
