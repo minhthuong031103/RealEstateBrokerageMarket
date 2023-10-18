@@ -5,7 +5,7 @@ import { Navbar, NavbarBrand, NavbarContent, DropdownItem, DropdownTrigger, Drop
 import Logo from "@/components/logo";
 import { BellIcon} from "@radix-ui/react-icons";
 
-function Header() {
+function Header({session}) {
     return (
         <Navbar shouldHideOnScroll>
             <NavbarBrand>
@@ -30,15 +30,15 @@ function Header() {
                             as="button"
                             className="transition-transform"
                             color="secondary"
-                            name="Jason Hughes"
+                            name={session?.user?.name}
                             size="sm"
-                            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                            src={session?.user?.avatar}
                         />
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
                         <DropdownItem key="profile" className="h-14 gap-2">
                             <p className="font-semibold">Signed in as</p>
-                            <p className="font-semibold">zoey@example.com</p>
+                            <p className="font-semibold">{session?.user?.name}</p>
                         </DropdownItem>
                         <DropdownItem key="settings">My Settings</DropdownItem>
                         <DropdownItem key="team_settings">Team Settings</DropdownItem>

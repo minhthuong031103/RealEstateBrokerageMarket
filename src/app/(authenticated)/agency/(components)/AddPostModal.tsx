@@ -7,6 +7,7 @@ import DialogCustom from '@/components/ui/dialogCustom';
 // import { Label } from '@/components/ui/label';
 import { SelectDanhMuc } from './SelectDanhMuc';
 import { BaiVietForm } from './(addPost)/BaiVietForm';
+import { PlusIcon } from 'lucide-react';
 // import * as z from 'zod';
 
 // const formSchema = z.object({});
@@ -16,12 +17,13 @@ export const AddPostModal = ({ subscribedPlan, user, currentlyPlan }) => {
   const [thue, setThue] = React.useState(false);
   const [ban, setBan] = React.useState(false);
   return (
-    <div className="w-full h-full">
+    <div className="right-0">
       <Button
         onClick={() => {
           setOpen(true);
         }}
       >
+        <PlusIcon className='mr-2'/>
         Đăng tin bất động sản
       </Button>
 

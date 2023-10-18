@@ -21,5 +21,7 @@ export const useBaiViet = () => {
     }
   };
 
-  return { onCreateBaiViet };
+  return {
+    onCreateBaiViet,
+  };
 };

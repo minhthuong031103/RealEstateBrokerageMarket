@@ -1,7 +1,26 @@
-import { Card } from '@/components/ui/card'
-import React from 'react'
+'use client'
 
-function AgencyInfo() {
+import React, { useState, useEffect } from 'react'
+import { Card } from '@/components/ui/card'
+import { useDoiTac } from '@/hooks/useDoiTac';
+
+
+function AgencyInfo({session}) {
+
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+      const fetchThongTinDoiTac = async () => {
+          const user = await fetchDoiTacTheoId(session?.user?.id);
+          setUserInfo(user[0]);
+          return user;
+      };
+
+      fetchThongTinDoiTac();
+  }, []);
+
+  const {fetchDoiTacTheoId} = useDoiTac();
+
   return (
     <div>
       <Card className="bg-white p-4 rounded-lg shadow-md relative mt-4">
@@ -9,15 +28,15 @@ function AgencyInfo() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <div>
             <h2 className="font-semibold">Họ và tên</h2>
-            <p>Trương Anh Khoa</p>
+            <p>{userInfo?.name}</p>
           </div>
           <div>
             <h2 className="font-semibold">Số điện thoại</h2>
-            <p>(+84) 868103589</p>
+            <p>{userInfo?.phoneNumber}</p>
           </div>
           <div>
             <h2 className="font-semibold">Email</h2>
-            <p>anhkhoatqt11@gmail.com</p>
+            <p>{userInfo?.email}</p>
           </div>
           <div>
             <h2 className="font-semibold">Thông tin mô tả</h2>

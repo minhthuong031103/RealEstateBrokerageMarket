@@ -1,21 +1,37 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import { Image } from '@nextui-org/react';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from '@/components/ui/dialog';
 import { DialogTrigger } from '@radix-ui/react-dialog';
+import { useDoiTac } from '@/hooks/useDoiTac';
 
-function AgencyImageAndName() {
+function AgencyImageAndName({ session }) {
+
+    const [userInfo, setUserInfo] = useState(null);
+
+    useEffect(() => {
+        const fetchThongTinDoiTac = async () => {
+            const user = await fetchDoiTacTheoId(session?.user?.id);
+            setUserInfo(user[0]);
+            return user;
+        };
+
+        fetchThongTinDoiTac();
+    }, []);
+
+    const {fetchDoiTacTheoId} = useDoiTac();
+
     return (
         <Card className="bg-white p-4 rounded-lg shadow-md flex flex-col md:flex-row items-center mt-4">
             <div className="flex-shrink-0 w-32 h-32 md:w-32 md:h-32 rounded-full overflow-hidden mb-4 md:mr-4 md:mb-0">
-                <Image src='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg' className="w-full h-full object-cover" />
+                <Image src={userInfo?.avatar} className="w-full h-full object-cover" />
             </div>
             <div className="flex-grow">
-                <CardTitle className="text-lg font-semibold">Trương Anh Khoa</CardTitle>
-                <CardDescription>Đối tác từ ngày 05/09/2023</CardDescription>
+                <CardTitle className="text-lg font-semibold">{userInfo?.name}</CardTitle>
+                <CardDescription>{userInfo?.email}</CardDescription>
             </div>
             {/* <Button className="mt-2 md:mt-0">Chỉnh sửa</Button> */}
             <Dialog>
@@ -30,7 +46,7 @@ function AgencyImageAndName() {
                     <div className="flex flex-col items-center space-y-4">
                         <div className="w-32 h-32 bg-gray-300 rounded-full overflow-hidden">
                             <Image
-                                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
+                                src={userInfo?.avatar}
                                 alt="Profile"
                                 className="w-full h-full object-cover"
                             />
@@ -44,6 +60,7 @@ function AgencyImageAndName() {
                                     type="text"
                                     id="fullName"
                                     name="fullName"
+                                    value={userInfo?.name}
                                     className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                                 />
                             </div>
@@ -55,6 +72,7 @@ function AgencyImageAndName() {
                                     type="email"
                                     id="email"
                                     name="email"
+                                    value={userInfo?.phoneNumber}
                                     className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                                 />
                             </div>
@@ -66,6 +84,7 @@ function AgencyImageAndName() {
                                     type="email"
                                     id="email"
                                     name="email"
+                                    value={userInfo?.email}
                                     className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                                 />
                             </div>

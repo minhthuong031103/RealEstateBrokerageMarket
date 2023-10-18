@@ -1,9 +1,10 @@
 import React from 'react';
 import SearchBarAndCreate from '../(components)/SearchBarAndCreate';
-import RealEstateCard from '../(components)/RealEstateCard';
 import { getSession } from '@/lib/auth';
 import { getUserSubscriptionPlan, stripe } from '@/lib/stripe';
 import prisma from '@/lib/prisma';
+import ListItemRealEstate from "../(components)/ListItemRealEstate";
+
 
 const page = async () => {
   const session = await getSession();
@@ -27,11 +28,7 @@ const page = async () => {
         user={user}
         currentlyPlan={currentlyPlan}
       />
-      <RealEstateCard />
-      <RealEstateCard />
-      <RealEstateCard />
-      <RealEstateCard />
-      <RealEstateCard />
+      <ListItemRealEstate session={session} />
     </div>
   );
 };

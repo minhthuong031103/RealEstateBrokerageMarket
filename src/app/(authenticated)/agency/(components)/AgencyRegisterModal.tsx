@@ -1,46 +1,69 @@
 'use client';
 
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import React, { useState } from 'react'
-import { FileDialog } from '@/components/ui/FileDialog'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+
+import React, { useState, useEffect } from 'react'
+import { useRole } from '@/hooks/useRole';
+import DialogCustom from '@/components/ui/dialogCustom'
+import Logo from '@/components/logo';
 
 
-import * as z from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { ImageList } from '@/components/ui/ImageList'
 
+function AgencyRegisterModal({ session }) {
+    const { getUserRole } = useRole();
+    const [userRole, setUserRole] = useState(null);
+    const [isUser, setIsuser] = React.useState(false);
+    useEffect(() => {
+        const fetchUserRole = async () => {
+            try {
+                const userRole = await getUserRole(session?.user?.id);
+                const role = userRole.role;
+                setUserRole(role);
+                if (role === 'user') {
+                    setIsuser(true);
+                }
+            } catch (error) {
+                console.error('Error fetching user role:', error);
+            }
+        };
 
-const formSchema = z.object({
+        fetchUserRole();
+    }, []);
 
-});
+    return userRole === 'user' ? (
+        <div>
+            <DialogCustom className='w-full lg:w-[70%] h-[80%] lg:h-[95%] flex items-center justify-center' isModalOpen={isUser} notShowClose={true}>
+                <div>
+                    <Logo/>
+                    <h1>Đăng ký để trở thành đối tác với UIT RealEstate .</h1>
+                    {/* <div className="w-1/2 mt-4">
+                        <div className="mb-4">
+                            <Label className="mb-4">Họ và tên</Label>
+                            <Input className="w-full" type="text" placeholder="Họ và tên" />
+                        </div>
 
-function AgencyRegisterModal() {
-    //    const [isUploading, setIsUploading] = useState(false);
-    const [isUploading] = useState(false);
-    // const [files, setFiles] = useState<Array<any>>([]);
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
+                        <div className="mb-4">
+                            <Label className="mb-4">Số điện thoại</Label>
+                            <Input className="w-full" type="text" placeholder="Số điện thoại" />
+                        </div>
 
-        },
-    });
-    return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <Button variant="outline">Register Modal</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-full">
-                <DialogHeader>
-                    <DialogTitle>Đăng ký làm đối tác</DialogTitle>
-                    <DialogDescription>
-                        Tham gia chương trình đối tác cùng UIT RealEstate. Bằng việc chấp nhận, bạn đồng ý với Điều khoản pháp lý.
-                    </DialogDescription>
-                </DialogHeader>
+                        <div className="mb-4">
+                            <Label className="mb-4">Địa chỉ</Label>
+                            <Input className="w-full" type="text" placeholder="Địa chỉ" />
+                        </div>
+
+                        <div className="mb-4">
+                            <Label className="mb-4">Mã số thuế</Label>
+                            <Input className="w-full" type="text" placeholder="Mã số thuế" />
+                        </div>
+
+                    </div> */}
+                </div>
+            </DialogCustom>
+
+            {/* <DialogCustom
+                className="sm:max-w-full"
+                isModalOpen={isUser}
+                notShowClose={true}>
                 <div className="flex justify-center items-start p-8">
                     <div className="w-1/2 mr-8">
                         <Form {...form}>
@@ -66,26 +89,66 @@ function AgencyRegisterModal() {
                                         </FormItem>
                                     )}
                                 />
-                                <div className="mt-10">
-                                    {files?.length ? (
-                                        <ImageList files={files} height={128} width={128} scrollHeight={72} scrollWidth="full" />
-                                    ) : null}
-                                </div>
+                            </form>
+                        </Form>
+
+
+                        <Form {...form}>
+                            <form>
+                                <FormField
+                                    name="images"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="mr-10">Ảnh CMND mặt sau</FormLabel>
+                                            <FormControl>
+                                                <FileDialog
+                                                    setValue={field.onChange}
+                                                    name="images"
+                                                    maxFiles={3}
+                                                    maxSize={1024 * 1024 * 4}
+                                                    files={files}
+                                                    setFiles={setFiles as any}
+                                                    isUploading={isUploading}
+                                                    disabled={false}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </form>
+                        </Form>
+
+
+                        <Form {...form}>
+                            <form>
+                                <FormField
+                                    name="images"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="mr-10">Ảnh CMND mặt trước</FormLabel>
+                                            <FormControl>
+                                                <FileDialog
+                                                    setValue={field.onChange}
+                                                    name="images"
+                                                    maxFiles={3}
+                                                    maxSize={1024 * 1024 * 4}
+                                                    files={files}
+                                                    setFiles={setFiles as any}
+                                                    isUploading={isUploading}
+                                                    disabled={false}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
                             </form>
                         </Form>
                     </div>
 
                     <div className="w-1/2">
                         <div className="mb-4">
-                            {/* <label htmlFor="fullName" className="block text-gray-700 font-bold mb-2">
-                                Họ và tên
-                            </label>
-                            <input
-                                type="text"
-                                id="fullName"
-                                name="fullName"
-                                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                            /> */}
                             <Label className="mb-4">Họ và tên</Label>
                             <Input className="w-full" type="text" placeholder="Họ và tên" />
                         </div>
@@ -95,15 +158,22 @@ function AgencyRegisterModal() {
                             <Input className="w-full" type="text" placeholder="Số điện thoại" />
                         </div>
 
+                        <div className="mb-4">
+                            <Label className="mb-4">Địa chỉ</Label>
+                            <Input className="w-full" type="text" placeholder="Địa chỉ" />
+                        </div>
+
+                        <div className="mb-4">
+                            <Label className="mb-4">Mã số thuế</Label>
+                            <Input className="w-full" type="text" placeholder="Mã số thuế" />
+                        </div>
+
                     </div>
                 </div>
-                <DialogFooter>
-                    <Button type="submit">Quay về</Button>
-                    <Button type="submit">Xác nhận</Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    )
+            </DialogCustom> */}
+
+        </div>
+    ) : null;
 }
 
-export default AgencyRegisterModal
+export default AgencyRegisterModal;
