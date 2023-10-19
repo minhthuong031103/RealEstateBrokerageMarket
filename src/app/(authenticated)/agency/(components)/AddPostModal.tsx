@@ -11,6 +11,7 @@ import { getRequest } from '@/lib/fetch';
 import { useSession } from 'next-auth/react';
 import { MuaLeModal } from '../goi-dich-vu/MuaLeModal';
 import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@/hooks/useAuth';
 // import * as z from 'zod';
 
 // const formSchema = z.object({});
@@ -21,16 +22,9 @@ export const AddPostModal = () => {
   const [ban, setBan] = React.useState(false);
   const [isMuaLeModalOpen, setIsMuaLeModalOpen] = React.useState(false);
   const session = useSession();
+  const { queryUser } = useAuth();
 
-  const { data: user, refetch: refetchUser } = useQuery({
-    queryKey: ['user'],
-    queryFn: async () => {
-      const res = await getRequest({
-        endPoint: `/api/user?id=${session?.data?.user?.id}`,
-      });
-      return res;
-    },
-  });
+  const { data: user, refetch: refetchUser } = queryUser(session);
 
   return (
     <div className="w-full h-full">
@@ -85,6 +79,7 @@ export const AddPostModal = () => {
                 </div>
                 {danhMucValue && (thue || ban) ? (
                   <BaiVietForm
+                    setIsMuaLeModalOpen={setIsMuaLeModalOpen}
                     danhMucValue={danhMucValue}
                     isChoThue={thue}
                     setOpen={setOpen}

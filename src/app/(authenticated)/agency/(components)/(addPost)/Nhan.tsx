@@ -1,29 +1,22 @@
+import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/useAuth';
 import { NhanBaiVietConst } from '@/lib/constant';
 import { getRequest } from '@/lib/fetch';
 import { Select, SelectItem } from '@nextui-org/react';
+import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
-import React, { useEffect } from 'react';
+import React from 'react';
 
-export const Nhan = () => {
+export const Nhan = ({ setIsMuaLeModalOpen }) => {
   const [selectedType, setSelectedType] = React.useState(new Set([]));
   const [typeTouched, setTypeTouched] = React.useState(false);
-  const [user, setUser] = React.useState(null);
-  console.log('🚀 ~ file: Nhan.tsx:11 ~ Nhan ~ user:', user);
   const session = useSession();
   console.log('🚀 ~ file: Nhan.tsx:12 ~ Nhan ~ session:', session);
 
   const isTypeValid = selectedType.size > 0;
+  const { queryUser } = useAuth();
 
-  useEffect(() => {
-    const getUser = async () => {
-      const res = await getRequest({
-        endPoint: `/api/user?id=${session?.data?.user?.id}`,
-      });
-      setUser(res);
-    };
-    getUser();
-  }, []);
-
+  const { data: user } = queryUser(session);
   return (
     <div className="flex flex-col gap-y-3">
       <div className="font-bold text-sm">Nhãn bài viết</div>
@@ -62,6 +55,14 @@ export const Nhan = () => {
               Bạn hiện có <span className="font-bold"> {user?.luotVip}</span>{' '}
               lượt đăng bài viết <span className="font-bold"> Yêu thích</span>.
             </p>
+            <Button
+              onClick={() => {
+                setIsMuaLeModalOpen(true);
+              }}
+              className="w-[60%]"
+            >
+              Mua ngay
+            </Button>
           </div>
         ) : null}
       </div>
