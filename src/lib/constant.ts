@@ -143,4 +143,5 @@ export const NhanBaiVietConst = [
     label: 'luotChuyenNghiep',
   },
   { value: 'Yêu thích', label: 'luotVip' },
+  { value: 'Thông thường', label: 'luot' },
 ];
