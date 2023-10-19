@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import DialogCustom from '@/components/ui/dialogCustom';
 // import { Label } from '@/components/ui/label';
 import { SelectDanhMuc } from './SelectDanhMuc';
@@ -10,6 +10,7 @@ import { BaiVietForm } from './(addPost)/BaiVietForm';
 import { getRequest } from '@/lib/fetch';
 import { useSession } from 'next-auth/react';
 import { MuaLeModal } from '../goi-dich-vu/MuaLeModal';
+import { useQuery } from '@tanstack/react-query';
 // import * as z from 'zod';
 
 // const formSchema = z.object({});
@@ -18,19 +19,18 @@ export const AddPostModal = () => {
   const [danhMucValue, setDanhMucValue] = React.useState(null);
   const [thue, setThue] = React.useState(false);
   const [ban, setBan] = React.useState(false);
-  const [user, setUser] = React.useState(null);
   const [isMuaLeModalOpen, setIsMuaLeModalOpen] = React.useState(false);
   const session = useSession();
 
-  useEffect(() => {
-    const getUser = async () => {
+  const { data: user, refetch: refetchUser } = useQuery({
+    queryKey: ['user'],
+    queryFn: async () => {
       const res = await getRequest({
         endPoint: `/api/user?id=${session?.data?.user?.id}`,
       });
-      setUser(res);
-    };
-    getUser();
-  }, []);
+      return res;
+    },
+  });
 
   return (
     <div className="w-full h-full">
@@ -71,7 +71,7 @@ export const AddPostModal = () => {
               </div>
             </div>
 
-            {!user?.luot > 0 ? (
+            {user?.luot > 0 ? (
               <>
                 <div className="flex flex-col space-y-3">
                   <div className="font-bold text-sm">Thông tin chung</div>
@@ -113,6 +113,13 @@ export const AddPostModal = () => {
             <MuaLeModal
               isModalOpen={isMuaLeModalOpen}
               setIsModalOpen={setIsMuaLeModalOpen}
+              isChild={true}
+              callback={async () => {
+                setIsMuaLeModalOpen(false);
+                setTimeout(() => {
+                  refetchUser();
+                }, 2000); //2000 is 2 seconds
+              }}
             />
           ) : null}
         </DialogCustom>
