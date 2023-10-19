@@ -56,7 +56,7 @@ export const BaiVietForm = ({
   const [suaChuaLanCuoi, setSuaChuaLanCuoi] = React.useState();
   const [hoanThanh, setHoanThanh] = React.useState();
   const [danhSachTienNghi, setDanhSachTienNghi] = React.useState([]);
-
+  const [nhan, setNhan] = React.useState();
   const { onCreateBaiViet } = useBaiViet();
 
   const onSubmit = async () => {
@@ -128,7 +128,7 @@ export const BaiVietForm = ({
       chieuRong: parseFloat(chieuRong),
       dienTich: chieuDai * chieuRong,
       tinhTrangPhapLy: phapLy,
-      nhan: 'Test',
+      nhan: nhan,
       gia: parseFloat(giaBan),
       tieuDe: tieuDe,
       moTa: moTa,
@@ -230,7 +230,7 @@ export const BaiVietForm = ({
         <div className="text-sm font-bold">Video bất động sản</div>
         <VideoUploader videoUrl={videoUrl} setVideoUrl={setVideoUrl} />
       </div>
-      <Nhan setIsMuaLeModalOpen={setIsMuaLeModalOpen} />
+      <Nhan setNhan={setNhan} setIsMuaLeModalOpen={setIsMuaLeModalOpen} />
       <TieuDe tieuDe={tieuDe} setTieuDe={setTieude} />
       <MoTaChiTiet moTa={moTa} setMota={setMoTa} />
 

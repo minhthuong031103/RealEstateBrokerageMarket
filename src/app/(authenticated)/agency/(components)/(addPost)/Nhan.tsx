@@ -3,14 +3,19 @@ import { useAuth } from '@/hooks/useAuth';
 import { NhanBaiVietConst } from '@/lib/constant';
 import { Select, SelectItem } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-export const Nhan = ({ setIsMuaLeModalOpen }) => {
+export const Nhan = ({ setIsMuaLeModalOpen, setNhan }) => {
   const [selectedType, setSelectedType] = React.useState(new Set([]));
   const [typeTouched, setTypeTouched] = React.useState(false);
   const session = useSession();
   console.log('🚀 ~ file: Nhan.tsx:12 ~ Nhan ~ session:', session);
-
+  useEffect(() => {
+    if (selectedType) {
+      const phapLyValueArray = Array.from(selectedType);
+      setNhan(phapLyValueArray?.[0]);
+    }
+  }, [selectedType]);
   const isTypeValid = selectedType.size > 0;
   const { queryUser } = useAuth();
 
