@@ -25,7 +25,12 @@ import { Nhan } from './Nhan';
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
-export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
+export const BaiVietForm = ({
+  danhMucValue,
+  isChoThue,
+  setOpen,
+  setIsMuaLeModalOpen,
+}) => {
   const { startUpload } = useUploadThing('imageUploader');
 
   const [addressValue, setAddressValue] = React.useState('');
@@ -225,7 +230,7 @@ export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
         <div className="text-sm font-bold">Video bất động sản</div>
         <VideoUploader videoUrl={videoUrl} setVideoUrl={setVideoUrl} />
       </div>
-      <Nhan />
+      <Nhan setIsMuaLeModalOpen={setIsMuaLeModalOpen} />
       <TieuDe tieuDe={tieuDe} setTieuDe={setTieude} />
       <MoTaChiTiet moTa={moTa} setMota={setMoTa} />
 

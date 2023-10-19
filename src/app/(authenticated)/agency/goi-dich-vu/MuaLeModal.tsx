@@ -15,14 +15,30 @@ import { CommonSvg } from '@/assets/CommonSvg';
 import { currencyFormat } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { useSession } from 'next-auth/react';
-export const MuaLeModal = ({ setIsModalOpen, isModalOpen }) => {
+import { useAuth } from '@/hooks/useAuth';
+
+interface MuaLeModalProps {
+  setIsModalOpen: (value: boolean) => void;
+  isModalOpen: boolean;
+  callback: () => void;
+  isChild?: boolean;
+}
+export const MuaLeModal = ({
+  setIsModalOpen,
+  isModalOpen,
+  callback,
+  isChild,
+}: MuaLeModalProps) => {
   const [selectedType, setSelectedType] = React.useState(new Set([]));
   const [typeTouched, setTypeTouched] = React.useState(false);
   const [clientSecret, setClientSecret] = React.useState('');
   const [stripePromise, setStripePromise] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [quantity, setQuantity] = React.useState(1);
-  const sessionUser = useSession();
+  const session = useSession();
+
+  const { queryUser } = useAuth();
+  const { data: user } = queryUser(session);
   useEffect(() => {
     const getConfig = async () => {
       const res = await getRequest({
@@ -30,9 +46,14 @@ export const MuaLeModal = ({ setIsModalOpen, isModalOpen }) => {
       });
       setStripePromise(loadStripe(res?.publishableKey));
     };
+
     getConfig();
   }, []);
-
+  const currentPrice = MuaLeConst?.find(
+    (item) => item.value === selectedType?.values().next().value
+  )?.price;
+  console.log('🚀 ~ file: MuaLeModal.tsx:61 ~ currentPrice:', currentPrice);
+  console.log('🚀 ~ file: MuaLeModal.tsx:40 ~ getUser ~ res:', user);
   const onSubmit = async () => {
     if (!stripePromise) return;
     setLoading(true);
@@ -49,18 +70,15 @@ export const MuaLeModal = ({ setIsModalOpen, isModalOpen }) => {
     if (phapLyValueArray?.[0] === MuaLeConst[2].value) {
       luotVip = quantity;
     }
-    const amount =
-      MuaLeConst?.find(
-        (item) => item.value === selectedType?.values().next().value
-      )?.price * quantity;
 
-    const session = await postRequest({
+    const checkoutSession = await postRequest({
       endPoint: '/api/stripe/checkout-session/mua-le',
       formData: {
-        userId: sessionUser?.data?.user?.id,
+        userId: session?.data?.user?.id,
         type: phapLyValueArray?.[0],
-        amount,
-        giamGia: 20,
+        amount:
+          currentPrice * quantity -
+          (currentPrice * quantity * user?.giamGia) / 100,
         luot,
         luotChuyenNghiep,
         luotVip,
@@ -68,7 +86,7 @@ export const MuaLeModal = ({ setIsModalOpen, isModalOpen }) => {
       isFormData: false,
     });
 
-    setClientSecret(session?.clientSecret);
+    setClientSecret(checkoutSession?.clientSecret);
     setLoading(false);
   };
   const isTypeValid = selectedType.size > 0;
@@ -76,10 +94,11 @@ export const MuaLeModal = ({ setIsModalOpen, isModalOpen }) => {
   return (
     <div className="w-full h-full px-1 ">
       <DialogCustom
+        isChild={isChild}
         className="w-full lg:w-[50%] h-[80%] lg:h-[95%] flex items-center justify-center "
         setIsModalOpen={setIsModalOpen}
         isModalOpen={isModalOpen}
-        warningOnClose={true}
+        warningOnClose={false}
         callBack={() => {}}
       >
         {loading ? (
@@ -89,7 +108,7 @@ export const MuaLeModal = ({ setIsModalOpen, isModalOpen }) => {
         ) : clientSecret ? (
           <Elements stripe={stripePromise} options={{ clientSecret }}>
             {/* <CheckoutForm clientSecret={clientSecret} /> */}
-            <PaymentForm />
+            <PaymentForm callback={callback} />
           </Elements>
         ) : (
           <div className="flex flex-col justify-between gap-y-6 h-full px-1">
@@ -117,20 +136,37 @@ export const MuaLeModal = ({ setIsModalOpen, isModalOpen }) => {
                 </SelectItem>
               ))}
             </Select>
+            <div>
+              {user?.giamGia && user.giamGia > 0 ? (
+                <div className="flex flex-row gap-x-2">
+                  Bạn được giảm giá{' '}
+                  <p className="font-bold ">{user.giamGia}%</p> khi mua lẻ
+                </div>
+              ) : null}
+            </div>
+
             {isTypeValid && (
               <>
                 <Label>
                   <div className="flex flex-row gap-x-3">
                     <div className="font-semibold">Giá:</div>
-                    {currencyFormat(
-                      MuaLeConst?.find(
-                        (item) =>
-                          item.value === selectedType?.values().next().value
-                      )?.price
+                    {user?.giamGia && user.giamGia > 0 ? (
+                      <>
+                        <div className="line-through">
+                          {currencyFormat(currentPrice)}
+                        </div>
+                        <div>
+                          {currencyFormat(
+                            currentPrice - (currentPrice * user?.giamGia) / 100
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      currentPrice
                     )}
                   </div>
                 </Label>
-                <div className="flex px-5 gap-1 flex-row">
+                <div className="flex px-5 gap-1 flex-row items-center">
                   <div className="font-semibold">Số lượng:</div>
 
                   <div className="flex items-center  justify-center">
@@ -189,10 +225,8 @@ export const MuaLeModal = ({ setIsModalOpen, isModalOpen }) => {
                 <div className="flex flex-row gap-x-3">
                   Tổng tiền :{' '}
                   {currencyFormat(
-                    MuaLeConst?.find(
-                      (item) =>
-                        item.value === selectedType?.values().next().value
-                    )?.price * quantity
+                    currentPrice * quantity -
+                      (currentPrice * quantity * user?.giamGia) / 100
                   )}
                 </div>
                 <Button onClick={onSubmit}>Thanh toán</Button>

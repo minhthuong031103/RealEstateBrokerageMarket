@@ -2,14 +2,14 @@
 
 import { Button } from '@/components/ui/button';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import DialogCustom from '@/components/ui/dialogCustom';
 // import { Label } from '@/components/ui/label';
 import { SelectDanhMuc } from './SelectDanhMuc';
 import { BaiVietForm } from './(addPost)/BaiVietForm';
-import { getRequest } from '@/lib/fetch';
 import { useSession } from 'next-auth/react';
 import { MuaLeModal } from '../goi-dich-vu/MuaLeModal';
+import { useAuth } from '@/hooks/useAuth';
 // import * as z from 'zod';
 
 // const formSchema = z.object({});
@@ -18,19 +18,11 @@ export const AddPostModal = () => {
   const [danhMucValue, setDanhMucValue] = React.useState(null);
   const [thue, setThue] = React.useState(false);
   const [ban, setBan] = React.useState(false);
-  const [user, setUser] = React.useState(null);
   const [isMuaLeModalOpen, setIsMuaLeModalOpen] = React.useState(false);
   const session = useSession();
+  const { queryUser } = useAuth();
 
-  useEffect(() => {
-    const getUser = async () => {
-      const res = await getRequest({
-        endPoint: `/api/user?id=${session?.data?.user?.id}`,
-      });
-      setUser(res);
-    };
-    getUser();
-  }, []);
+  const { data: user, refetch: refetchUser } = queryUser(session);
 
   return (
     <div className="w-full h-full">
@@ -71,7 +63,7 @@ export const AddPostModal = () => {
               </div>
             </div>
 
-            {!user?.luot > 0 ? (
+            {user?.luot > 0 ? (
               <>
                 <div className="flex flex-col space-y-3">
                   <div className="font-bold text-sm">Thông tin chung</div>
@@ -85,6 +77,7 @@ export const AddPostModal = () => {
                 </div>
                 {danhMucValue && (thue || ban) ? (
                   <BaiVietForm
+                    setIsMuaLeModalOpen={setIsMuaLeModalOpen}
                     danhMucValue={danhMucValue}
                     isChoThue={thue}
                     setOpen={setOpen}
@@ -113,6 +106,13 @@ export const AddPostModal = () => {
             <MuaLeModal
               isModalOpen={isMuaLeModalOpen}
               setIsModalOpen={setIsMuaLeModalOpen}
+              isChild={true}
+              callback={async () => {
+                setIsMuaLeModalOpen(false);
+                setTimeout(() => {
+                  refetchUser();
+                }, 2000); //2000 is 2 seconds
+              }}
             />
           ) : null}
         </DialogCustom>
