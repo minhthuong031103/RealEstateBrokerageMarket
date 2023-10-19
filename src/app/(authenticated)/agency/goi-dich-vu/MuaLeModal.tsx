@@ -15,7 +15,6 @@ import { CommonSvg } from '@/assets/CommonSvg';
 import { currencyFormat } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { useSession } from 'next-auth/react';
-import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 
 interface MuaLeModalProps {

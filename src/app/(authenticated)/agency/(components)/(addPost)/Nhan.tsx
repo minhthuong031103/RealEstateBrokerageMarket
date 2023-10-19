@@ -1,9 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { NhanBaiVietConst } from '@/lib/constant';
-import { getRequest } from '@/lib/fetch';
 import { Select, SelectItem } from '@nextui-org/react';
-import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import React from 'react';
 

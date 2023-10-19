@@ -7,10 +7,8 @@ import DialogCustom from '@/components/ui/dialogCustom';
 // import { Label } from '@/components/ui/label';
 import { SelectDanhMuc } from './SelectDanhMuc';
 import { BaiVietForm } from './(addPost)/BaiVietForm';
-import { getRequest } from '@/lib/fetch';
 import { useSession } from 'next-auth/react';
 import { MuaLeModal } from '../goi-dich-vu/MuaLeModal';
-import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 // import * as z from 'zod';
 
