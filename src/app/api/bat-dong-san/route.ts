@@ -98,9 +98,73 @@ export async function GET(request: Request) {
       },
     },
   });
+  const countItem = await prisma.baiViet.count({
+    where: {
+      tieuDe: {
+        contains: searchWord || '',
+      },
+      nhan: {
+        contains: branch || '',
+      },
+      loaiHinh: {
+        loaiBDS: {
+          name: {
+            contains: type || '',
+          },
+        },
+        name: {
+          contains: loaiCanHo || loaiNhaO || loaiVanPhong || loaiDat || '',
+        },
+      },
+      trangThai: {
+        equals: 'Đã duyệt',
+      },
+      diaChi: {
+        contains: location || '',
+      },
+
+      ...(isRent !== null
+        ? {
+            isChothue: {
+              equals: isRent === 'true',
+            },
+          }
+        : {}),
+      ...(huongBanCong !== null
+        ? { huongBanCong: { equals: huongBanCong } }
+        : {}),
+      ...(huongCuaChinh !== null
+        ? { huongCuaChinh: { equals: huongCuaChinh } }
+        : {}),
+      ...(huongDat !== null ? { huongDat: { equals: huongDat } } : {}),
+      ...(soPhongNgu !== null
+        ? {
+            soPhongNgu: {
+              equals: parseInt(soPhongNgu),
+            },
+          }
+        : {}),
+      ...(soPhongTam !== null
+        ? {
+            soPhongTam: {
+              equals: parseInt(soPhongTam),
+            },
+          }
+        : {}),
+
+      gia: {
+        gte: minPrice ? parseInt(minPrice) : 0,
+        lte: maxPrice ? parseInt(maxPrice) : Number.MAX_SAFE_INTEGER,
+      },
+      dienTich: {
+        gte: minSquare ? parseInt(minSquare) : 0,
+        lte: maxSquare ? parseInt(maxSquare) : Number.MAX_SAFE_INTEGER,
+      },
+    },
+  });
   const data = {
     data: bds,
-    totalPages: Math.ceil(bds.length / limit),
+    totalPages: Math.ceil(countItem / limit),
     totalItems: bds.length,
   };
   // console.log(bds[0].sanPham.chiTietCanHo)

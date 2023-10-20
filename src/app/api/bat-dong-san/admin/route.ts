@@ -8,6 +8,17 @@ export async function GET(request: Request) {
   const trangThai = searchParams?.get('type');
   const searchWord = searchParams?.get('search');
 
+  const countItem = await prisma.baiViet.count({
+    where: {
+        trangThai: {
+            equals: trangThai || "",
+        },
+        tieuDe: {
+          contains: searchWord || ""
+        }
+    },
+  });
+
   const bds = await prisma.baiViet.findMany({
     include: {
       loaiHinh: {
@@ -28,9 +39,10 @@ export async function GET(request: Request) {
     skip: (page - 1) * limit,
     take: limit,
   });
+
   const data = {
     data: bds,
-    totalPages: Math.ceil(bds.length / limit),
+    totalPages: Math.ceil(countItem / limit),
     totalItems: bds.length,
   };
 
