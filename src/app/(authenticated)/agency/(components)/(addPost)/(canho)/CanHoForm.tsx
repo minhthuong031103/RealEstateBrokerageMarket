@@ -7,6 +7,9 @@ import * as z from 'zod';
 import { SelectNoiThat } from '../SelectNoiThat';
 import { HuongCanHo } from './HuongCanHo';
 import { Button } from '@/components/ui/button';
+import { FileDialog } from '@/components/ui/FileDialog';
+import { ImageList } from '@/components/ui/ImageList';
+import { DatePicker } from '@/components/ui/date-picker';
 
 const canHoSchema = z.object({
   chieuDai: z.string().nonempty({ message: 'Chiều dài không được để trống' }),
@@ -20,6 +23,14 @@ export const CanHoForm = ({
   setHuongBanCong,
   setHuongCuaChinh,
   setSoTang,
+  banVeThietKe,
+  setBanVeThietKe,
+  suaChuaLanCuoi,
+  setSuaChuaLanCuoi,
+  hoanThanh,
+  setHoanThanh,
+  danhSachTienNghi,
+  setDanhSachTienNghi,
 }) => {
   const form = useForm<z.infer<typeof canHoSchema>>({
     resolver: zodResolver(canHoSchema),
@@ -33,10 +44,45 @@ export const CanHoForm = ({
           setPhongTam={setPhongTam}
           setNoiThat={setNoiThat}
           setSoTang={setSoTang}
+          danhSachTienNghi={danhSachTienNghi}
+          setDanhSachTienNghi={setDanhSachTienNghi}
         />
+        <div className="flex flex-col space-y-3">
+          <div className="font-bold text-sm"> Bản vẽ thiết kế</div>
+          <FileDialog
+            name="images"
+            maxFiles={8}
+            maxSize={1024 * 1024 * 4}
+            files={banVeThietKe}
+            setFiles={setBanVeThietKe}
+            disabled={false}
+            className="mb-3"
+          />
+          {banVeThietKe?.length ? (
+            <ImageList
+              className={'w-full h-36'}
+              files={banVeThietKe}
+              height={32}
+              width={32}
+            />
+          ) : null}
+        </div>
+
         <HuongCanHo
           setHuongBanCong={setHuongBanCong}
           setHuongCuaChinh={setHuongCuaChinh}
+        />
+
+        <DatePicker
+          date={suaChuaLanCuoi}
+          setDate={setSuaChuaLanCuoi}
+          label={'Sửa chữa lần cuối'}
+        />
+
+        <DatePicker
+          date={hoanThanh}
+          setDate={setHoanThanh}
+          label={'Hoàn thành'}
         />
       </form>
     </Form>

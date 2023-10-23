@@ -70,7 +70,7 @@ model BaiViet {
   huongBanCong        String?
   soPhongNgu          Int?
   soPhongTam          Int?
-  hinhAnhBanVeThietKe String?
+  hinhAnhBanVeThietKe String?    @db.LongText
   tinhTrangNoiThat    String?
   danhSachTienNghi    String?     @db.LongText
   hoanThanh           DateTime?

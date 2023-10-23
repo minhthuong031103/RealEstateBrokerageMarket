@@ -27,7 +27,6 @@ export const LoaiHinh = ({ setLoaiHinhValue, danhMucValue }) => {
   return (
     <div className="flex flex-col h-full gap-y-6">
       <Select
-        isRequired
         key={'loaihinh'}
         radius={'md'}
         label="Loại hình bất động sản"

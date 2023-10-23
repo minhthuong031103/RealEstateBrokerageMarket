@@ -12,7 +12,6 @@ export const DienTich = ({
     <div className="flex flex-col space-y-6 max-w-xs lg:max-w-lg">
       <div className="flex flex-col lg:flex-row gap-6 max-w-xs lg:max-w-lg ">
         <Input
-          isRequired
           label="Chiều dài"
           isInvalid={chieuDai !== '' ? false : true}
           errorMessage={`${chieuDai !== '' ? '' : 'Vui lòng nhập chiều dài'}`}
@@ -25,7 +24,6 @@ export const DienTich = ({
         />
 
         <Input
-          isRequired
           isInvalid={chieuRong !== '' ? false : true}
           errorMessage={`${chieuRong !== '' ? '' : 'Vui lòng nhập chiều rộng'}`}
           label="Chiều rộng"
