@@ -39,7 +39,7 @@ export default async function AgencyLayout({
       <div className="flex justify-between h-screen">
         <AgencyRegisterModal session={session}/>
         <Sidebar navItems={navItems} title="Navigation" />
-        <div className="flex-1 w-full">{children}</div>
+        <div className="flex-1 w-full h-full">{children}</div>
       </div>
     </div>
   );
