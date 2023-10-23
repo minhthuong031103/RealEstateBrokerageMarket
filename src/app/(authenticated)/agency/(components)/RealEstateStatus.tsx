@@ -1,39 +1,25 @@
-import React from 'react'
+import React from 'react';
 import { CheckCircledIcon, LockClosedIcon } from '@radix-ui/react-icons';
 import { BiXCircle } from 'react-icons/bi';
 
-
 export const RealEstateStatus = ({ trangthai }) => {
+    const statusIconMapping = {
+        "Đã duyệt": <CheckCircledIcon className="mr-2" />,
+        "Đã khóa": <LockClosedIcon className="mr-2" />,
+        "Chờ duyệt": <LockClosedIcon className="mr-2" />,
+        "Không duyệt": <BiXCircle className="mr-2" />
+    };
+
+    const icon = statusIconMapping[trangthai];
+
     return (
         <div>
-            {trangthai === "Đã duyệt" ? (
+            {icon && (
                 <div className="flex items-center m-4">
-                    <CheckCircledIcon className="mr-2"></CheckCircledIcon>
+                    {icon}
                     <p className="font-medium">{trangthai}</p>
                 </div>
-            ) : null}
-
-            {trangthai === "Đã khóa" ? (
-                <div className="flex items-center m-4">
-                    <LockClosedIcon className="mr-2"></LockClosedIcon>
-                    <p className="font-medium">{trangthai}</p>
-                </div>
-            ) : null}
-
-            {trangthai === "Chờ duyệt" ? (
-                <div className="flex items-center m-4">
-                    <LockClosedIcon className="mr-2"></LockClosedIcon>
-                    <p className="font-medium">{trangthai}</p>
-                </div>
-            ) : null}
-
-            {trangthai === "Không duyệt" ? (
-                <div className="flex items-center m-4">
-                    <BiXCircle className='mr-2'/>
-                    <p className="font-medium">{trangthai}</p>
-                </div>
-            ) : null}
+            )}
         </div>
-    )
+    );
 }
-

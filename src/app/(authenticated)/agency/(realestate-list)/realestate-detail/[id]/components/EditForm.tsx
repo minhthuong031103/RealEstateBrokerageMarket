@@ -14,13 +14,11 @@ import { GiaBan } from '@/app/(authenticated)/agency/(components)/(addPost)/GiaB
 
 export const EditForm = ({ id }) => {
   const { fetchBatDongSanTheoId } = useBatDongSan();
-  // const [trangThai, setTrangThai] = useState(new Set([]));
   const [chiTietBDS, setChiTietBDS] = useState();
   const [tieuDe, setTieuDe] = React.useState('');
   const [moTa, setMoTa] = React.useState('');
   const [diaChi, setDiaChi] = React.useState('');
   const [giaBan, setGiaBan] = React.useState(null);
-  // const [hinhThucBan, setHinhThucBan] = React.useState(new Set([]));
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [chieuDai, setChieuDai] = React.useState();
   const [chieuRong, setChieuRong] = React.useState();
@@ -34,7 +32,7 @@ export const EditForm = ({ id }) => {
   // const [suaChuaLanCuoi, setSuaChuaLanCuoi] = React.useState();
   // const [hoanThanh, setHoanThanh] = React.useState();
   // const [danhSachTienNghi, setDanhSachTienNghi] = React.useState([]);
-  // const [danhMucValue, setDanhMucValue] = React.useState(null);
+  const [danhMucValue, setDanhMucValue] = React.useState(null);
   const [thue, setThue] = React.useState(false);
   const [ban, setBan] = React.useState(false);
 
@@ -48,7 +46,7 @@ export const EditForm = ({ id }) => {
       trangThai: 'Chờ duyệt',
       diaChi: diaChi,
       gia: giaBan,
-
+      danhMucValue: danhMucValue,
     }
     setIsSubmitting(true);
     const success = await onUpdateBaiViet(id, baiViet);
@@ -75,7 +73,6 @@ export const EditForm = ({ id }) => {
       setTieuDe(chiTietBDS.tieuDe);
       setMoTa(chiTietBDS.moTa);
       setDiaChi(chiTietBDS.diaChi);
-      setDanhMucValue(chiTietBDS.danhMuc);
       setChieuDai(chiTietBDS.chieuDai);
       setChieuRong(chiTietBDS.chieuRong);
     }
