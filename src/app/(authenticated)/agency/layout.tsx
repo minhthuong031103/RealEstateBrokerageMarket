@@ -1,10 +1,12 @@
-import React from 'react';
+import React from 'react'
 import { getSession } from '@/lib/auth';
-import AgencyHeader from './(components)/Header';
+import Header from './(components)/Header';
 import { Sidebar } from './(components)/Sidebar';
 import { DashboardIcon } from '@radix-ui/react-icons';
 import { SubscriptIcon, UserIcon } from 'lucide-react';
 import { redirect } from 'next/navigation';
+import AgencyRegisterModal  from './(components)/AgencyRegisterModal';
+
 const navItems = [
   {
     title: 'Danh sách BĐS đã tạo',
@@ -32,11 +34,12 @@ export default async function AgencyLayout({
   if (!session) redirect('/auth/login');
   return (
     <div className="w-full h-full bg-slate-50">
-      <AgencyHeader />
+      <Header session={session} />
       {/* <Header session={session}/> */}
       <div className="flex justify-between h-screen">
+        <AgencyRegisterModal session={session}/>
         <Sidebar navItems={navItems} title="Navigation" />
-        <div className="flex-1 w-full">{children}</div>
+        <div className="flex-1 w-full h-full">{children}</div>
       </div>
     </div>
   );

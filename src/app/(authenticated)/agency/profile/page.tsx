@@ -1,17 +1,16 @@
 import React from 'react'
 import AgencyImageAndName from '../(components)/(profile)/AgencyImageAndName'
 import AgencyInfo from '../(components)/(profile)/AgencyInfo'
+import { getSession } from '@/lib/auth'
 
-const page = () => {
+
+export default async function page() {
+    const session = await getSession()
     return (
         <div className='m-4'>
             <h1 className='text-2xl font-bold'>Hồ sơ đối tác</h1>
-            {/* <div className='w-full h-screen mt-4 bg-white rounded-lg border-solid border-2 border-white'> */}
-            <AgencyImageAndName />
-            <AgencyInfo />
-            {/* </div> */}
+            <AgencyImageAndName session={session} />
+            <AgencyInfo session={session} />
         </div>
     )
 }
-
-export default page

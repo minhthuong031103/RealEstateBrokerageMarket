@@ -1,16 +1,15 @@
 import React from 'react';
 import SearchBarAndCreate from '../(components)/SearchBarAndCreate';
-import RealEstateCard from '../(components)/RealEstateCard';
+import { getSession } from '@/lib/auth';
+import ListItemRealEstate from '../(components)/ListItemRealEstate';
+
 
 const page = async () => {
+  const session = await getSession();
   return (
     <div className="m-4">
-      <SearchBarAndCreate />
-      <RealEstateCard />
-      <RealEstateCard />
-      <RealEstateCard />
-      <RealEstateCard />
-      <RealEstateCard />
+      <SearchBarAndCreate/>
+      <ListItemRealEstate session={session} />
     </div>
   );
 };
