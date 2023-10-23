@@ -2,222 +2,61 @@ import { getRequest, postRequest } from '@/lib/fetch';
 import toast from 'react-hot-toast';
 
 export const useBatDongSan = () => {
-  const fetchAllBatDongSan = async (page,props) => {
+  const fetchAllBatDongSan = async (page, props = {}) => {
     let endPointUrl = `/api/bat-dong-san?page=${page}&limit=6`;
-    if (typeof props !== "undefined")
-    {
+    
+    const specialProps = {
+        "Căn hộ": ["loaiCanHo", "huongBanCong", "huongCuaChinh", "soPhongNgu", "soPhongTam"],
+        "Nhà ở": ["loaiNhaO", "huongCuaChinh", "soPhongNgu", "soPhongTam"],
+        "Văn phòng": ["loaiVanPhong", "huongCuaChinh"],
+        "Đất": ["loaiDatDai", "huongDat"]
+    };
 
-      if (props?.searchWord !== "")
-      {
-        endPointUrl+=`&searchWord=${props?.searchWord}`
-      }
-      if (props?.location !== "")
-      {
-        endPointUrl+=`&location=${props?.location}`
-      }
-      if (props?.branch !== "")
-      {
-        endPointUrl+=`&branch=${props?.branch}`
-      }
-      if (props?.isRent !== "")
-      {
-        endPointUrl+=`&isRent=${props?.isRent}`
-      }
-      if (props?.type !== "")
-      {
-        endPointUrl+=`&type=${props?.type}`;
-        if (props?.type === "Căn hộ")
-        {
-          if (props?.loaiCanHo !== "")
-          {
-            endPointUrl+=`&loaiCanHo=${props?.loaiCanHo}`
-          }
-          if (props?.huongBanCong !== "")
-          {
-            endPointUrl+=`&huongBanCong=${props?.huongBanCong}`
-          }
-          if (props?.huongCuaChinh !== "")
-          {
-            endPointUrl+=`&huongCuaChinh=${props?.huongCuaChinh}`
-          }
-          if (props?.soPhongNgu !== "")
-          {
-            endPointUrl+=`&soPhongNgu=${props?.soPhongNgu}`
-          }
-          if (props?.soPhongTam !== "")
-          {
-            endPointUrl+=`&soPhongTam=${props?.soPhongTam}`
-          }
+    const appendParam = (param, value) => {
+        if (value !== "" && typeof value !== "undefined") {
+            endPointUrl += `&${param}=${value}`;
         }
-        else if (props?.type === "Nhà ở")
-        {
-          if (props?.loaiNhaO !== "")
-          {
-            endPointUrl+=`&loaiNhaO=${props?.loaiNhaO}`
-          }
-          if (props?.huongCuaChinh !== "")
-          {
-            endPointUrl+=`&huongCuaChinh=${props?.huongCuaChinh}`
-          }
-          if (props?.soPhongNgu !== "")
-          {
-            endPointUrl+=`&soPhongNgu=${props?.soPhongNgu}`
-          }
-          if (props?.soPhongTam !== "")
-          {
-            endPointUrl+=`&soPhongTam=${props?.soPhongTam}`
-          }
+    };
+
+    Object.keys(props).forEach(prop => {
+        if (prop === "type" && specialProps[props[prop]]) {
+            specialProps[props[prop]].forEach(specialProp => {
+                appendParam(specialProp, props[specialProp]);
+            });
+        } else {
+            appendParam(prop, props[prop]);
         }
-        else if (props?.type === "Văn phòng")
-        {
-          if (props?.loaiVanPhong !== "")
-          {
-            endPointUrl+=`&loaiVanPhong=${props?.loaiVanPhong}`
-          }
-          if (props?.huongCuaChinh !== "")
-          {
-            endPointUrl+=`&huongCuaChinh=${props?.huongCuaChinh}`
-          }
-        }
-        else if (props?.type === "Đất")
-        {
-          if (props?.loaiDatDai !== "")
-          {
-            endPointUrl+=`&loaiDatDai=${props?.loaiDatDai}`
-          }
-          if (props?.huongDat !== "")
-          {
-            endPointUrl+=`&huongDat=${props?.huongDat}`
-          }
-        }
-      }
-      if (props?.minPrice !== "")
-      {
-        endPointUrl+=`&minPrice=${props?.minPrice}`
-      }
-      if (props?.maxPrice !== "")
-      {
-        endPointUrl+=`&maxPrice=${props?.maxPrice}`
-      }
-      if (props?.minSquare !== "")
-      {
-        endPointUrl+=`&minSquare=${props?.minSquare}`
-      }
-      if (props?.maxSquare !== "")
-      {
-        endPointUrl+=`&maxSquare=${props?.maxSquare}`
-      }
-    }
+    });
+
     const res = await getRequest({ endPoint: endPointUrl });
     return res;
-  };
+};
 
   const fetchAllBatDongSanCuaDoiTac = async (page,props,userId) => {
     let endPointUrl = `/api/bat-dong-san/bat-dong-san-cua-doi-tac?page=${page}&limit=6&userId=${userId}`;
-    if (typeof props !== "undefined")
-    {
+    const specialProps = {
+      "Căn hộ": ["loaiCanHo", "huongBanCong", "huongCuaChinh", "soPhongNgu", "soPhongTam"],
+      "Nhà ở": ["loaiNhaO", "huongCuaChinh", "soPhongNgu", "soPhongTam"],
+      "Văn phòng": ["loaiVanPhong", "huongCuaChinh"],
+      "Đất": ["loaiDatDai", "huongDat"]
+  };
 
-      if (props?.searchWord !== "")
-      {
-        endPointUrl+=`&searchWord=${props?.searchWord}`
-      }
-      if (props?.location !== "")
-      {
-        endPointUrl+=`&location=${props?.location}`
-      }
-      if (props?.branch !== "")
-      {
-        endPointUrl+=`&branch=${props?.branch}`
-      }
-      if (props?.isRent !== "")
-      {
-        endPointUrl+=`&isRent=${props?.isRent}`
-      }
-      if (props?.type !== "")
-      {
-        endPointUrl+=`&type=${props?.type}`;
-        if (props?.type === "Căn hộ")
-        {
-          if (props?.loaiCanHo !== "")
-          {
-            endPointUrl+=`&loaiCanHo=${props?.loaiCanHo}`
-          }
-          if (props?.huongBanCong !== "")
-          {
-            endPointUrl+=`&huongBanCong=${props?.huongBanCong}`
-          }
-          if (props?.huongCuaChinh !== "")
-          {
-            endPointUrl+=`&huongCuaChinh=${props?.huongCuaChinh}`
-          }
-          if (props?.soPhongNgu !== "")
-          {
-            endPointUrl+=`&soPhongNgu=${props?.soPhongNgu}`
-          }
-          if (props?.soPhongTam !== "")
-          {
-            endPointUrl+=`&soPhongTam=${props?.soPhongTam}`
-          }
+    const appendParam = (param, value) => {
+        if (value !== "" && typeof value !== "undefined") {
+            endPointUrl += `&${param}=${value}`;
         }
-        else if (props?.type === "Nhà ở")
-        {
-          if (props?.loaiNhaO !== "")
-          {
-            endPointUrl+=`&loaiNhaO=${props?.loaiNhaO}`
-          }
-          if (props?.huongCuaChinh !== "")
-          {
-            endPointUrl+=`&huongCuaChinh=${props?.huongCuaChinh}`
-          }
-          if (props?.soPhongNgu !== "")
-          {
-            endPointUrl+=`&soPhongNgu=${props?.soPhongNgu}`
-          }
-          if (props?.soPhongTam !== "")
-          {
-            endPointUrl+=`&soPhongTam=${props?.soPhongTam}`
-          }
+    };
+
+    Object.keys(props).forEach(prop => {
+        if (prop === "type" && specialProps[props[prop]]) {
+            specialProps[props[prop]].forEach(specialProp => {
+                appendParam(specialProp, props[specialProp]);
+            });
+        } else {
+            appendParam(prop, props[prop]);
         }
-        else if (props?.type === "Văn phòng")
-        {
-          if (props?.loaiVanPhong !== "")
-          {
-            endPointUrl+=`&loaiVanPhong=${props?.loaiVanPhong}`
-          }
-          if (props?.huongCuaChinh !== "")
-          {
-            endPointUrl+=`&huongCuaChinh=${props?.huongCuaChinh}`
-          }
-        }
-        else if (props?.type === "Đất")
-        {
-          if (props?.loaiDatDai !== "")
-          {
-            endPointUrl+=`&loaiDatDai=${props?.loaiDatDai}`
-          }
-          if (props?.huongDat !== "")
-          {
-            endPointUrl+=`&huongDat=${props?.huongDat}`
-          }
-        }
-      }
-      if (props?.minPrice !== "")
-      {
-        endPointUrl+=`&minPrice=${props?.minPrice}`
-      }
-      if (props?.maxPrice !== "")
-      {
-        endPointUrl+=`&maxPrice=${props?.maxPrice}`
-      }
-      if (props?.minSquare !== "")
-      {
-        endPointUrl+=`&minSquare=${props?.minSquare}`
-      }
-      if (props?.maxSquare !== "")
-      {
-        endPointUrl+=`&maxSquare=${props?.maxSquare}`
-      }
-    }
+    });
+
     const res = await getRequest({ endPoint: endPointUrl });
     return res;
   };
