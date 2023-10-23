@@ -70,7 +70,7 @@ model BaiViet {
   huongBanCong        String?
   soPhongNgu          Int?
   soPhongTam          Int?
-  hinhAnhBanVeThietKe String?    @db.LongText
+  hinhAnhBanVeThietKe String?     @db.LongText
   tinhTrangNoiThat    String?
   danhSachTienNghi    String?     @db.LongText
   hoanThanh           DateTime?
@@ -183,16 +183,14 @@ model PaymentHistory {
   @@index([userId])
 }
 
-
-
 model Revenue {
-  id               Int            @id @default(autoincrement())
-  serviceName      String
-  number           Int
-  amount           Float
-  createdAt        DateTime       @default(now())
-  userId           Int
-  user             User           @relation(fields: [userId], references: [id])
+  id          Int      @id @default(autoincrement())
+  amount      Float
+  createdAt   DateTime @default(now())
+  userId      Int
+  number      Int
+  serviceName String
+  user        User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
 }
