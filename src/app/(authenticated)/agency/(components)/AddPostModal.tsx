@@ -1,21 +1,28 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-
 import React from 'react';
 import DialogCustom from '@/components/ui/dialogCustom';
 // import { Label } from '@/components/ui/label';
 import { SelectDanhMuc } from './SelectDanhMuc';
 import { BaiVietForm } from './(addPost)/BaiVietForm';
-import { PlusIcon } from 'lucide-react';
 // import * as z from 'zod';
-
+import { useSession } from 'next-auth/react';
+import { MuaLeModal } from '../goi-dich-vu/MuaLeModal';
+import { useAuth } from '@/hooks/useAuth';
+import { PlusIcon } from '@radix-ui/react-icons';
 // const formSchema = z.object({});
-export const AddPostModal = ({ subscribedPlan, user, currentlyPlan }) => {
+export const AddPostModal = () => {
   const [open, setOpen] = React.useState(false);
   const [danhMucValue, setDanhMucValue] = React.useState(null);
   const [thue, setThue] = React.useState(false);
   const [ban, setBan] = React.useState(false);
+  const [isMuaLeModalOpen, setIsMuaLeModalOpen] = React.useState(false);
+  const session = useSession();
+  const { queryUser } = useAuth();
+
+  const { data: user, refetch: refetchUser } = queryUser(session);
+
   return (
     <div className="right-0">
       <Button
@@ -47,54 +54,67 @@ export const AddPostModal = ({ subscribedPlan, user, currentlyPlan }) => {
               </div>
             </div>
             <div className="w-full h-full">
-              <div className="mx-auto mb-10 sm:max-w-lg ">
-                {currentlyPlan?.isSubscribed ? (
-                  <p>
-                    Bạn hiện đang đăng ký gói{' '}
-                    <span className="font-bold">{subscribedPlan?.name}</span>.
-                  </p>
-                ) : (
-                  <p>
-                    Bạn chưa đăng ký gói nào. Hãy đăng ký ngay để trải nghiệm
-                    tất cả các tính năng của UIT Estate
-                  </p>
-                )}
+              <div className=" mb-3 sm:max-w-lg ">
                 <p>
-                  Bạn hiện có <span className="font-bold"> {user?.luot}</span>{' '}
+                  Bạn hiện có{' '}
+                  <span className="font-bold text-red-500"> {user?.luot}</span>{' '}
                   lượt đăng bài viết.
-                </p>
-                <p>
-                  Bạn hiện có{' '}
-                  <span className="font-bold"> {user?.luotChuyenNghiep}</span>{' '}
-                  lượt đăng bài viết <span className="font-bold"> Nổi bật</span>
-                  .
-                </p>
-                <p>
-                  Bạn hiện có{' '}
-                  <span className="font-bold"> {user?.luotVip}</span> lượt đăng
-                  bài viết <span className="font-bold"> Yêu thích</span>.
                 </p>
               </div>
             </div>
-            <div className="flex flex-col space-y-3">
-              <div className="font-bold text-sm">Thông tin chung</div>
-              <SelectDanhMuc
-                setThue={setThue}
-                setBan={setBan}
-                thue={thue}
-                ban={ban}
-                setDanhMucValue={setDanhMucValue}
-              />
-            </div>
 
-            {danhMucValue && (thue || ban) ? (
-              <BaiVietForm
-                danhMucValue={danhMucValue}
-                isChoThue={thue}
-                setOpen={setOpen}
-              />
-            ) : null}
+            {user?.luot > 0 ? (
+              <>
+                <div className="flex flex-col space-y-3">
+                  <div className="font-bold text-sm">Thông tin chung</div>
+                  <SelectDanhMuc
+                    setThue={setThue}
+                    setBan={setBan}
+                    thue={thue}
+                    ban={ban}
+                    setDanhMucValue={setDanhMucValue}
+                  />
+                </div>
+                {danhMucValue && (thue || ban) ? (
+                  <BaiVietForm
+                    setIsMuaLeModalOpen={setIsMuaLeModalOpen}
+                    danhMucValue={danhMucValue}
+                    isChoThue={thue}
+                    setOpen={setOpen}
+                  />
+                ) : null}
+              </>
+            ) : (
+              <>
+                <div className="font-bol text-sm text-red-500">
+                  Bạn đã hết lượt đăng bài viết, vui lòng mua thêm lượt.
+                </div>
+                <div className="w-full flex flex-col items-center justify-center">
+                  <Button
+                    onClick={() => {
+                      setIsMuaLeModalOpen(true);
+                    }}
+                    className="w-[60%]"
+                  >
+                    Mua ngay
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
+          {isMuaLeModalOpen ? (
+            <MuaLeModal
+              isModalOpen={isMuaLeModalOpen}
+              setIsModalOpen={setIsMuaLeModalOpen}
+              isChild={true}
+              callback={async () => {
+                setIsMuaLeModalOpen(false);
+                setTimeout(() => {
+                  refetchUser();
+                }, 2000); //2000 is 2 seconds
+              }}
+            />
+          ) : null}
         </DialogCustom>
       ) : null}
     </div>

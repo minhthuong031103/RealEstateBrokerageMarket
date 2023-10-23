@@ -1,7 +1,8 @@
-import { postRequest, putRequest } from '@/lib/fetch';
+import { getRequest, postRequest, putRequest } from '@/lib/fetch';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
+import { useQuery } from '@tanstack/react-query';
 
 export const useAuth = () => {
   const router = useRouter();
@@ -89,11 +90,25 @@ export const useAuth = () => {
       isFormData: false,
     });
   };
+
+  const queryUser = (session) => {
+    return useQuery({
+      queryKey: ['user'],
+      queryFn: async () => {
+        const res = await getRequest({
+          endPoint: `/api/user?id=${session?.data?.user?.id}`,
+        });
+        return res;
+      },
+    });
+  };
+
   return {
     onRegister,
     onRegister1,
     onSendAgain,
     onVerifyOtp,
     onFirstSend,
+    queryUser,
   };
 };

@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import Loader from '@/components/Loader';
 
-export const PaymentForm = () => {
+export const PaymentForm = ({ callback }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = React.useState(false);
@@ -32,7 +32,7 @@ export const PaymentForm = () => {
       toast.error(error.message);
     } else if (paymentIntent.status === 'succeeded') {
       toast.success('Thanh toán thành công');
-      window.location.href = `${window.location.origin}/agency/goi-dich-vu`;
+      callback && callback();
     } else {
       toast.error('Thanh toán thất bại');
     }

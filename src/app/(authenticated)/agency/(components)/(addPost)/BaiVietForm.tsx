@@ -21,10 +21,16 @@ import DialogCustom from '@/components/ui/dialogCustom';
 import { Spinner } from '@nextui-org/react';
 import { ImageList } from '@/components/ui/ImageList';
 import { DatePicker } from '@/components/ui/date-picker';
+import { Nhan } from './Nhan';
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
-export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
+export const BaiVietForm = ({
+  danhMucValue,
+  isChoThue,
+  setOpen,
+  setIsMuaLeModalOpen,
+}) => {
   const { startUpload } = useUploadThing('imageUploader');
 
   const [addressValue, setAddressValue] = React.useState('');
@@ -50,7 +56,7 @@ export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
   const [suaChuaLanCuoi, setSuaChuaLanCuoi] = React.useState();
   const [hoanThanh, setHoanThanh] = React.useState();
   const [danhSachTienNghi, setDanhSachTienNghi] = React.useState([]);
-
+  const [nhan, setNhan] = React.useState();
   const { onCreateBaiViet } = useBaiViet();
 
   const onSubmit = async () => {
@@ -122,7 +128,7 @@ export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
       chieuRong: parseFloat(chieuRong),
       dienTich: chieuDai * chieuRong,
       tinhTrangPhapLy: phapLy,
-      nhan: 'Test',
+      nhan: nhan,
       gia: parseFloat(giaBan),
       tieuDe: tieuDe,
       moTa: moTa,
@@ -224,6 +230,7 @@ export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
         <div className="text-sm font-bold">Video bất động sản</div>
         <VideoUploader videoUrl={videoUrl} setVideoUrl={setVideoUrl} />
       </div>
+      <Nhan setNhan={setNhan} setIsMuaLeModalOpen={setIsMuaLeModalOpen} />
       <TieuDe tieuDe={tieuDe} setTieuDe={setTieude} />
       <MoTaChiTiet moTa={moTa} setMota={setMoTa} />
 

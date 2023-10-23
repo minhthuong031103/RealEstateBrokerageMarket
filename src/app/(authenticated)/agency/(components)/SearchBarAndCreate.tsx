@@ -3,7 +3,7 @@
 // import { Input } from '@/components/ui/input';
 import { AddPostModal } from './AddPostModal';
 
-export function SearchBarAndCreate({ subscribedPlan, user, currentlyPlan }) {
+export function SearchBarAndCreate() {
   return (
     <div className="flex flex-col md:flex-row justify-between">
       {/* <Input
@@ -11,11 +11,7 @@ export function SearchBarAndCreate({ subscribedPlan, user, currentlyPlan }) {
         type="text"
         placeholder="Tìm kiếm bất động sản theo tên"
       /> */}
-      <AddPostModal
-        subscribedPlan={subscribedPlan}
-        user={user}
-        currentlyPlan={currentlyPlan}
-      />
+      <AddPostModal />
     </div>
   );
 }
