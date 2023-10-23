@@ -3,8 +3,10 @@
 import { Button } from '@/components/ui/button';
 import React from 'react';
 import { MuaLeModal } from './MuaLeModal';
+import { useRouter } from 'next/navigation';
 
 export const MuaLe = () => {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   return (
     <div>
@@ -17,7 +19,15 @@ export const MuaLe = () => {
       </Button>
 
       {isModalOpen ? (
-        <MuaLeModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <MuaLeModal
+          isChild={false}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          callback={() => {
+            setIsModalOpen(false);
+            router.refresh();
+          }}
+        />
       ) : null}
     </div>
   );

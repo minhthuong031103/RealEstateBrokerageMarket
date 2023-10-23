@@ -136,3 +136,12 @@ export const MuaLeConst = [
   { value: 'Lượt nổi bật', price: 30000 },
   { value: 'Lượt yêu thích', price: 50000 },
 ];
+
+export const NhanBaiVietConst = [
+  {
+    value: 'Nổi bật',
+    label: 'luotChuyenNghiep',
+  },
+  { value: 'Yêu thích', label: 'luotVip' },
+  { value: 'Thông thường', label: 'luot' },
+];

@@ -35,7 +35,6 @@ export const HuongCanHo = ({ setHuongCuaChinh, setHuongBanCong }) => {
   return (
     <div className="flex flex-col lg:flex-row h-full gap-6 justify-between max-w-xs lg:max-w-lg ">
       <Select
-        isRequired
         key={'banCong'}
         radius={'md'}
         label="Hướng ban công"
@@ -60,7 +59,6 @@ export const HuongCanHo = ({ setHuongCuaChinh, setHuongBanCong }) => {
       </Select>
 
       <Select
-        isRequired
         key={'cuaChinh'}
         radius={'md'}
         label="Hướng cửa chính"

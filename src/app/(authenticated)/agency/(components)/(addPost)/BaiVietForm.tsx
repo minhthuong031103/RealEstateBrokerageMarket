@@ -20,10 +20,17 @@ import { OurFileRouter } from '@/app/api/uploadthing/core';
 import DialogCustom from '@/components/ui/dialogCustom';
 import { Spinner } from '@nextui-org/react';
 import { ImageList } from '@/components/ui/ImageList';
+import { DatePicker } from '@/components/ui/date-picker';
+import { Nhan } from './Nhan';
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
-export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
+export const BaiVietForm = ({
+  danhMucValue,
+  isChoThue,
+  setOpen,
+  setIsMuaLeModalOpen,
+}) => {
   const { startUpload } = useUploadThing('imageUploader');
 
   const [addressValue, setAddressValue] = React.useState('');
@@ -44,12 +51,15 @@ export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
   const [isInValid, setIsInValid] = React.useState(false);
   const [productImageFiles, setProductImagesFile] = React.useState([]);
   const [phapLyImageFiles, setPhapLyImageFiles] = React.useState([]);
+  const [banVeThietKe, setBanVeThietKe] = React.useState([]);
   const [videoUrl, setVideoUrl] = React.useState();
+  const [suaChuaLanCuoi, setSuaChuaLanCuoi] = React.useState();
+  const [hoanThanh, setHoanThanh] = React.useState();
+  const [danhSachTienNghi, setDanhSachTienNghi] = React.useState([]);
+  const [nhan, setNhan] = React.useState();
   const { onCreateBaiViet } = useBaiViet();
 
   const onSubmit = async () => {
-    console.log(productImageFiles);
-    console.log(phapLyImageFiles);
     if (productImageFiles.length <= 0) {
       toast.error('Vui lòng chọn hình ảnh sản phẩm');
     }
@@ -100,6 +110,14 @@ export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
         }));
         return formattedImages ?? null;
       }),
+      startUpload([...banVeThietKe]).then((res) => {
+        const formattedImages = res?.map((image) => ({
+          id: image.key,
+          name: image.key.split('_')[1] ?? image.key,
+          url: image.url,
+        }));
+        return formattedImages ?? null;
+      }),
     ]);
 
     console.log(productImages, phapLyImages);
@@ -110,7 +128,7 @@ export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
       chieuRong: parseFloat(chieuRong),
       dienTich: chieuDai * chieuRong,
       tinhTrangPhapLy: phapLy,
-      nhan: 'Test',
+      nhan: nhan,
       gia: parseFloat(giaBan),
       tieuDe: tieuDe,
       moTa: moTa,
@@ -118,12 +136,19 @@ export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
       soPhongTam: phongTam ? parseInt(phongTam) : null,
       tinhTrangNoiThat: noiThat,
       huongBanCong: huongBanCong,
-      hoanThanh: new Date(),
-      suaChuaLanCuoi: new Date(),
+      hoanThanh: hoanThanh ? new Date(hoanThanh) : null,
+      suaChuaLanCuoi: suaChuaLanCuoi ? new Date(suaChuaLanCuoi) : null,
       huongCuaChinh: huongCuaChinh,
       soTang: soTang ? parseInt(soTang) : null,
       hinhAnhSanPham: productImages ? JSON.stringify([...productImages]) : null,
       hinhAnhGiayTo: phapLyImages ? JSON.stringify([...phapLyImages]) : null,
+      danhSachTienNghi:
+        danhSachTienNghi.length > 0
+          ? JSON.stringify([...danhSachTienNghi])
+          : null,
+      hinhAnhBanVeThietKe: banVeThietKe
+        ? JSON.stringify([...banVeThietKe])
+        : null,
       isChothue: isChoThue,
       video: videoUrl,
     };
@@ -157,14 +182,28 @@ export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
       />
 
       {/* <CanHoForm /> */}
-      <CanHoForm
-        setHuongBanCong={setHuongBanCong}
-        setHuongCuaChinh={setHuongCuaChinh}
-        setNoiThat={setNoiThat}
-        setPhongNgu={setPhongNgu}
-        setPhongTam={setPhongTam}
-        setSoTang={setSoTang}
-      />
+      {
+        danhMucValue === 'Căn hộ' && (
+          <CanHoForm
+            setHuongBanCong={setHuongBanCong}
+            setHuongCuaChinh={setHuongCuaChinh}
+            setNoiThat={setNoiThat}
+            setPhongNgu={setPhongNgu}
+            setPhongTam={setPhongTam}
+            setSoTang={setSoTang}
+            banVeThietKe={banVeThietKe}
+            setBanVeThietKe={setBanVeThietKe}
+            suaChuaLanCuoi={suaChuaLanCuoi}
+            setSuaChuaLanCuoi={setSuaChuaLanCuoi}
+            hoanThanh={hoanThanh}
+            setHoanThanh={setHoanThanh}
+            danhSachTienNghi={danhSachTienNghi}
+            setDanhSachTienNghi={setDanhSachTienNghi}
+          />
+        )
+        // <CanHoForm />
+      }
+
       {/* <CanHoForm /> */}
 
       <GiaBan giaBan={giaBan} setGiaBan={setGiaBan} />
@@ -180,7 +219,7 @@ export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
         />
         {productImageFiles?.length ? (
           <ImageList
-            className={'w-full h-32'}
+            className={'w-full h-36'}
             files={productImageFiles}
             height={32}
             width={32}
@@ -191,6 +230,7 @@ export const BaiVietForm = ({ danhMucValue, isChoThue, setOpen }) => {
         <div className="text-sm font-bold">Video bất động sản</div>
         <VideoUploader videoUrl={videoUrl} setVideoUrl={setVideoUrl} />
       </div>
+      <Nhan setNhan={setNhan} setIsMuaLeModalOpen={setIsMuaLeModalOpen} />
       <TieuDe tieuDe={tieuDe} setTieuDe={setTieude} />
       <MoTaChiTiet moTa={moTa} setMota={setMoTa} />
 

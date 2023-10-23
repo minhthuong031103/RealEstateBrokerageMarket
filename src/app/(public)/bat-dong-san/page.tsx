@@ -1,7 +1,4 @@
-import React from "react";
-import { ListComponent } from "./components/ListComponent";
-import { SearchComponent } from "./components/SearchComponent";
-import { SearchSheetComponent } from "./components/SearchSheetComponent";
+import { LayoutBatDongSan } from "./components/LayoutBatDongSan";
 
 async function page() {
   return (
@@ -16,17 +13,7 @@ async function page() {
               Danh sách bất động sản
             </h1>
           </div>
-          <div className="flex flex-row mt-4 justify-between lg:hidden">
-            <SearchSheetComponent />
-          </div>
-          <div className="flex flex-col lg:flex-row pt-8">
-            <div className="basis-[35%] hidden lg:block">
-              <SearchComponent />
-            </div>
-            <div className="basis-[65%]">
-              <ListComponent />
-            </div>
-          </div>
+          <LayoutBatDongSan />
         </div>
       </div>
     </div>
