@@ -7,7 +7,6 @@ import { RealEstateStatus } from './RealEstateStatus';
 import { parseJSON } from "@/lib/utils";
 import Link from "next/link";
 
-
 export function RealEstateCard({ item }) {
     return (
         <Link href={`agency/realestate-detail/${item?.id}`}>

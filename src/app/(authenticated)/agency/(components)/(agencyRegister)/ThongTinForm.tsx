@@ -9,7 +9,6 @@ import { ImageList } from '@/components/ui/ImageList';
 import { Button } from '@/components/ui/button';
 import { useDoiTac } from '@/hooks/useDoiTac';
 import DialogCustom from '@/components/ui/dialogCustom';
-import { Spinner } from '@nextui-org/react';
 import { PartnerName } from './PartnerName';
 import { PhoneNumber } from './PhoneNumber';
 import toast from 'react-hot-toast';
@@ -28,28 +27,44 @@ export const ThongTinForm = ({ loaiDoiTac }) => {
   const [nationalIDBackImageFile, setNationalIDBackImageFile] = React.useState([]);
   const [giayPhepKinhDoanhImageFiles, setGiayPhepKinhDoanhImageFiles] = React.useState([]);
   const [anhChanDungImageFiles, setAnhChanDungImageFiles] = React.useState([]);
-  const [nameDoiTac, setNameDoiTac] = React.useState('');
+  const [nameDoiTac, setNameDoiTac] = React.useState();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const { uploadDoiTacInfo } = useDoiTac();
 
 
   const onSubmit = async () => {
-    if (nationalIDFrontImageFile.length <= 0) {
-      toast.error('Vui lòng chọn hình ảnh mặt trước CCCD')
+    if (
+      !addressValue ||
+      !phoneNumber ||
+      !nameDoiTac
+    ) {
+      toast.error('Vui lòng nhập tất cả thông tin');
+      return;
     }
 
-    if (nationalIDBackImageFile.length <= 0) {
-      toast.error('Vui lòng chọn hình ảnh mặt sau CCCD')
-    }
 
-    if (anhChanDungImageFiles.length <= 0) {
-      toast.error('Vui lòng chọn ảnh chân dung');
-    }
+    // if (nationalIDFrontImageFile.length <= 0) {
+    //   toast.error('Vui lòng chọn hình ảnh mặt trước CCCD');
+    //   return;
+    // }
 
-    if (giayPhepKinhDoanhImageFiles.length <= 0 && loaiDoiTac == 'doanhnghiep'){
-      toast.error('Vui lòng chọn ảnh giấy phép kinh doanh');
-    }
+    // if (nationalIDBackImageFile.length <= 0) {
+    //   toast.error('Vui lòng chọn hình ảnh mặt sau CCCD');
+    //   return;
+    // }
+
+    // if (anhChanDungImageFiles.length <= 0) {
+    //   toast.error('Vui lòng chọn ảnh chân dung');
+    //   return;
+    // }
+
+    // if (giayPhepKinhDoanhImageFiles.length <= 0 && loaiDoiTac == 'doanhnghiep'){
+    //   toast.error('Vui lòng chọn ảnh giấy phép kinh doanh');
+    //   return;
+    // }
+
+
 
 
     const [nationalIDFrontImage, nationalIDBackImage, giayPhepKinhDoanhImages] = await Promise.all([
@@ -99,13 +114,7 @@ export const ThongTinForm = ({ loaiDoiTac }) => {
     }
 
     setIsSubmitting(true);
-
-
-    const success = await uploadDoiTacInfo(thongTin);
-
-    if (success){
-      console.log('upload thông tin đối tác thành công');
-    }
+    await uploadDoiTacInfo(thongTin);
   }
   return (
     <div className="grid-cols-1 grid gap-4 mb-6 mt-5">
@@ -216,7 +225,6 @@ export const ThongTinForm = ({ loaiDoiTac }) => {
           notShowClose={true}
         >
           <div className="flex flex-col gap-3 items-center justify-center">
-            <Spinner size="lg" />
             <div className="text-center font-semibold text-xs sm:text-sm">
               Yêu cầu tham gia chương trình đối tác đã được gửi thành công.
             </div>

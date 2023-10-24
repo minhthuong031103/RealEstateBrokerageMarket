@@ -117,6 +117,36 @@ export const useBatDongSan = () => {
     return res;
   };
 
+
+  const fetchAllBatDongSanCuaDoiTacTatCaTrangThai = async (page,props,userId) => {
+    let endPointUrl = `/api/agency/realestate-list?page=${page}&limit=6&userId=${userId}`;
+    const specialProps = {
+      "Căn hộ": ["loaiCanHo", "huongBanCong", "huongCuaChinh", "soPhongNgu", "soPhongTam"],
+      "Nhà ở": ["loaiNhaO", "huongCuaChinh", "soPhongNgu", "soPhongTam"],
+      "Văn phòng": ["loaiVanPhong", "huongCuaChinh"],
+      "Đất": ["loaiDatDai", "huongDat"]
+  };
+
+    const appendParam = (param, value) => {
+        if (value !== "" && typeof value !== "undefined") {
+            endPointUrl += `&${param}=${value}`;
+        }
+    };
+
+    Object.keys(props).forEach(prop => {
+        if (prop === "type" && specialProps[props[prop]]) {
+            specialProps[props[prop]].forEach(specialProp => {
+                appendParam(specialProp, props[specialProp]);
+            });
+        } else {
+            appendParam(prop, props[prop]);
+        }
+    });
+
+    const res = await getRequest({ endPoint: endPointUrl });
+    return res;
+  };
+
   return {
     fetchAllBatDongSan,
     fetchAllBatDongSanCuaDoiTac,
@@ -128,5 +158,6 @@ export const useBatDongSan = () => {
     xoaKhoiYeuThich,
     fetchAllDanhMuc,
     fetchLoaiHinhTheoDanhMuc,
+    fetchAllBatDongSanCuaDoiTacTatCaTrangThai,
   };
 };

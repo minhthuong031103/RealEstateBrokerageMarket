@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchBarAndCreate from '../(components)/SearchBarAndCreate';
 import { getSession } from '@/lib/auth';
-import ListItemRealEstate from '../(components)/ListItemRealEstate';
+import RealEstateListLayout from '../(components)/RealEstateListLayout';
 
 
 const page = async () => {
@@ -9,7 +9,7 @@ const page = async () => {
   return (
     <div className="m-4">
       <SearchBarAndCreate/>
-      <ListItemRealEstate session={session} />
+      <RealEstateListLayout session={session} />
     </div>
   );
 };

@@ -20,13 +20,13 @@ type props = {
 
 export function ListComponent({ searchProps }: props) {
   const [currentPage, setCurrentPage] = useState(1);
-  const { fetchAllBatDongSan } = useBatDongSan();
+  const { fetchAllBatDongSanCuaDoiTacTatCaTrangThai } = useBatDongSan();
   const { data } = useQuery({
     queryKey: [
       ["bat-dong-san", currentPage],
       ["props", searchProps],
     ],
-    queryFn: () => fetchAllBatDongSan(currentPage, searchProps),
+    queryFn: () => fetchAllBatDongSanCuaDoiTacTatCaTrangThai(currentPage, searchProps),
     staleTime: 60 * 1000 * 1,
     keepPreviousData: true,
   });
