@@ -36,14 +36,14 @@ export type ToaDoDiaChi = {
   lon: number;
 };
 
-export function ChiTietComponent({ id }) {
-  const { fetchBatDongSanTheoId } = useBatDongSan();
+export function ChiTietComponent({ id, session }) {
+  const { fetchBatDongSanTheoIdDoiTac } = useBatDongSan();
   // const [chiTietBDS, setChiTietBDS] = useState();
 
   const { data: chiTietBDS } = useQuery({
     queryKey: ['chiTietBDS', id],
     queryFn: async () => {
-      const res = await fetchBatDongSanTheoId(id);
+      const res = await fetchBatDongSanTheoIdDoiTac(id, session?.user?.id);
       console.log('🚀 ~ file: ChiTietComponent.tsx:45 ~ queryFn: ~ res:', res);
 
       return res?.[0];
@@ -55,19 +55,13 @@ export function ChiTietComponent({ id }) {
   );
   const [toaDo, setToaDo] = useState<ToaDoDiaChi>();
 
-  // useEffect(() => {
-  //   const getLocation = async (diaChi) => {
-  //     const { lat, lon } = await getLatLonForCity(diaChi);
-  //     setToaDo({ lat: lat, lon: lon });
-  //   };
-  //   const getBatDongSan = async () => {
-
-  //       getLocation(chiTietBDS?.[0]?.diaChi);
-
-  //   };
-
-  //   getBatDongSan();
-  // }, []);
+  useEffect(() => {
+    const getLocation = async (diaChi) => {
+      const { lat, lon } = await getLatLonForCity(diaChi);
+      setToaDo({ lat: lat, lon: lon });
+    };
+    getLocation(chiTietBDS?.[0]?.diaChi)
+  }, []);
   return (
     <div className="container mx-auto px-[24px]">
       <div className="ml-4">

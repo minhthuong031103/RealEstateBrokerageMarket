@@ -26,7 +26,7 @@ function AgencyRegisterModal({ session }) {
                 const role = userRole?.role;
                 const duyetDoiTac = userRole?.duyetDoiTac;
                 setUserRole(role);
-                if (role === 'user') {
+                if (role === 'khach_hang') {
                     setIsuser(true);
                 }
                 setDuyetDoiTac(duyetDoiTac);
@@ -38,9 +38,9 @@ function AgencyRegisterModal({ session }) {
 
         fetchUserRole();
     }, []);
-    return userRole === 'user' ? (
+    return userRole === 'khach_hang' ? (
         <div>
-            {userRole === 'user' && duyetDoiTac === '' ? (
+            {userRole === 'khach_hang' && duyetDoiTac === '' ? (
                 <DialogCustom className='w-full lg:w-[70%] h-[80%] lg:h-[95%] flex items-center justify-center' isModalOpen={isUser} notShowClose={true}>
                     <div>
                         <Logo />
@@ -60,7 +60,7 @@ function AgencyRegisterModal({ session }) {
                         </div>
                     </div>
                 </DialogCustom>
-            ) : duyetDoiTac === 'decline' ? (
+            ) : duyetDoiTac === 'tu_choi' ? (
                 <DialogCustom className='w-full lg:w-[70%] h-[80%] lg:h-[95%] flex items-center justify-center' isModalOpen={isUser} notShowClose={true}>
                     <div>
                         <Logo />

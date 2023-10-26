@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import ListItemRealEstate from './ListItemRealEstate';
-import { SearchComponent } from '@/app/(public)/bat-dong-san/components/SearchComponent';
+import SearchBarAndCreate from './SearchBarAndCreate';
 
 export interface searchType {
     searchWord: string;
@@ -24,6 +24,7 @@ export interface searchType {
     maxPrice: string;
     minSquare: string;
     maxSquare: string;
+    trangThai: string;
 }
 
 export function RealEstateListLayout({ session }) {
@@ -46,6 +47,7 @@ export function RealEstateListLayout({ session }) {
         maxPrice: '',
         minSquare: '',
         maxSquare: '',
+        trangThai: '',
     });
 
     useEffect(() => {
@@ -68,13 +70,15 @@ export function RealEstateListLayout({ session }) {
             maxPrice: '',
             minSquare: '',
             maxSquare: '',
+            trangThai: '',
         };
         setSearchProps(search);
     }, []);
 
     return (
         <div>
-            <SearchComponent setSearchProps={setSearchProps} />
+            {/* <SearchComponent setSearchProps={setSearchProps} /> */}
+            <SearchBarAndCreate setSearchProps={setSearchProps}/>
             <ListItemRealEstate searchProps={searchProps} id={session?.user?.id} />
         </div>
     );

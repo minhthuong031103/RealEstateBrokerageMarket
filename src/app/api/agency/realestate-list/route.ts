@@ -24,6 +24,7 @@ export async function GET(request: Request) {
   const maxPrice = searchParams.get('maxPrice');
   const minSquare = searchParams.get('minSquare');
   const maxSquare = searchParams.get('maxSquare');
+  const trangThai = searchParams.get('trangThai');
 
   const bds = await prisma.baiViet.findMany({
     include: {
@@ -53,25 +54,25 @@ export async function GET(request: Request) {
           contains: loaiCanHo || loaiNhaO || loaiVanPhong || loaiDat || '',
         },
       },
-      // trangThai: {
-      //   equals: 'Đã khóa',
-      // },
+      ...(trangThai !== null
+        ? { trangThai: { equals: trangThai } }
+        : {}),
       diaChi: {
         contains: location || '',
       },
-      ...(userId !== null 
-      ? {
-        userId: {
-          equals: userId || 1
-        },
-      }:{}),
+      ...(userId !== null
+        ? {
+          userId: {
+            equals: userId || 1
+          },
+        } : {}),
 
       ...(isRent !== null
         ? {
-            isChothue: {
-              equals: isRent === 'true',
-            },
-          }
+          isChothue: {
+            equals: isRent === 'true',
+          },
+        }
         : {}),
       ...(huongBanCong !== null
         ? { huongBanCong: { equals: huongBanCong } }
@@ -82,17 +83,17 @@ export async function GET(request: Request) {
       ...(huongDat !== null ? { huongDat: { equals: huongDat } } : {}),
       ...(soPhongNgu !== null
         ? {
-            soPhongNgu: {
-              equals: parseInt(soPhongNgu),
-            },
-          }
+          soPhongNgu: {
+            equals: parseInt(soPhongNgu),
+          },
+        }
         : {}),
       ...(soPhongTam !== null
         ? {
-            soPhongTam: {
-              equals: parseInt(soPhongTam),
-            },
-          }
+          soPhongTam: {
+            equals: parseInt(soPhongTam),
+          },
+        }
         : {}),
 
       gia: {
@@ -123,25 +124,25 @@ export async function GET(request: Request) {
           contains: loaiCanHo || loaiNhaO || loaiVanPhong || loaiDat || '',
         },
       },
-      // trangThai: {
-      //   equals: 'Đã duyệt',
-      // },
+      ...(trangThai !== null
+        ? { trangThai: { equals: trangThai } }
+        : {}),
       diaChi: {
         contains: location || '',
       },
-      ...(userId !== null 
-      ? {
-        userId: {
-          equals: userId || 1
-        },
-      }:{}),
+      ...(userId !== null
+        ? {
+          userId: {
+            equals: userId || 1
+          },
+        } : {}),
 
       ...(isRent !== null
         ? {
-            isChothue: {
-              equals: isRent === 'true',
-            },
-          }
+          isChothue: {
+            equals: isRent === 'true',
+          },
+        }
         : {}),
       ...(huongBanCong !== null
         ? { huongBanCong: { equals: huongBanCong } }
@@ -152,17 +153,17 @@ export async function GET(request: Request) {
       ...(huongDat !== null ? { huongDat: { equals: huongDat } } : {}),
       ...(soPhongNgu !== null
         ? {
-            soPhongNgu: {
-              equals: parseInt(soPhongNgu),
-            },
-          }
+          soPhongNgu: {
+            equals: parseInt(soPhongNgu),
+          },
+        }
         : {}),
       ...(soPhongTam !== null
         ? {
-            soPhongTam: {
-              equals: parseInt(soPhongTam),
-            },
-          }
+          soPhongTam: {
+            equals: parseInt(soPhongTam),
+          },
+        }
         : {}),
 
       gia: {

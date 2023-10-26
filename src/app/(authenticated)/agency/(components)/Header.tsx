@@ -1,11 +1,46 @@
 'use client';
 
-import { Navbar, NavbarBrand, NavbarContent, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button } from "@nextui-org/react";
-// import { Button } from "@/components/ui/button";
+import {
+    Navbar,
+    NavbarBrand,
+    NavbarContent,
+    Button
+} from "@nextui-org/react";
 import Logo from "@/components/logo";
-import { BellIcon} from "@radix-ui/react-icons";
+import { BellIcon } from "@radix-ui/react-icons";
+import React, {useState } from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar';
+import {
+    Dropdown,
+    DropdownTrigger,
+    DropdownMenu,
+    DropdownItem,
+    DropdownSection,
+} from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
+import AuthSvg from '@/assets/AuthSvg';
 
-function Header({session}) {
+
+const avatarNav = [
+    {
+      name: 'Hồ sơ',
+      href: '/agency',
+    },
+    {
+      name: 'Thêm sản phẩm',
+      href: '/admin/add-product',
+    },
+    {
+      name: 'Team',
+      href: '/admin/add-product',
+    },
+  ];
+
+function Header({ session }) {
+    const [isUserOpen, setIsUserOpen] = useState(false);
+    const [user] = useState(session?.user);
+    const router = useRouter();
     return (
         <Navbar shouldHideOnScroll>
             <NavbarBrand>
@@ -20,35 +55,46 @@ function Header({session}) {
                 <Button isIconOnly aria-label="Like" radius="full">
                     <BellIcon />
                 </Button>
-                {/* <Button variant="outline" size="icon" >
-                    <BellIcon className="h-4 w-4" />
-                </Button> */}
-                <Dropdown placement="bottom-end">
+                <Dropdown
+                    shouldBlockScroll={true}
+                    onOpenChange={(open) => {
+                        setIsUserOpen(open);
+                    }}
+                    closeOnSelect={true}
+                    onClose={() => {
+                        setIsUserOpen(false);
+                    }}
+                    isOpen={isUserOpen}
+                >
                     <DropdownTrigger>
-                        <Avatar
-                            isBordered
-                            as="button"
-                            className="transition-transform"
-                            color="secondary"
-                            name={session?.user?.name}
-                            size="sm"
-                            src={session?.user?.avatar}
-                        />
+                        <Avatar>
+                            <AvatarImage src={user.avatar} />
+                            <AvatarFallback>Guest</AvatarFallback>
+                        </Avatar>
                     </DropdownTrigger>
-                    <DropdownMenu aria-label="Profile Actions" variant="flat">
-                        <DropdownItem key="profile" className="h-14 gap-2">
-                            <p className="font-semibold">Signed in as</p>
-                            <p className="font-semibold">{session?.user?.name}</p>
-                        </DropdownItem>
-                        <DropdownItem key="settings">My Settings</DropdownItem>
-                        <DropdownItem key="team_settings">Team Settings</DropdownItem>
-                        <DropdownItem key="analytics">Analytics</DropdownItem>
-                        <DropdownItem key="system">System</DropdownItem>
-                        <DropdownItem key="configurations">Configurations</DropdownItem>
-                        <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-                        <DropdownItem key="logout" color="danger">
-                            Log Out
-                        </DropdownItem>
+                    <DropdownMenu>
+                        <DropdownSection title={`${user?.name}`}>
+                            {avatarNav.map((item, index) => (
+                                <DropdownItem
+                                    onClick={() => {
+                                        router.push(item.href);
+                                    }}
+                                    className="w-full"
+                                    key={index}
+                                >
+                                    {item.name}
+                                </DropdownItem>
+                            ))}
+
+                            <DropdownItem
+                                onClick={() => signOut({ callbackUrl: '/auth/login' })}
+                            >
+                                <div className="flex flex-row gap-2 items-center h-8  ">
+                                    <div className="">{AuthSvg.signIn()}</div>
+                                    <div>Logout</div>
+                                </div>
+                            </DropdownItem>
+                        </DropdownSection>
                     </DropdownMenu>
                 </Dropdown>
             </NavbarContent>

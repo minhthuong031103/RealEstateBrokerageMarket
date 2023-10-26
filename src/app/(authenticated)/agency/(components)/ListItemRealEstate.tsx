@@ -30,10 +30,6 @@ function ListItemRealEstate({ searchProps, id }: props) {
   });
   const ref = React.useRef(null);
 
-  console.log(currentPage);
-  console.log(searchProps);
-  console.log(id);
-  console.log(data);
 
   const onPageChange = (page) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -45,12 +41,7 @@ function ListItemRealEstate({ searchProps, id }: props) {
 
   return (
     <div className="mr-6 mt-4 bg-slate-50">
-      <div className="flex justify-between p-4 rounded-xl bg-white border-[1px] shadow-sm">
-        <div className=" text-[14px] text-gray-500 flex my-auto">
-          {data?.totalItems} bất động sản đã đăng
-        </div>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mt-6">
         {data?.data.map((item) => (
           <RealEstateCard item={item} />
         ))}
