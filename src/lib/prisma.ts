@@ -12,3 +12,17 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 export default prisma;
+
+// export default prisma.$extends({
+//   result: {
+//     user: {
+//       searchName: {
+//         needs: { name: true, email: true },
+//         compute(user) {
+//           return `${user.name} ${user.email}`;
+//         },
+//       },
+//     },
+//   },
+// });
+
