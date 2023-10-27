@@ -31,7 +31,22 @@ export async function GET(req: Request) {
       } else if (key == "search") {
         search = args[key] as string;
       } else if (["getcount"].indexOf(key) < 0) {
-        where[key] = args[key] as string;
+        if (Array.isArray(args[key])) {
+          where.AND = where.AND ? where.AND : [];
+          const andItem: Prisma.UserWhereInput = {};
+          andItem.OR = [];
+          (args[key] as string[]).forEach((elem) => {
+            andItem.OR?.push({
+              [key]: 
+              {
+                equals: elem ? elem : null,
+              }
+            })
+          });
+          (where.AND as Prisma.UserWhereInput[]).push(andItem)
+        } else {
+          where[key] = args[key] as string;
+        }
       }
     });
     // if (args.id)
@@ -51,17 +66,26 @@ export async function GET(req: Request) {
     }
     query["where"] = {
       ...where,
-      OR: [
+      AND: [
         {
-          name: {
-            contains: search,
-          },
+          OR: [
+            {
+              name: {
+                contains: search,
+              },
+            },
+            {
+              email: {
+                contains: search,
+              },
+            },
+          ],
         },
-        {
-          email: {
-            contains: search,
-          },
-        },
+        ...(where.AND
+          ? Array.isArray(where.AND)
+            ? where.AND
+            : [where.AND]
+          : []),
       ],
     };
     const result = await prisma.user.findMany(query);
