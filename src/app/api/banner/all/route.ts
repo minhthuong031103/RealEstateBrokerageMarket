@@ -11,5 +11,5 @@ export async function GET() {
   return new Response(JSON.stringify({ message: 'Không tìm thấy dữ liệu' }), {
     status: 404,
   });
-  return new Response(JSON.stringify(banners), { status: 200 });
+  return new Response(JSON.stringify({items: banners, message: "success"}), { status: 200 });
 }
