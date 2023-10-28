@@ -4,30 +4,58 @@ export async function POST(req: Request) {
   const body = await req.json();
   let success = false;
   const transactions: any[] = []
-  if (Array.isArray(body.indices)) {
-    body.indices.forEach((item) => {
-      transactions.push(prisma.banners.update({
+  if (body.id !== null && body.from !== null && body.to !== null && body.to !== body.from) {
+    
+    const LARGE_NUMBER = 1000000
+    
+    let query: any = null
+    const bUp = body.to < body.from
+    query = prisma.banners.updateMany(
+      {
         where: {
-          id: item.id,
+          bannerIndex:
+          {
+            gte: bUp ? body.to : body.from,
+            lte: bUp ? body.from : body.to,
+          }
+        },
+        data:{
+          bannerIndex: {
+            increment: LARGE_NUMBER
+          }
+        },
+      }
+    )
+    transactions.push(query)
+    query = prisma.banners.update(
+      {
+        where: {
+          id: body.id
         },
         data: {
-          bannerIndex: item.bannerIndex + 100000, // dirty hack
-        },
-      }));
-    });
-    await prisma.$transaction(transactions)
-    body.indices.forEach((item) => {
-      transactions.push(prisma.banners.update({
+          bannerIndex: body.to
+        }
+      }
+    )
+    transactions.push(query)
+    query = prisma.banners.updateMany(
+      {
         where: {
-          id: item.id,
+          bannerIndex: {
+            gte: LARGE_NUMBER
+          }
         },
         data: {
-          bannerIndex: item.bannerIndex,
-        },
-      }));
-    });
+          bannerIndex: {
+            increment: (bUp ? 1 : -1) - LARGE_NUMBER
+          }
+        }
+      }
+    )
+    transactions.push(query)
+
     await prisma.$transaction(transactions)
-    success = true;
+    success = true
   }
   return new Response(
     JSON.stringify({ message: success ? "Success" : "Invalid arguments" }),
