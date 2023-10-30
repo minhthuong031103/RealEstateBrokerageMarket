@@ -18,7 +18,7 @@ export const LoaiHinh = ({ setLoaiHinhValue, danhMucValue }) => {
   }, [danhMucValue]);
   console.log(danhMucValue);
   useEffect(() => {
-    if (selectedLoaiHinh) {
+    if (selectedLoaiHinh.size > 0) {
       const loaiHinhValueArray = Array.from(selectedLoaiHinh);
       setLoaiHinhValue(loaiHinhValueArray?.[0]);
     }

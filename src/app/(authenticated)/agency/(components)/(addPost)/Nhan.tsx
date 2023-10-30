@@ -11,7 +11,7 @@ export const Nhan = ({ setIsMuaLeModalOpen, setNhan }) => {
   const session = useSession();
   console.log('🚀 ~ file: Nhan.tsx:12 ~ Nhan ~ session:', session);
   useEffect(() => {
-    if (selectedType) {
+    if (selectedType.size > 0) {
       const phapLyValueArray = Array.from(selectedType);
       setNhan(phapLyValueArray?.[0]);
     }
