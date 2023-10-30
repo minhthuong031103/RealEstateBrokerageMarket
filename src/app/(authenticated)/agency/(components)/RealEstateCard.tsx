@@ -2,12 +2,11 @@
 
 import { Card } from '@/components/ui/card'
 import React from 'react'
-import { Image } from '@nextui-org/react'
+import { Image } from '@nextui-org/react';
 import { parseJSON } from "@/lib/utils";
 import Link from "next/link";
 import { RealEstateStatus } from './(realestateItem)/RealEstateStatus';
-import { RealEstateTypeAndPrice } from './(realestateItem)/RealEstateTypeAndPrice';
-
+import { RealEstateInfo } from './(realestateItem)/RealEstateInfo';
 
 export function RealEstateCard({ item }) {
     return (
@@ -16,18 +15,12 @@ export function RealEstateCard({ item }) {
                 <RealEstateStatus trangthai={item.trangThai} />
                 <div className="flex flex-col md:flex-row">
                     <div className="md:w-1/6 m-3">
-                        <div className="w-full aspect-w-4 aspect-h-3" >
-                            {parseJSON(item?.hinhAnhSanPham)?.[0] && (
-                                <div className="rounded-md">
-                                    <Image
-                                        src={parseJSON(item?.hinhAnhSanPham)[0].url} />
-                                </div>
-                            )}
-                        </div>
+                        <Image
+                            src={parseJSON(item?.hinhAnhSanPham)[0].url} />
                     </div>
                     <div className="md:w-5/6 m-3">
-                        <h1 className='text-2xl font-bold'>{item.tieuDe}</h1>
-                        <RealEstateTypeAndPrice loaiHinh={item.loaiHinh} gia={item.gia} />
+                        <h1 className='text-2xl font-extrabold'>{item.tieuDe}</h1>
+                        <RealEstateInfo item={item}  />
                         <p className='text-sm mt-2'>{item.moTa}</p>
                     </div>
                 </div>

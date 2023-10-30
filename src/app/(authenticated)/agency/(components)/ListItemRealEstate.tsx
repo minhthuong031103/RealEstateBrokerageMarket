@@ -43,7 +43,7 @@ function ListItemRealEstate({ searchProps, id }: props) {
     <div className="mr-6 mt-4 bg-slate-50">
       <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mt-6">
         {data?.data.map((item) => (
-          <RealEstateCard item={item} />
+          <RealEstateCard item={item} key={`realestate-${item.id}`} />
         ))}
       </div>
       <div className="flex justify-center p-6">

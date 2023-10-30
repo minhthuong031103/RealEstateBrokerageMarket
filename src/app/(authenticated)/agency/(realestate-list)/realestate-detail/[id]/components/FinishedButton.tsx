@@ -20,7 +20,7 @@ export const FinishedButton = ({ setOpenComplete, id }) => {
     }
 
     return (
-        <div className='grid grid-rows-1'>
+        <div className='grid grid-rows-1 bottom-0'>
             <Button
                 disabled={isSubmitting}
                 onClick={() => {

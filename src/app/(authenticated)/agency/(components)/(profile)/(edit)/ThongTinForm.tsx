@@ -8,7 +8,6 @@ import { FileDialog } from '@/components/ui/FileDialog';
 import { ImageList } from '@/components/ui/ImageList';
 import { Button } from '@/components/ui/button';
 import { useDoiTac } from '@/hooks/useDoiTac';
-import DialogCustom from '@/components/ui/dialogCustom';
 import { PartnerName } from './PartnerName';
 import { PhoneNumber } from './PhoneNumber';
 import toast from 'react-hot-toast';
@@ -29,6 +28,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
   const [anhChanDungImageFiles, setAnhChanDungImageFiles] = React.useState([]);
   const [nameDoiTac, setNameDoiTac] = React.useState();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+
 
   const { uploadDoiTacInfo } = useDoiTac();
 
@@ -229,7 +229,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
           Gửi yêu cầu
         </Button>
       </div>
-      {isSubmitting && (
+      {/* {isSubmitting && (
         <DialogCustom
           className="w-[90%] lg:w-[50%] h-fit items-center justify-center"
           isModalOpen={isSubmitting}
@@ -241,7 +241,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
             </div>
           </div>
         </DialogCustom>
-      )}
+      )} */}
     </div >
   )
 }

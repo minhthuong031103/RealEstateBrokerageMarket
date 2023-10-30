@@ -37,6 +37,7 @@ export const CanHoForm = ({
   noiThatValue,
   huongBanCongValue,
   huongCuaChinhValue,
+  setDeletedImageBanVeThietKeFiles,
 }) => {
   const form = useForm<z.infer<typeof canHoSchema>>({
     resolver: zodResolver(canHoSchema),
@@ -67,6 +68,7 @@ export const CanHoForm = ({
         <div className="flex flex-col space-y-3">
           <div className="font-bold text-sm"> Bản vẽ thiết kế</div>
           <FileDialog
+            setDeletedImage={setDeletedImageBanVeThietKeFiles}
             name="images"
             maxFiles={8}
             maxSize={1024 * 1024 * 4}

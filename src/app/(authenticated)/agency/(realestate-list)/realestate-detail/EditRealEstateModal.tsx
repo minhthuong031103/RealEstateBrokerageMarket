@@ -25,7 +25,6 @@ export const EditRealEstateModal = ({ id }) => {
                     isModalOpen={openEdit}
                     warningOnClose={true}>
                     <div>
-                        <h3>Chỉnh sửa thông tin bất động sản</h3>
                         <EditForm id={id} />
                     </div>
                 </DialogCustom>

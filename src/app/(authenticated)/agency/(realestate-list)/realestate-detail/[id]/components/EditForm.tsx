@@ -23,6 +23,9 @@ import { CanHoForm } from './(editPost)/(canho)/CanHoForm';
 import { set } from 'date-fns';
 import { useQuery } from '@tanstack/react-query';
 import { parse } from 'path';
+import { SelectAddress } from './(editPost)/SelectAddress';
+import { TieuDe } from '@/app/(authenticated)/agency/(components)/(addPost)/TieuDe';
+import { MoTaChiTiet } from '@/app/(authenticated)/agency/(components)/(addPost)/MoTaChiTiet';
 
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
@@ -55,8 +58,10 @@ export const EditForm = ({ id }) => {
   const [ban, setBan] = React.useState(false);
   const [productImageFiles, setProductImagesFile] = React.useState([]);
   const [phapLyImageFiles, setPhapLyImageFiles] = React.useState([]);
-  const [banVeThietKe, setBanVeThietKe] = React.useState([]);
-  const [deletedImage, setDeletedImage] = React.useState([]);
+  const [banVeThietKeImageFiles, setBanVeThietKeImageFiles] = React.useState([]);
+  const [deletedImageProductFiles, setDeletedImageProductFiles] = React.useState([]);
+  const [deletedImagePhapLyFiles, setDeletedImagePhapLyFiles] = React.useState([]);
+  const [deletedImageBanVeThietKeFiles, setDeletedImageBanVeThietKeFiles] = React.useState([]);
   const [loaiHinhValue, setLoaiHinhValue] = React.useState(null);
   const [oldloaiHinhValue, setoldLoaiHinhValue] = React.useState(null);
 
@@ -65,15 +70,27 @@ export const EditForm = ({ id }) => {
 
     const productfileArray = [];
     const phaplyfileArray = [];
+    const banVeThietKeArray = [];
 
-
-    //image that need to be push to server put in file Array
     productImageFiles.forEach((file) => {
       if (file?.lastModified) {
         productfileArray.push(file);
       }
     });
-    const [productImages, phapLyImages] = await Promise.all([
+
+    phapLyImageFiles.forEach((file) => {
+      if (file?.lastModified) {
+        phaplyfileArray.push(file);
+      }
+    });
+
+    banVeThietKeImageFiles.forEach((file) => {
+      if (file?.lastModified) {
+        banVeThietKeArray.push(file);
+      }
+    });
+
+    const [productImages, phapLyImages, banVeThietKeImages] = await Promise.all([
       startUpload([...productfileArray]).then((res) => {
         const formattedImages = res?.map((image) => ({
           id: image.key,
@@ -90,26 +107,33 @@ export const EditForm = ({ id }) => {
         }));
         return formattedImages ?? null;
       }),
+      startUpload([...banVeThietKeArray]).then((res) => {
+        const formattedImages = res?.map((image) => ({
+          id: image.key,
+          name: image.key.split('_')[1] ?? image.key,
+          url: image.url,
+        }));
+        return formattedImages ?? null;
+      }),
     ]);
 
-    //old image arrray + delete image array + new url arry
-    const newArrayImages = productImageFiles?.filter((image) => {
-      return !deletedImage.includes(image?.id) && image.id;
+    const newArrayImagesProduct = productImageFiles?.filter((image) => {
+      return !deletedImageProductFiles.includes(image?.id) && image.id;
     });
 
-    // add product image productImages
+    const newArrayImagesPhapLy = phapLyImageFiles?.filter((image) => {
+      return !deletedImagePhapLyFiles.includes(image?.id) && image.id;
+    });
 
-    const imagedelete = {
-      deletedImage: deletedImage,
-    }
+    const newArrayImagesThietKe = banVeThietKeImageFiles?.filter((image) => {
+      return !deletedImageBanVeThietKeFiles.includes(image?.id) && image.id;
+    });
+    
 
-    // // array deletedImage truyen vao body
-    console.log(
-      '🚀 ~ file: EditForm.tsx:89 ~ newArrayImages ~ newArrayImages:',
-      newArrayImages
-    );
 
-    //array hoan chinh
+    const updateArrayImageProduct = [...newArrayImagesProduct, ...(productImages || [])];
+    const updateArrayImagePhapLy = [...newArrayImagesPhapLy, ...(phapLyImages || [])];
+    const updateArrayImageThietKe = [...newArrayImagesThietKe, ...(banVeThietKeImages || [])];
 
 
 
@@ -131,17 +155,17 @@ export const EditForm = ({ id }) => {
       suaChuaLanCuoi: suaChuaLanCuoi ? new Date(suaChuaLanCuoi) : null,
       huongCuaChinh: huongCuaChinh,
       soTang: soTang ? parseInt(soTang) : null,
-      hinhAnhSanPham: productImages ? JSON.stringify([...productImages]) : null,
-      hinhAnhGiayTo: phapLyImages ? JSON.stringify([...phapLyImages]) : null,
+      hinhAnhSanPham: updateArrayImageProduct ? JSON.stringify([...updateArrayImageProduct]) : null,
+      hinhAnhGiayTo: updateArrayImagePhapLy ? JSON.stringify([...updateArrayImagePhapLy]) : null,
+      hinhAnhBanVeThietKe: updateArrayImageThietKe ? JSON.stringify([...updateArrayImageThietKe]) : null,
       danhSachTienNghi:
         danhSachTienNghi.length > 0
           ? JSON.stringify([...danhSachTienNghi])
           : null,
-      hinhAnhBanVeThietKe: banVeThietKe
-        ? JSON.stringify([...banVeThietKe])
-        : null,
       isChothue: thue,
-    }
+      tinhTrang: 'Chờ duyệt',
+      deletedImageProductFiles: deletedImageProductFiles ? JSON.stringify([...deletedImageProductFiles]) : null,
+    }                                                  
 
     if (oldloaiHinhValue == loaiHinhValue) {
       delete baiVietUpdated.loaiHinh;
@@ -152,22 +176,7 @@ export const EditForm = ({ id }) => {
       setIsSubmitting(true);
       console.log('Thay đổi thông tin bài viết thành công');
     }
-
-
-
-
-
-
   };
-
-  // useEffect(() => {
-  //   const getBatDongSan = async () => {
-  //     await fetchBatDongSanTheoId(id).then((data) => {
-  //       setChiTietBDS(data[0]);
-  //     });
-  //   };
-  //   getBatDongSan();
-  // }, []);
 
   const { data: chiTietBDS } = useQuery({
     queryKey: ['chiTietBDS', id],
@@ -194,7 +203,7 @@ export const EditForm = ({ id }) => {
       setChieuRong(chiTietBDS?.chieuRong);
       setProductImagesFile(JSON.parse(chiTietBDS?.hinhAnhSanPham));
       setPhapLyImageFiles(JSON.parse(chiTietBDS?.hinhAnhGiayTo));
-      setBanVeThietKe(JSON.parse(chiTietBDS?.hinhAnhBanVeThietKe));
+      setBanVeThietKeImageFiles(JSON.parse(chiTietBDS?.hinhAnhBanVeThietKe));
       setGiaBan(chiTietBDS?.gia?.toString());
       setPhapLy(chiTietBDS?.tinhTrangPhapLy);
       setPhongNgu(chiTietBDS?.soPhongNgu.toString());
@@ -208,21 +217,25 @@ export const EditForm = ({ id }) => {
       setIsLoaded(true);
     }
   }, [chiTietBDS]);
+
   return (
-    <div className="grid-cols-1 grid gap-4 mb-6 px-1">
+    <div className="w-full h-full flex flex-col space-y-6">
       <Skeleton isLoaded={isLoaded} className='rounded-md'>
-        <Input
+        {/* <Input
           value={tieuDe}
           label={'Tiêu đề'}
           onChange={(e) => setTieuDe(e.target.value)}
-        />
+        /> */}
+        <TieuDe tieuDe={tieuDe} setTieuDe={setTieuDe} />
       </Skeleton>
+
       <Skeleton isLoaded={isLoaded} className='rounded-md'>
-        <Textarea
+        {/* <Textarea
           value={moTa}
           label={'Mô tả'}
           onChange={(e) => setMoTa(e.target.value)}
-        />
+        /> */}
+        <MoTaChiTiet setMota={MoTaChiTiet} moTa={moTa} />
       </Skeleton>
 
       <Skeleton isLoaded={isLoaded} className='rounded-md'>
@@ -235,19 +248,14 @@ export const EditForm = ({ id }) => {
           danhMucValue={danhMucValue}
         />
       </Skeleton>
-      <Skeleton isLoaded={isLoaded} className='rounded-md'>
-        <Input
-          value={diaChi}
-          label={'Địa chỉ'}
-          onChange={(e) => setDiaChi(e.target.value)}
-        />
 
+      <Skeleton isLoaded={isLoaded} className='rounded-md'>
+        <SelectAddress addressValue={diaChi} setAddressValue={setDiaChi} />
       </Skeleton>
+
       <Skeleton isLoaded={isLoaded} className='rounded-md'>
         <LoaiHinh danhMucValue={danhMucValue} setLoaiHinhValue={setLoaiHinhValue} loaiHinhValue={loaiHinhValue} />
       </Skeleton>
-
-
 
       <Skeleton isLoaded={isLoaded} className='rounded-md'>
         <DienTich
@@ -259,7 +267,7 @@ export const EditForm = ({ id }) => {
       </Skeleton>
 
       <Skeleton isLoaded={isLoaded} className='rounded-md'>
-        <GiayToPhapLy phapLy={phapLy} setPhapLy={setPhapLy} phapLyImageFiles={phapLyImageFiles} setPhapLyImageFiles={setPhapLyImageFiles} />
+        <GiayToPhapLy phapLy={phapLy} setPhapLy={setPhapLy} phapLyImageFiles={phapLyImageFiles} setPhapLyImageFiles={setPhapLyImageFiles} setDeletedImagePhapLyFiles={setDeletedImagePhapLyFiles} />
       </Skeleton>
       {
         danhMucValue === 'Căn hộ' && (
@@ -277,24 +285,25 @@ export const EditForm = ({ id }) => {
               noiThatValue={noiThat}
               huongBanCongValue={huongBanCong}
               huongCuaChinhValue={huongCuaChinh}
-              banVeThietKe={banVeThietKe}
-              setBanVeThietKe={setBanVeThietKe}
+              banVeThietKe={banVeThietKeImageFiles}
+              setBanVeThietKe={setBanVeThietKeImageFiles}
               suaChuaLanCuoi={suaChuaLanCuoi}
               setSuaChuaLanCuoi={setSuaChuaLanCuoi}
               hoanThanh={hoanThanh}
               setHoanThanh={setHoanThanh}
               danhSachTienNghi={danhSachTienNghi}
-              setDanhSachTienNghi={setDanhSachTienNghi} />
+              setDanhSachTienNghi={setDanhSachTienNghi}
+              setDeletedImageBanVeThietKeFiles = {setDeletedImageBanVeThietKeFiles} />
           </Skeleton>
-
         )}
+
       <Skeleton isLoaded={isLoaded} className='rounded-md'>
         <GiaBan giaBan={giaBan} setGiaBan={setGiaBan} />
       </Skeleton>
 
       <Skeleton isLoaded={isLoaded} className='rounded-md'>
         <FileDialog
-          setDeletedImage={setDeletedImage}
+          setDeletedImage={setDeletedImageProductFiles}
           name="images"
           maxFiles={8}
           maxSize={1024 * 1024 * 4}
@@ -328,6 +337,8 @@ export const EditForm = ({ id }) => {
           </Button>
         </div>
       </Skeleton>
+
+      
       {/* {isSubmitting && (
         <DialogCustom
           className="w-[90%] lg:w-[50%] h-fit items-center justify-center"

@@ -9,6 +9,7 @@ export const GiayToPhapLy = ({
   setPhapLy,
   phapLyImageFiles,
   setPhapLyImageFiles,
+  setDeletedImagePhapLyFiles,
 }) => {
   const [selectedPhapLy, setSelectedPhapLy] = React.useState(new Set([]));
   const [phapLyTouched, setPhapLyTouched] = React.useState(false);
@@ -56,6 +57,7 @@ export const GiayToPhapLy = ({
         />
       ) : null}
       <FileDialog
+        setDeletedImage={setDeletedImagePhapLyFiles}
         className="max-w-xs lg:max-w-lg"
         name="phapLyImages"
         maxFiles={8}

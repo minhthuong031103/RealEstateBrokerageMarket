@@ -5,11 +5,12 @@ import React, { useEffect } from 'react'
 
 export const SelectTinhTrangList = ({
     setTrangThaiValue,
-    onSubmit
+    onSubmit,
 }) => {
     const [selectedTrangThai, setSelectedTrangThai] = React.useState(new Set([]));
     const [trangThaiTouched, setTrangThaiTouched] = React.useState(false);
 
+    console.log(trangThaiTouched);
     const trangthai = [
         {
             label: "Tất cả", value: ""
@@ -31,11 +32,9 @@ export const SelectTinhTrangList = ({
         if (selectedTrangThai) {
             const trangThaiValueArray = Array.from(selectedTrangThai);
             setTrangThaiValue(trangThaiValueArray?.[0]);
-            // Call the onSubmit function when the selection changes
-            onSubmit(); // You can pass any necessary data to onSubmit if needed
-            console.log(trangThaiTouched);
+            onSubmit();
         }
-    }, [selectedTrangThai, onSubmit]); // Include onSubmit as a dependency
+    }, [selectedTrangThai, onSubmit]);
 
     return (
         <div className='"w-full md:w-[480px] mb-2 md:mb-0'>
@@ -43,7 +42,7 @@ export const SelectTinhTrangList = ({
                 <Select
                     key={'trangthai'}
                     radius={'md'}
-                    label="Trạng thái"
+                    label={'Trạng thái'}
                     placeholder="Tìm kiếm dựa trên trạng thái bài đăng"
                     selectedKeys={selectedTrangThai}
                     onSelectionChange={setSelectedTrangThai}
