@@ -13,6 +13,7 @@ import MapComponent from './MapComponent';
 import { EditRealEstateModal } from '../../../EditRealEstateModal';
 import { useQuery } from '@tanstack/react-query';
 import { getRequest } from '@/lib/fetch';
+import Loader from '@/components/Loader';
 
 const CURRENCY_FORMAT = new Intl.NumberFormat(undefined, {
   currency: 'VND',
@@ -57,10 +58,15 @@ export function ChiTietComponent({ id, session }) {
       const { lat, lon } = await getLatLonForCity(diaChi);
       setToaDo({ lat: lat, lon: lon });
     };
-    getLocation(chiTietBDS?.[0]?.diaChi)
+    getLocation(chiTietBDS?.[0]?.diaChi);
   }, []);
   return (
-      <div className="container mx-auto px-[24px]">
+    <div className="container mx-auto px-[24px]">
+      {!isLoaded ? (
+        <div className="flex h-screen items-center justify-center">
+          <Loader />
+        </div>
+      ) : (
         <div className="ml-4">
           <div className="container pt-[48px]">
             <div>
@@ -97,13 +103,15 @@ export function ChiTietComponent({ id, session }) {
                 <div className="mt-8 w-full rounded-md bg-white border-[1px] shadow p-8">
                   <div className="flex flex-row flex-wrap gap-4">
                     <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
-                      {chiTietBDS?.isChothue === false ? 'Đăng bán' : 'Cho thuê'}
+                      {chiTietBDS?.isChothue === false
+                        ? 'Đăng bán'
+                        : 'Cho thuê'}
                     </div>
                     <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
                       {chiTietBDS?.loaiHinh?.name}
                     </div>
                     {chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Căn hộ' ||
-                      chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Nhà ở' ? (
+                    chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Nhà ở' ? (
                       <>
                         <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
                           Nhà tắm: {chiTietBDS?.soPhongTam}
@@ -128,7 +136,9 @@ export function ChiTietComponent({ id, session }) {
                   <div className="mt-4 lg:w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-600 text-[14px]">
                     <div className="flex flex-row">
                       <div className="w-1/2">BDS ID:</div>
-                      <div className="w-1/2 font-semibold">{chiTietBDS?.id}</div>
+                      <div className="w-1/2 font-semibold">
+                        {chiTietBDS?.id}
+                      </div>
                     </div>
                     <div className="flex flex-row">
                       <div className="w-1/2">Chiều dài:</div>
@@ -273,7 +283,9 @@ export function ChiTietComponent({ id, session }) {
                 </div>
                 <div className="mt-8 mb-8 w-full rounded-md bg-white border-[1px] shadow p-8">
                   <div className="flex flex-row justify-between flex-wrap">
-                    <div className="text-gray-600 font-semibold">Bản vẽ nhà</div>
+                    <div className="text-gray-600 font-semibold">
+                      Bản vẽ nhà
+                    </div>
                   </div>
                   <img
                     src={chiTietBDS?.hinhAnhBanVeThietKe}
@@ -311,6 +323,7 @@ export function ChiTietComponent({ id, session }) {
             </a>
           </div>
         </div>
-      </div>
+      )}
+    </div>
   );
 }

@@ -49,7 +49,7 @@ export const CanHoForm = ({
     console.log(soTangValue);
     console.log(huongBanCongValue);
     console.log(huongCuaChinhValue);
-  })
+  });
   return (
     <Form {...form}>
       <form className="flex flex-col space-y-6 max-w-xs lg:max-w-lg">

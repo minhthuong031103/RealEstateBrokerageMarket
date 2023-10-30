@@ -27,13 +27,13 @@ model User {
   luotChuyenNghiep       Int?            @default(0)
   luotVip                Int?            @default(0)
   duyetDoiTac            String?
-  duyetKhachHang         String?
   stripeCurrentPeriodEnd DateTime?       @map("stripe_current_period_end")
   stripeCustomerId       String?         @unique @map("stripe_customer_id")
   stripePriceId          String?         @map("stripe_price_id")
   stripeSubscriptionId   String?         @unique @map("stripe_subscription_id")
   createdAt              DateTime        @default(now())
   giamGia                Int?            @default(0)
+  duyetKhachHang         String?
   directMessages         DirectMessage[]
   seenMessages           SeenMessage[]
   BaiViets               BaiViet[]
@@ -166,7 +166,7 @@ model Office {
   password    String
   logo        String? @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
   aboutUs     String
-  policy      String    @db.LongText
+  policy      String  @db.LongText
   address     String
   phoneNumber String
   anhGiayPhep String?

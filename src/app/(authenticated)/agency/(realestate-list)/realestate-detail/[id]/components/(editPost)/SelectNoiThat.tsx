@@ -17,6 +17,14 @@ export const SelectNoiThat = ({
   soTangValue,
   noiThatValue,
 }) => {
+  console.log(
+    '🚀 ~ file: SelectNoiThat.tsx:20 ~ ',
+    phongTamValue,
+    soTangValue,
+    noiThatValue,
+    soTangValue,
+    noiThatValue
+  );
   const [selectedPhongNgu, setSelectedPhongNgu] = React.useState(new Set([]));
   const [phongNguTouched, setPhongNguTouched] = React.useState(false);
 
@@ -28,34 +36,33 @@ export const SelectNoiThat = ({
 
   const [selectedSoTang, setSelectedSoTang] = React.useState(new Set([]));
   const [soTangTouched, setSoTangTouched] = React.useState(false);
-
   useEffect(() => {
-    if (selectedPhongNgu) {
+    if (selectedPhongNgu.size > 0) {
       const phongNguValueArray = Array.from(selectedPhongNgu);
       setPhongNgu(phongNguValueArray?.[0]);
     }
   }, [selectedPhongNgu]);
 
   useEffect(() => {
-    if (selectedPhongTam) {
+    if (selectedPhongTam.size > 0) {
       const phongTamValueArray = Array.from(selectedPhongTam);
       setPhongTam(phongTamValueArray?.[0]);
     }
   }, [selectedPhongTam]);
 
   useEffect(() => {
-    if (selectedNoiThat) {
+    if (selectedNoiThat.size > 0) {
       const noiThatValueArray = Array.from(selectedNoiThat);
       setNoiThat(noiThatValueArray?.[0]);
     }
   }, [selectedNoiThat]);
 
   useEffect(() => {
-    if (selectedSoTang) {
+    if (selectedSoTang.size > 0) {
       const soTangValueArray = Array.from(selectedSoTang);
       setSoTang(soTangValueArray?.[0]);
     }
-  });
+  }, [selectedSoTang]);
 
   const isPhongNguValid = selectedPhongNgu.size > 0;
   const isPhongTamValid = selectedPhongTam.size > 0;

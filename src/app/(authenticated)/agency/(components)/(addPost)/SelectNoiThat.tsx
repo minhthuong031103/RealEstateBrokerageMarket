@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { TinhTrangNoiThat, noiThat } from '@/lib/constant';
@@ -5,14 +6,26 @@ import { Select, SelectItem } from '@nextui-org/react';
 import React, { useEffect } from 'react';
 import { DanhSachTienNghi } from './DanhSachTienNghi';
 
+interface SelectNoiThatProps {
+  setPhongNgu: (value: string) => void;
+  setPhongTam: (value: string) => void;
+  setNoiThat: (value: string) => void;
+  setSoTang: (value: string) => void;
+  danhSachTienNghi: any;
+  setDanhSachTienNghi: (value: any) => void;
+  phongNguValue?: any;
+  isEdit?: boolean;
+}
+
 export const SelectNoiThat = ({
   setPhongNgu,
   setPhongTam,
   setNoiThat,
   setSoTang,
   danhSachTienNghi,
+  phongNguValue,
   setDanhSachTienNghi,
-}) => {
+}: SelectNoiThatProps) => {
   const [selectedPhongNgu, setSelectedPhongNgu] = React.useState(new Set([]));
   const [phongNguTouched, setPhongNguTouched] = React.useState(false);
 

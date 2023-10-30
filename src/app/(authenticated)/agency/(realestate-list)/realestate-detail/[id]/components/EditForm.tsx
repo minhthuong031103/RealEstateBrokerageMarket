@@ -27,7 +27,6 @@ import { SelectAddress } from './(editPost)/SelectAddress';
 import { TieuDe } from '@/app/(authenticated)/agency/(components)/(addPost)/TieuDe';
 import { MoTaChiTiet } from '@/app/(authenticated)/agency/(components)/(addPost)/MoTaChiTiet';
 
-
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
 export const EditForm = ({ id }) => {
@@ -58,16 +57,21 @@ export const EditForm = ({ id }) => {
   const [ban, setBan] = React.useState(false);
   const [productImageFiles, setProductImagesFile] = React.useState([]);
   const [phapLyImageFiles, setPhapLyImageFiles] = React.useState([]);
-  const [banVeThietKeImageFiles, setBanVeThietKeImageFiles] = React.useState([]);
-  const [deletedImageProductFiles, setDeletedImageProductFiles] = React.useState([]);
-  const [deletedImagePhapLyFiles, setDeletedImagePhapLyFiles] = React.useState([]);
-  const [deletedImageBanVeThietKeFiles, setDeletedImageBanVeThietKeFiles] = React.useState([]);
+  const [banVeThietKeImageFiles, setBanVeThietKeImageFiles] = React.useState(
+    []
+  );
+  const [deletedImageProductFiles, setDeletedImageProductFiles] =
+    React.useState([]);
+  const [deletedImagePhapLyFiles, setDeletedImagePhapLyFiles] = React.useState(
+    []
+  );
+  const [deletedImageBanVeThietKeFiles, setDeletedImageBanVeThietKeFiles] =
+    React.useState([]);
   const [loaiHinhValue, setLoaiHinhValue] = React.useState(null);
   const [oldloaiHinhValue, setoldLoaiHinhValue] = React.useState(null);
 
   const { onUpdateBaiViet } = useBaiViet();
   const onSubmit = async () => {
-
     const productfileArray = [];
     const phaplyfileArray = [];
     const banVeThietKeArray = [];
@@ -90,32 +94,34 @@ export const EditForm = ({ id }) => {
       }
     });
 
-    const [productImages, phapLyImages, banVeThietKeImages] = await Promise.all([
-      startUpload([...productfileArray]).then((res) => {
-        const formattedImages = res?.map((image) => ({
-          id: image.key,
-          name: image.key.split('_')[1] ?? image.key,
-          url: image.url,
-        }));
-        return formattedImages ?? null;
-      }),
-      startUpload([...phaplyfileArray]).then((res) => {
-        const formattedImages = res?.map((image) => ({
-          id: image.key,
-          name: image.key.split('_')[1] ?? image.key,
-          url: image.url,
-        }));
-        return formattedImages ?? null;
-      }),
-      startUpload([...banVeThietKeArray]).then((res) => {
-        const formattedImages = res?.map((image) => ({
-          id: image.key,
-          name: image.key.split('_')[1] ?? image.key,
-          url: image.url,
-        }));
-        return formattedImages ?? null;
-      }),
-    ]);
+    const [productImages, phapLyImages, banVeThietKeImages] = await Promise.all(
+      [
+        startUpload([...productfileArray]).then((res) => {
+          const formattedImages = res?.map((image) => ({
+            id: image.key,
+            name: image.key.split('_')[1] ?? image.key,
+            url: image.url,
+          }));
+          return formattedImages ?? null;
+        }),
+        startUpload([...phaplyfileArray]).then((res) => {
+          const formattedImages = res?.map((image) => ({
+            id: image.key,
+            name: image.key.split('_')[1] ?? image.key,
+            url: image.url,
+          }));
+          return formattedImages ?? null;
+        }),
+        startUpload([...banVeThietKeArray]).then((res) => {
+          const formattedImages = res?.map((image) => ({
+            id: image.key,
+            name: image.key.split('_')[1] ?? image.key,
+            url: image.url,
+          }));
+          return formattedImages ?? null;
+        }),
+      ]
+    );
 
     const newArrayImagesProduct = productImageFiles?.filter((image) => {
       return !deletedImageProductFiles.includes(image?.id) && image.id;
@@ -128,14 +134,19 @@ export const EditForm = ({ id }) => {
     const newArrayImagesThietKe = banVeThietKeImageFiles?.filter((image) => {
       return !deletedImageBanVeThietKeFiles.includes(image?.id) && image.id;
     });
-    
 
-
-    const updateArrayImageProduct = [...newArrayImagesProduct, ...(productImages || [])];
-    const updateArrayImagePhapLy = [...newArrayImagesPhapLy, ...(phapLyImages || [])];
-    const updateArrayImageThietKe = [...newArrayImagesThietKe, ...(banVeThietKeImages || [])];
-
-
+    const updateArrayImageProduct = [
+      ...newArrayImagesProduct,
+      ...(productImages || []),
+    ];
+    const updateArrayImagePhapLy = [
+      ...newArrayImagesPhapLy,
+      ...(phapLyImages || []),
+    ];
+    const updateArrayImageThietKe = [
+      ...newArrayImagesThietKe,
+      ...(banVeThietKeImages || []),
+    ];
 
     const baiVietUpdated = {
       diaChi: diaChi,
@@ -155,17 +166,25 @@ export const EditForm = ({ id }) => {
       suaChuaLanCuoi: suaChuaLanCuoi ? new Date(suaChuaLanCuoi) : null,
       huongCuaChinh: huongCuaChinh,
       soTang: soTang ? parseInt(soTang) : null,
-      hinhAnhSanPham: updateArrayImageProduct ? JSON.stringify([...updateArrayImageProduct]) : null,
-      hinhAnhGiayTo: updateArrayImagePhapLy ? JSON.stringify([...updateArrayImagePhapLy]) : null,
-      hinhAnhBanVeThietKe: updateArrayImageThietKe ? JSON.stringify([...updateArrayImageThietKe]) : null,
+      hinhAnhSanPham: updateArrayImageProduct
+        ? JSON.stringify([...updateArrayImageProduct])
+        : null,
+      hinhAnhGiayTo: updateArrayImagePhapLy
+        ? JSON.stringify([...updateArrayImagePhapLy])
+        : null,
+      hinhAnhBanVeThietKe: updateArrayImageThietKe
+        ? JSON.stringify([...updateArrayImageThietKe])
+        : null,
       danhSachTienNghi:
         danhSachTienNghi.length > 0
           ? JSON.stringify([...danhSachTienNghi])
           : null,
       isChothue: thue,
       tinhTrang: 'Chờ duyệt',
-      deletedImageProductFiles: deletedImageProductFiles ? JSON.stringify([...deletedImageProductFiles]) : null,
-    }                                                  
+      deletedImageProductFiles: deletedImageProductFiles
+        ? JSON.stringify([...deletedImageProductFiles])
+        : null,
+    };
 
     if (oldloaiHinhValue == loaiHinhValue) {
       delete baiVietUpdated.loaiHinh;
@@ -188,6 +207,10 @@ export const EditForm = ({ id }) => {
 
   useEffect(() => {
     if (chiTietBDS) {
+      console.log(
+        '🚀 ~ file: EditForm.tsx:191 ~ useEffect ~ chiTietBDS:',
+        chiTietBDS
+      );
       setDanhMucValue(chiTietBDS?.loaiHinh?.loaiBDS?.name);
       if (chiTietBDS?.isChothue === true) {
         setThue(true);
@@ -195,7 +218,7 @@ export const EditForm = ({ id }) => {
         setBan(true);
       }
       setLoaiHinhValue(chiTietBDS?.loaiHinh?.name);
-      setoldLoaiHinhValue(chiTietBDS?.loaiHinh?.name)
+      setoldLoaiHinhValue(chiTietBDS?.loaiHinh?.name);
       setTieuDe(chiTietBDS?.tieuDe);
       setMoTa(chiTietBDS?.moTa);
       setDiaChi(chiTietBDS?.diaChi);
@@ -220,7 +243,7 @@ export const EditForm = ({ id }) => {
 
   return (
     <div className="w-full h-full flex flex-col space-y-6">
-      <Skeleton isLoaded={isLoaded} className='rounded-md'>
+      <Skeleton isLoaded={isLoaded} className="rounded-md">
         {/* <Input
           value={tieuDe}
           label={'Tiêu đề'}
@@ -229,7 +252,7 @@ export const EditForm = ({ id }) => {
         <TieuDe tieuDe={tieuDe} setTieuDe={setTieuDe} />
       </Skeleton>
 
-      <Skeleton isLoaded={isLoaded} className='rounded-md'>
+      <Skeleton isLoaded={isLoaded} className="rounded-md">
         {/* <Textarea
           value={moTa}
           label={'Mô tả'}
@@ -238,7 +261,7 @@ export const EditForm = ({ id }) => {
         <MoTaChiTiet setMota={MoTaChiTiet} moTa={moTa} />
       </Skeleton>
 
-      <Skeleton isLoaded={isLoaded} className='rounded-md'>
+      <Skeleton isLoaded={isLoaded} className="rounded-md">
         <SelectDanhMuc
           setThue={setThue}
           setBan={setBan}
@@ -249,15 +272,19 @@ export const EditForm = ({ id }) => {
         />
       </Skeleton>
 
-      <Skeleton isLoaded={isLoaded} className='rounded-md'>
+      <Skeleton isLoaded={isLoaded} className="rounded-md">
         <SelectAddress addressValue={diaChi} setAddressValue={setDiaChi} />
       </Skeleton>
 
-      <Skeleton isLoaded={isLoaded} className='rounded-md'>
-        <LoaiHinh danhMucValue={danhMucValue} setLoaiHinhValue={setLoaiHinhValue} loaiHinhValue={loaiHinhValue} />
+      <Skeleton isLoaded={isLoaded} className="rounded-md">
+        <LoaiHinh
+          danhMucValue={danhMucValue}
+          setLoaiHinhValue={setLoaiHinhValue}
+          loaiHinhValue={loaiHinhValue}
+        />
       </Skeleton>
 
-      <Skeleton isLoaded={isLoaded} className='rounded-md'>
+      <Skeleton isLoaded={isLoaded} className="rounded-md">
         <DienTich
           chieuDai={chieuDai}
           chieuRong={chieuRong}
@@ -266,42 +293,48 @@ export const EditForm = ({ id }) => {
         />
       </Skeleton>
 
-      <Skeleton isLoaded={isLoaded} className='rounded-md'>
-        <GiayToPhapLy phapLy={phapLy} setPhapLy={setPhapLy} phapLyImageFiles={phapLyImageFiles} setPhapLyImageFiles={setPhapLyImageFiles} setDeletedImagePhapLyFiles={setDeletedImagePhapLyFiles} />
+      <Skeleton isLoaded={isLoaded} className="rounded-md">
+        <GiayToPhapLy
+          phapLy={phapLy}
+          setPhapLy={setPhapLy}
+          phapLyImageFiles={phapLyImageFiles}
+          setPhapLyImageFiles={setPhapLyImageFiles}
+          setDeletedImagePhapLyFiles={setDeletedImagePhapLyFiles}
+        />
       </Skeleton>
-      {
-        danhMucValue === 'Căn hộ' && (
-          <Skeleton isLoaded={isLoaded} className='rounded-md'>
-            <CanHoForm
-              setHuongBanCong={setHuongBanCong}
-              setHuongCuaChinh={setHuongCuaChinh}
-              setNoiThat={setNoiThat}
-              setPhongNgu={setPhongNgu}
-              setPhongTam={setPhongTam}
-              setSoTang={setSoTang}
-              phongNguValue={phongNgu}
-              phongTamValue={phongTam}
-              soTangValue={soTang}
-              noiThatValue={noiThat}
-              huongBanCongValue={huongBanCong}
-              huongCuaChinhValue={huongCuaChinh}
-              banVeThietKe={banVeThietKeImageFiles}
-              setBanVeThietKe={setBanVeThietKeImageFiles}
-              suaChuaLanCuoi={suaChuaLanCuoi}
-              setSuaChuaLanCuoi={setSuaChuaLanCuoi}
-              hoanThanh={hoanThanh}
-              setHoanThanh={setHoanThanh}
-              danhSachTienNghi={danhSachTienNghi}
-              setDanhSachTienNghi={setDanhSachTienNghi}
-              setDeletedImageBanVeThietKeFiles = {setDeletedImageBanVeThietKeFiles} />
-          </Skeleton>
-        )}
+      {danhMucValue === 'Căn hộ' && (
+        <Skeleton isLoaded={isLoaded} className="rounded-md">
+          <CanHoForm
+            setHuongBanCong={setHuongBanCong}
+            setHuongCuaChinh={setHuongCuaChinh}
+            setNoiThat={setNoiThat}
+            setPhongNgu={setPhongNgu}
+            setPhongTam={setPhongTam}
+            setSoTang={setSoTang}
+            phongNguValue={phongNgu}
+            phongTamValue={phongTam}
+            soTangValue={soTang}
+            noiThatValue={noiThat}
+            huongBanCongValue={huongBanCong}
+            huongCuaChinhValue={huongCuaChinh}
+            banVeThietKe={banVeThietKeImageFiles}
+            setBanVeThietKe={setBanVeThietKeImageFiles}
+            suaChuaLanCuoi={suaChuaLanCuoi}
+            setSuaChuaLanCuoi={setSuaChuaLanCuoi}
+            hoanThanh={hoanThanh}
+            setHoanThanh={setHoanThanh}
+            danhSachTienNghi={danhSachTienNghi}
+            setDanhSachTienNghi={setDanhSachTienNghi}
+            setDeletedImageBanVeThietKeFiles={setDeletedImageBanVeThietKeFiles}
+          />
+        </Skeleton>
+      )}
 
-      <Skeleton isLoaded={isLoaded} className='rounded-md'>
+      <Skeleton isLoaded={isLoaded} className="rounded-md">
         <GiaBan giaBan={giaBan} setGiaBan={setGiaBan} />
       </Skeleton>
 
-      <Skeleton isLoaded={isLoaded} className='rounded-md'>
+      <Skeleton isLoaded={isLoaded} className="rounded-md">
         <FileDialog
           setDeletedImage={setDeletedImageProductFiles}
           name="images"
@@ -323,8 +356,7 @@ export const EditForm = ({ id }) => {
 
       {/* <Nhan setNhan={setNhan} setIsMuaLeModalOpen={setIsMuaLeModalOpen} /> */}
 
-      <Skeleton isLoaded={isLoaded} className='rounded-md'>
-
+      <Skeleton isLoaded={isLoaded} className="rounded-md">
         <div className="w-full flex items-center justify-center pt-10">
           <Button
             disabled={isSubmitting}
@@ -338,7 +370,6 @@ export const EditForm = ({ id }) => {
         </div>
       </Skeleton>
 
-      
       {/* {isSubmitting && (
         <DialogCustom
           className="w-[90%] lg:w-[50%] h-fit items-center justify-center"

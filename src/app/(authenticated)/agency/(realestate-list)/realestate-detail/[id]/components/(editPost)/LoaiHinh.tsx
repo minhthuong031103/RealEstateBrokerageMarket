@@ -5,12 +5,17 @@ import { Select, SelectItem } from '@nextui-org/react';
 import React, { useEffect } from 'react';
 
 export const LoaiHinh = ({ setLoaiHinhValue, danhMucValue, loaiHinhValue }) => {
+  console.log(
+    '🚀 ~ file: LoaiHinh.tsx:8 ~ LoaiHinh ~ danhMucValue:',
+    danhMucValue
+  );
   const [selectedLoaiHinh, setSelectedLoaiHinh] = React.useState(new Set([]));
   const [loaiHinhTouched, setLoaiHinhTouched] = React.useState(false);
   const [loaiHinh, setLoaiHinh] = React.useState([]);
   const { fetchLoaiHinhTheoDanhMuc } = useBatDongSan();
   useEffect(() => {
     async function getLoaiHinh() {
+      if (!danhMucValue) return;
       const res = await fetchLoaiHinhTheoDanhMuc(danhMucValue);
       setLoaiHinh(res);
     }
