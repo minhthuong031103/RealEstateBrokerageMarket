@@ -12,87 +12,70 @@ export async function GET(req: Request) {
   }
   const args = decode(qs);
 
-  // if (Object.keys(args).length > 0)
-  {
-    const query: Prisma.UserFindManyArgs = {};
-    const where: Prisma.UserWhereInput = {};
-    let search = "";
-    let returnCount = false;
-    // const keys: string[] = Object.keys(args);
-    Object.keys(args).forEach(function (key: string) {
-      if (key == "getcount") {
-        returnCount = true;
-      } else if (key == "id") {
-        where.id = parseInt(args[key] as string);
-      } else if (key == "start") {
-        query.skip = parseInt(args[key] as string);
-      } else if (key == "count") {
-        query.take = parseInt(args[key] as string);
-      } else if (key == "search") {
-        search = args[key] as string;
-      } else if (["getcount"].indexOf(key) < 0) {
-        if (Array.isArray(args[key])) {
-          where.AND = where.AND ? where.AND : [];
-          const andItem: Prisma.UserWhereInput = {};
-          andItem.OR = [];
-          (args[key] as string[]).forEach((elem) => {
-            andItem.OR?.push({
-              [key]: 
-              {
-                equals: elem ? elem : null,
-              }
-            })
+  const query: Prisma.UserFindManyArgs = {};
+  const where: Prisma.UserWhereInput = {};
+  let search = "";
+  let returnCount = false;
+  // const keys: string[] = Object.keys(args);
+  Object.keys(args).forEach(function (key: string) {
+    if (key == "getcount") {
+      returnCount = true;
+    } else if (key == "id") {
+      where.id = parseInt(args[key] as string);
+    } else if (key == "start") {
+      query.skip = parseInt(args[key] as string);
+    } else if (key == "count") {
+      query.take = parseInt(args[key] as string);
+    } else if (key == "search") {
+      search = args[key] as string;
+    } else if (["getcount"].indexOf(key) < 0) {
+      if (Array.isArray(args[key])) {
+        where.AND = where.AND ? where.AND : [];
+        const andItem: Prisma.UserWhereInput = {};
+        andItem.OR = [];
+        (args[key] as string[]).forEach((elem) => {
+          andItem.OR?.push({
+            [key]: {
+              equals: elem ? elem : null,
+            },
           });
-          (where.AND as Prisma.UserWhereInput[]).push(andItem)
-        } else {
-          where[key] = args[key] as string;
-        }
+        });
+        (where.AND as Prisma.UserWhereInput[]).push(andItem);
+      } else {
+        where[key] = args[key] as string;
       }
-    });
-    // if (args.id)
-    // {
-    //     where.id = parseInt(Array.isArray(args.id) ? args.id.join('') : args.id)
-    //     // const result = await prisma.user.findFirst({where: {id: parseInt(id)}});
-    //     // return new Response(JSON.stringify(result))
-    // }
-    // if (args.role)
-    // {
-    //     where.role = Array.isArray(args.role) ? args.role.join('') : args.role
-    //     // return new Response(JSON.stringify(result))
-    // }
-    if (returnCount) {
-      const count = await prisma.user.count({ where: where });
-      return new Response(JSON.stringify({ count: count }));
     }
-    query["where"] = {
-      ...where,
-      AND: [
-        {
-          OR: [
-            {
-              name: {
-                contains: search,
-              },
-            },
-            {
-              email: {
-                contains: search,
-              },
-            },
-          ],
-        },
-        ...(where.AND
-          ? Array.isArray(where.AND)
-            ? where.AND
-            : [where.AND]
-          : []),
-      ],
-    };
-    const result = await prisma.user.findMany(query);
-    return new Response(JSON.stringify(result), {
-      headers: [["Access-Control-Allow-Origin", "*"]],
-    });
+  });
+  if (returnCount) {
+    const count = await prisma.user.count({ where: where });
+    return new Response(JSON.stringify({ count: count }));
   }
-
-  return new Response(JSON.stringify(await prisma.user.findMany({})));
+  query["where"] = {
+    ...where,
+    AND: [
+      {
+        OR: [
+          {
+            name: {
+              contains: search,
+            },
+          },
+          {
+            email: {
+              contains: search,
+            },
+          },
+        ],
+      },
+      ...(where.AND
+        ? Array.isArray(where.AND)
+          ? where.AND
+          : [where.AND]
+        : []),
+    ],
+  };
+  const result = await prisma.user.findMany(query);
+  return new Response(JSON.stringify(result), {
+    headers: [["Access-Control-Allow-Origin", "*"]],
+  });
 }
