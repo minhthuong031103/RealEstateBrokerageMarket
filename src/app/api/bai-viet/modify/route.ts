@@ -1,6 +1,5 @@
 import prisma from '@/lib/prisma';
-import { uploadthingApi } from '@/lib/uploadthingServer';
-import { getImageKey } from '@/lib/utils';
+
 
 export async function POST(req: Request) {
   try {
@@ -10,14 +9,6 @@ export async function POST(req: Request) {
     const body = await req.json();
 
     if (body.deletedImageProductFiles) {
-      const deletedImages = JSON.parse(body.deletedImageProductFiles);
-
-      for (const image of deletedImages) {
-        const imageKey = getImageKey(image.url);
-
-        uploadthingApi.deleteFiles([imageKey]);
-      }
-
       delete body.deletedImageProductFiles;
     }
 

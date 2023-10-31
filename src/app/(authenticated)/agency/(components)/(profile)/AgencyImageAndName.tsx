@@ -61,15 +61,6 @@ function AgencyImageAndName({ session }) {
                     <DialogCustom className='w-full lg:w-[70%] h-[80%] lg:h-[95%] flex items-center justify-center' isModalOpen={isOpen} setIsModalOpen={setOpen} notShowClose={false}>
 
                         <div>
-                            <h1>Chỉnh sửa thông tin cá nhân</h1>
-                            {/* <SelectLoaiDoiTac
-                                setLoaiDoiTacValue={setLoaiDoiTacValue}
-                                setCaNhan={setCaNhan}
-                                setDoanhNghiep={setDoanhNghiep}
-                                loaiDoiTacValue={loaiDoiTac}
-                                canhan={canhan}
-                                doanhnghiep={doanhnghiep}
-                            /> */}
                             <div className="flex flex-col space-y-3">
                                 {loaiDoiTac ? (
                                     <ThongTinForm

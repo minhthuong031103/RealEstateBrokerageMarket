@@ -16,7 +16,6 @@ import { ImageList } from '@/components/ui/ImageList';
 import { generateReactHelpers } from '@uploadthing/react/hooks';
 import { OurFileRouter } from '@/app/api/uploadthing/core';
 import { useQueryClient } from '@tanstack/react-query';
-import { Skeleton } from '@nextui-org/react';
 import { LoaiHinh } from './(editPost)/LoaiHinh';
 import { GiayToPhapLy } from './(editPost)/GiayToPhapLy';
 import { CanHoForm } from './(editPost)/(canho)/CanHoForm';
@@ -26,6 +25,7 @@ import { parse } from 'path';
 import { SelectAddress } from './(editPost)/SelectAddress';
 import { TieuDe } from '@/app/(authenticated)/agency/(components)/(addPost)/TieuDe';
 import { MoTaChiTiet } from '@/app/(authenticated)/agency/(components)/(addPost)/MoTaChiTiet';
+import Loader from '@/components/Loader';
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
@@ -69,6 +69,7 @@ export const EditForm = ({ id }) => {
     React.useState([]);
   const [loaiHinhValue, setLoaiHinhValue] = React.useState(null);
   const [oldloaiHinhValue, setoldLoaiHinhValue] = React.useState(null);
+  const [loadingDanhMuc, setLoadingDanhMuc] = React.useState(true);
 
   const { onUpdateBaiViet } = useBaiViet();
   const onSubmit = async () => {
@@ -180,7 +181,7 @@ export const EditForm = ({ id }) => {
           ? JSON.stringify([...danhSachTienNghi])
           : null,
       isChothue: thue,
-      tinhTrang: 'Chờ duyệt',
+      trangThai: 'Chờ duyệt',
       deletedImageProductFiles: deletedImageProductFiles
         ? JSON.stringify([...deletedImageProductFiles])
         : null,
@@ -229,160 +230,127 @@ export const EditForm = ({ id }) => {
       setBanVeThietKeImageFiles(JSON.parse(chiTietBDS?.hinhAnhBanVeThietKe));
       setGiaBan(chiTietBDS?.gia?.toString());
       setPhapLy(chiTietBDS?.tinhTrangPhapLy);
-      setPhongNgu(chiTietBDS?.soPhongNgu.toString());
-      setPhongTam(chiTietBDS?.soPhongTam.toString());
+      setPhongNgu(chiTietBDS?.soPhongNgu?.toString());
+      setPhongTam(chiTietBDS?.soPhongTam?.toString());
       setNoiThat(chiTietBDS?.tinhTrangNoiThat);
       setHuongBanCong(chiTietBDS?.huongBanCong);
       setHuongCuaChinh(chiTietBDS?.huongCuaChinh);
       setSuaChuaLanCuoi(Date.parse(chiTietBDS?.suaChuaLanCuoi));
       setHoanThanh(Date.parse(chiTietBDS?.hoanThanh));
       setDanhSachTienNghi(JSON.parse(chiTietBDS?.danhSachTienNghi));
+      setSoTang(chiTietBDS?.soTang?.toString());
       setIsLoaded(true);
     }
   }, [chiTietBDS]);
 
   return (
-    <div className="w-full h-full flex flex-col space-y-6">
-      <Skeleton isLoaded={isLoaded} className="rounded-md">
-        {/* <Input
-          value={tieuDe}
-          label={'Tiêu đề'}
-          onChange={(e) => setTieuDe(e.target.value)}
-        /> */}
-        <TieuDe tieuDe={tieuDe} setTieuDe={setTieuDe} />
-      </Skeleton>
-
-      <Skeleton isLoaded={isLoaded} className="rounded-md">
-        {/* <Textarea
-          value={moTa}
-          label={'Mô tả'}
-          onChange={(e) => setMoTa(e.target.value)}
-        /> */}
-        <MoTaChiTiet setMota={MoTaChiTiet} moTa={moTa} />
-      </Skeleton>
-
-      <Skeleton isLoaded={isLoaded} className="rounded-md">
-        <SelectDanhMuc
-          setThue={setThue}
-          setBan={setBan}
-          thue={thue}
-          ban={ban}
-          setDanhMucValue={setDanhMucValue}
-          danhMucValue={danhMucValue}
-        />
-      </Skeleton>
-
-      <Skeleton isLoaded={isLoaded} className="rounded-md">
-        <SelectAddress addressValue={diaChi} setAddressValue={setDiaChi} />
-      </Skeleton>
-
-      <Skeleton isLoaded={isLoaded} className="rounded-md">
-        <LoaiHinh
-          danhMucValue={danhMucValue}
-          setLoaiHinhValue={setLoaiHinhValue}
-          loaiHinhValue={loaiHinhValue}
-        />
-      </Skeleton>
-
-      <Skeleton isLoaded={isLoaded} className="rounded-md">
-        <DienTich
-          chieuDai={chieuDai}
-          chieuRong={chieuRong}
-          setChieuDai={setChieuDai}
-          setChieuRong={setChieuRong}
-        />
-      </Skeleton>
-
-      <Skeleton isLoaded={isLoaded} className="rounded-md">
-        <GiayToPhapLy
-          phapLy={phapLy}
-          setPhapLy={setPhapLy}
-          phapLyImageFiles={phapLyImageFiles}
-          setPhapLyImageFiles={setPhapLyImageFiles}
-          setDeletedImagePhapLyFiles={setDeletedImagePhapLyFiles}
-        />
-      </Skeleton>
-      {danhMucValue === 'Căn hộ' && (
-        <Skeleton isLoaded={isLoaded} className="rounded-md">
-          <CanHoForm
-            setHuongBanCong={setHuongBanCong}
-            setHuongCuaChinh={setHuongCuaChinh}
-            setNoiThat={setNoiThat}
-            setPhongNgu={setPhongNgu}
-            setPhongTam={setPhongTam}
-            setSoTang={setSoTang}
-            phongNguValue={phongNgu}
-            phongTamValue={phongTam}
-            soTangValue={soTang}
-            noiThatValue={noiThat}
-            huongBanCongValue={huongBanCong}
-            huongCuaChinhValue={huongCuaChinh}
-            banVeThietKe={banVeThietKeImageFiles}
-            setBanVeThietKe={setBanVeThietKeImageFiles}
-            suaChuaLanCuoi={suaChuaLanCuoi}
-            setSuaChuaLanCuoi={setSuaChuaLanCuoi}
-            hoanThanh={hoanThanh}
-            setHoanThanh={setHoanThanh}
-            danhSachTienNghi={danhSachTienNghi}
-            setDanhSachTienNghi={setDanhSachTienNghi}
-            setDeletedImageBanVeThietKeFiles={setDeletedImageBanVeThietKeFiles}
-          />
-        </Skeleton>
-      )}
-
-      <Skeleton isLoaded={isLoaded} className="rounded-md">
-        <GiaBan giaBan={giaBan} setGiaBan={setGiaBan} />
-      </Skeleton>
-
-      <Skeleton isLoaded={isLoaded} className="rounded-md">
-        <FileDialog
-          setDeletedImage={setDeletedImageProductFiles}
-          name="images"
-          maxFiles={8}
-          maxSize={1024 * 1024 * 4}
-          files={productImageFiles}
-          setFiles={setProductImagesFile}
-          disabled={false}
-        />
-        {productImageFiles?.length ? (
-          <ImageList
-            className={'w-full h-36'}
-            files={productImageFiles}
-            height={32}
-            width={32}
-          />
-        ) : null}
-      </Skeleton>
-
-      {/* <Nhan setNhan={setNhan} setIsMuaLeModalOpen={setIsMuaLeModalOpen} /> */}
-
-      <Skeleton isLoaded={isLoaded} className="rounded-md">
-        <div className="w-full flex items-center justify-center pt-10">
-          <Button
-            disabled={isSubmitting}
-            onClick={() => {
-              onSubmit();
-            }}
-            className="w-[50%]"
-          >
-            Lưu thông tin
-          </Button>
+    <div>
+      {!isLoaded && loadingDanhMuc ? (
+        <div className="flex h-full items-center justify-center">
+          <Loader />
         </div>
-      </Skeleton>
+      ) : (
+        <div className='w-full h-full flex flex-col space-y-6'>
+          <TieuDe tieuDe={tieuDe} setTieuDe={setTieuDe} />
 
-      {/* {isSubmitting && (
-        <DialogCustom
-          className="w-[90%] lg:w-[50%] h-fit items-center justify-center"
-          isModalOpen={isSubmitting}
-          notShowClose={true}
-        >
-          <div className="flex flex-col gap-3 items-center justify-center">
-            <div className="text-center font-semibold text-xs sm:text-sm">
-              Cập nhật thông tin bất động sản thành công
-            </div>
+          <MoTaChiTiet setMota={MoTaChiTiet} moTa={moTa} />
+
+          <SelectDanhMuc
+            setThue={setThue}
+            setBan={setBan}
+            thue={thue}
+            ban={ban}
+            setDanhMucValue={setDanhMucValue}
+            danhMucValue={danhMucValue}
+            setLoadingDanhMuc={setLoadingDanhMuc}
+          />
+
+          <SelectAddress addressValue={diaChi} setAddressValue={setDiaChi} />
+
+          <LoaiHinh
+            danhMucValue={danhMucValue}
+            setLoaiHinhValue={setLoaiHinhValue}
+            loaiHinhValue={loaiHinhValue}
+          />
+
+          <DienTich
+            chieuDai={chieuDai}
+            chieuRong={chieuRong}
+            setChieuDai={setChieuDai}
+            setChieuRong={setChieuRong}
+          />
+
+          <GiayToPhapLy
+            phapLy={phapLy}
+            setPhapLy={setPhapLy}
+            phapLyImageFiles={phapLyImageFiles}
+            setPhapLyImageFiles={setPhapLyImageFiles}
+            setDeletedImagePhapLyFiles={setDeletedImagePhapLyFiles}
+          />
+          {danhMucValue === 'Căn hộ' && (
+            <CanHoForm
+              setHuongBanCong={setHuongBanCong}
+              setHuongCuaChinh={setHuongCuaChinh}
+              setNoiThat={setNoiThat}
+              setPhongNgu={setPhongNgu}
+              setPhongTam={setPhongTam}
+              setSoTang={setSoTang}
+              phongNguValue={phongNgu}
+              phongTamValue={phongTam}
+              soTangValue={soTang}
+              noiThatValue={noiThat}
+              huongBanCongValue={huongBanCong}
+              huongCuaChinhValue={huongCuaChinh}
+              banVeThietKe={banVeThietKeImageFiles}
+              setBanVeThietKe={setBanVeThietKeImageFiles}
+              suaChuaLanCuoi={suaChuaLanCuoi}
+              setSuaChuaLanCuoi={setSuaChuaLanCuoi}
+              hoanThanh={hoanThanh}
+              setHoanThanh={setHoanThanh}
+              danhSachTienNghi={danhSachTienNghi}
+              setDanhSachTienNghi={setDanhSachTienNghi}
+              setDeletedImageBanVeThietKeFiles={setDeletedImageBanVeThietKeFiles}
+            />
+          )}
+
+          <GiaBan giaBan={giaBan} setGiaBan={setGiaBan} />
+
+          <div className="flex flex-col gap-y-3 max-w-xs lg:max-w-lg">
+            <div className="font-bold text-sm">Hình ảnh bài viết</div>
+            <FileDialog
+              setDeletedImage={setDeletedImageProductFiles}
+              name="images"
+              maxFiles={8}
+              maxSize={1024 * 1024 * 4}
+              files={productImageFiles}
+              setFiles={setProductImagesFile}
+              disabled={false}
+            />
+            {productImageFiles?.length ? (
+              <ImageList
+                className={'w-full h-36'}
+                files={productImageFiles}
+                height={32}
+                width={32}
+              />
+            ) : null}
           </div>
-        </DialogCustom>
-      )} */}
+
+
+
+          <div className="w-full flex items-center justify-center pt-10">
+            <Button
+              disabled={isSubmitting}
+              onClick={() => {
+                onSubmit();
+              }}
+              className="w-[50%]"
+            >
+              Lưu thông tin
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

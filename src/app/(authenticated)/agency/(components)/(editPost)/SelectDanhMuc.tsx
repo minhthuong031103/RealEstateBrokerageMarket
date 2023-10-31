@@ -12,6 +12,7 @@ export const SelectDanhMuc = ({
   thue,
   ban,
   danhMucValue,
+  setLoadingDanhMuc,
 }) => {
   const [selectedDanhMuc, setSelectedDanhMuc] = React.useState(new Set([]));
   const [danhMucTouched, setDanhMucTouched] = React.useState(false);
@@ -22,13 +23,16 @@ export const SelectDanhMuc = ({
     async function getDanhMuc() {
       setIsLoadingDanhMuc(true);
       const res = await fetchAllDanhMuc();
-
       setDanhMuc(res);
       setIsLoadingDanhMuc(false);
+      setLoadingDanhMuc(false);
     }
     getDanhMuc();
   }, []);
   useEffect(() => {
+    if (danhMucValue) {
+      setSelectedDanhMuc(new Set([danhMucValue]));
+    }
     if (selectedDanhMuc) {
       console.log(selectedDanhMuc);
       const danhMucValueArray = Array.from(selectedDanhMuc);
@@ -48,7 +52,7 @@ export const SelectDanhMuc = ({
         }
         autoFocus={false}
         placeholder="Chọn danh mục bất động sản"
-        selectedKeys={danhMucValue ? [danhMucValue] : []}
+        selectedKeys={selectedDanhMuc}
         isLoading={isLoadingDanhMuc}
         onSelectionChange={setSelectedDanhMuc}
         onClose={() => setDanhMucTouched(true)}

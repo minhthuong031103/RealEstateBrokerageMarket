@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useBatDongSan } from "@/hooks/useBatDongSan";
 import { searchType } from './RealEstateListLayout';
 import { Pagination } from "@nextui-org/react";
+import Loader from '@/components/Loader';
 
 
 type props = {
@@ -18,6 +19,7 @@ type props = {
 function ListItemRealEstate({ searchProps, id }: props) {
   const [currentPage, setCurrentPage] = useState(1);
   const { fetchAllBatDongSanCuaDoiTacTatCaTrangThai } = useBatDongSan();
+  const [isLoaded, setIsLoaded] = React.useState(false);
   const { data } = useQuery({
     queryKey: [
       ["bat-dong-san", currentPage],
@@ -27,6 +29,9 @@ function ListItemRealEstate({ searchProps, id }: props) {
     queryFn: () => fetchAllBatDongSanCuaDoiTacTatCaTrangThai(currentPage, searchProps, id),
     staleTime: 60 * 1000 * 1,
     keepPreviousData: true,
+    onSuccess: () => {
+      setIsLoaded(true);
+    }
   });
   const ref = React.useRef(null);
 
@@ -40,23 +45,31 @@ function ListItemRealEstate({ searchProps, id }: props) {
   // const [isDefaultPrice, setIsDefaultPrice] = useState(true);
 
   return (
-    <div className="mr-6 mt-4 bg-slate-50">
-      <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mt-6">
-        {data?.data.map((item) => (
-          <RealEstateCard item={item} key={`realestate-${item.id}`} />
-        ))}
-      </div>
-      <div className="flex justify-center p-6">
-        <Pagination
-          showControls
-          total={data?.totalPages}
-          initialPage={1}
-          onChange={(page) => {
-            onPageChange(page);
-          }}
-          page={currentPage}
-        />
-      </div>
+    <div>
+      {!isLoaded ? (
+        <div className="flex h-screen items-center justify-center">
+          <Loader />
+        </div>
+      ) : (
+        <div className="mr-6 mt-4 bg-slate-50">
+          <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mt-6">
+            {data?.data.map((item) => (
+              <RealEstateCard item={item} key={`realestate-${item.id}`} />
+            ))}
+          </div>
+          <div className="flex justify-center p-6">
+            <Pagination
+              showControls
+              total={data?.totalPages}
+              initialPage={1}
+              onChange={(page) => {
+                onPageChange(page);
+              }}
+              page={currentPage}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -15,7 +15,7 @@ export const GiayToPhapLy = ({
   const [phapLyTouched, setPhapLyTouched] = React.useState(false);
 
   useEffect(() => {
-    if (selectedPhapLy) {
+    if (selectedPhapLy.size > 0) {
       const phapLyValueArray = Array.from(selectedPhapLy);
       setPhapLy(phapLyValueArray?.[0]);
     }

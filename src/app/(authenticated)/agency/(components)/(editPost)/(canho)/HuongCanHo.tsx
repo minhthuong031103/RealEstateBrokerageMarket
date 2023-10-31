@@ -16,14 +16,14 @@ export const HuongCanHo = ({ setHuongCuaChinh, setHuongBanCong, huongCuaChinhVal
   const [cuaChinhTouched, setCuaChinhTouched] = React.useState(false);
 
   useEffect(() => {
-    if (selectedHuongBanCong) {
+    if (selectedHuongBanCong.size > 0) {
       const banCongValueArray = Array.from(selectedHuongBanCong);
       setHuongBanCong(banCongValueArray?.[0]);
     }
   }, [selectedHuongBanCong]);
 
   useEffect(() => {
-    if (selectedHuongCuaChinh) {
+    if (selectedHuongCuaChinh.size > 0) {
       const cuaChinhValueArray = Array.from(selectedHuongCuaChinh);
       setHuongCuaChinh(cuaChinhValueArray?.[0]);
     }

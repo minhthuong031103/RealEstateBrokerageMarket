@@ -15,13 +15,15 @@ export const LoaiHinh = ({ setLoaiHinhValue, danhMucValue, loaiHinhValue }) => {
   const { fetchLoaiHinhTheoDanhMuc } = useBatDongSan();
   useEffect(() => {
     async function getLoaiHinh() {
-      if (!danhMucValue) return;
       const res = await fetchLoaiHinhTheoDanhMuc(danhMucValue);
       setLoaiHinh(res);
     }
     getLoaiHinh();
   }, [danhMucValue]);
   useEffect(() => {
+    if (loaiHinhValue){
+      setSelectedLoaiHinh(new Set([loaiHinhValue]));
+    }
     if (selectedLoaiHinh) {
       const loaiHinhValueArray = Array.from(selectedLoaiHinh);
       setLoaiHinhValue(loaiHinhValueArray?.[0]);
@@ -40,7 +42,7 @@ export const LoaiHinh = ({ setLoaiHinhValue, danhMucValue, loaiHinhValue }) => {
         }
         autoFocus={false}
         placeholder="Chọn loại hình bất động sản"
-        selectedKeys={loaiHinhValue ? [loaiHinhValue] : []}
+        selectedKeys={selectedLoaiHinh}
         onSelectionChange={setSelectedLoaiHinh}
         onClose={() => setLoaiHinhTouched(true)}
         className="max-w-xs"

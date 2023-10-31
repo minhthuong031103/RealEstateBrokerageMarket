@@ -10,10 +10,10 @@ import { ContactInfo } from './ContactInfo';
 import { ImagePost } from './ImagePost';
 // import { LikeShareGroup } from "./LikeShareGroup";
 import MapComponent from './MapComponent';
-import { EditRealEstateModal } from '../../../EditRealEstateModal';
 import { useQuery } from '@tanstack/react-query';
 import { getRequest } from '@/lib/fetch';
 import Loader from '@/components/Loader';
+import { useRouter } from 'next/navigation'
 
 const CURRENCY_FORMAT = new Intl.NumberFormat(undefined, {
   currency: 'VND',
@@ -38,19 +38,21 @@ export type ToaDoDiaChi = {
   lon: number;
 };
 
-export function ChiTietComponent({ id, session }) {
-  const { fetchBatDongSanTheoIdDoiTac } = useBatDongSan();
+export function ChiTietComponent({ id }) {
+  const { fetchBatDongSanTheoId } = useBatDongSan();
   const [isLoaded, setIsLoaded] = useState(false);
-  // const [chiTietBDS, setChiTietBDS] = useState();
+  const router = useRouter();
 
   const { data: chiTietBDS } = useQuery({
     queryKey: ['chiTietBDS', id],
     queryFn: async () => {
-      const res = await fetchBatDongSanTheoIdDoiTac(id, session?.user?.id);
+      const res = await fetchBatDongSanTheoId(id);
       setIsLoaded(true);
       return res?.[0];
     },
   });
+
+
   const [toaDo, setToaDo] = useState<ToaDoDiaChi>();
 
   useEffect(() => {
@@ -88,13 +90,6 @@ export function ChiTietComponent({ id, session }) {
                     <></>
                   )}
                 </p>
-                <div>
-                  {/* <LikeShareGroup
-                  userIdOfWriter={chiTietBDS?.userId}
-                  postId={parseInt(id)}
-                /> */}
-                  <EditRealEstateModal id={id} />
-                </div>
               </div>
             </div>
             <ImagePost imageList={parseJSON(chiTietBDS?.hinhAnhSanPham)} />
@@ -111,7 +106,7 @@ export function ChiTietComponent({ id, session }) {
                       {chiTietBDS?.loaiHinh?.name}
                     </div>
                     {chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Căn hộ' ||
-                    chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Nhà ở' ? (
+                      chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Nhà ở' ? (
                       <>
                         <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
                           Nhà tắm: {chiTietBDS?.soPhongTam}
