@@ -77,7 +77,6 @@ export function RealEstateListLayout({ session }) {
 
     return (
         <div>
-            {/* <SearchComponent setSearchProps={setSearchProps} /> */}
             <SearchBarAndCreate setSearchProps={setSearchProps}/>
             <ListItemRealEstate searchProps={searchProps} id={session?.user?.id} />
         </div>
