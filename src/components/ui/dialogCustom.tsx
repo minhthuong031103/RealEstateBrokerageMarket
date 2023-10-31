@@ -140,7 +140,7 @@ function DialogCustom({
                     </Button>
                   </div>
                 ) : null}
-                <div className="w-full h-full py-3">
+                <div className="w-full h-full py-3 px-1">
                   {/* CHILDREN */}
                   {children}
                   {/* CHILDREN */}

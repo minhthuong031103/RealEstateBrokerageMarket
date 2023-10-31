@@ -15,11 +15,33 @@ export const useBaiViet = () => {
       }
       return true;
     } catch (e) {
-      console.log(e);
+      console.error(e);
       toast.error('Đăng bài thất bại');
       return false;
     }
   };
 
-  return { onCreateBaiViet };
+  const onUpdateBaiViet = async (id, updatedData) => {
+    try {
+      const res = await postRequest({
+        endPoint: `/api/bai-viet/modify/?id=${id}`, // Adjust the API endpoint to your route
+        isFormData: false,
+        formData: updatedData,
+      });
+      console.log(res);
+      if (res) {
+        toast.success('Cập nhật thông tin thành công');
+      }
+      return true;
+    } catch (e) {
+      console.error(e);
+      toast.error('Cập nhật thông tin thất bại');
+      return false;
+    }
+  };
+
+  return {
+    onCreateBaiViet,
+    onUpdateBaiViet,
+  };
 };

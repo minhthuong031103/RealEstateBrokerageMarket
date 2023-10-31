@@ -14,8 +14,7 @@ export async function POST(request: Request) {
     console.log('🚀 ~ file: route.ts:14 ~ POST ~ body:', body);
     console.log('🚀 ~ file: route.ts:16 ~ POST ~ user:', user);
 
-    if (!user || !user.stripeCustomerId)
-      return new Response('Unauthorized', { status: 401 });
+    if (!user) return new Response('Unauthorized', { status: 401 });
     try {
       const stripeSession = await stripe.paymentIntents.create({
         amount: body.amount,

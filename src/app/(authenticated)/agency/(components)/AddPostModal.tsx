@@ -1,17 +1,16 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-
 import React from 'react';
 import DialogCustom from '@/components/ui/dialogCustom';
 // import { Label } from '@/components/ui/label';
 import { SelectDanhMuc } from './SelectDanhMuc';
 import { BaiVietForm } from './(addPost)/BaiVietForm';
+// import * as z from 'zod';
 import { useSession } from 'next-auth/react';
 import { MuaLeModal } from '../goi-dich-vu/MuaLeModal';
 import { useAuth } from '@/hooks/useAuth';
-// import * as z from 'zod';
-
+import { PlusIcon } from '@radix-ui/react-icons';
 // const formSchema = z.object({});
 export const AddPostModal = () => {
   const [open, setOpen] = React.useState(false);
@@ -25,12 +24,13 @@ export const AddPostModal = () => {
   const { data: user, refetch: refetchUser } = queryUser(session);
 
   return (
-    <div className="w-full h-full">
+    <div className="right-0">
       <Button
         onClick={() => {
           setOpen(true);
         }}
       >
+        <PlusIcon className='mr-2'/>
         Đăng tin bất động sản
       </Button>
 
