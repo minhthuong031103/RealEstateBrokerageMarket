@@ -127,28 +127,28 @@ function DialogCustom({
                 : ''
             }
        `,
-            className
-          )}
-        >
-          <div className="h-full w-full ">
-            <ScrollArea className="h-full w-full px-3">
-              {!notShowClose ? (
-                <div className="flex items-end justify-end mb-3">
-                  <Button variant={'outline'} onClick={handleClose}>
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-              ) : null}
-              <div className="w-full h-full py-3 px-1">
-                {/* CHILDREN */}
-                {children}
-                {/* CHILDREN */}
-                {isWarningOpen ? (
-                  <div className="absolute ">
-                    <div
-                      className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm ${
-                        isWarningOpen ? `animate-in fade-in-0` : ''
-                      }  ${isWarningClosing ? 'animate-out fade-out-0 ' : ''}
+              className
+            )}
+          >
+            <div className="h-full w-full ">
+              <ScrollArea className="h-full w-full px-3">
+                {!notShowClose ? (
+                  <div className="flex items-end justify-end mb-3">
+                    <Button variant={'outline'} onClick={handleClose}>
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ) : null}
+                <div className="w-full h-full py-3 px-1">
+                  {/* CHILDREN */}
+                  {children}
+                  {/* CHILDREN */}
+                  {isWarningOpen ? (
+                    <div className="absolute ">
+                      <div
+                        className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm ${
+                          isWarningOpen ? `animate-in fade-in-0` : ''
+                        }  ${isWarningClosing ? 'animate-out fade-out-0 ' : ''}
   `}
                     ></div>
                     <div
