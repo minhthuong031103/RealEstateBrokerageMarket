@@ -2,7 +2,7 @@ import { getRequest, postRequest } from '@/lib/fetch';
 import toast from 'react-hot-toast';
 
 export const useBatDongSan = () => {
-  const fetchAllBatDongSan = async (page, props = {}) => {
+  const fetchAllBatDongSan = async (page, props) => {
     let endPointUrl = `/api/bat-dong-san?page=${page}&limit=6`;
     
     const specialProps = {
@@ -20,6 +20,7 @@ export const useBatDongSan = () => {
 
     Object.keys(props).forEach(prop => {
         if (prop === "type" && specialProps[props[prop]]) {
+          appendParam("type",props[prop]);
             specialProps[props[prop]].forEach(specialProp => {
                 appendParam(specialProp, props[specialProp]);
             });
@@ -27,7 +28,7 @@ export const useBatDongSan = () => {
             appendParam(prop, props[prop]);
         }
     });
-
+    console.log(endPointUrl)
     const res = await getRequest({ endPoint: endPointUrl });
     return res;
 };
@@ -49,6 +50,7 @@ export const useBatDongSan = () => {
 
     Object.keys(props).forEach(prop => {
         if (prop === "type" && specialProps[props[prop]]) {
+          appendParam("type",props[prop]);
             specialProps[props[prop]].forEach(specialProp => {
                 appendParam(specialProp, props[specialProp]);
             });
@@ -140,6 +142,7 @@ export const useBatDongSan = () => {
 
     Object.keys(props).forEach(prop => {
         if (prop === "type" && specialProps[props[prop]]) {
+          appendParam("type",props[prop]);
             specialProps[props[prop]].forEach(specialProp => {
                 appendParam(specialProp, props[specialProp]);
             });

@@ -1,7 +1,7 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import { BatDongSanNoiBat } from "../../bat-dong-san/components/BatDongSanNoiBat";
-import { CacLoaiHinhBatDongSan } from "../../bat-dong-san/components/CacLoaiHinhBatDongSan";
+import { BatDongSanNoiBat } from "../../bat-dong-san/(components)/BatDongSanNoiBat";
+import { CacLoaiHinhBatDongSan } from "../../bat-dong-san/(components)/CacLoaiHinhBatDongSan";
 import { ListComponent } from "./ListComponent";
 
 export interface searchType {
@@ -24,7 +24,7 @@ export interface searchType {
   minSquare: string;
   maxSquare: string;
 }
-export function LayoutBatDongSanYeuThich() {
+export function LayoutBatDongSanYeuThich({ session }) {
   return (
     <>
       <div className="flex flex-col gap-6 lg:gap-0 lg:flex-row pt-8 pb-8">
@@ -34,7 +34,7 @@ export function LayoutBatDongSanYeuThich() {
         </div>
         <div className="basis-[65%]">
           <Separator className="lg:hidden h-[6px] mt-4 mb-8 w-[96%] text-gray-500 rounded-md" />
-          <ListComponent />
+          <ListComponent session={session} />
         </div>
       </div>
     </>

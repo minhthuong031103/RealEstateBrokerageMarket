@@ -24,7 +24,7 @@ export function formatCurrency(value: number) {
 }
 export function ListItemComponent({ item }) {
   return (
-    <Link href={`bat-dong-san/chi-tiet-bat-dong-san/${item?.id}`}>
+    <Link href={`/bat-dong-san/chi-tiet-bat-dong-san/${item?.id}`}>
       <Card className="hover:shadow-2xl transition ease-in-out duration-200 hover:scale-[1.01] h-full">
         <CardContent>
           <div className="mt-6 rounded-sm relative">

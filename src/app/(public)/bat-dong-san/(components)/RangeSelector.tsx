@@ -26,9 +26,9 @@ export const RangeSelector = ({ range, setRange, type }: props) => {
       {type === "Phạm vi giá thành" ? (
         <Slider
           defaultValue={range}
-          max={10000}
+          max={10000000000}
           min={0}
-          step={100}
+          step={100000000}
           value={range}
           onValueChange={(e) => {
             setRange(e);

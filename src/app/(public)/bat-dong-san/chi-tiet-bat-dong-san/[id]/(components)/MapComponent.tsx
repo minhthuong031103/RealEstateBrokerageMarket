@@ -20,7 +20,7 @@ export type Place = {
   longitude: number;
 };
 
-function MapComponent({ lat, lon }) {
+function MapComponent({ lat, lon, nameAddress, title }) {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -65,6 +65,15 @@ function MapComponent({ lat, lon }) {
         className="bg-neutral-800 text-white font-medium w-[100%] px-0 py-2"
         onClick={() => {
           setPosition({ lat: lat, lng: lon });
+          setPlaces([
+            ...places,
+            {
+              name: title,
+              address: nameAddress,
+              latitude: lat,
+              longitude: lon,
+            },
+          ]);
         }}
       >
         Nhấn để xem vị trí bất động sản

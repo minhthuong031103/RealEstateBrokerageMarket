@@ -20,6 +20,7 @@ async function getLatLonForCity(location: string) {
   )}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
   const geocodeResponse = await fetch(geocodeUrl);
   const geocodeData = await geocodeResponse.json();
+  console.log(geocodeData);
   const { lat, lng } = geocodeData.results[0].geometry.location;
   return { lon: lng, lat };
 }
@@ -256,7 +257,12 @@ export function ChiTietComponent({ id }) {
                   </div>
                 </div>
                 <div className="mt-8 w-full rounded-md overflow-hidden"></div>
-                <MapComponent lat={toaDo?.lat} lon={toaDo?.lon} />
+                <MapComponent
+                  lat={toaDo?.lat}
+                  lon={toaDo?.lon}
+                  nameAddress={chiTietBDS?.diaChi}
+                  title={chiTietBDS?.tieuDe}
+                />
               </div>
               <div className="mt-8 mb-8 w-full rounded-md bg-white border-[1px] shadow p-8">
                 <div className="flex flex-row justify-between flex-wrap">

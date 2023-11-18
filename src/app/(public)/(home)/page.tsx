@@ -1,10 +1,10 @@
 import React from "react";
-import SearchHome from "./components/SearchHome";
-import TypeCollection from "./components/TypeCollection";
-import BatDongSanNoiBatHome from "./components/BatDongSanNoiBat";
-import BatDongSanKhuVuc from "./components/BatDongSanKhuVuc";
-import Banner from "./components/Banner";
-import FindMore from "./components/FindMore";
+import SearchHome from "./(components)/SearchHome";
+import TypeCollection from "./(components)/TypeCollection";
+import BatDongSanNoiBatHome from "./(components)/BatDongSanNoiBat";
+import BatDongSanKhuVuc from "./(components)/BatDongSanKhuVuc";
+import Banner from "./(components)/Banner";
+import FindMore from "./(components)/FindMore";
 
 const page = async () => {
   return (

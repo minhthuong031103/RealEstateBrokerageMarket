@@ -1,4 +1,4 @@
-import { ThongTinLayout } from "./components/ThongTinLayout";
+import { ThongTinLayout } from "./(components)/ThongTinLayout";
 
 async function page() {
   return (

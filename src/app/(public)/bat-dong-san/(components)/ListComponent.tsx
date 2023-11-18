@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useBatDongSan } from "@/hooks/useBatDongSan";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiSortAscending } from "react-icons/hi";
 import { ListItemComponent } from "./ListItemComponent";
 import {
@@ -13,24 +13,23 @@ import {
 } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { searchType } from "./LayoutBatDongSan";
-type props = {
-  searchProps: searchType | unknown;
-};
 
-export function ListComponent({ searchProps }: props) {
+export function ListComponent({ searchProps }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const { fetchAllBatDongSanCuaDoiTacTatCaTrangThai } = useBatDongSan();
+  const { fetchAllBatDongSan } = useBatDongSan();
   const { data } = useQuery({
     queryKey: [
       ["bat-dong-san", currentPage],
       ["props", searchProps],
     ],
-    queryFn: () => fetchAllBatDongSanCuaDoiTacTatCaTrangThai(currentPage, searchProps),
+    queryFn: () => fetchAllBatDongSan(currentPage, searchProps),
     staleTime: 60 * 1000 * 1,
     keepPreviousData: true,
   });
   const ref = React.useRef(null);
+  useEffect(() => {
+    console.log(searchProps);
+  }, [searchProps]);
 
   //Set page state when change review page index
   const onPageChange = (page) => {

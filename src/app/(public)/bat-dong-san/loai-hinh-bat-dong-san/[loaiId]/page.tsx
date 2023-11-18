@@ -1,4 +1,4 @@
-import { LayoutBatDongSanTheoType } from "./components/LayoutBatDongSanTheoType";
+import { LayoutBatDongSanTheoType } from "./(components)/LayoutBatDongSanTheoType";
 
 async function page({ params }) {
   return (

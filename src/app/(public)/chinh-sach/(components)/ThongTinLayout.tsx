@@ -2,6 +2,7 @@
 import { Separator } from "@/components/ui/separator";
 import { Zoom } from "@/components/ui/zoom-image";
 import { useOffice } from "@/hooks/useOffice";
+import { Divider } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { AiOutlinePhone } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
@@ -21,7 +22,7 @@ export const ThongTinLayout = () => {
   }, []);
   return (
     <div className="flex flex-row mt-6">
-      <div className="basis-1/3 p-3">
+      <div className="w-1/3 p-6  rounded-lg bg-white shadow-md">
         <div className="text-xl font-meduim">{info?.nameOffice}</div>
         <p className="text-neutral-700 text-sm">{info?.aboutUs}</p>
         <Separator className="mt-2 mb-2" />
@@ -54,7 +55,8 @@ export const ThongTinLayout = () => {
           Cảm ơn bạn đã tin tưởng đội ngũ chúng tôi
         </div>
       </div>
-      <div className="basis-2/3 pt-3 pb-3 pl-6">
+      <Divider orientation="vertical" />
+      <div className="w-2/3 pt-3 pb-3 pl-6">
         <div className="text-xl font-meduim">Chính sách văn phòng</div>
         <div
           id="policy-container"

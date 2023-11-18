@@ -35,7 +35,7 @@ export const BatDongSanNoiBat = () => {
         showStatus={false}
       >
         {listNoiBat?.map((item) => (
-          <Link href={`bat-dong-san/chi-tiet-bat-dong-san/${item?.id}`}>
+          <Link href={`/bat-dong-san/chi-tiet-bat-dong-san/${item?.id}`}>
             <div className="rounded-sm relative">
               {parseJSON(item?.hinhAnhSanPham)?.map((url, index) =>
                 index === 0 ? (
