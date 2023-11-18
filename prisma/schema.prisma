@@ -34,6 +34,7 @@ model User {
   stripeSubscriptionId   String?         @unique @map("stripe_subscription_id")
   createdAt              DateTime        @default(now())
   giamGia                Int?            @default(0)
+  duyetKhachHang         String?
   directMessages         DirectMessage[]
   seenMessages           SeenMessage[]
   BaiViets               BaiViet[]
