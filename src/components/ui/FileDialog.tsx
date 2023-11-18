@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /** @format */
 
 import * as React from 'react';
@@ -19,12 +20,13 @@ import { toast } from 'react-hot-toast';
 
 import 'cropperjs/dist/cropper.css';
 
-import { cn, formatBytes } from '@/lib/utils';
+import { cn, formatBytes, getImageKey } from '@/lib/utils';
 import { Button } from '@components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@components/ui/dialog';
 import { Icons } from '@/assets/Icons';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ImageCus } from '@/components/ui/ImageCus';
+import { postRequest } from '@/lib/fetch';
 
 // FIXME Your proposed upload exceeds the maximum allowed size, this should trigger toast.error too
 type FileWithPreview = FileWithPath & {
@@ -44,6 +46,7 @@ interface FileDialogProps<
   setFiles: React.Dispatch<React.SetStateAction<FileWithPreview[] | null>>;
   isUploading?: boolean;
   disabled?: boolean;
+  setDeletedImage?: React.Dispatch<React.SetStateAction<[]>>;
 }
 
 export function FileDialog<TFieldValues extends FieldValues>({
@@ -59,6 +62,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
   isUploading = false,
   disabled = false,
   className,
+  setDeletedImage,
   ...props
 }: FileDialogProps<TFieldValues>) {
   const onDrop = React.useCallback(
@@ -95,7 +99,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
   React.useEffect(() => {
     setValue?.(name, files as PathValue<TFieldValues, Path<TFieldValues>>);
   }, [files]);
-
+  console.log(files);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept,
@@ -109,11 +113,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
   React.useEffect(() => {
     return () => {
       if (!files) return;
-      files.forEach((file) =>
-        URL.revokeObjectURL(
-          file?.preview || `${import.meta.env.VITE_IMAGE_HOST}${file}`
-        )
-      );
+      files.forEach((file) => URL.revokeObjectURL(file?.preview || file?.url));
     };
   }, []);
 
@@ -179,6 +179,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
             <div className="grid gap-5">
               {files?.map((file, i) => (
                 <FileCard
+                  setDeletedImage={setDeletedImage}
                   key={i}
                   i={i}
                   files={files}
@@ -211,10 +212,17 @@ interface FileCardProps {
   i: number;
   file: FileWithPreview;
   files: FileWithPreview[] | null;
+  setDeletedImage?: React.Dispatch<React.SetStateAction<[]>>;
   setFiles: React.Dispatch<React.SetStateAction<FileWithPreview[] | null>>;
 }
 
-function FileCard({ i, file, files, setFiles }: FileCardProps) {
+function FileCard({
+  i,
+  file,
+  files,
+  setFiles,
+  setDeletedImage,
+}: FileCardProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [cropData, setCropData] = React.useState<string | null>(null);
   const cropperRef = React.useRef<ReactCropperElement>(null);
@@ -257,12 +265,11 @@ function FileCard({ i, file, files, setFiles }: FileCardProps) {
     document.addEventListener('keydown', handleKeydown);
     return () => document.removeEventListener('keydown', handleKeydown);
   }, [onCrop]);
-  console.log(file?.type.startsWith('image'));
   return (
     <div className="relative flex items-center justify-between gap-2.5">
       <div className="flex items-center gap-2">
         <ImageCus
-          src={cropData ? cropData : file.preview}
+          src={cropData ? cropData : file.preview || file.url}
           alt={file.name}
           className="h-12 w-12 shrink-0 rounded-md"
         />
@@ -303,7 +310,7 @@ function FileCard({ i, file, files, setFiles }: FileCardProps) {
                   zoomTo={0.5}
                   initialAspectRatio={1 / 1}
                   preview=".img-preview"
-                  src={file.preview}
+                  src={file.preview || file.url}
                   viewMode={1}
                   minCropBoxHeight={10}
                   minCropBoxWidth={10}
@@ -354,9 +361,24 @@ function FileCard({ i, file, files, setFiles }: FileCardProps) {
           variant="outline"
           size="icon"
           className="h-7 w-7"
-          onClick={() => {
+          onClick={async () => {
             if (!files) return;
+            // if (file.url) {
+            //   const imageKey = getImageKey(file.url);
+            //   const res = await postRequest({
+            //     endPoint: '/api/bai-viet/deleteImage',
+            //     formData: { imageKey },
+            //     isFormData: false,
+            //   });
+            //   console.log(
+            //     '🚀 ~ file: FileDialog.tsx:362 ~ onClick={ ~ res:',
+            //     res
+            //   );
+            // }
             setFiles(files.filter((_, j) => j !== i));
+            if (setDeletedImage && file.url) {
+              setDeletedImage((prev) => [...(prev ?? []), file]);
+            }
           }}
         >
           <Icons.close className="h-4 w-4 text-primary" aria-hidden="true" />

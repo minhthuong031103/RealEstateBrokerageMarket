@@ -105,3 +105,8 @@ export function formatNumberWithCommas(numStr) {
   // Join the array back into a string
   return parts.join('.');
 }
+
+export const getImageKey = (url) => {
+  const filename = url.split('/').pop();
+  return filename;
+};

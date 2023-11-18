@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { TinhTrangNoiThat, noiThat } from '@/lib/constant';
@@ -6,26 +5,26 @@ import { Select, SelectItem } from '@nextui-org/react';
 import React, { useEffect } from 'react';
 import { DanhSachTienNghi } from './DanhSachTienNghi';
 
-interface SelectNoiThatProps {
-  setPhongNgu: (value: string) => void;
-  setPhongTam: (value: string) => void;
-  setNoiThat: (value: string) => void;
-  setSoTang: (value: string) => void;
-  danhSachTienNghi: any;
-  setDanhSachTienNghi: (value: any) => void;
-  phongNguValue?: any;
-  isEdit?: boolean;
-}
-
 export const SelectNoiThat = ({
   setPhongNgu,
   setPhongTam,
   setNoiThat,
   setSoTang,
   danhSachTienNghi,
-  phongNguValue,
   setDanhSachTienNghi,
-}: SelectNoiThatProps) => {
+  phongNguValue,
+  phongTamValue,
+  soTangValue,
+  noiThatValue,
+}) => {
+  console.log(
+    '🚀 ~ file: SelectNoiThat.tsx:20 ~ ',
+    phongTamValue,
+    soTangValue,
+    noiThatValue,
+    soTangValue,
+    noiThatValue
+  );
   const [selectedPhongNgu, setSelectedPhongNgu] = React.useState(new Set([]));
   const [phongNguTouched, setPhongNguTouched] = React.useState(false);
 
@@ -37,7 +36,6 @@ export const SelectNoiThat = ({
 
   const [selectedSoTang, setSelectedSoTang] = React.useState(new Set([]));
   const [soTangTouched, setSoTangTouched] = React.useState(false);
-
   useEffect(() => {
     if (selectedPhongNgu.size > 0) {
       const phongNguValueArray = Array.from(selectedPhongNgu);
@@ -85,7 +83,7 @@ export const SelectNoiThat = ({
           }
           autoFocus={false}
           placeholder="Chọn số phòng ngủ"
-          selectedKeys={selectedPhongNgu}
+          selectedKeys={phongNguValue ? [phongNguValue] : []}
           onSelectionChange={setSelectedPhongNgu}
           onClose={() => setPhongNguTouched(true)}
           // className="w-[48%]"
@@ -109,7 +107,7 @@ export const SelectNoiThat = ({
           }
           autoFocus={false}
           placeholder="Chọn số phòng tắm"
-          selectedKeys={selectedPhongTam}
+          selectedKeys={phongTamValue ? [phongTamValue] : []}
           onSelectionChange={setSelectedPhongTam}
           onClose={() => setPhongTamTouched(true)}
           // className="w-[48%]"
@@ -131,7 +129,7 @@ export const SelectNoiThat = ({
         }
         autoFocus={false}
         placeholder="Chọn nội thất"
-        selectedKeys={selectedNoiThat}
+        selectedKeys={noiThatValue ? [noiThatValue] : []}
         onSelectionChange={setSelectedNoiThat}
         onClose={() => setNoiThatTouched(true)}
         className="max-w-xs lg:max-w-lg"
@@ -153,7 +151,7 @@ export const SelectNoiThat = ({
         }
         autoFocus={false}
         placeholder="Chọn số tầng"
-        selectedKeys={selectedSoTang}
+        selectedKeys={soTangValue ? [soTangValue] : []}
         onSelectionChange={setSelectedSoTang}
         onClose={() => setSoTangTouched(true)}
         className="max-w-xs lg:max-w-lg"

@@ -6,6 +6,7 @@ import { DashboardIcon } from '@radix-ui/react-icons';
 import { SubscriptIcon, UserIcon } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import AgencyRegisterModal  from './(components)/AgencyRegisterModal';
+import { Footer } from '@/components/footer';
 
 const navItems = [
   {
@@ -36,11 +37,12 @@ export default async function AgencyLayout({
     <div className="w-full h-full bg-slate-50">
       <Header session={session} />
       {/* <Header session={session}/> */}
-      <div className="flex justify-between h-screen">
+      <div className="flex justify-between h-full ">
         <AgencyRegisterModal session={session}/>
         <Sidebar navItems={navItems} title="Navigation" />
-        <div className="flex-1 w-full h-full">{children}</div>
+        <div className="flex-1 w-full h-full min-h-screen bg-slate-50">{children}</div>
       </div>
+      <Footer />
     </div>
   );
 }

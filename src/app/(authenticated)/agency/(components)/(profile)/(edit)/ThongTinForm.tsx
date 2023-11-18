@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SelectAddress } from './SelectAddress';
 import { generateReactHelpers } from '@uploadthing/react/hooks';
 import { OurFileRouter } from '@/app/api/uploadthing/core';
@@ -8,7 +8,6 @@ import { FileDialog } from '@/components/ui/FileDialog';
 import { ImageList } from '@/components/ui/ImageList';
 import { Button } from '@/components/ui/button';
 import { useDoiTac } from '@/hooks/useDoiTac';
-import DialogCustom from '@/components/ui/dialogCustom';
 import { PartnerName } from './PartnerName';
 import { PhoneNumber } from './PhoneNumber';
 import toast from 'react-hot-toast';
@@ -16,7 +15,7 @@ import toast from 'react-hot-toast';
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
 
-export const ThongTinForm = ({ loaiDoiTac }) => {
+export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
 
   const { startUpload } = useUploadThing('imageUploader');
 
@@ -29,6 +28,7 @@ export const ThongTinForm = ({ loaiDoiTac }) => {
   const [anhChanDungImageFiles, setAnhChanDungImageFiles] = React.useState([]);
   const [nameDoiTac, setNameDoiTac] = React.useState();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+
 
   const { uploadDoiTacInfo } = useDoiTac();
 
@@ -110,12 +110,23 @@ export const ThongTinForm = ({ loaiDoiTac }) => {
       anhCCCDSau: nationalIDBackImage ? JSON.stringify([...nationalIDBackImage]) : null,
       anhGiayPhepKinhDoanh: giayPhepKinhDoanhImages ? JSON.stringify([...giayPhepKinhDoanhImages]) : null,
       anhChanDung: anhChanDungImageFiles ? JSON.stringify([...anhChanDungImageFiles]) : null,
-      duyetDoiTac: 'pending',
     }
 
     setIsSubmitting(true);
     await uploadDoiTacInfo(thongTin);
   }
+
+  useEffect(() => {
+    if (userInfo)  {
+      setNameDoiTac(userInfo?.name);
+      setPhoneNumber(userInfo?.phoneNumber);
+      setAddressValue(userInfo?.diaChi);
+      setNationalIDFrontImageFile(JSON.parse(userInfo?.anhCCCDTruoc));
+      setNationalIDBackImageFile(JSON.parse(userInfo?.anhCCCDSau));
+      setGiayPhepKinhDoanhImageFiles(JSON.parse(userInfo?.anhGiayPhepKinhDoanh));
+      setAnhChanDungImageFiles(JSON.parse(userInfo?.anhChanDung));
+    }
+  }, [userInfo])
   return (
     <div className="grid-cols-1 grid gap-4 mb-6 mt-5">
       <PartnerName
@@ -218,7 +229,7 @@ export const ThongTinForm = ({ loaiDoiTac }) => {
           Gửi yêu cầu
         </Button>
       </div>
-      {isSubmitting && (
+      {/* {isSubmitting && (
         <DialogCustom
           className="w-[90%] lg:w-[50%] h-fit items-center justify-center"
           isModalOpen={isSubmitting}
@@ -230,7 +241,7 @@ export const ThongTinForm = ({ loaiDoiTac }) => {
             </div>
           </div>
         </DialogCustom>
-      )}
+      )} */}
     </div >
   )
 }

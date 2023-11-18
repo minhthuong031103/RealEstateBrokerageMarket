@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { AiOutlinePhone } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
@@ -34,7 +33,6 @@ export function ContactInfo({ doiTacInfo }) {
         <IoLocationOutline className="text-[24px]" />
         {doiTacInfo?.diaChi}
       </div>
-      <Button className="mt-4 w-[94%] lg:w-[50%]">Liên hệ</Button>
     </div>
   );
 }
