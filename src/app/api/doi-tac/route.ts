@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     take: limit,
     where: {
         role: {
-            contains: "partner"
+            contains: "doi_tac"
         }
     }
   });

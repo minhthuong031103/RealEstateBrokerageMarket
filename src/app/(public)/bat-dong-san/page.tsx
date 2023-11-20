@@ -1,4 +1,4 @@
-import { LayoutBatDongSan } from "./components/LayoutBatDongSan";
+import { LayoutBatDongSan } from "./(components)/LayoutBatDongSan";
 
 async function page() {
   return (

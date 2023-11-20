@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
-import { BatDongSanNoiBat } from "../../../bat-dong-san/components/BatDongSanNoiBat";
+import { BatDongSanNoiBat } from "../../../bat-dong-san/(components)/BatDongSanNoiBat";
 import { ListComponent } from "./ListComponent";
-import { SearchComponent } from "../../../bat-dong-san/components/SearchComponent";
+import { SearchComponent } from "../../../bat-dong-san/(components)/SearchComponent";
 import { DoiTacInfo } from "./DoiTacInfo";
-import { CacLoaiHinhBatDongSan } from "@/app/(public)/bat-dong-san/components/CacLoaiHinhBatDongSan";
+import { CacLoaiHinhBatDongSan } from "@/app/(public)/bat-dong-san/(components)/CacLoaiHinhBatDongSan";
 import { Separator } from "@/components/ui/separator";
 
 export interface searchType {
@@ -28,7 +28,26 @@ export interface searchType {
   maxSquare: string;
 }
 export function LayoutBatDongSanCuaDoiTac({ id }) {
-  const [searchProps, setSearchProps] = useState<searchType>();
+  const [searchProps, setSearchProps] = useState<searchType>({
+    searchWord: "",
+    location: "",
+    type: "",
+    branch: "",
+    isRent: "",
+    loaiCanHo: "",
+    loaiNhaO: "",
+    loaiVanPhong: "",
+    loaiDatDai: "",
+    huongBanCong: "",
+    huongCuaChinh: "",
+    huongDat: "",
+    soPhongNgu: "",
+    soPhongTam: "",
+    minPrice: "",
+    maxPrice: "",
+    minSquare: "",
+    maxSquare: "",
+  });
   return (
     <>
       <div className="flex flex-col gap-6 lg:gap-0 lg:flex-row pt-8 pb-8">

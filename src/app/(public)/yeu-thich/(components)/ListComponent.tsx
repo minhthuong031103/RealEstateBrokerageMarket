@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useBatDongSan } from "@/hooks/useBatDongSan";
 import { useState } from "react";
 import { HiSortAscending } from "react-icons/hi";
-import { ListItemComponent } from "../../bat-dong-san/components/ListItemComponent";
+import { ListItemComponent } from "../../bat-dong-san/(components)/ListItemComponent";
 import {
   Dropdown,
   DropdownItem,
@@ -13,8 +13,8 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
-export function ListComponent() {
-  const userId = 1;
+export function ListComponent({ session }) {
+  const userId = session?.user?.id;
   const { fetchAllBatDongSanYeuThich } = useBatDongSan();
   const { data } = useQuery({
     queryKey: [["userId", userId]],

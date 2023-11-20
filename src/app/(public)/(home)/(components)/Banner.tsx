@@ -10,7 +10,7 @@ function Banner() {
   useEffect(() => {
     const getBanner = async () => {
       await fetchBanner().then((data) => {
-        setListBanners(data);
+        setListBanners(data?.items);
         console.log(data);
       });
     };

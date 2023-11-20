@@ -18,7 +18,7 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 import { BiBuildingHouse } from "react-icons/bi";
 import { GiReceiveMoney } from "react-icons/gi";
-import { PickLocation } from "../../bat-dong-san/components/PickLocation";
+import { PickLocation } from "../../bat-dong-san/(components)/PickLocation";
 import { useRouter } from "next/navigation";
 
 const types = [
@@ -169,7 +169,10 @@ export function SearchBar() {
                   </FormItem>
                 )}
               />
-              <Button className="w-[90%] bg-red-400" type="submit">
+              <Button
+                className="w-[90%] bg-red-400 hover:bg:text-white bg:bg-slate-800"
+                type="submit"
+              >
                 Tìm kiếm
               </Button>
             </form>

@@ -5,6 +5,9 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { AiOutlinePhone } from "react-icons/ai";
+import { IoLocationOutline } from "react-icons/io5";
+import { HiOutlineMail } from "react-icons/hi";
 
 const CURRENCY_FORMAT = new Intl.NumberFormat(undefined, {
   currency: "VND",
@@ -30,18 +33,23 @@ export function ListItemComponent({ item }) {
           <div className="mt-6 space-y-2 mb-6">
             <div className="font-medium text-[20px]">{item?.name}</div>
             <div className="text-red-400 text-sm">Cá nhân hoặc công ty</div>
-            <div className="text-neutral-600 text-sm">
-              Địa chỉ: {item?.diaChi}
+            <div className="flex flex-row gap-2 text-sm mt-1">
+              <IoLocationOutline className="text-[24px]" />
+              {item?.diaChi}
             </div>
-            <div className="text-neutral-600 text-sm">
-              Điện thoại: {item?.phoneNumber}
+            <div className="flex flex-row gap-2 w-full text-sm">
+              <AiOutlinePhone className="py-auto" />
+              {item?.phoneNumber}
             </div>
-            <div className="text-neutral-600 text-sm">Email: {item?.email}</div>
+            <div className="flex flex-row gap-2 w-full text-sm">
+              <HiOutlineMail />
+              {item?.email}
+            </div>
           </div>
           <Separator />
         </CardContent>
         <CardFooter className="flex justify-start flex-wrap gap-x-2">
-          <div className="text-red-400 text-sm flex flex-row">
+          <div className="text-red-400 font-medium text-sm flex flex-row">
             Xem danh sách{" "}
             <MdOutlineKeyboardArrowRight className="h-[24px] grid content-center" />
           </div>

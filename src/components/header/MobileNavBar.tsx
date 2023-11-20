@@ -1,64 +1,62 @@
-'use client';
-import { cn } from '@/lib/utils';
+"use client";
+import { cn } from "@/lib/utils";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { usePathname } from 'next/navigation';
-import React, { useState } from 'react';
-import { CommonSvg } from '@/assets/CommonSvg';
-import Link from 'next/link';
-const sidebarNavItems = [
-  {
-    title: 'Account',
-    href: '/dashboard/account',
-    icon: 'user',
-    items: [],
-  },
-  {
-    title: 'Stores',
-    href: '/dashboard/stores',
-    icon: 'store',
-    items: [],
-  },
-  {
-    title: 'Add Product',
-    href: '/admin/add-product',
-    icon: 'billing',
-    items: [],
-  },
-  {
-    title: 'Purchases',
-    href: '/dashboard/purchases',
-    icon: 'dollarSign',
-    items: [],
-  },
-];
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { usePathname } from "next/navigation";
+import React, { useState } from "react";
+import { CommonSvg } from "@/assets/CommonSvg";
+import Link from "next/link";
+
 const mainNavItems = [
   {
-    title: 'Lobby',
+    title: "Trang chủ",
     items: [
       {
-        title: 'Products',
-        href: '/products',
-        description: 'All the products we have to offer.',
+        title: "Tìm kiếm bất động sản",
+        href: "/bat-dong-san",
+        description: "Find real estate",
         items: [],
       },
       {
-        title: 'Build a Board',
-        href: '/build-a-board',
-        description: 'Build your own custom skateboard.',
+        title: "Tìm kiếm đối tác",
+        href: "/doi-tac",
+        description: "Find agency",
         items: [],
       },
       {
-        title: 'Blog',
-        href: '/blog',
-        description: 'Read our latest blog posts.',
+        title: "Chính sách văn phòng",
+        href: "/chinh-sach",
+        description: "Policy",
+        items: [],
+      },
+    ],
+  },
+  {
+    title: "Hồ sơ",
+    items: [
+      {
+        title: "Thông tin cá nhân",
+        href: "/bat-dong-san",
+        description: "profile",
+        items: [],
+      },
+      {
+        title: "Tin nhắn",
+        href: "/doi-tac",
+        description: "Message",
+        items: [],
+      },
+      {
+        title: "Kênh đối tác",
+        href: "/chinh-sach",
+        description: "agency channel",
         items: [],
       },
     ],
@@ -89,7 +87,7 @@ export function MobileNav() {
             className="flex items-center"
             onClick={() => setIsOpen(false)}
           >
-            <span className="font-bold">{'thuong'}</span>
+            <span className="font-bold">{"UITEstate"}</span>
           </Link>
         </div>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
@@ -126,35 +124,6 @@ export function MobileNav() {
                   </AccordionContent>
                 </AccordionItem>
               ))}
-              <AccordionItem value="sidebar">
-                <AccordionTrigger className="text-sm">
-                  Sidebar Menu
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="flex flex-col space-y-2">
-                    {sidebarNavItems?.map((item, index) =>
-                      item.href ? (
-                        <MobileLink
-                          key={index}
-                          href={String(item.href)}
-                          pathname={pathname}
-                          setIsOpen={setIsOpen}
-                          disabled={item.disabled}
-                        >
-                          {item.title}
-                        </MobileLink>
-                      ) : (
-                        <div
-                          key={index}
-                          className="text-foreground/70 transition-colors"
-                        >
-                          {item.title}
-                        </div>
-                      )
-                    )}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
             </Accordion>
           </div>
         </ScrollArea>
@@ -182,9 +151,9 @@ function MobileLink({
     <Link
       href={href}
       className={cn(
-        'text-foreground/70 transition-colors hover:text-foreground',
-        pathname === href && 'text-foreground',
-        disabled && 'pointer-events-none opacity-60'
+        "text-foreground/70 transition-colors hover:text-foreground",
+        pathname === href && "text-foreground",
+        disabled && "pointer-events-none opacity-60"
       )}
       onClick={() => setIsOpen(false)}
     >

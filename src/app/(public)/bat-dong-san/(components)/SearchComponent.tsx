@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@nextui-org/react";
+import { Checkbox, Input } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/react";
 
 import {
@@ -103,8 +103,9 @@ type props = {
 export function SearchComponent({ setSearchProps }: props) {
   const { fetchAllDanhMuc } = useBatDongSan();
   const [addressValue, setAddressValue] = useState("");
-  const [priceRange, setPriceRange] = useState<number[]>([0, 10000]);
+  const [priceRange, setPriceRange] = useState<number[]>([0, 10000000000]);
   const [squareRange, setSquareRange] = useState<number[]>([0, 5000]);
+  const [addingFilter, setAddingFilter] = useState(false);
 
   useEffect(() => {
     const getBatDongSan = async () => {
@@ -172,26 +173,25 @@ export function SearchComponent({ setSearchProps }: props) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
     setSearchProps({
       searchWord: values.searchWord,
       location: addressValue,
       type: values.type,
       branch: values.branch,
       isRent: values.isRent,
-      loaiCanHo: values.loaiCanHo,
-      loaiNhaO: values.loaiNhaO,
-      loaiVanPhong: values.loaiVanPhong,
-      loaiDatDai: values.loaiDatDai,
-      huongBanCong: values.huongBanCong,
-      huongCuaChinh: values.huongCuaChinh,
-      huongDat: values.huongDat,
-      soPhongNgu: values.soPhongNgu,
-      soPhongTam: values.soPhongTam,
-      minPrice: priceRange[0].toString(),
-      maxPrice: priceRange[1].toString(),
-      minSquare: squareRange[0].toString(),
-      maxSquare: squareRange[1].toString(),
+      loaiCanHo: addingFilter === true ? values.loaiCanHo : "",
+      loaiNhaO: addingFilter === true ? values.loaiNhaO : "",
+      loaiVanPhong: addingFilter === true ? values.loaiVanPhong : "",
+      loaiDatDai: addingFilter === true ? values.loaiDatDai : "",
+      huongBanCong: addingFilter === true ? values.huongBanCong : "",
+      huongCuaChinh: addingFilter === true ? values.huongCuaChinh : "",
+      huongDat: addingFilter === true ? values.huongDat : "",
+      soPhongNgu: addingFilter === true ? values.soPhongNgu : "",
+      soPhongTam: addingFilter === true ? values.soPhongTam : "",
+      minPrice: addingFilter === true ? priceRange[0].toString() : "",
+      maxPrice: addingFilter === true ? priceRange[1].toString() : "",
+      minSquare: addingFilter === true ? squareRange[0].toString() : "",
+      maxSquare: addingFilter === true ? squareRange[1].toString() : "",
     });
   }
   return (
@@ -328,7 +328,13 @@ export function SearchComponent({ setSearchProps }: props) {
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger className="ml-3 mr-3">
-                Lọc thêm
+                <Checkbox
+                  color="danger"
+                  isSelected={addingFilter}
+                  onValueChange={setAddingFilter}
+                >
+                  Lọc thêm
+                </Checkbox>
               </AccordionTrigger>
               <AccordionContent>
                 <div className="space-y-6">

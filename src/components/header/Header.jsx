@@ -3,9 +3,8 @@
 
 import React, { useEffect, useState } from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import { CaretDownIcon } from '@radix-ui/react-icons';
 import './styles.css';
-import { Button } from '../ui/button';
+import { Button } from "@nextui-org/react";
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar';
 import { signOut } from 'next-auth/react';
@@ -19,7 +18,6 @@ import {
 import AuthSvg from '@/assets/AuthSvg';
 import { MobileNav } from './MobileNavBar';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { Badge } from '../ui/badge';
 import Logo from '../logo';
 import BackDropCus from '../backdropCus/backdropCus';
 import { useRouter } from 'next/navigation';
@@ -30,11 +28,7 @@ const avatarNav = [
     href: '/agency',
   },
   {
-    name: 'Thêm sản phẩm',
-    href: '/admin/add-product',
-  },
-  {
-    name: 'Team',
+    name: 'Tin nhắn',
     href: '/admin/add-product',
   },
 ];
@@ -73,154 +67,35 @@ const NavigationMenuDemo = ({ session }) => {
     >
       <MobileNav />
 
-      <div className="hidden lg:flex py-2 items-center justify-center  ">
+      <div className="hidden lg:flex py-2 items-center justify-end">
         {isUserOpen ? <BackDropCus isOpen={isUserOpen} /> : null}
         <Logo />
-        <NavigationMenu.Root className="NavigationMenuRoot">
-          <NavigationMenu.List className="NavigationMenuList">
+        <NavigationMenu.Root className="relative flex justify-end w-[100vw] me-6">
+          <NavigationMenu.List className="flex justify-end">
             <NavigationMenu.Item>
-              <NavigationMenu.Trigger className="NavigationMenuTrigger">
-                Learn <CaretDownIcon className="CaretDown" aria-hidden />
-              </NavigationMenu.Trigger>
-              <NavigationMenu.Content className="NavigationMenuContent">
-                <ul className="List one">
-                  <li style={{ gridRow: 'span 3' }}>
-                    <NavigationMenu.Link asChild>
-                      <a className="Callout" href="/">
-                        <svg
-                          aria-hidden
-                          width="38"
-                          height="38"
-                          viewBox="0 0 25 25"
-                          fill="white"
-                        >
-                          <path d="M12 25C7.58173 25 4 21.4183 4 17C4 12.5817 7.58173 9 12 9V25Z"></path>
-                          <path d="M12 0H4V8H12V0Z"></path>
-                          <path d="M17 8C19.2091 8 21 6.20914 21 4C21 1.79086 19.2091 0 17 0C14.7909 0 13 1.79086 13 4C13 6.20914 14.7909 8 17 8Z"></path>
-                        </svg>
-                        <div className="CalloutHeading">Radix Primitives</div>
-                        <p className="CalloutText">
-                          Unstyled, accessible components for React.
-                        </p>
-                      </a>
-                    </NavigationMenu.Link>
-                  </li>
-
-                  <ListItem href="https://stitches.dev/" title="Stitches">
-                    CSS-in-JS with best-in-class developer experience.
-                  </ListItem>
-                  <ListItem href="/colors" title="Colors">
-                    Beautiful, thought-out palettes with auto dark mode.
-                  </ListItem>
-                  <ListItem href="https://icons.radix-ui.com/" title="Icons">
-                    A crisp set of 15x15 icons, balanced and consistent.
-                  </ListItem>
-                </ul>
-              </NavigationMenu.Content>
+              <NavigationMenu.Link
+                className="NavigationMenuLink h-full"
+                href="/bat-dong-san"
+              >
+                Bất động sản
+              </NavigationMenu.Link>
             </NavigationMenu.Item>
-            <NavigationMenu.Item>
-              <NavigationMenu.Trigger className="NavigationMenuTrigger">
-                Overview <CaretDownIcon className="CaretDown" aria-hidden />
-              </NavigationMenu.Trigger>
-              <NavigationMenu.Content className="NavigationMenuContent">
-                <ul className="List two">
-                  <ListItem
-                    title="Introduction"
-                    href="/primitives/docs/overview/introduction"
-                  >
-                    Build high-quality, accessible design systems and web apps.
-                  </ListItem>
-                  <ListItem
-                    title="Getting started"
-                    href="/primitives/docs/overview/getting-started"
-                  >
-                    A quick tutorial to get you up and running with Radix
-                    Primitives.
-                  </ListItem>
-                  <ListItem
-                    title="Styling"
-                    href="/primitives/docs/guides/styling"
-                  >
-                    Unstyled and compatible with any styling solution.
-                  </ListItem>
-                  <ListItem
-                    title="Animation"
-                    href="/primitives/docs/guides/animation"
-                  >
-                    Use CSS keyframes or any animation library of your choice.
-                  </ListItem>
-                  <ListItem
-                    title="Accessibility"
-                    href="/primitives/docs/overview/accessibility"
-                  >
-                    Tested in a range of browsers and assistive technologies.
-                  </ListItem>
-                  <ListItem
-                    title="Releases"
-                    href="/primitives/docs/overview/releases"
-                  >
-                    Radix Primitives releases and their changelogs.
-                  </ListItem>
-                </ul>
-              </NavigationMenu.Content>
-            </NavigationMenu.Item>
-
-            <NavigationMenu.Item>
-              <NavigationMenu.Trigger className="NavigationMenuTrigger">
-                Overview <CaretDownIcon className="CaretDown" aria-hidden />
-              </NavigationMenu.Trigger>
-              <NavigationMenu.Content className="NavigationMenuContent">
-                <ul className="List two">
-                  <ListItem
-                    title="Introduction"
-                    href="/primitives/docs/overview/introduction"
-                  >
-                    Build high-quality, accessible design systems and web apps.
-                  </ListItem>
-                  <ListItem
-                    title="Getting started"
-                    href="/primitives/docs/overview/getting-started"
-                  >
-                    A quick tutorial to get you up and running with Radix
-                    Primitives.
-                  </ListItem>
-                  <ListItem
-                    title="Styling"
-                    href="/primitives/docs/guides/styling"
-                  >
-                    Unstyled and compatible with any styling solution.
-                  </ListItem>
-                  <ListItem
-                    title="Animation"
-                    href="/primitives/docs/guides/animation"
-                  >
-                    Use CSS keyframes or any animation library of your choice.
-                  </ListItem>
-                  <ListItem
-                    title="Accessibility"
-                    href="/primitives/docs/overview/accessibility"
-                  >
-                    Tested in a range of browsers and assistive technologies.
-                  </ListItem>
-                  <ListItem
-                    title="Releases"
-                    href="/primitives/docs/overview/releases"
-                  >
-                    Radix Primitives releases and their changelogs.
-                  </ListItem>
-                </ul>
-              </NavigationMenu.Content>
-            </NavigationMenu.Item>
-
             <NavigationMenu.Item>
               <NavigationMenu.Link
                 className="NavigationMenuLink"
-                href="https://github.com/radix-ui"
+                href="/doi-tac"
               >
-                Github
+                Đối tác
               </NavigationMenu.Link>
             </NavigationMenu.Item>
-
+            <NavigationMenu.Item>
+              <NavigationMenu.Link
+                className="NavigationMenuLink"
+                href="/chinh-sach"
+              >
+                Chính sách
+              </NavigationMenu.Link>
+            </NavigationMenu.Item>
             <NavigationMenu.Indicator className="NavigationMenuIndicator">
               <div className="Arrow" />
             </NavigationMenu.Indicator>
@@ -230,23 +105,18 @@ const NavigationMenuDemo = ({ session }) => {
             <NavigationMenu.Viewport className="NavigationMenuViewport" />
           </div>
         </NavigationMenu.Root>
-        <Button className="w-48 h-6 text-sm">Dành cho đối tác</Button>
+        <Button className="w-52 bg-red-400 text-white font-medium shadow-lg transition ease-in-out hover:scale-105 hover:shadow-red-200" variant='shadow' radius='sm'>Dành cho đối tác</Button>
         {user ? (
           <div className="flex flex-row gap-5 items-center justify-center">
-            <Link href={'/favorite'}>
-              <Button variant="outline" size="icon" className="relative">
-                {1 > 0 && (
-                  <Badge
-                    variant="secondary"
-                    className="absolute -right-2 -top-2 h-6 w-6 justify-center rounded-full p-2.5"
-                  >
-                    7
-                  </Badge>
-                )}
+            <Link href={'/yeu-thich'}>
+              {/* <Button variant="outline" size="icon" className="relative">
                 {
                   <AiOutlineHeart className="text-slate-600 stroke-zinc-950 w-4 h-4 " />
                 }
-              </Button>
+              </Button> */}
+              <Button isIconOnly  radius='sm' variant='bordered' className='ml-2 border-1 font-medium border-red-400 text-red-400 hover:bg-red-400 hover:text-white transition ease-in-out hover:scale-105 border-solid' aria-label="Like">
+                <AiOutlineHeart className='w-4 h-4'/>
+              </Button> 
             </Link>
             <div className="w-full h-full">
               <Dropdown
@@ -320,7 +190,7 @@ const NavigationMenuDemo = ({ session }) => {
           </div>
         ) : (
           <Link href={'/auth/login'}>
-            <Button className="w-[70px] h-8">Login</Button>
+            <Button className="w-[70px] ml-2 border-1 font-medium border-red-400 text-red-400 hover:bg-red-400 hover:text-white transition ease-in-out hover:scale-105 border-solid" variant="bordered" radius='sm'>Login</Button>
           </Link>
         )}
       </div>
@@ -328,17 +198,17 @@ const NavigationMenuDemo = ({ session }) => {
   );
 };
 
-const ListItem = React.forwardRef(
-  ({ children, title, ...props }, forwardedRef) => (
-    <li>
-      <NavigationMenu.Link asChild>
-        <a className={'ListItemLink'} {...props} ref={forwardedRef}>
-          <div className="ListItemHeading">{title}</div>
-          <p className="ListItemText">{children}</p>
-        </a>
-      </NavigationMenu.Link>
-    </li>
-  )
-);
+// const ListItem = React.forwardRef(
+//   ({ children, title, ...props }, forwardedRef) => (
+//     <li>
+//       <NavigationMenu.Link asChild>
+//         <a className={'ListItemLink'} {...props} ref={forwardedRef}>
+//           <div className="ListItemHeading">{title}</div>
+//           <p className="ListItemText">{children}</p>
+//         </a>
+//       </NavigationMenu.Link>
+//     </li>
+//   )
+// );
 
 export default NavigationMenuDemo;
