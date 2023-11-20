@@ -93,7 +93,7 @@ export const BaiVietForm = ({
 
     // let productImages;
     // let phapLyImages;
-    const [productImages, phapLyImages] = await Promise.all([
+    const [productImages, phapLyImages, banVeImages] = await Promise.all([
       startUpload([...productImageFiles]).then((res) => {
         const formattedImages = res?.map((image) => ({
           id: image.key,

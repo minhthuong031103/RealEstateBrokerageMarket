@@ -11,7 +11,7 @@ export const ImageList = ({ files, width, height, className }) => {
           return (
             <Zoom key={i}>
               <ImageCus
-                src={file?.preview}
+                src={file?.preview || file?.url}
                 alt={file?.name}
                 className={`h-${height} w-${width} shrink-0 rounded-md object-cover object-center`}
               />

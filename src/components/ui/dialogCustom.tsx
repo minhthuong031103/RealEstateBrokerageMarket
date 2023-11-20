@@ -107,26 +107,25 @@ function DialogCustom({
   };
   return (
     isVisible && (
-      <div className="w-full h-full">
-        <div className="absolute">
-          <div
-            className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm ${
-              isModalOpen ? `animate-in fade-in-0` : ''
-            }  ${isClosing ? 'animate-out fade-out-0 ' : ''}
+      <div className="absolute w-full h-full z-500 ">
+        <div
+          className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm ${
+            isModalOpen ? `animate-in fade-in-0` : ''
+          }  ${isClosing ? 'animate-out fade-out-0 ' : ''}
   `}
-          ></div>
-          <div
-            className={cn(
-              `fixed left-[50%] top-[50%] z-50 max-w-full translate-x-[-50%] 
+        ></div>
+        <div
+          className={cn(
+            `fixed left-[50%] top-[50%] z-50 max-w-full translate-x-[-50%] 
       translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200   ${
         isModalOpen
           ? `animate-in fade-in-0 zoom-in-95 slide-in-from-left-1/2 slide-in-from-top-[48%]`
           : ''
       } ${
-                isClosing
-                  ? 'animate-out fade-out-10 zoom-out-95 slide-out-to-left-1/2  slide-out-to-top-[48%] '
-                  : ''
-              }
+              isClosing
+                ? 'animate-out fade-out-10 zoom-out-95 slide-out-to-left-1/2  slide-out-to-top-[48%] '
+                : ''
+            }
        `,
               className
             )}
@@ -151,64 +150,63 @@ function DialogCustom({
                           isWarningOpen ? `animate-in fade-in-0` : ''
                         }  ${isWarningClosing ? 'animate-out fade-out-0 ' : ''}
   `}
-                      ></div>
-                      <div
-                        className={cn(
-                          `fixed left-[50%] top-[50%] z-50 max-w-full translate-x-[-50%] 
+                    ></div>
+                    <div
+                      className={cn(
+                        `fixed left-[50%] top-[50%] z-50 max-w-full translate-x-[-50%] 
       translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 w-[90%] lg:w-[400px] ${
         isWarningOpen
           ? `animate-in fade-in-0 zoom-in-95 slide-in-from-left-1/2 slide-in-from-top-[48%]`
           : ''
       } ${
-                            isWarningClosing
-                              ? 'animate-out fade-out-10 zoom-out-95 slide-out-to-left-1/2  slide-out-to-top-[48%] '
-                              : ''
-                          }
+                          isWarningClosing
+                            ? 'animate-out fade-out-10 zoom-out-95 slide-out-to-left-1/2  slide-out-to-top-[48%] '
+                            : ''
+                        }
        `
-                        )}
-                      >
-                        <div className="w-full h-full ">
-                          <div className="h-full w-full px-3">
-                            <div className="flex items-end justify-end mb-3"></div>
-                            <div className="w-full h-full py-3">
-                              <div className="flex flex-col items-center justify-between h-full w-full lg:py-12">
-                                <Label className="mb-24 font-bold text-lg">
-                                  Bạn có muốn đóng cửa sổ này không?
-                                </Label>
-                                <div className="flex items-center justify-center w-full">
-                                  <Button
-                                    variant={'destructive'}
-                                    className="w-[30%] mr-4"
-                                    onClick={() => {
-                                      // setOpen(false);
-                                      // setDanhMucValue(null);
-                                      // setThue(false);
-                                      // setBan(false);
-                                      callBack?.();
-                                      handleClose();
-                                    }}
-                                  >
-                                    Có
-                                  </Button>
-                                  <Button
-                                    className="w-[30%]"
-                                    onClick={() => {
-                                      handleCloseWarning();
-                                    }}
-                                  >
-                                    Không
-                                  </Button>
-                                </div>
+                      )}
+                    >
+                      <div className="w-full h-full ">
+                        <div className="h-full w-full px-3">
+                          <div className="flex items-end justify-end mb-3"></div>
+                          <div className="w-full h-full py-3">
+                            <div className="flex flex-col items-center justify-between h-full w-full lg:py-12">
+                              <Label className="mb-24 font-bold text-lg">
+                                Bạn có muốn đóng cửa sổ này không?
+                              </Label>
+                              <div className="flex items-center justify-center w-full">
+                                <Button
+                                  variant={'destructive'}
+                                  className="w-[30%] mr-4"
+                                  onClick={() => {
+                                    // setOpen(false);
+                                    // setDanhMucValue(null);
+                                    // setThue(false);
+                                    // setBan(false);
+                                    callBack?.();
+                                    handleClose();
+                                  }}
+                                >
+                                  Có
+                                </Button>
+                                <Button
+                                  className="w-[30%]"
+                                  onClick={() => {
+                                    handleCloseWarning();
+                                  }}
+                                >
+                                  Không
+                                </Button>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  ) : null}
-                </div>
-              </ScrollArea>
-            </div>
+                  </div>
+                ) : null}
+              </div>
+            </ScrollArea>
           </div>
         </div>
       </div>

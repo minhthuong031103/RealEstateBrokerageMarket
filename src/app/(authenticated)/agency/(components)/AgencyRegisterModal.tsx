@@ -26,15 +26,11 @@ function AgencyRegisterModal({ session }) {
                 const role = userRole?.role;
                 const duyetDoiTac = userRole?.duyetDoiTac;
                 setUserRole(role);
-                if (role === 'user') {
+                if (role === 'khach_hang') {
                     setIsuser(true);
                 }
-                if (duyetDoiTac === 'pending') {
-                    {
-                        console.log(duyetDoiTac);
-                        setDuyetDoiTac('pending');
-                    }
-                }
+                setDuyetDoiTac(duyetDoiTac);
+                console.log(userRole);
             } catch (error) {
                 console.error('Error fetching user role:', error);
             }
@@ -42,13 +38,13 @@ function AgencyRegisterModal({ session }) {
 
         fetchUserRole();
     }, []);
-    return userRole === 'user' ? (
+    return userRole === 'khach_hang' ? (
         <div>
-            {userRole === 'user' && duyetDoiTac === '' ? (
+            {userRole === 'khach_hang' && duyetDoiTac === '' ? (
                 <DialogCustom className='w-full lg:w-[70%] h-[80%] lg:h-[95%] flex items-center justify-center' isModalOpen={isUser} notShowClose={true}>
                     <div>
                         <Logo />
-                        <h1>Đăng ký để trở thành đối tác với UIT RealEstate .</h1>
+                        <h1>Đăng ký để trở thành đối tác với UIT RealEstate.</h1>
                         <SelectLoaiDoiTac
                             setLoaiDoiTacValue={setLoaiDoiTacValue}
                             setCaNhan={setCaNhan}
@@ -64,11 +60,18 @@ function AgencyRegisterModal({ session }) {
                         </div>
                     </div>
                 </DialogCustom>
+            ) : duyetDoiTac === 'tu_choi' ? (
+                <DialogCustom className='w-full lg:w-[70%] h-[80%] lg:h-[95%] flex items-center justify-center' isModalOpen={isUser} notShowClose={true}>
+                    <div>
+                        <Logo />
+                        <h1>Đăng ký của bạn đã bị từ chối.</h1>
+                    </div>
+                </DialogCustom>
             ) : (
                 <DialogCustom className='w-full lg:w-[70%] h-[80%] lg:h-[95%] flex items-center justify-center' isModalOpen={isUser} notShowClose={true}>
                     <div>
                         <Logo />
-                        <h1>Đăng ký của bạn đang chờ được phê duyệt</h1>
+                        <h1>Đăng ký của bạn đang chờ được phê duyệt.</h1>
                     </div>
                 </DialogCustom>
             )}

@@ -1,16 +1,52 @@
 'use client';
 
-// import { Input } from '@/components/ui/input';
 import { AddPostModal } from './AddPostModal';
+import { SelectTrangThai } from './SelectTrangThai';
+import React, { useEffect } from 'react'
+import { Dispatch, SetStateAction } from "react";
+import { searchType } from './RealEstateListLayout';
 
-export function SearchBarAndCreate() {
+type props = {
+  setSearchProps: Dispatch<SetStateAction<searchType>>;
+};
+
+export function SearchBarAndCreate({ setSearchProps }: props) {
+  const [trangThaiValue, setTrangThaiValue] = React.useState();
+  function onSubmit() {
+    setSearchProps({
+      searchWord: "",
+      location: "",
+      type: "",
+      branch: "",
+      isRent: "",
+      loaiCanHo: "",
+      loaiNhaO: "",
+      loaiVanPhong: "",
+      loaiDatDai: "",
+      huongBanCong: "",
+      huongCuaChinh: "",
+      huongDat: "",
+      soPhongNgu: "",
+      soPhongTam: "",
+      minPrice: "",
+      maxPrice: "",
+      minSquare: "",
+      maxSquare: "",
+      trangThai: trangThaiValue,
+    });
+  }
+
+  useEffect(() => {
+    if (trangThaiValue) {
+      onSubmit();
+    } else if (trangThaiValue == "") {
+      onSubmit();
+    }
+  }, [trangThaiValue])
+
   return (
     <div className="flex flex-col md:flex-row justify-between">
-      {/* <Input
-        className="w-full md:w-[480px] bg-white mb-2 md:mb-0"
-        type="text"
-        placeholder="Tìm kiếm bất động sản theo tên"
-      /> */}
+      <SelectTrangThai setTrangThaiValue={setTrangThaiValue} />
       <AddPostModal />
     </div>
   );
