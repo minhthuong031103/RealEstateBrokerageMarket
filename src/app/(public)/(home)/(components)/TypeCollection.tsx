@@ -1,7 +1,6 @@
 "use client";
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import Image from "next/image";
 import React from "react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -100,20 +99,17 @@ function TypeCollections() {
             >
               <div className="group relative overflow-hidden rounded-md">
                 <AspectRatio ratio={3 / 2}>
-                  <Image
+                  <img
                     src={collection.image}
                     alt={"Loại bất động sản"}
-                    sizes="(max-width: 768px) 50vw, (max-width: 600px) 25vw, 16vw"
-                    fill
-                    className="object-cover transition-transform group-hover:scale-105"
-                    priority
+                    className="object-cover h-full w-full transition-transform group-hover:scale-105"
                   />
                 </AspectRatio>
                 <div
                   className="px-5 absolute inset-0 z-20 flex items-end justify-center"
                   style={{
                     background:
-                      "linear-gradient(to top, #25253bdc 0%, #20202b00 100%)",
+                      "linear-gradient(to top, #25253bdc 0%, #20202b00 80%)",
                   }}
                 >
                   <h3 className="text-[24px] font-semibold capitalize text-slate-100 md:text-xl mb-6">

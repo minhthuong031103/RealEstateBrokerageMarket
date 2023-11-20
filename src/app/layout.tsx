@@ -13,11 +13,11 @@ const montserrat = Montserrat({
 });
 
 const metadata: Metadata = {
-  title: "Real estate",
+  title: "UITEstate",
   description: "Real Estate By UIT",
   openGraph: {
     images: [
-      'https://wallpapers.com/images/hd/house-corner-architecture-7vl0mtz3dfxod0fd.webp"',
+      "https://wallpapers.com/images/hd/house-corner-architecture-7vl0mtz3dfxod0fd.webp",
     ],
   },
 };
@@ -26,11 +26,18 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+          rel="stylesheet"
+        />
         <link rel="icon" href="/logoEstate.png" />
         <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
       </head>
       <body
-        className={`${montserrat.variable} ${montserrat.style.fontWeight} font-mont`}
+        className={`${montserrat.variable} ${montserrat.style.fontWeight}`}
+        style={{ fontFamily: "'Nunito', sans-serif" }}
       >
         <QueryProvider>
           <AuthProvider>
