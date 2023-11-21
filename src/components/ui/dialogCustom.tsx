@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { ScrollArea } from '@components/ui/scroll-area';
-import { X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
-import { Label } from './label';
+import { ScrollArea } from "@components/ui/scroll-area";
+import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { Label } from "./label";
 function DialogCustom({
   isModalOpen,
   setIsModalOpen,
@@ -43,24 +43,24 @@ function DialogCustom({
     function setScrollbarWidthProperty() {
       const scrollbarWidth = getScrollbarWidth();
       document.documentElement.style.setProperty(
-        '--scrollbar-width',
+        "--scrollbar-width",
         `${scrollbarWidth}px`
       );
     }
-    window.addEventListener('resize', setScrollbarWidthProperty);
+    window.addEventListener("resize", setScrollbarWidthProperty);
     // Call this function when your app loads
     setScrollbarWidthProperty();
     // Disable scrolling on the body when the dialog is open
     if (isModalOpen) {
-      document.body.classList.add('no-scroll');
+      document.body.classList.add("no-scroll");
     } else {
       if (isChild) return;
-      document.body.classList.remove('no-scroll');
+      document.body.classList.remove("no-scroll");
     }
     return () => {
       // Re-enable scrolling when the component unmounts
       if (isChild) return;
-      document.body.classList.remove('no-scroll');
+      document.body.classList.remove("no-scroll");
     };
   }, [isModalOpen]);
 
@@ -107,48 +107,48 @@ function DialogCustom({
   };
   return (
     isVisible && (
-      <div className="absolute w-full h-full z-500 ">
+      <div className="absolute w-full h-full z-500 rounded-md">
         <div
-          className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm ${
-            isModalOpen ? `animate-in fade-in-0` : ''
-          }  ${isClosing ? 'animate-out fade-out-0 ' : ''}
+          className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm rounded-md ${
+            isModalOpen ? `animate-in fade-in-0` : ""
+          }  ${isClosing ? "animate-out fade-out-0 " : ""}
   `}
         ></div>
         <div
           className={cn(
             `fixed left-[50%] top-[50%] z-50 max-w-full translate-x-[-50%] 
-      translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200   ${
+      translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 rounded-md ${
         isModalOpen
           ? `animate-in fade-in-0 zoom-in-95 slide-in-from-left-1/2 slide-in-from-top-[48%]`
-          : ''
+          : ""
       } ${
               isClosing
-                ? 'animate-out fade-out-10 zoom-out-95 slide-out-to-left-1/2  slide-out-to-top-[48%] '
-                : ''
+                ? "animate-out fade-out-10 zoom-out-95 slide-out-to-left-1/2  slide-out-to-top-[48%] "
+                : ""
             }
        `,
-              className
-            )}
-          >
-            <div className="h-full w-full ">
-              <ScrollArea className="h-full w-full px-3">
-                {!notShowClose ? (
-                  <div className="flex items-end justify-end mb-3">
-                    <Button variant={'outline'} onClick={handleClose}>
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ) : null}
-                <div className="w-full h-full py-3 px-1">
-                  {/* CHILDREN */}
-                  {children}
-                  {/* CHILDREN */}
-                  {isWarningOpen ? (
-                    <div className="absolute ">
-                      <div
-                        className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm ${
-                          isWarningOpen ? `animate-in fade-in-0` : ''
-                        }  ${isWarningClosing ? 'animate-out fade-out-0 ' : ''}
+            className
+          )}
+        >
+          <div className="h-full w-full rounded-lg">
+            <ScrollArea className="h-full w-full px-3">
+              {!notShowClose ? (
+                <div className="flex items-end justify-end mb-3">
+                  <Button variant={"outline"} onClick={handleClose}>
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ) : null}
+              <div className="w-full h-full py-3 px-1">
+                {/* CHILDREN */}
+                {children}
+                {/* CHILDREN */}
+                {isWarningOpen ? (
+                  <div className="absolute ">
+                    <div
+                      className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm ${
+                        isWarningOpen ? `animate-in fade-in-0` : ""
+                      }  ${isWarningClosing ? "animate-out fade-out-0 " : ""}
   `}
                     ></div>
                     <div
@@ -157,11 +157,11 @@ function DialogCustom({
       translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 w-[90%] lg:w-[400px] ${
         isWarningOpen
           ? `animate-in fade-in-0 zoom-in-95 slide-in-from-left-1/2 slide-in-from-top-[48%]`
-          : ''
+          : ""
       } ${
                           isWarningClosing
-                            ? 'animate-out fade-out-10 zoom-out-95 slide-out-to-left-1/2  slide-out-to-top-[48%] '
-                            : ''
+                            ? "animate-out fade-out-10 zoom-out-95 slide-out-to-left-1/2  slide-out-to-top-[48%] "
+                            : ""
                         }
        `
                       )}
@@ -176,7 +176,7 @@ function DialogCustom({
                               </Label>
                               <div className="flex items-center justify-center w-full">
                                 <Button
-                                  variant={'destructive'}
+                                  variant={"destructive"}
                                   className="w-[30%] mr-4"
                                   onClick={() => {
                                     // setOpen(false);
