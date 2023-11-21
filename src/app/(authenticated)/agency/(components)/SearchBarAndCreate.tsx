@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { AddPostModal } from './AddPostModal';
-import { SelectTrangThai } from './SelectTrangThai';
-import React, { useEffect } from 'react'
+import { AddPostModal } from "./AddPostModal";
+import { SelectTrangThai } from "./SelectTrangThai";
+import React, { useEffect } from "react";
 import { Dispatch, SetStateAction } from "react";
-import { searchType } from './RealEstateListLayout';
+import { searchType } from "./RealEstateListLayout";
 
 type props = {
   setSearchProps: Dispatch<SetStateAction<searchType>>;
@@ -42,10 +42,10 @@ export function SearchBarAndCreate({ setSearchProps }: props) {
     } else if (trangThaiValue == "") {
       onSubmit();
     }
-  }, [trangThaiValue])
+  }, [trangThaiValue]);
 
   return (
-    <div className="flex flex-col md:flex-row justify-between">
+    <div className="flex flex-col md:flex-row md:mr-6 justify-between gap-2">
       <SelectTrangThai setTrangThaiValue={setTrangThaiValue} />
       <AddPostModal />
     </div>

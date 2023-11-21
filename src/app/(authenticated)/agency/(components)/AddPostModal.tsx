@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import React from 'react';
-import DialogCustom from '@/components/ui/dialogCustom';
+import { Button } from "@/components/ui/button";
+import React from "react";
+import DialogCustom from "@/components/ui/dialogCustom";
 // import { Label } from '@/components/ui/label';
-import { SelectDanhMuc } from './SelectDanhMuc';
-import { BaiVietForm } from './(addPost)/BaiVietForm';
+import { SelectDanhMuc } from "./SelectDanhMuc";
+import { BaiVietForm } from "./(addPost)/BaiVietForm";
 // import * as z from 'zod';
-import { useSession } from 'next-auth/react';
-import { MuaLeModal } from '../goi-dich-vu/MuaLeModal';
-import { useAuth } from '@/hooks/useAuth';
-import { PlusIcon } from '@radix-ui/react-icons';
+import { useSession } from "next-auth/react";
+import { MuaLeModal } from "../goi-dich-vu/MuaLeModal";
+import { useAuth } from "@/hooks/useAuth";
+import { PlusIcon } from "@radix-ui/react-icons";
 // const formSchema = z.object({});
 export const AddPostModal = () => {
   const [open, setOpen] = React.useState(false);
@@ -29,8 +29,9 @@ export const AddPostModal = () => {
         onClick={() => {
           setOpen(true);
         }}
+        className="w-full"
       >
-        <PlusIcon className='mr-2'/>
+        <PlusIcon className="mr-2" />
         Đăng tin bất động sản
       </Button>
 
@@ -56,8 +57,8 @@ export const AddPostModal = () => {
             <div className="w-full h-full">
               <div className=" mb-3 sm:max-w-lg ">
                 <p>
-                  Bạn hiện có{' '}
-                  <span className="font-bold text-red-500"> {user?.luot}</span>{' '}
+                  Bạn hiện có{" "}
+                  <span className="font-bold text-red-500"> {user?.luot}</span>{" "}
                   lượt đăng bài viết.
                 </p>
               </div>

@@ -105,7 +105,9 @@ const NavigationMenuDemo = ({ session }) => {
             <NavigationMenu.Viewport className="NavigationMenuViewport" />
           </div>
         </NavigationMenu.Root>
-        <Button className="w-52 bg-red-400 text-white font-medium shadow-lg transition ease-in-out hover:scale-105 hover:shadow-red-200" variant='shadow' radius='sm'>Dành cho đối tác</Button>
+        <Link href={'/agency'}>        
+        <Button className="w-48 bg-red-400 text-white font-medium shadow-lg transition ease-in-out hover:scale-105 hover:shadow-red-200" variant='shadow' radius='sm'>Dành cho đối tác</Button>
+        </Link>
         {user ? (
           <div className="flex flex-row gap-5 items-center justify-center">
             <Link href={'/yeu-thich'}>
