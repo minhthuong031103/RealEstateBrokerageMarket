@@ -130,23 +130,23 @@ function DialogCustom({
             className
           )}
         >
-          <div className="h-full w-full rounded-lg">
+          <div className="h-full w-full rounded-md">
             <ScrollArea className="h-full w-full px-3">
               {!notShowClose ? (
-                <div className="flex items-end justify-end mb-3">
+                <div className="flex items-end justify-end mb-3 sticky top-0 bg-white z-10">
                   <Button variant={"outline"} onClick={handleClose}>
                     <X className="h-4 w-4" />
                   </Button>
                 </div>
               ) : null}
-              <div className="w-full h-full py-3 px-1">
+              <div className="w-full h-full py-3 px-1 rounded-md">
                 {/* CHILDREN */}
                 {children}
                 {/* CHILDREN */}
                 {isWarningOpen ? (
-                  <div className="absolute ">
+                  <div className="absolute rounded-md">
                     <div
-                      className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm ${
+                      className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm rounded-md ${
                         isWarningOpen ? `animate-in fade-in-0` : ""
                       }  ${isWarningClosing ? "animate-out fade-out-0 " : ""}
   `}
@@ -154,7 +154,7 @@ function DialogCustom({
                     <div
                       className={cn(
                         `fixed left-[50%] top-[50%] z-50 max-w-full translate-x-[-50%] 
-      translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 w-[90%] lg:w-[400px] ${
+      translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 w-[90%] lg:w-[400px] rounded-md ${
         isWarningOpen
           ? `animate-in fade-in-0 zoom-in-95 slide-in-from-left-1/2 slide-in-from-top-[48%]`
           : ""
@@ -166,18 +166,20 @@ function DialogCustom({
        `
                       )}
                     >
-                      <div className="w-full h-full ">
+                      <div className="w-full h-full rounded-md">
                         <div className="h-full w-full px-3">
                           <div className="flex items-end justify-end mb-3"></div>
                           <div className="w-full h-full py-3">
-                            <div className="flex flex-col items-center justify-between h-full w-full lg:py-12">
-                              <Label className="mb-24 font-bold text-lg">
-                                Bạn có muốn đóng cửa sổ này không?
+                            <div className="flex flex-col items-start justify-start h-full w-full">
+                              <Label className="font-bold text-lg">
+                                Xác nhận
                               </Label>
-                              <div className="flex items-center justify-center w-full">
+                              <p className="mb-6">
+                                Bạn có muốn đóng cửa sổ này không?
+                              </p>
+                              <div className="flex justify-end w-full">
                                 <Button
-                                  variant={"destructive"}
-                                  className="w-[30%] mr-4"
+                                  className="w-[30%] mr-4 bg-transparent border-1 border-emerald-400 text-emerald-400 hover:text-white hover:bg-emerald-400"
                                   onClick={() => {
                                     // setOpen(false);
                                     // setDanhMucValue(null);
@@ -187,10 +189,10 @@ function DialogCustom({
                                     handleClose();
                                   }}
                                 >
-                                  Có
+                                  Xác nhận
                                 </Button>
                                 <Button
-                                  className="w-[30%]"
+                                  className="w-[30%] bg-slate-800 hover:bg-black"
                                   onClick={() => {
                                     handleCloseWarning();
                                   }}

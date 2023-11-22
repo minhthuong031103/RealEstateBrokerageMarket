@@ -1,8 +1,8 @@
-import { FileDialog } from '@/components/ui/FileDialog';
-import { ImageList } from '@/components/ui/ImageList';
-import { TinhTrangPhapLy } from '@/lib/constant';
-import { Select, SelectItem } from '@nextui-org/react';
-import React, { useEffect } from 'react';
+import { FileDialog } from "@/components/ui/FileDialog";
+import { ImageList } from "@/components/ui/ImageList";
+import { TinhTrangPhapLy } from "@/lib/constant";
+import { Select, SelectItem } from "@nextui-org/react";
+import React, { useEffect } from "react";
 
 export const GiayToPhapLy = ({
   phapLy,
@@ -25,21 +25,22 @@ export const GiayToPhapLy = ({
   return (
     <div className="flex flex-col gap-y-3">
       <Select
-        key={'phaply'}
-        radius={'md'}
+        key={"phaply"}
+        radius={"sm"}
+        variant="bordered"
         label="Tình trạng pháp lý"
         isInvalid={isPhapLyValid || !phapLyTouched ? false : true}
         errorMessage={
           isPhapLyValid || !phapLyTouched
-            ? ''
-            : 'Vui lòng chọn tình trạng pháp lý'
+            ? ""
+            : "Vui lòng chọn tình trạng pháp lý"
         }
         autoFocus={false}
         placeholder="Chọn tình trạng pháp lý"
         selectedKeys={phapLy ? [phapLy] : []}
         onSelectionChange={setSelectedPhapLy}
         onClose={() => setPhapLyTouched(true)}
-        className="max-w-xs lg:max-w-lg"
+        className="w-full"
       >
         {TinhTrangPhapLy?.map((phaply) => (
           <SelectItem key={phaply.value} value={phaply.value}>
@@ -47,18 +48,20 @@ export const GiayToPhapLy = ({
           </SelectItem>
         ))}
       </Select>
-      <div className="font-bold text-sm">Hình ảnh pháp lý </div>
-      {phapLyImageFiles?.length ? (
-        <ImageList
-          className={'w-full h-36'}
-          files={phapLyImageFiles}
-          height={32}
-          width={32}
-        />
-      ) : null}
+      <div className="font-bold text-sm">{`Hình ảnh pháp lý (tối đa 8 hình)`}</div>
+      <div className="border-1 border-gray-400 w-full h-64 overflow-hidden rounded-md">
+        {phapLyImageFiles?.length ? (
+          <ImageList
+            className={"w-full h-64"}
+            files={phapLyImageFiles}
+            height={32}
+            width={32}
+          />
+        ) : null}
+      </div>
       <FileDialog
         setDeletedImage={setDeletedImagePhapLyFiles}
-        className="max-w-xs lg:max-w-lg"
+        className="w-full"
         name="phapLyImages"
         maxFiles={8}
         maxSize={1024 * 1024 * 4}

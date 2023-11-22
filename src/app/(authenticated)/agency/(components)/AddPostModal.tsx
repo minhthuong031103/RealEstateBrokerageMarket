@@ -58,7 +58,10 @@ export const AddPostModal = () => {
               <div className=" mb-3 sm:max-w-lg ">
                 <p>
                   Bạn hiện có{" "}
-                  <span className="font-bold text-red-500"> {user?.luot}</span>{" "}
+                  <span className="font-semibold text-red-500">
+                    {" "}
+                    {user?.luot}
+                  </span>{" "}
                   lượt đăng bài viết.
                 </p>
               </div>
@@ -87,7 +90,7 @@ export const AddPostModal = () => {
               </>
             ) : (
               <>
-                <div className="font-bol text-sm text-red-500">
+                <div className="font-bol text-sm text-red-400">
                   Bạn đã hết lượt đăng bài viết, vui lòng mua thêm lượt.
                 </div>
                 <div className="w-full flex flex-col items-center justify-center">
@@ -95,7 +98,7 @@ export const AddPostModal = () => {
                     onClick={() => {
                       setIsMuaLeModalOpen(true);
                     }}
-                    className="w-[60%]"
+                    className="w-full border-2 font-semibold border-red-400 text-red-400 bg-transparent hover:bg-red-400 hover:text-white"
                   >
                     Mua ngay
                   </Button>

@@ -1,6 +1,6 @@
-import { Input } from '@nextui-org/react';
-import { formatNumberWithCommas } from '@/lib/utils';
-import React, { useEffect, useState } from 'react';
+import { Input } from "@nextui-org/react";
+import { formatNumberWithCommas } from "@/lib/utils";
+import React, { useEffect, useState } from "react";
 
 export const GiaBan = ({ giaBan, setGiaBan }) => {
   const [displayValue, setDisplayValue] = useState();
@@ -11,7 +11,7 @@ export const GiaBan = ({ giaBan, setGiaBan }) => {
     }
   }, [giaBan]);
   const handleInputChange = (e) => {
-    const inputVal = e.target.value.replace(/[^0-9]/g, ''); // Only digits
+    const inputVal = e.target.value.replace(/[^0-9]/g, ""); // Only digits
     if (/^\d*$/.test(inputVal)) {
       setGiaBan(inputVal);
       setDisplayValue(formatNumberWithCommas(inputVal));
@@ -19,11 +19,14 @@ export const GiaBan = ({ giaBan, setGiaBan }) => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 max-w-xs lg:max-w-lg ">
+    <div className="flex flex-col lg:flex-row gap-6 w-full">
       <Input
         label="Giá bán"
-        isInvalid={giaBan !== '' ? false : true}
-        errorMessage={`${giaBan !== '' ? '' : 'Vui lòng nhập giá bán'}`}
+        placeholder="Nhập giá bán"
+        variant="bordered"
+        radius="sm"
+        isInvalid={giaBan !== "" ? false : true}
+        errorMessage={`${giaBan !== "" ? "" : "Vui lòng nhập giá bán"}`}
         value={displayValue}
         onChange={handleInputChange}
       />

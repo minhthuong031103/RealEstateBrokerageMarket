@@ -1,4 +1,3 @@
-import React from "react";
 import AgencyImageAndName from "../(components)/(profile)/AgencyImageAndName";
 import AgencyInfo from "../(components)/(profile)/AgencyInfo";
 import { getSession } from "@/lib/auth";

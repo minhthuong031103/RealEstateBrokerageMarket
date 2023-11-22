@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useBatDongSan } from '@/hooks/useBatDongSan';
-import { Select, SelectItem } from '@nextui-org/react';
-import React, { useEffect } from 'react';
+import { useBatDongSan } from "@/hooks/useBatDongSan";
+import { Select, SelectItem } from "@nextui-org/react";
+import React, { useEffect } from "react";
 
 export const LoaiHinh = ({ setLoaiHinhValue, danhMucValue }) => {
   const [selectedLoaiHinh, setSelectedLoaiHinh] = React.useState(new Set([]));
@@ -27,19 +27,20 @@ export const LoaiHinh = ({ setLoaiHinhValue, danhMucValue }) => {
   return (
     <div className="flex flex-col h-full gap-y-6">
       <Select
-        key={'loaihinh'}
-        radius={'md'}
+        key={"loaihinh"}
+        radius={"sm"}
+        variant="bordered"
         label="Loại hình bất động sản"
         isInvalid={isLoaiHinhValid || !loaiHinhTouched ? false : true}
         errorMessage={
-          isLoaiHinhValid || !loaiHinhTouched ? '' : 'Vui lòng chọn loại hình'
+          isLoaiHinhValid || !loaiHinhTouched ? "" : "Vui lòng chọn loại hình"
         }
         autoFocus={false}
         placeholder="Chọn loại hình bất động sản"
         selectedKeys={selectedLoaiHinh}
         onSelectionChange={setSelectedLoaiHinh}
         onClose={() => setLoaiHinhTouched(true)}
-        className="max-w-xs"
+        className="w-full"
       >
         {loaiHinh?.map((loaihinh) => (
           <SelectItem key={loaihinh.name} value={loaihinh.name}>

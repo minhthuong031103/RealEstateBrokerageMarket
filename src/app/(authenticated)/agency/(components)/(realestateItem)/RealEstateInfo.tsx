@@ -6,7 +6,7 @@ import { BsCoin } from "react-icons/bs";
 
 export const RealEstateInfo = ({ item }) => {
   return (
-    <div className="text-base flex flex-col gap-2 -mt-1 font-medium">
+    <div className="text-base flex flex-col gap-2 font-medium">
       <div className="text-[24px] text-neutral-700 font-semibold mb-2">
         {item?.tieuDe}
       </div>

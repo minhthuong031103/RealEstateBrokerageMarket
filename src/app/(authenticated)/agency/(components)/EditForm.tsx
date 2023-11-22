@@ -1,43 +1,43 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { useBatDongSan } from '@/hooks/useBatDongSan';
-import { Input, Textarea } from '@nextui-org/react';
-import { useBaiViet } from '@/hooks/useBaiViet';
-import DialogCustom from '@/components/ui/dialogCustom';
-import { Button } from '@/components/ui/button';
-import { Spinner } from '@nextui-org/react';
-import { DienTich } from '@/app/(authenticated)/agency/(components)/(addPost)/DienTich';
-import { SelectDanhMuc } from './(editPost)/SelectDanhMuc';
-import { GiaBan } from '@/app/(authenticated)/agency/(components)/(addPost)/GiaBan';
-import { FileDialog } from '@/components/ui/FileDialog';
-import { ImageList } from '@/components/ui/ImageList';
-import { generateReactHelpers } from '@uploadthing/react/hooks';
-import { OurFileRouter } from '@/app/api/uploadthing/core';
-import { useQueryClient } from '@tanstack/react-query';
-import { LoaiHinh } from './(editPost)/LoaiHinh';
-import { GiayToPhapLy } from './(editPost)/GiayToPhapLy';
-import { CanHoForm } from './(editPost)/(canho)/CanHoForm';
-import { set } from 'date-fns';
-import { useQuery } from '@tanstack/react-query';
-import { parse } from 'path';
-import { SelectAddress } from './(editPost)/SelectAddress';
-import { TieuDe } from '@/app/(authenticated)/agency/(components)/(addPost)/TieuDe';
-import { MoTaChiTiet } from '@/app/(authenticated)/agency/(components)/(addPost)/MoTaChiTiet';
-import Loader from '@/components/Loader';
+import React, { useEffect, useState } from "react";
+import { useBatDongSan } from "@/hooks/useBatDongSan";
+import { Input, Textarea } from "@nextui-org/react";
+import { useBaiViet } from "@/hooks/useBaiViet";
+import DialogCustom from "@/components/ui/dialogCustom";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@nextui-org/react";
+import { DienTich } from "@/app/(authenticated)/agency/(components)/(addPost)/DienTich";
+import { SelectDanhMuc } from "./(editPost)/SelectDanhMuc";
+import { GiaBan } from "@/app/(authenticated)/agency/(components)/(addPost)/GiaBan";
+import { FileDialog } from "@/components/ui/FileDialog";
+import { ImageList } from "@/components/ui/ImageList";
+import { generateReactHelpers } from "@uploadthing/react/hooks";
+import { OurFileRouter } from "@/app/api/uploadthing/core";
+import { useQueryClient } from "@tanstack/react-query";
+import { LoaiHinh } from "./(editPost)/LoaiHinh";
+import { GiayToPhapLy } from "./(editPost)/GiayToPhapLy";
+import { CanHoForm } from "./(editPost)/(canho)/CanHoForm";
+import { set } from "date-fns";
+import { useQuery } from "@tanstack/react-query";
+import { parse } from "path";
+import { SelectAddress } from "./(editPost)/SelectAddress";
+import { TieuDe } from "@/app/(authenticated)/agency/(components)/(addPost)/TieuDe";
+import { MoTaChiTiet } from "@/app/(authenticated)/agency/(components)/(addPost)/MoTaChiTiet";
+import Loader from "@/components/Loader";
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
 export const EditForm = ({ id }) => {
   const queryClient = useQueryClient();
-  const { startUpload } = useUploadThing('imageUploader');
+  const { startUpload } = useUploadThing("imageUploader");
   const [isLoaded, setIsLoaded] = React.useState(false);
   const { fetchBatDongSanTheoId } = useBatDongSan();
   // const [chiTietBDS, setChiTietBDS] = useState();
-  const [tieuDe, setTieuDe] = React.useState('');
-  const [moTa, setMoTa] = React.useState('');
-  const [diaChi, setDiaChi] = React.useState('');
+  const [tieuDe, setTieuDe] = React.useState("");
+  const [moTa, setMoTa] = React.useState("");
+  const [diaChi, setDiaChi] = React.useState("");
   const [giaBan, setGiaBan] = React.useState(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [chieuDai, setChieuDai] = React.useState();
@@ -100,7 +100,7 @@ export const EditForm = ({ id }) => {
         startUpload([...productfileArray]).then((res) => {
           const formattedImages = res?.map((image) => ({
             id: image.key,
-            name: image.key.split('_')[1] ?? image.key,
+            name: image.key.split("_")[1] ?? image.key,
             url: image.url,
           }));
           return formattedImages ?? null;
@@ -108,7 +108,7 @@ export const EditForm = ({ id }) => {
         startUpload([...phaplyfileArray]).then((res) => {
           const formattedImages = res?.map((image) => ({
             id: image.key,
-            name: image.key.split('_')[1] ?? image.key,
+            name: image.key.split("_")[1] ?? image.key,
             url: image.url,
           }));
           return formattedImages ?? null;
@@ -116,7 +116,7 @@ export const EditForm = ({ id }) => {
         startUpload([...banVeThietKeArray]).then((res) => {
           const formattedImages = res?.map((image) => ({
             id: image.key,
-            name: image.key.split('_')[1] ?? image.key,
+            name: image.key.split("_")[1] ?? image.key,
             url: image.url,
           }));
           return formattedImages ?? null;
@@ -181,7 +181,7 @@ export const EditForm = ({ id }) => {
           ? JSON.stringify([...danhSachTienNghi])
           : null,
       isChothue: thue,
-      trangThai: 'Chờ duyệt',
+      trangThai: "Chờ duyệt",
       deletedImageProductFiles: deletedImageProductFiles
         ? JSON.stringify([...deletedImageProductFiles])
         : null,
@@ -194,12 +194,12 @@ export const EditForm = ({ id }) => {
     const success = await onUpdateBaiViet(id, baiVietUpdated);
     if (success) {
       setIsSubmitting(true);
-      console.log('Thay đổi thông tin bài viết thành công');
+      console.log("Thay đổi thông tin bài viết thành công");
     }
   };
 
   const { data: chiTietBDS } = useQuery({
-    queryKey: ['chiTietBDS', id],
+    queryKey: ["chiTietBDS", id],
     queryFn: async () => {
       const res = await fetchBatDongSanTheoId(id);
       return res?.[0];
@@ -209,7 +209,7 @@ export const EditForm = ({ id }) => {
   useEffect(() => {
     if (chiTietBDS) {
       console.log(
-        '🚀 ~ file: EditForm.tsx:191 ~ useEffect ~ chiTietBDS:',
+        "🚀 ~ file: EditForm.tsx:191 ~ useEffect ~ chiTietBDS:",
         chiTietBDS
       );
       setDanhMucValue(chiTietBDS?.loaiHinh?.loaiBDS?.name);
@@ -250,7 +250,7 @@ export const EditForm = ({ id }) => {
           <Loader />
         </div>
       ) : (
-        <div className='w-full h-full flex flex-col space-y-6'>
+        <div className="w-full h-full flex flex-col space-y-6">
           <TieuDe tieuDe={tieuDe} setTieuDe={setTieuDe} />
 
           <MoTaChiTiet setMota={MoTaChiTiet} moTa={moTa} />
@@ -287,7 +287,7 @@ export const EditForm = ({ id }) => {
             setPhapLyImageFiles={setPhapLyImageFiles}
             setDeletedImagePhapLyFiles={setDeletedImagePhapLyFiles}
           />
-          {danhMucValue === 'Căn hộ' && (
+          {danhMucValue === "Căn hộ" && (
             <CanHoForm
               setHuongBanCong={setHuongBanCong}
               setHuongCuaChinh={setHuongCuaChinh}
@@ -309,34 +309,35 @@ export const EditForm = ({ id }) => {
               setHoanThanh={setHoanThanh}
               danhSachTienNghi={danhSachTienNghi}
               setDanhSachTienNghi={setDanhSachTienNghi}
-              setDeletedImageBanVeThietKeFiles={setDeletedImageBanVeThietKeFiles}
+              setDeletedImageBanVeThietKeFiles={
+                setDeletedImageBanVeThietKeFiles
+              }
             />
           )}
 
           <GiaBan giaBan={giaBan} setGiaBan={setGiaBan} />
 
-          <div className="flex flex-col gap-y-3 max-w-xs lg:max-w-lg">
-            <div className="font-bold text-sm">Hình ảnh bài viết</div>
+          <div className="flex flex-col gap-y-3 w-full">
+            <div className="font-bold text-sm">{`Hình ảnh bài viết (Tối thiểu 7 hình - Tối đa 20 hình)`}</div>
+            <div className="border-1 border-gray-400 w-full h-64 overflow-hidden rounded-md">
+              {productImageFiles?.length ? (
+                <ImageList
+                  className={"w-full h-64"}
+                  files={productImageFiles}
+                  height={32}
+                  width={32}
+                />
+              ) : null}
+            </div>
             <FileDialog
-              setDeletedImage={setDeletedImageProductFiles}
               name="images"
-              maxFiles={8}
+              maxFiles={20}
               maxSize={1024 * 1024 * 4}
               files={productImageFiles}
               setFiles={setProductImagesFile}
               disabled={false}
             />
-            {productImageFiles?.length ? (
-              <ImageList
-                className={'w-full h-36'}
-                files={productImageFiles}
-                height={32}
-                width={32}
-              />
-            ) : null}
           </div>
-
-
 
           <div className="w-full flex items-center justify-center pt-10">
             <Button

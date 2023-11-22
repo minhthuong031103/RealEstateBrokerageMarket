@@ -24,7 +24,7 @@ export function RealEstateCard({ item }) {
         </div>
         <div className="md:w-5/6 m-3">
           <div className="flex flex-col md:flex-row gap-2">
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row  h-fit my-1 gap-4">
               <div className="text-red-500 text-sm flex flex-row gap-1">
                 {item?.loaiHinh?.loaiBDS?.name === "Căn hộ" ? (
                   <MdApartment className="mt-1" />

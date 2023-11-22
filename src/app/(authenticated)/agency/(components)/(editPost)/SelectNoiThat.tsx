@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { TinhTrangNoiThat, noiThat } from '@/lib/constant';
-import { Select, SelectItem } from '@nextui-org/react';
-import React, { useEffect } from 'react';
-import { DanhSachTienNghi } from './DanhSachTienNghi';
+import { TinhTrangNoiThat, noiThat } from "@/lib/constant";
+import { Select, SelectItem } from "@nextui-org/react";
+import React, { useEffect } from "react";
+import { DanhSachTienNghi } from "./DanhSachTienNghi";
 
 export const SelectNoiThat = ({
   setPhongNgu,
@@ -18,7 +18,7 @@ export const SelectNoiThat = ({
   noiThatValue,
 }) => {
   console.log(
-    '🚀 ~ file: SelectNoiThat.tsx:20 ~ ',
+    "🚀 ~ file: SelectNoiThat.tsx:20 ~ ",
     phongTamValue,
     soTangValue,
     noiThatValue,
@@ -69,24 +69,25 @@ export const SelectNoiThat = ({
   const isNoiThatValid = selectedNoiThat.size > 0;
   const isSoTangValid = selectedSoTang.size > 0;
   return (
-    <div className="flex flex-col gap-y-6 max-w-xs lg:max-w-lg ">
-      <div className="flex flex-col lg:flex-row h-full gap-6 justify-between max-w-xs lg:max-w-lg ">
+    <div className="flex flex-col gap-y-6 w-full ">
+      <div className="flex flex-col lg:flex-row h-full gap-6 justify-between w-full ">
         <Select
-          key={'phongngu'}
-          radius={'md'}
+          key={"phongngu"}
+          radius={"sm"}
+          variant="bordered"
           label="Số phòng ngủ"
           isInvalid={isPhongNguValid || !phongNguTouched ? false : true}
           errorMessage={
             isPhongNguValid || !phongNguTouched
-              ? ''
-              : 'Vui lòng chọn số phòng ngủ'
+              ? ""
+              : "Vui lòng chọn số phòng ngủ"
           }
           autoFocus={false}
           placeholder="Chọn số phòng ngủ"
           selectedKeys={phongNguValue ? [phongNguValue] : []}
           onSelectionChange={setSelectedPhongNgu}
           onClose={() => setPhongNguTouched(true)}
-          // className="w-[48%]"
+          className="w-full"
         >
           {noiThat?.map((noithat) => (
             <SelectItem key={noithat.value} value={noithat.value}>
@@ -96,14 +97,14 @@ export const SelectNoiThat = ({
         </Select>
 
         <Select
-          key={'phongtam'}
-          radius={'md'}
+          key={"phongtam"}
+          radius={"md"}
           label="Số phòng tắm"
           isInvalid={isPhongTamValid || !phongTamTouched ? false : true}
           errorMessage={
             isPhongTamValid || !phongTamTouched
-              ? ''
-              : 'Vui lòng chọn số phòng tắm'
+              ? ""
+              : "Vui lòng chọn số phòng tắm"
           }
           autoFocus={false}
           placeholder="Chọn số phòng tắm"
@@ -120,12 +121,12 @@ export const SelectNoiThat = ({
         </Select>
       </div>
       <Select
-        key={'noithat'}
-        radius={'md'}
+        key={"noithat"}
+        radius={"md"}
         label="Nội thất"
         isInvalid={isNoiThatValid || !noiThatTouched ? false : true}
         errorMessage={
-          isNoiThatValid || !noiThatTouched ? '' : 'Vui lòng chọn nội thất'
+          isNoiThatValid || !noiThatTouched ? "" : "Vui lòng chọn nội thất"
         }
         autoFocus={false}
         placeholder="Chọn nội thất"
@@ -142,12 +143,12 @@ export const SelectNoiThat = ({
       </Select>
 
       <Select
-        key={'sotang'}
-        radius={'md'}
+        key={"sotang"}
+        radius={"md"}
         label="Số tầng"
         isInvalid={isSoTangValid || !soTangTouched ? false : true}
         errorMessage={
-          isSoTangValid || !soTangTouched ? '' : 'Vui lòng chọn số tầng'
+          isSoTangValid || !soTangTouched ? "" : "Vui lòng chọn số tầng"
         }
         autoFocus={false}
         placeholder="Chọn số tầng"

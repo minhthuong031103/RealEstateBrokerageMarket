@@ -1,11 +1,11 @@
-'use client';
-import React, { useState } from 'react';
-import { Chip, Input } from '@nextui-org/react'; // Assuming '@nextui-org/react' has an Input component.
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+"use client";
+import React, { useState } from "react";
+import { Chip, Input } from "@nextui-org/react"; // Assuming '@nextui-org/react' has an Input component.
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 export const DanhSachTienNghi = ({ danhSachTienNghi, setDanhSachTienNghi }) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [removingFruits, setRemovingFruits] = useState([]);
 
   const handleClose = (tienNghiToRemove) => {
@@ -24,7 +24,7 @@ export const DanhSachTienNghi = ({ danhSachTienNghi, setDanhSachTienNghi }) => {
   const handleAddFruit = () => {
     if (inputValue && !danhSachTienNghi.includes(inputValue)) {
       setDanhSachTienNghi((prevFruits) => [...prevFruits, inputValue]);
-      setInputValue('');
+      setInputValue("");
     }
   };
 
@@ -40,12 +40,17 @@ export const DanhSachTienNghi = ({ danhSachTienNghi, setDanhSachTienNghi }) => {
           value={inputValue}
           onChange={handleInputChange}
           placeholder="Thêm các tiện nghi của bất động sản"
+          variant="bordered"
+          radius="sm"
+          label="Tên tiện nghi"
           endContent={
-            <div className="py-3 ">
-              <Button type="button" onClick={handleAddFruit}>
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
+            <Button
+              type="button"
+              className="rounded-full transition ease-in-out hover:scale-115 origin-center hover:rotate-180 w-8 h-8 p-0 border-1 border-red-400 bg-transparent text-red-400 hover:bg-red-400 hover:text-white -mt-4"
+              onClick={handleAddFruit}
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
           }
         />
       </div>
@@ -55,8 +60,8 @@ export const DanhSachTienNghi = ({ danhSachTienNghi, setDanhSachTienNghi }) => {
           <Chip
             className={
               removingFruits.includes(tienNghi)
-                ? 'animate-appearance-out duration-100'
-                : 'animate-appearance-in'
+                ? "animate-appearance-out duration-100"
+                : "animate-appearance-in"
             }
             key={index}
             onClose={() => handleClose(tienNghi)}

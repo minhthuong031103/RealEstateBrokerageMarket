@@ -4,10 +4,13 @@ import React, { useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { useDoiTac } from "@/hooks/useDoiTac";
 import { useQuery } from "@tanstack/react-query";
-import { Skeleton } from "@nextui-org/react";
+import { Chip, Skeleton } from "@nextui-org/react";
 import { MdOutlineEmail, MdPermIdentity } from "react-icons/md";
 import { IoIosPhonePortrait } from "react-icons/io";
 import { CiLocationOn } from "react-icons/ci";
+import { Zoom } from "@/components/ui/zoom-image";
+import { convertPrismaTimeToDateTime } from "@/lib/utils";
+import { CheckIcon, X } from "lucide-react";
 
 function AgencyInfo({ session }) {
   const [isLoaded, setIsLoaded] = React.useState(false);
@@ -78,23 +81,103 @@ function AgencyInfo({ session }) {
           </div>
         </Card>
       </Skeleton>
+      <h1 className="text-xl font-medium mt-3">Thông tin kinh doanh</h1>
       <Skeleton isLoaded={isLoaded} className="rounded-lg mt-4">
-        <Card className="bg-white p-4 rounded-lg shadow-md relative mt-4">
-          <h1 className="text-xl font-semibold">Số lượt đăng bài đang có</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div>
-              <h2 className="font-semibold">Tổng số lượt</h2>
+        <Card className="bg-white p-4 rounded-lg shadow-md relative">
+          <h1 className="text-base font-medium">
+            Giấy tờ cá nhân / đại diện tổ chức
+          </h1>
+          <div className="flex flex-col md:flex-row gap-3">
+            <div className="flex flex-col gap-y-3 basis-1 md:basis-1/4">
+              <div className="font-bold text-sm">Giấy phép kinh doanh</div>
+              <div className="w-full flex justify-start">
+                <Zoom>
+                  <img
+                    className={"w-28 h-36 rounded-md border-1 border-gray-400"}
+                    src={userInfo?.anhGiayPhepKinhDoanh}
+                  />
+                </Zoom>
+              </div>
+            </div>
+            <div className="flex flex-col gap-y-3 basis-1 md:basis-1/4">
+              <div className="font-bold text-sm">Ảnh chân dung</div>
+              <div className="w-full flex justify-start">
+                <Zoom>
+                  <img
+                    className={"w-28 h-36 rounded-md border-1 border-gray-400"}
+                    src={userInfo?.anhChanDung}
+                  />
+                </Zoom>
+              </div>
+            </div>
+            <div className="flex flex-col gap-y-3 basis-1 md:basis-1/4">
+              <div className="font-bold text-sm">Hình ảnh CCCD mặt trước</div>
+              <div className="w-full flex justify-start">
+                <Zoom>
+                  <img
+                    className={"w-56 h-36 rounded-md border-1 border-gray-400"}
+                    src={userInfo?.anhCCCDTruoc}
+                  />
+                </Zoom>
+              </div>
+            </div>
+            <div className="flex flex-col gap-y-3 basis-1 md:basis-1/4">
+              <div className="font-bold text-sm">Hình ảnh CCCD mặt sau</div>
+              <div className="w-full flex justify-start">
+                <Zoom>
+                  <img
+                    className={"w-56 h-36 rounded-md border-1 border-gray-400"}
+                    src={userInfo?.anhCCCDSau}
+                  />
+                </Zoom>
+              </div>
+            </div>
+          </div>
+          <h1 className="text-base font-medium mt-6">
+            Thông tin dịch vụ hiện tại
+          </h1>
+          <div className="flex flex-row flex-wrap gap-4 mt-1">
+            <div className="flex flex-row gap-2">
+              <h2 className="font-bold text-sm">Tổng số lượt</h2>
               <p>{userInfo?.luot}</p>
             </div>
-            <div>
-              <h2 className="font-semibold">Lượt chuyên nghiệp</h2>
+            <div className="flex flex-row gap-2">
+              <h2 className="font-bold text-sm">Lượt chuyên nghiệp</h2>
               <p>{userInfo?.luotChuyenNghiep}</p>
             </div>
-            <div>
-              <h2 className="font-semibold">Lượt VIP</h2>
+            <div className="flex flex-row gap-2">
+              <h2 className="font-bold text-sm">Lượt VIP</h2>
               <p>{userInfo?.luotVip}</p>
             </div>
           </div>
+          {userInfo?.stripeCurrentPeriodEnd ? (
+            <div className="flex flex-row gap-2 mt-2">
+              <h2 className="font-bold text-sm">
+                Thời gian kết thúc gói đăng ký:
+              </h2>
+              <p>
+                {convertPrismaTimeToDateTime(userInfo?.stripeCurrentPeriodEnd)}
+              </p>
+              {new Date(userInfo?.stripeCurrentPeriodEnd).getTime() <
+              new Date().getTime() ? (
+                <Chip
+                  color="success"
+                  variant="bordered"
+                  startContent={<CheckIcon size={18} />}
+                >
+                  Đang kích hoạt
+                </Chip>
+              ) : (
+                <Chip
+                  color="default"
+                  variant="bordered"
+                  startContent={<X size={18} />}
+                >
+                  Hết hạn
+                </Chip>
+              )}
+            </div>
+          ) : null}
         </Card>
       </Skeleton>
     </div>
