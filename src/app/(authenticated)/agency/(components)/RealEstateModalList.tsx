@@ -62,7 +62,7 @@ export const RealEstateModalList = ({ id }) => {
       </Button>
       {openComplete ? (
         <DialogCustom
-          className="w-full lg:w-[30%] h-[30%] lg:h-[95%] flex items-center justify-center"
+          className="w-full lg:w-[30%] h-[26%] flex items-center justify-center"
           setIsModalOpen={setOpenComplete}
           isModalOpen={openComplete}
           warningOnClose={true}
