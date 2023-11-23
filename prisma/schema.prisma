@@ -96,6 +96,7 @@ model LoaiHinh {
   name      String    @unique
   loaiBDSId Int
   createdAt DateTime  @default(now())
+  visible   Boolean   @default(true)
   loaiBDS   LoaiBDS   @relation(fields: [loaiBDSId], references: [id])
   baiViets  BaiViet[]
 

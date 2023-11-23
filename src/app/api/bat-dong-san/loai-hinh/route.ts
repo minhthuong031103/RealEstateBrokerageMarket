@@ -12,6 +12,7 @@ export async function POST(req: Request) {
   const loaiHinh = await prisma.loaiHinh.findMany({
     where: {
       loaiBDSId: danhMuc?.id,
+      visible: true
     },
   });
 
