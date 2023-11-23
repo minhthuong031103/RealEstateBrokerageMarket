@@ -9,11 +9,9 @@ import { useQuery } from "@tanstack/react-query";
 import { ThongTinForm } from "./(edit)/ThongTinForm";
 
 function AgencyImageAndName({ session }) {
-  const [loaiDoiTac, setLoaiDoiTacValue] = React.useState();
+  const [loaiDoiTac, setLoaiDoiTacValue] = React.useState("");
   const [isOpen, setOpen] = React.useState(false);
   const { fetchDoiTacTheoId } = useDoiTac();
-  const [giayPhepKinhDoanhImageFiles, setGiayPhepKinhDoanhImageFiles] =
-    React.useState([]);
 
   const { data: userInfo } = useQuery({
     queryKey: ["userInfo", session?.user?.id],
@@ -25,9 +23,7 @@ function AgencyImageAndName({ session }) {
 
   useEffect(() => {
     if (userInfo) {
-      if (userInfo?.giayPhepKinhDoanh != undefined) {
-        setGiayPhepKinhDoanhImageFiles(JSON.parse(userInfo!.giayPhepKinhDoanh));
-        console.log(giayPhepKinhDoanhImageFiles);
+      if (userInfo?.giayPhepKinhDoanh !== undefined) {
         setLoaiDoiTacValue("doanhnghiep");
       } else {
         setLoaiDoiTacValue("canhan");

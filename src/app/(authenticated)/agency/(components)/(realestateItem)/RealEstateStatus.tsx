@@ -1,13 +1,15 @@
 import React from "react";
-import { CheckCircledIcon, LockClosedIcon } from "@radix-ui/react-icons";
-import { BiXCircle } from "react-icons/bi";
+import { TiLockClosed } from "react-icons/ti";
+import { FaRegClock } from "react-icons/fa";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { PiXCircleBold } from "react-icons/pi";
 
 export const RealEstateStatus = ({ trangthai }) => {
   const statusIconMapping = {
-    "Đã duyệt": <CheckCircledIcon className="mr-2" />,
-    "Đã khóa": <LockClosedIcon className="mr-2" />,
-    "Chờ duyệt": <LockClosedIcon className="mr-2" />,
-    "Không duyệt": <BiXCircle className="mr-2" />,
+    "Đã duyệt": <IoMdCheckmarkCircleOutline className="mr-2 font-semibold" />,
+    "Đã khóa": <TiLockClosed className="mr-2 font-semibold" />,
+    "Chờ duyệt": <FaRegClock className="mr-2 font-semibold" />,
+    "Không duyệt": <PiXCircleBold className="mr-2 font-semibold" />,
   };
 
   const icon = statusIconMapping[trangthai];
@@ -35,7 +37,7 @@ export const RealEstateStatus = ({ trangthai }) => {
       {icon && (
         <div className={`flex items-center mt-3 ml-4 ${textColorClass}`}>
           {icon}
-          <p className="font-medium">{statusText}</p>
+          <p className="font-semibold text-sm">{statusText}</p>
         </div>
       )}
     </div>

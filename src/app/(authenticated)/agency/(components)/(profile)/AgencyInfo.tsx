@@ -87,8 +87,8 @@ function AgencyInfo({ session }) {
           <h1 className="text-base font-medium">
             Giấy tờ cá nhân / đại diện tổ chức
           </h1>
-          <div className="flex flex-col md:flex-row gap-3">
-            <div className="flex flex-col gap-y-3 basis-1 md:basis-1/4">
+          <div className="flex flex-row flex-wrap gap-10 justify-center md:justify-start">
+            <div className="flex flex-col gap-y-3">
               <div className="font-bold text-sm">Giấy phép kinh doanh</div>
               <div className="w-full flex justify-start">
                 <Zoom>
@@ -99,7 +99,7 @@ function AgencyInfo({ session }) {
                 </Zoom>
               </div>
             </div>
-            <div className="flex flex-col gap-y-3 basis-1 md:basis-1/4">
+            <div className="flex flex-col gap-y-3">
               <div className="font-bold text-sm">Ảnh chân dung</div>
               <div className="w-full flex justify-start">
                 <Zoom>
@@ -110,7 +110,7 @@ function AgencyInfo({ session }) {
                 </Zoom>
               </div>
             </div>
-            <div className="flex flex-col gap-y-3 basis-1 md:basis-1/4">
+            <div className="flex flex-col gap-y-3">
               <div className="font-bold text-sm">Hình ảnh CCCD mặt trước</div>
               <div className="w-full flex justify-start">
                 <Zoom>
@@ -121,7 +121,7 @@ function AgencyInfo({ session }) {
                 </Zoom>
               </div>
             </div>
-            <div className="flex flex-col gap-y-3 basis-1 md:basis-1/4">
+            <div className="flex flex-col gap-y-3">
               <div className="font-bold text-sm">Hình ảnh CCCD mặt sau</div>
               <div className="w-full flex justify-start">
                 <Zoom>
