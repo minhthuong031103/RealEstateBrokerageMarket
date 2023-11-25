@@ -1,28 +1,28 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-'use client';
-import { Separator } from '@/components/ui/separator';
-import { useBatDongSan } from '@/hooks/useBatDongSan';
-import { parseJSON } from '@/lib/utils';
-import React, { useEffect, useState } from 'react';
-import { BiSolidArrowFromBottom } from 'react-icons/bi';
-import { BsCheck2 } from 'react-icons/bs';
-import { ContactInfo } from './ContactInfo';
-import { ImagePost } from './ImagePost';
+"use client";
+import { Separator } from "@/components/ui/separator";
+import { useBatDongSan } from "@/hooks/useBatDongSan";
+import { parseJSON } from "@/lib/utils";
+import React, { useEffect, useState } from "react";
+import { BiSolidArrowFromBottom } from "react-icons/bi";
+import { BsCheck2 } from "react-icons/bs";
+import { ContactInfo } from "./ContactInfo";
+import { ImagePost } from "./ImagePost";
 // import { LikeShareGroup } from "./LikeShareGroup";
-import MapComponent from './MapComponent';
-import { useQuery } from '@tanstack/react-query';
-import { getRequest } from '@/lib/fetch';
-import Loader from '@/components/Loader';
-import { useRouter } from 'next/navigation'
+import MapComponent from "./MapComponent";
+import { useQuery } from "@tanstack/react-query";
+import { getRequest } from "@/lib/fetch";
+import Loader from "@/components/Loader";
+import { useRouter } from "next/navigation";
 
 const CURRENCY_FORMAT = new Intl.NumberFormat(undefined, {
-  currency: 'VND',
-  style: 'currency',
+  currency: "VND",
+  style: "currency",
 });
 
 async function getLatLonForCity(location: string) {
   const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-    location + ', Vietnam'
+    location + ", Vietnam"
   )}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
   const geocodeResponse = await fetch(geocodeUrl);
   const geocodeData = await geocodeResponse.json();
@@ -44,14 +44,13 @@ export function ChiTietComponent({ id }) {
   const router = useRouter();
 
   const { data: chiTietBDS } = useQuery({
-    queryKey: ['chiTietBDS', id],
+    queryKey: ["chiTietBDS", id],
     queryFn: async () => {
       const res = await fetchBatDongSanTheoId(id);
       setIsLoaded(true);
       return res?.[0];
     },
   });
-
 
   const [toaDo, setToaDo] = useState<ToaDoDiaChi>();
 
@@ -99,14 +98,14 @@ export function ChiTietComponent({ id }) {
                   <div className="flex flex-row flex-wrap gap-4">
                     <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
                       {chiTietBDS?.isChothue === false
-                        ? 'Đăng bán'
-                        : 'Cho thuê'}
+                        ? "Đăng bán"
+                        : "Cho thuê"}
                     </div>
                     <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
                       {chiTietBDS?.loaiHinh?.name}
                     </div>
-                    {chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Căn hộ' ||
-                      chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Nhà ở' ? (
+                    {chiTietBDS?.loaiHinh?.loaiBDS?.name === "Căn hộ" ||
+                    chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
                       <>
                         <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
                           Nhà tắm: {chiTietBDS?.soPhongTam}
@@ -153,15 +152,15 @@ export function ChiTietComponent({ id }) {
                         {chiTietBDS?.dienTich} m<sup>2</sup>
                       </div>
                     </div>
-                    {chiTietBDS?.loaiHinh?.loaiBDS?.name !== 'Đất' ? (
+                    {chiTietBDS?.loaiHinh?.loaiBDS?.name !== "Đất" ? (
                       <>
                         <div className="flex flex-row">
                           <div className="w-1/2">Năm hoàn thành:</div>
                           <div className="w-1/2 font-semibold">
                             {
                               new Date(chiTietBDS?.hoanThanh)
-                                .toLocaleDateString('en-GB')
-                                .split('/')[2]
+                                .toLocaleDateString("en-GB")
+                                .split("/")[2]
                             }
                           </div>
                         </div>
@@ -186,7 +185,7 @@ export function ChiTietComponent({ id }) {
                         </div>
                       </div>
                     )}
-                    {chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Căn hộ' ? (
+                    {chiTietBDS?.loaiHinh?.loaiBDS?.name === "Căn hộ" ? (
                       <>
                         <div className="flex flex-row">
                           <div className="w-1/2">Hướng ban công:</div>
@@ -213,7 +212,7 @@ export function ChiTietComponent({ id }) {
                           </div>
                         </div>
                       </>
-                    ) : chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Nhà ở' ? (
+                    ) : chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
                       <>
                         <div className="flex flex-row">
                           <div className="w-1/2">Phòng tắm:</div>
@@ -251,7 +250,7 @@ export function ChiTietComponent({ id }) {
                     </div>
                   </div>
                 </div>
-                {chiTietBDS?.loaiHinh?.loaiBDS?.name !== 'Đất' ? (
+                {chiTietBDS?.loaiHinh?.loaiBDS?.name !== "Đất" ? (
                   <div className="mt-8 mb-8 w-full rounded-md bg-white border-[1px] shadow p-8">
                     <div className="text-gray-600 font-semibold">Tiện nghi</div>
                     <div className="mt-4 lg:w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-600 text-[14px]">
@@ -285,7 +284,7 @@ export function ChiTietComponent({ id }) {
                   <img
                     src={chiTietBDS?.hinhAnhBanVeThietKe}
                     className="mt-8 w-full rounded-md h-[360px] md:h-[540px] lg:h-[630px]"
-                    style={{ objectFit: 'cover' }}
+                    style={{ objectFit: "cover" }}
                   />
                 </div>
                 <div className="mt-8 mb-8 w-full rounded-md bg-white border-[1px] shadow p-8">
@@ -299,13 +298,16 @@ export function ChiTietComponent({ id }) {
               /> */}
                   <iframe
                     className="mt-8 rounded-md w-full h-[270px] md:h-[450px] lg:h-[540px]"
-                    style={{ objectFit: 'cover' }}
+                    style={{ objectFit: "cover" }}
                     src="https://www.youtube.com/embed/KudedLV0tP0"
                   ></iframe>
                 </div>
               </div>
               <div className="basis-1/4 h-fit lg:mt-8 mt-0 mb-8">
-                <ContactInfo doiTacInfo={chiTietBDS?.user} />
+                <ContactInfo
+                  doiTacInfo={chiTietBDS?.user}
+                  nhan={chiTietBDS?.nhan}
+                />
               </div>
             </div>
 

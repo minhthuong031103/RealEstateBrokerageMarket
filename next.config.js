@@ -30,22 +30,6 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'static.nike.com',
-                port: '',
-
-            },
-            {
-                protocol: 'https',
-                hostname: 'freight.cargo.site',
-                port: '',
-            }, {
-                protocol: 'https',
-                hostname: 'media.about.nike.com',
-                port: '',
-            }
-            ,
-            {
-                protocol: 'https',
                 hostname: 'images.lifestyleasia.com',
                 port: '',
             }
@@ -71,6 +55,11 @@ const nextConfig = {
                 port: ''
             },
             {
+                protocol: 'http',
+                hostname: 'res.cloudinary.com',
+                port: ''
+            },
+            {
                 protocol: 'https',
                 hostname: 'res.cloudinary.com',
                 port: ''
@@ -79,7 +68,18 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'upload.wikimedia.org',
                 port: ''
-            }
+            },
+            {
+                protocol: 'https',
+                hostname: 'upload.wikimedia.org',
+                port: ''
+            },
+            {
+                protocol: 'https',
+                hostname: 'upload.wikimedia.org',
+                port: ''
+            },
+            
         ],
     },
 }

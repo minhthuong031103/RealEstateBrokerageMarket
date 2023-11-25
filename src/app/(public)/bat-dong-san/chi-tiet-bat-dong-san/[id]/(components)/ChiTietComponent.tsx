@@ -306,7 +306,10 @@ export function ChiTietComponent({ id }) {
                 </div>
               </div>
               <div className="basis-1/4 h-fit lg:mt-8 mt-0 mb-8">
-                <ContactInfo doiTacInfo={chiTietBDS?.user} />
+                <ContactInfo
+                  doiTacInfo={chiTietBDS?.user}
+                  nhan={chiTietBDS?.nhan}
+                />
               </div>
             </div>
 

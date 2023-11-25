@@ -1,11 +1,11 @@
-import { Chip, Textarea } from '@nextui-org/react';
-import React from 'react';
-import { Label } from '@/components/ui/label';
-import { Card, CardBody } from '@nextui-org/react';
+import { Chip, Textarea } from "@nextui-org/react";
+import React from "react";
+import { Label } from "@/components/ui/label";
+import { Card, CardBody } from "@nextui-org/react";
 
 export const TieuDe = ({ tieuDe, setTieuDe }) => {
   return (
-    <div className="flex flex-col gap-3 max-w-xs lg:max-w-2xl ">
+    <div className="flex flex-col gap-3 w-full">
       <Label className="font-bold text-sm">
         Tiêu đề <span className="text-red-500">*</span>
       </Label>
@@ -24,10 +24,11 @@ export const TieuDe = ({ tieuDe, setTieuDe }) => {
       </Card>
 
       <Textarea
-        isInvalid={tieuDe !== '' ? false : true}
-        errorMessage={`${tieuDe !== '' ? '' : 'Vui lòng nhập tiêu đề'}`}
+        isInvalid={tieuDe !== "" ? false : true}
+        errorMessage={`${tieuDe !== "" ? "" : "Vui lòng nhập tiêu đề"}`}
         variant="bordered"
-        className="max-w-xs lg:max-w-2xl "
+        className="w-full"
+        radius="sm"
         minRows={2}
         maxRows={2}
         value={tieuDe}

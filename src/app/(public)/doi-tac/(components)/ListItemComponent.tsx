@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { AiOutlinePhone } from "react-icons/ai";
-import { IoLocationOutline } from "react-icons/io5";
+import { IoLocationOutline, IoStorefrontOutline } from "react-icons/io5";
 import { HiOutlineMail } from "react-icons/hi";
 
 const CURRENCY_FORMAT = new Intl.NumberFormat(undefined, {
@@ -32,7 +32,10 @@ export function ListItemComponent({ item }) {
           </div>
           <div className="mt-6 space-y-2 mb-6">
             <div className="font-medium text-[20px]">{item?.name}</div>
-            <div className="text-red-400 text-sm">Cá nhân hoặc công ty</div>
+            <div className="text-red-400 flex flex-row gap-2 text-sm">
+              <IoStorefrontOutline />
+              {item?.anhGiayPhepKinhDoanh ? "Doanh nghiệp" : "Cá nhân"}
+            </div>
             <div className="flex flex-row gap-2 text-sm mt-1">
               <IoLocationOutline className="text-[24px]" />
               {item?.diaChi}

@@ -13,7 +13,7 @@ function BatDongSanKhuVuc() {
       aria-labelledby="categories-heading"
       className="space-y-2  py-6 md:pt-10 px-10"
     >
-      <div className="flex max-w-[58rem] flex-col items-start space-y-2 text-center">
+      <div className="flex max-w-[58rem] mb-10 flex-col items-start space-y-2 text-center">
         <h2 className="text-xl font-bold leading-[1.1] sm:text-3xl md:text-2xl">
           Bất động sản theo khu vực
         </h2>

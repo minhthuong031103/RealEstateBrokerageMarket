@@ -1,15 +1,14 @@
-'use client';
+"use client";
 
-import React from 'react'
-import { useState } from 'react';
-import { RealEstateCard } from './RealEstateCard';
+import React from "react";
+import { useState } from "react";
+import { RealEstateCard } from "./RealEstateCard";
 // import { useBaiVietDoiTac } from '@/hooks/useBaiVietDoiTac';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 import { useBatDongSan } from "@/hooks/useBatDongSan";
-import { searchType } from './RealEstateListLayout';
+import { searchType } from "./RealEstateListLayout";
 import { Pagination } from "@nextui-org/react";
-import Loader from '@/components/Loader';
-
+import Loader from "@/components/Loader";
 
 type props = {
   searchProps: searchType | unknown;
@@ -26,15 +25,15 @@ function ListItemRealEstate({ searchProps, id }: props) {
       ["props", searchProps],
       ["iduser", id],
     ],
-    queryFn: () => fetchAllBatDongSanCuaDoiTacTatCaTrangThai(currentPage, searchProps, id),
+    queryFn: () =>
+      fetchAllBatDongSanCuaDoiTacTatCaTrangThai(currentPage, searchProps, id),
     staleTime: 60 * 1000 * 1,
     keepPreviousData: true,
     onSuccess: () => {
       setIsLoaded(true);
-    }
+    },
   });
   const ref = React.useRef(null);
-
 
   const onPageChange = (page) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -74,4 +73,4 @@ function ListItemRealEstate({ searchProps, id }: props) {
   );
 }
 
-export default ListItemRealEstate
+export default ListItemRealEstate;

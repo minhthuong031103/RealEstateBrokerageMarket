@@ -5,7 +5,8 @@ export async function POST(req: Request) {
   if (typeof body.id == 'number' && typeof body.newStatus == 'string') {
     await prisma.user.update({ 
         where: { id: parseInt(body.id) },
-        data: {duyetDoiTac: body.newStatus}
+        data: {duyetDoiTac: body.newStatus,
+        role: 'doi_tac'}
      });
      return new Response(JSON.stringify(await prisma.user.findFirst({where: {id: body.id}})));
   }

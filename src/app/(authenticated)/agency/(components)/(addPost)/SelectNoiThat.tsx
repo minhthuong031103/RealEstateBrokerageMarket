@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-'use client';
+"use client";
 
-import { TinhTrangNoiThat, noiThat } from '@/lib/constant';
-import { Select, SelectItem } from '@nextui-org/react';
-import React, { useEffect } from 'react';
-import { DanhSachTienNghi } from './DanhSachTienNghi';
+import { TinhTrangNoiThat, noiThat } from "@/lib/constant";
+import { Select, SelectItem } from "@nextui-org/react";
+import React, { useEffect } from "react";
+import { IoBedOutline } from "react-icons/io5";
+import { PiBathtubLight } from "react-icons/pi";
+import { TbWashMachine } from "react-icons/tb";
+import { DanhSachTienNghi } from "./DanhSachTienNghi";
+import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 
 interface SelectNoiThatProps {
   setPhongNgu: (value: string) => void;
@@ -71,24 +75,26 @@ export const SelectNoiThat = ({
   const isNoiThatValid = selectedNoiThat.size > 0;
   const isSoTangValid = selectedSoTang.size > 0;
   return (
-    <div className="flex flex-col gap-y-6 max-w-xs lg:max-w-lg ">
-      <div className="flex flex-col lg:flex-row h-full gap-6 justify-between max-w-xs lg:max-w-lg ">
+    <div className="flex flex-col gap-y-6 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 h-full gap-6 justify-between w-full">
         <Select
-          key={'phongngu'}
-          radius={'md'}
+          key={"phongngu"}
+          radius={"sm"}
+          variant="bordered"
           label="Số phòng ngủ"
           isInvalid={isPhongNguValid || !phongNguTouched ? false : true}
           errorMessage={
             isPhongNguValid || !phongNguTouched
-              ? ''
-              : 'Vui lòng chọn số phòng ngủ'
+              ? ""
+              : "Vui lòng chọn số phòng ngủ"
           }
           autoFocus={false}
           placeholder="Chọn số phòng ngủ"
           selectedKeys={selectedPhongNgu}
           onSelectionChange={setSelectedPhongNgu}
           onClose={() => setPhongNguTouched(true)}
-          // className="w-[48%]"
+          className="w-full"
+          startContent={<IoBedOutline className="w-3 h-3" />}
         >
           {noiThat?.map((noithat) => (
             <SelectItem key={noithat.value} value={noithat.value}>
@@ -98,21 +104,23 @@ export const SelectNoiThat = ({
         </Select>
 
         <Select
-          key={'phongtam'}
-          radius={'md'}
+          key={"phongtam"}
+          radius={"sm"}
+          variant="bordered"
           label="Số phòng tắm"
           isInvalid={isPhongTamValid || !phongTamTouched ? false : true}
           errorMessage={
             isPhongTamValid || !phongTamTouched
-              ? ''
-              : 'Vui lòng chọn số phòng tắm'
+              ? ""
+              : "Vui lòng chọn số phòng tắm"
           }
           autoFocus={false}
           placeholder="Chọn số phòng tắm"
           selectedKeys={selectedPhongTam}
           onSelectionChange={setSelectedPhongTam}
           onClose={() => setPhongTamTouched(true)}
-          // className="w-[48%]"
+          className="w-full"
+          startContent={<PiBathtubLight className="w-3 h-3" />}
         >
           {noiThat?.map((noithat) => (
             <SelectItem key={noithat.value} value={noithat.value}>
@@ -122,19 +130,21 @@ export const SelectNoiThat = ({
         </Select>
       </div>
       <Select
-        key={'noithat'}
-        radius={'md'}
+        key={"noithat"}
+        radius={"sm"}
+        variant="bordered"
         label="Nội thất"
         isInvalid={isNoiThatValid || !noiThatTouched ? false : true}
         errorMessage={
-          isNoiThatValid || !noiThatTouched ? '' : 'Vui lòng chọn nội thất'
+          isNoiThatValid || !noiThatTouched ? "" : "Vui lòng chọn nội thất"
         }
         autoFocus={false}
         placeholder="Chọn nội thất"
         selectedKeys={selectedNoiThat}
         onSelectionChange={setSelectedNoiThat}
         onClose={() => setNoiThatTouched(true)}
-        className="max-w-xs lg:max-w-lg"
+        className="w-full"
+        startContent={<TbWashMachine className="w-3 h-3" />}
       >
         {TinhTrangNoiThat?.map((noithat) => (
           <SelectItem key={noithat.name} value={noithat.value}>
@@ -144,19 +154,21 @@ export const SelectNoiThat = ({
       </Select>
 
       <Select
-        key={'sotang'}
-        radius={'md'}
+        key={"sotang"}
+        radius={"sm"}
+        variant="bordered"
         label="Số tầng"
         isInvalid={isSoTangValid || !soTangTouched ? false : true}
         errorMessage={
-          isSoTangValid || !soTangTouched ? '' : 'Vui lòng chọn số tầng'
+          isSoTangValid || !soTangTouched ? "" : "Vui lòng chọn số tầng"
         }
         autoFocus={false}
         placeholder="Chọn số tầng"
         selectedKeys={selectedSoTang}
         onSelectionChange={setSelectedSoTang}
         onClose={() => setSoTangTouched(true)}
-        className="max-w-xs lg:max-w-lg"
+        className="w-full"
+        startContent={<HiOutlineBuildingOffice2 className="w-3 h-3" />}
       >
         {noiThat?.map((noithat) => (
           <SelectItem key={noithat.value} value={noithat.value}>

@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import React from 'react';
-import DialogCustom from '@/components/ui/dialogCustom';
+import { Button } from "@/components/ui/button";
+import React from "react";
+import DialogCustom from "@/components/ui/dialogCustom";
 // import { Label } from '@/components/ui/label';
-import { SelectDanhMuc } from './SelectDanhMuc';
-import { BaiVietForm } from './(addPost)/BaiVietForm';
+import { SelectDanhMuc } from "./SelectDanhMuc";
+import { BaiVietForm } from "./(addPost)/BaiVietForm";
 // import * as z from 'zod';
-import { useSession } from 'next-auth/react';
-import { MuaLeModal } from '../goi-dich-vu/MuaLeModal';
-import { useAuth } from '@/hooks/useAuth';
-import { PlusIcon } from '@radix-ui/react-icons';
+import { useSession } from "next-auth/react";
+import { MuaLeModal } from "../goi-dich-vu/MuaLeModal";
+import { useAuth } from "@/hooks/useAuth";
+import { PlusIcon } from "@radix-ui/react-icons";
 // const formSchema = z.object({});
 export const AddPostModal = () => {
   const [open, setOpen] = React.useState(false);
@@ -29,8 +29,9 @@ export const AddPostModal = () => {
         onClick={() => {
           setOpen(true);
         }}
+        className="w-full"
       >
-        <PlusIcon className='mr-2'/>
+        <PlusIcon className="mr-2" />
         Đăng tin bất động sản
       </Button>
 
@@ -56,8 +57,11 @@ export const AddPostModal = () => {
             <div className="w-full h-full">
               <div className=" mb-3 sm:max-w-lg ">
                 <p>
-                  Bạn hiện có{' '}
-                  <span className="font-bold text-red-500"> {user?.luot}</span>{' '}
+                  Bạn hiện có{" "}
+                  <span className="font-semibold text-red-500">
+                    {" "}
+                    {user?.luot}
+                  </span>{" "}
                   lượt đăng bài viết.
                 </p>
               </div>
@@ -86,7 +90,7 @@ export const AddPostModal = () => {
               </>
             ) : (
               <>
-                <div className="font-bol text-sm text-red-500">
+                <div className="font-bol text-sm text-red-400">
                   Bạn đã hết lượt đăng bài viết, vui lòng mua thêm lượt.
                 </div>
                 <div className="w-full flex flex-col items-center justify-center">
@@ -94,7 +98,7 @@ export const AddPostModal = () => {
                     onClick={() => {
                       setIsMuaLeModalOpen(true);
                     }}
-                    className="w-[60%]"
+                    className="w-full border-2 font-semibold border-red-400 text-red-400 bg-transparent hover:bg-red-400 hover:text-white"
                   >
                     Mua ngay
                   </Button>

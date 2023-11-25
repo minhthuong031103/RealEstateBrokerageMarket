@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import { Huong } from '@/lib/constant';
-import { Select, SelectItem } from '@nextui-org/react';
-import React, { useEffect } from 'react';
+import { Huong } from "@/lib/constant";
+import { Select, SelectItem } from "@nextui-org/react";
+import React, { useEffect } from "react";
+import { BsCompass } from "react-icons/bs";
 
 export const HuongCanHo = ({ setHuongCuaChinh, setHuongBanCong }) => {
   const [selectedHuongBanCong, setSelectedHuongBanCong] = React.useState(
@@ -33,23 +34,25 @@ export const HuongCanHo = ({ setHuongCuaChinh, setHuongBanCong }) => {
   const isBanCongValid = selectedHuongBanCong.size > 0;
 
   return (
-    <div className="flex flex-col lg:flex-row h-full gap-6 justify-between max-w-xs lg:max-w-lg ">
+    <div className="grid grid-cols-1 md:grid-cols-2 h-full gap-6 justify-between w-full">
       <Select
-        key={'banCong'}
-        radius={'md'}
+        key={"banCong"}
+        radius={"sm"}
+        variant="bordered"
         label="Hướng ban công"
         isInvalid={isBanCongValid || !banCongTouched ? false : true}
         errorMessage={
           isBanCongValid || !banCongTouched
-            ? ''
-            : 'Vui lòng chọn hướng ban công'
+            ? ""
+            : "Vui lòng chọn hướng ban công"
         }
         autoFocus={false}
         placeholder="Chọn hướng ban công"
         selectedKeys={selectedHuongBanCong}
         onSelectionChange={setSelectedHuongBanCong}
         onClose={() => setBanCongTouched(true)}
-        // className="w-[48%]"
+        className="w-full"
+        startContent={<BsCompass className="w-3 h-3" />}
       >
         {Huong?.map((noithat) => (
           <SelectItem key={noithat.value} value={noithat.value}>
@@ -59,21 +62,23 @@ export const HuongCanHo = ({ setHuongCuaChinh, setHuongBanCong }) => {
       </Select>
 
       <Select
-        key={'cuaChinh'}
-        radius={'md'}
+        key={"cuaChinh"}
+        radius={"sm"}
+        variant="bordered"
         label="Hướng cửa chính"
         isInvalid={isCuaChinhValid || !cuaChinhTouched ? false : true}
         errorMessage={
           isCuaChinhValid || !cuaChinhTouched
-            ? ''
-            : 'Vui lòng chọn hướng cửa chính'
+            ? ""
+            : "Vui lòng chọn hướng cửa chính"
         }
         autoFocus={false}
         placeholder="Chọn hướng cửa chính"
         selectedKeys={selectedHuongCuaChinh}
         onSelectionChange={setSelectedHuongCuaChinh}
         onClose={() => setCuaChinhTouched(true)}
-        // className="w-[48%]"
+        className="w-full"
+        startContent={<BsCompass className="w-3 h-3" />}
       >
         {Huong?.map((noithat) => (
           <SelectItem key={noithat.value} value={noithat.value}>

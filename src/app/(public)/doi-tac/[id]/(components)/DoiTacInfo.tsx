@@ -4,7 +4,7 @@ import { useDoiTac } from "@/hooks/useDoiTac";
 import { useEffect, useState } from "react";
 import { AiOutlinePhone } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
-import { IoLocationOutline } from "react-icons/io5";
+import { IoLocationOutline, IoStorefrontOutline } from "react-icons/io5";
 export const DoiTacInfo = ({ id }) => {
   const [doiTacInformation, setDoiTacInformation] = useState();
   const { fetchDoiTacTheoId } = useDoiTac();
@@ -29,6 +29,12 @@ export const DoiTacInfo = ({ id }) => {
             {doiTacInformation?.name}
           </div>
           <div className="text-[14px] mt-2">
+            <div className="flex flex-row gap-2 text-red-400">
+              <IoStorefrontOutline className="py-auto" />
+              {doiTacInformation?.anhGiayPhepKinhDoanh
+                ? "Doanh nghiệp"
+                : "Cá nhân"}
+            </div>
             <div className="flex flex-row gap-2 w-full">
               <AiOutlinePhone className="py-auto" />
               {doiTacInformation?.phoneNumber}

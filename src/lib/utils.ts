@@ -110,3 +110,10 @@ export const getImageKey = (url) => {
   const filename = url.split('/').pop();
   return filename;
 };
+export function convertPrismaTimeToDateTime(type) {
+  const time = new Date(type).toLocaleDateString("en-GB").split("/");
+  const year = parseInt(time[2]);
+  const month = parseInt(time[1]);
+  const day = parseInt(time[0]);
+  return day + "-" + month+"-"+year;
+}

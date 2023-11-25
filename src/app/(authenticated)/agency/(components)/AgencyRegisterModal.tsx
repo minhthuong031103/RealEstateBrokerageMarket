@@ -1,82 +1,111 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react'
-import { useRole } from '@/hooks/useRole';
-import DialogCustom from '@/components/ui/dialogCustom'
-import Logo from '@/components/logo';
-import { SelectLoaiDoiTac } from './SelectLoaiDoiTac';
-import { ThongTinForm } from './(agencyRegister)/ThongTinForm';
-
+import React, { useState, useEffect } from "react";
+import { useRole } from "@/hooks/useRole";
+import DialogCustom from "@/components/ui/dialogCustom";
+import Logo from "@/components/logo";
+import { SelectLoaiDoiTac } from "./SelectLoaiDoiTac";
+import { ThongTinForm } from "./(agencyRegister)/ThongTinForm";
+import { FaRegClock, FaUserLock } from "react-icons/fa";
 
 function AgencyRegisterModal({ session }) {
-    const { getUserRole } = useRole();
-    const [userRole, setUserRole] = useState('');
-    const [duyetDoiTac, setDuyetDoiTac] = useState('');
-    const [isUser, setIsuser] = React.useState(false);
-    const [loaiDoiTac, setLoaiDoiTacValue] = React.useState(null);
-    const [canhan, setCaNhan] = React.useState(false);
-    const [doanhnghiep, setDoanhNghiep] = React.useState(false);
+  const { getUserRole } = useRole();
+  const [userRole, setUserRole] = useState("");
+  const [duyetDoiTac, setDuyetDoiTac] = useState("");
+  const [isUser, setIsuser] = React.useState(false);
+  const [loaiDoiTac, setLoaiDoiTacValue] = React.useState(null);
+  const [canhan, setCaNhan] = React.useState(false);
+  const [doanhnghiep, setDoanhNghiep] = React.useState(false);
 
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const userRoleFetch = await getUserRole(session?.user?.id);
+        const role = userRoleFetch?.role;
+        const duyetDoiTac = userRoleFetch?.duyetDoiTac;
+        setUserRole(role);
+        if (role === "khach_hang") {
+          setIsuser(true);
+        }
+        setDuyetDoiTac(duyetDoiTac);
+        console.log(userRole, duyetDoiTac);
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      }
+    };
 
-
-    useEffect(() => {
-        const fetchUserRole = async () => {
-            try {
-                const userRole = await getUserRole(session?.user?.id);
-                const role = userRole?.role;
-                const duyetDoiTac = userRole?.duyetDoiTac;
-                setUserRole(role);
-                if (role === 'khach_hang') {
-                    setIsuser(true);
-                }
-                setDuyetDoiTac(duyetDoiTac);
-                console.log(userRole);
-            } catch (error) {
-                console.error('Error fetching user role:', error);
-            }
-        };
-
-        fetchUserRole();
-    }, []);
-    return userRole === 'khach_hang' ? (
+    fetchUserRole();
+  }, []);
+  return userRole === "khach_hang" ? (
+    <div>
+      {userRole === "khach_hang" && !duyetDoiTac ? (
+        <DialogCustom
+          className="w-full lg:w-[70%] h-[80%] lg:h-[95%] flex items-center justify-center"
+          isModalOpen={isUser}
+          notShowClose={true}
+        >
+          <div>
+            <Logo />
+            <h1 className="ml-4 font-medium mb-3">
+              Đăng ký để trở thành đối tác với UITEstate.
+            </h1>
+            <SelectLoaiDoiTac
+              setLoaiDoiTacValue={setLoaiDoiTacValue}
+              setCaNhan={setCaNhan}
+              setDoanhNghiep={setDoanhNghiep}
+              canhan={canhan}
+              doanhnghiep={doanhnghiep}
+            />
+            <div className="flex flex-col space-y-3">
+              {loaiDoiTac ? <ThongTinForm loaiDoiTac={loaiDoiTac} /> : null}
+            </div>
+          </div>
+        </DialogCustom>
+      ) : (
+        <DialogCustom
+          className="w-full lg:w-[50%] h-[40%] lg:h-[30%] flex items-center justify-center"
+          isModalOpen={isUser}
+          notShowClose={true}
+        >
+          <div>
+            <Logo />
+            <div className="ml-4 flex flex-row">
+              <FaRegClock className="text-red-400 w-6 h-6" />
+              <h1 className="ml-4 text-xl font-semibold text-slate-800">
+                Đăng ký của bạn đang chờ được phê duyệt.
+              </h1>
+            </div>
+            <h1 className="ml-4 text-slate-800 mt-3">
+              Vui lòng quay lại sau. Cảm ơn bạn đã sử dụng dịch vụ của chúng
+              tôi.
+            </h1>
+          </div>
+        </DialogCustom>
+      )}
+    </div>
+  ) : userRole === "doi_tac" && duyetDoiTac === "da_khoa" ? (
+    <div>
+      <DialogCustom
+        className="w-full lg:w-[60%] h-[40%] lg:h-[30%] flex items-center justify-center"
+        isModalOpen={true}
+        notShowClose={true}
+      >
         <div>
-            {userRole === 'khach_hang' && duyetDoiTac === '' ? (
-                <DialogCustom className='w-full lg:w-[70%] h-[80%] lg:h-[95%] flex items-center justify-center' isModalOpen={isUser} notShowClose={true}>
-                    <div>
-                        <Logo />
-                        <h1>Đăng ký để trở thành đối tác với UIT RealEstate.</h1>
-                        <SelectLoaiDoiTac
-                            setLoaiDoiTacValue={setLoaiDoiTacValue}
-                            setCaNhan={setCaNhan}
-                            setDoanhNghiep={setDoanhNghiep}
-                            canhan={canhan}
-                            doanhnghiep={doanhnghiep}
-                        />
-                        <div className="flex flex-col space-y-3">
-                            {loaiDoiTac ? (
-                                <ThongTinForm
-                                    loaiDoiTac={loaiDoiTac} />
-                            ) : null}
-                        </div>
-                    </div>
-                </DialogCustom>
-            ) : duyetDoiTac === 'tu_choi' ? (
-                <DialogCustom className='w-full lg:w-[70%] h-[80%] lg:h-[95%] flex items-center justify-center' isModalOpen={isUser} notShowClose={true}>
-                    <div>
-                        <Logo />
-                        <h1>Đăng ký của bạn đã bị từ chối.</h1>
-                    </div>
-                </DialogCustom>
-            ) : (
-                <DialogCustom className='w-full lg:w-[70%] h-[80%] lg:h-[95%] flex items-center justify-center' isModalOpen={isUser} notShowClose={true}>
-                    <div>
-                        <Logo />
-                        <h1>Đăng ký của bạn đang chờ được phê duyệt.</h1>
-                    </div>
-                </DialogCustom>
-            )}
+          <Logo />
+          <div className="ml-4 flex flex-row">
+            <FaUserLock className="text-red-400 w-6 h-6" />
+            <h1 className="ml-4 text-xl font-semibold text-slate-800">
+              Tài khoản của bạn đã bị khóa. Vui lòng liên hệ trực tiếp với quản
+              lý văn phòng để được xử lý.
+            </h1>
+          </div>
+          <h1 className="ml-4 text-slate-800 mt-3">
+            Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.
+          </h1>
         </div>
-    ) : null;
+      </DialogCustom>
+    </div>
+  ) : null;
 }
 
 export default AgencyRegisterModal;

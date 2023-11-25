@@ -1,19 +1,22 @@
-import { Input } from '@nextui-org/react';
-import React from 'react';
-import { Label } from '@/components/ui/label';
+import { Input } from "@nextui-org/react";
+import React from "react";
+import { Label } from "@/components/ui/label";
 
 export const PartnerName = ({ nameDoiTac, setNameDoiTac }) => {
   return (
-    <div className="flex flex-col gap-3 max-w-xs lg:max-w-2xl ">
+    <div className="flex flex-col gap-3 w-full">
       <Label className="font-bold text-sm">
-        Tên đối tác <span className="text-red-500">*</span>
+        Tên đối tác / doanh nghiệp<span className="text-red-500">*</span>
       </Label>
       <Input
-        isInvalid={nameDoiTac !== '' ? false : true}
-        errorMessage={`${nameDoiTac !== '' ? '' : 'Vui lòng nhập tên đối tác'}`}
-        className="max-w-xs lg:max-w-2xl "
+        variant="bordered"
+        isInvalid={nameDoiTac !== "" ? false : true}
+        errorMessage={`${nameDoiTac !== "" ? "" : "Vui lòng nhập tên đối tác"}`}
+        className="w-full"
+        radius="sm"
+        size="md"
         value={nameDoiTac}
-        placeholder="Nhập tên đối tác"
+        label="Tên đối tác / doanh nghiệp"
         onChange={(e) => {
           setNameDoiTac(e.target.value);
         }}

@@ -1,11 +1,11 @@
-import { Chip, Textarea } from '@nextui-org/react';
-import React from 'react';
-import { Label } from '@/components/ui/label';
-import { Card, CardBody } from '@nextui-org/react';
+import { Chip, Textarea } from "@nextui-org/react";
+import React from "react";
+import { Label } from "@/components/ui/label";
+import { Card, CardBody } from "@nextui-org/react";
 
 export const MoTaChiTiet = ({ moTa, setMota }) => {
   return (
-    <div className="flex flex-col gap-3 max-w-xs lg:max-w-2xl ">
+    <div className="flex flex-col gap-3 w-full">
       <Label className="font-bold text-sm">
         Mô tả chi tiết <span className="text-red-500">*</span>
       </Label>
@@ -24,10 +24,11 @@ export const MoTaChiTiet = ({ moTa, setMota }) => {
       </Card>
 
       <Textarea
-        isInvalid={moTa !== '' ? false : true}
-        errorMessage={`${moTa !== '' ? '' : 'Vui lòng nhập mô tả'}`}
+        isInvalid={moTa !== "" ? false : true}
+        errorMessage={`${moTa !== "" ? "" : "Vui lòng nhập mô tả"}`}
         variant="bordered"
-        className="max-w-xs lg:max-w-2xl "
+        className="w-full"
+        radius="sm"
         minRows={10}
         maxRows={10}
         value={moTa}

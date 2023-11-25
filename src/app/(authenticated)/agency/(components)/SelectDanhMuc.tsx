@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useBatDongSan } from '@/hooks/useBatDongSan';
-import { Select, SelectItem } from '@nextui-org/react';
-import React, { useEffect } from 'react';
-import { Checkbox } from '@nextui-org/react';
+import { useBatDongSan } from "@/hooks/useBatDongSan";
+import { Select, SelectItem } from "@nextui-org/react";
+import React, { useEffect } from "react";
+import { Checkbox } from "@nextui-org/react";
 
 export const SelectDanhMuc = ({
   setDanhMucValue,
@@ -37,12 +37,13 @@ export const SelectDanhMuc = ({
   return (
     <div className="flex flex-col h-full gap-y-6">
       <Select
-        key={'danhmuc'}
-        radius={'md'}
+        key={"danhmuc"}
+        variant="bordered"
+        radius={"sm"}
         label="Danh mục bất động sản"
         isInvalid={isProvinceValid || !danhMucTouched ? false : true}
         errorMessage={
-          isProvinceValid || !danhMucTouched ? '' : 'Vui lòng chọn danh mục'
+          isProvinceValid || !danhMucTouched ? "" : "Vui lòng chọn danh mục"
         }
         autoFocus={false}
         placeholder="Chọn danh mục bất động sản"
@@ -50,7 +51,7 @@ export const SelectDanhMuc = ({
         isLoading={isLoadingDanhMuc}
         onSelectionChange={setSelectedDanhMuc}
         onClose={() => setDanhMucTouched(true)}
-        className="max-w-xs"
+        className="w-full"
       >
         {danhMuc?.map((danhmuc) => (
           <SelectItem key={danhmuc.name} value={danhmuc.name}>

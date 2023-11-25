@@ -128,6 +128,10 @@ function BranchPost(type) {
     <p className="bg-red-500 w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
       Nổi bật
     </p>
+  ) : type?.type === "Hoàn thành" ? (
+    <p className="bg-emerald-500 w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
+      Hoàn thành
+    </p>
   ) : (
     <></>
   );
