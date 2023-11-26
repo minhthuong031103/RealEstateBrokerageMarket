@@ -102,7 +102,7 @@ export function ChiTietComponent({ id }) {
                       {chiTietBDS?.loaiHinh?.name}
                     </div>
                     {chiTietBDS?.loaiHinh?.loaiBDS?.name === "Căn hộ" ||
-                    chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
+                      chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
                       <>
                         <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
                           Nhà tắm: {chiTietBDS?.soPhongTam}
@@ -208,6 +208,22 @@ export function ChiTietComponent({ id }) {
                             {chiTietBDS?.soPhongNgu}
                           </div>
                         </div>
+                        {chiTietBDS?.dienTichGarage > 0 && (
+                          <div className="flex flex-row">
+                            <div className="w-1/2">Garage:</div>
+                            <div className="w-1/2 font-semibold">
+                              {chiTietBDS?.dienTichGarage} m<sup>2</sup>
+                            </div>
+                          </div>
+                        )}
+                        {chiTietBDS?.dienTichHoBoi > 0 && (
+                          <div className="flex flex-row">
+                            <div className="w-1/2">Hồ bơi:</div>
+                            <div className="w-1/2 font-semibold">
+                              {chiTietBDS?.dienTichHoBoi} m<sup>2</sup>
+                            </div>
+                          </div>
+                        )}
                       </>
                     ) : chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
                       <>
@@ -223,20 +239,24 @@ export function ChiTietComponent({ id }) {
                             {chiTietBDS?.soPhongNgu}
                           </div>
                         </div>
-                        <div className="flex flex-row">
-                          <div className="w-1/2">Garage:</div>
-                          <div className="w-1/2 font-semibold">
-                            {chiTietBDS?.dienTichGarage} m<sup>2</sup>
+                        {chiTietBDS?.dienTichGarage > 0 && (
+                          <div className="flex flex-row">
+                            <div className="w-1/2">Garage:</div>
+                            <div className="w-1/2 font-semibold">
+                              {chiTietBDS?.dienTichGarage} m<sup>2</sup>
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex flex-row">
-                          <div className="w-1/2">Hồ bơi:</div>
-                          <div className="w-1/2 font-semibold">
-                            {chiTietBDS?.dienTichHoBoi} m<sup>2</sup>
+                        )}
+                        {chiTietBDS?.dienTichHoBoi > 0 && (
+                          <div className="flex flex-row">
+                            <div className="w-1/2">Hồ bơi:</div>
+                            <div className="w-1/2 font-semibold">
+                              {chiTietBDS?.dienTichHoBoi} m<sup>2</sup>
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </>
-                    ) : (
+                    ) :  (
                       <></>
                     )}
                     <div className="flex flex-row">

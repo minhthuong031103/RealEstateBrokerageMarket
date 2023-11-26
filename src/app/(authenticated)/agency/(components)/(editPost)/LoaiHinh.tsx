@@ -5,10 +5,6 @@ import { Select, SelectItem } from "@nextui-org/react";
 import React, { useEffect } from "react";
 
 export const LoaiHinh = ({ setLoaiHinhValue, danhMucValue, loaiHinhValue }) => {
-  console.log(
-    "🚀 ~ file: LoaiHinh.tsx:8 ~ LoaiHinh ~ danhMucValue:",
-    danhMucValue
-  );
   const [selectedLoaiHinh, setSelectedLoaiHinh] = React.useState(new Set([]));
   const [loaiHinhTouched, setLoaiHinhTouched] = React.useState(false);
   const [loaiHinh, setLoaiHinh] = React.useState([]);
@@ -22,8 +18,11 @@ export const LoaiHinh = ({ setLoaiHinhValue, danhMucValue, loaiHinhValue }) => {
   }, [danhMucValue]);
   useEffect(() => {
     if (loaiHinhValue) {
-      setSelectedLoaiHinh(new Set([loaiHinhValue]));
+      console.log(loaiHinhValue);
+      setSelectedLoaiHinh([loaiHinhValue]);
     }
+  }, []);
+  useEffect(() => {
     if (selectedLoaiHinh) {
       const loaiHinhValueArray = Array.from(selectedLoaiHinh);
       setLoaiHinhValue(loaiHinhValueArray?.[0]);
