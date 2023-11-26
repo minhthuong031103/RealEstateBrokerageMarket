@@ -2,22 +2,30 @@
 "use client";
 
 import { TinhTrangNoiThat, noiThat } from "@/lib/constant";
-import { Select, SelectItem } from "@nextui-org/react";
+import { Select, SelectItem, Input, Checkbox } from "@nextui-org/react";
 import React, { useEffect } from "react";
 import { IoBedOutline } from "react-icons/io5";
-import { PiBathtubLight } from "react-icons/pi";
+import { PiBathtubLight, PiGarageFill } from "react-icons/pi";
 import { TbWashMachine } from "react-icons/tb";
 import { DanhSachTienNghi } from "./DanhSachTienNghi";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
+import { LiaSwimmingPoolSolid } from "react-icons/lia";
+import { formatNumberWithCommas } from "@/lib/utils";
+
 
 interface SelectNoiThatProps {
   setPhongNgu: (value: string) => void;
   setPhongTam: (value: string) => void;
   setNoiThat: (value: string) => void;
   setSoTang: (value: string) => void;
+  setDienTichGarage: (value: string) => void;
+  setDienTichHoBoi: (value: string) => void;
   danhSachTienNghi: any;
+  dienTichGarage: any;
+  dienTichHoBoi: any;
   setDanhSachTienNghi: (value: any) => void;
   phongNguValue?: any;
+  danhMucValue?: any;
   isEdit?: boolean;
 }
 
@@ -29,6 +37,11 @@ export const SelectNoiThat = ({
   danhSachTienNghi,
   phongNguValue,
   setDanhSachTienNghi,
+  dienTichGarage,
+  dienTichHoBoi,
+  setDienTichGarage,
+  setDienTichHoBoi,
+  danhMucValue,
 }: SelectNoiThatProps) => {
   const [selectedPhongNgu, setSelectedPhongNgu] = React.useState(new Set([]));
   const [phongNguTouched, setPhongNguTouched] = React.useState(false);
@@ -152,30 +165,65 @@ export const SelectNoiThat = ({
           </SelectItem>
         ))}
       </Select>
+      {danhMucValue !== "Căn hộ" && (
+        <Select
+          key={"sotang"}
+          radius={"sm"}
+          variant="bordered"
+          label="Số tầng"
+          isInvalid={isSoTangValid || !soTangTouched ? false : true}
+          errorMessage={
+            isSoTangValid || !soTangTouched ? "" : "Vui lòng chọn số tầng"
+          }
+          autoFocus={false}
+          placeholder="Chọn số tầng"
+          selectedKeys={selectedSoTang}
+          onSelectionChange={setSelectedSoTang}
+          onClose={() => setSoTangTouched(true)}
+          className="w-full"
+          startContent={<HiOutlineBuildingOffice2 className="w-3 h-3" />}
+        >
 
-      <Select
-        key={"sotang"}
-        radius={"sm"}
-        variant="bordered"
-        label="Số tầng"
-        isInvalid={isSoTangValid || !soTangTouched ? false : true}
-        errorMessage={
-          isSoTangValid || !soTangTouched ? "" : "Vui lòng chọn số tầng"
-        }
-        autoFocus={false}
-        placeholder="Chọn số tầng"
-        selectedKeys={selectedSoTang}
-        onSelectionChange={setSelectedSoTang}
-        onClose={() => setSoTangTouched(true)}
-        className="w-full"
-        startContent={<HiOutlineBuildingOffice2 className="w-3 h-3" />}
-      >
-        {noiThat?.map((noithat) => (
-          <SelectItem key={noithat.value} value={noithat.value}>
-            {noithat.value.toString()}
-          </SelectItem>
-        ))}
-      </Select>
+          {noiThat?.map((noithat) => (
+            <SelectItem key={noithat.value} value={noithat.value}>
+              {noithat.value.toString()}
+            </SelectItem>
+          ))}
+        </Select>
+      )}
+
+      <div className="flex flex-col gap-y-4">
+        <Input
+          variant="bordered"
+          radius="sm"
+          className="w-full"
+          label="Diện tích Garage"
+          value={dienTichGarage}
+          description="Nhập 0 nếu không có Garage"
+          startContent={<PiGarageFill className="w-3 h-3" />}
+          placeholder="Diện tích Garage"
+          onChange={(e) => {
+            if (/^\d*$/.test(e.target.value)) {
+              setDienTichGarage(e.target.value);
+            }
+          }}
+        />
+        <Input
+          variant="bordered"
+          radius="sm"
+          className="w-full"
+          label="Diện tích hồ bơi"
+          description="Nhập 0 nếu không có hồ bơi"
+          startContent={<LiaSwimmingPoolSolid className="w-3 h-3" />}
+          placeholder="Diện tích hồ bơi"
+          value={dienTichHoBoi}
+          onChange={(e) => {
+            if (/^\d*$/.test(e.target.value)) {
+              setDienTichHoBoi(e.target.value);
+            }
+          }}
+        />
+      </div>
       <DanhSachTienNghi
         danhSachTienNghi={danhSachTienNghi}
         setDanhSachTienNghi={setDanhSachTienNghi}

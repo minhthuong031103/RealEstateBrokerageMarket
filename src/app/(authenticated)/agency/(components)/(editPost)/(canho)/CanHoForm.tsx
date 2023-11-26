@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { SelectNoiThat } from "../SelectNoiThat";
 import { HuongCanHo } from "./HuongCanHo";
-import { Button } from "@/components/ui/button";
 import { FileDialog } from "@/components/ui/FileDialog";
 import { ImageList } from "@/components/ui/ImageList";
 import { DatePicker } from "@/components/ui/date-picker";
@@ -42,14 +41,6 @@ export const CanHoForm = ({
   const form = useForm<z.infer<typeof canHoSchema>>({
     resolver: zodResolver(canHoSchema),
   });
-  console.log(form);
-  useEffect(() => {
-    console.log(phongNguValue);
-    console.log(phongTamValue);
-    console.log(soTangValue);
-    console.log(huongBanCongValue);
-    console.log(huongCuaChinhValue);
-  });
   return (
     <Form {...form}>
       <form className="flex flex-col space-y-6 w-full">
@@ -64,6 +55,7 @@ export const CanHoForm = ({
           noiThatValue={noiThatValue}
           danhSachTienNghi={danhSachTienNghi}
           setDanhSachTienNghi={setDanhSachTienNghi}
+          loaiHinh={"Căn hộ"}
         />
         <div className="flex flex-col space-y-3">
           <div className="font-bold text-sm"> Bản vẽ thiết kế</div>

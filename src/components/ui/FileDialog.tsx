@@ -99,7 +99,6 @@ export function FileDialog<TFieldValues extends FieldValues>({
   React.useEffect(() => {
     setValue?.(name, files as PathValue<TFieldValues, Path<TFieldValues>>);
   }, [files]);
-  console.log(files);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept,

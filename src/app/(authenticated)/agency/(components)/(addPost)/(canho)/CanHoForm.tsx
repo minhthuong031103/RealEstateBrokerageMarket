@@ -22,7 +22,6 @@ export const CanHoForm = ({
   setNoiThat,
   setHuongBanCong,
   setHuongCuaChinh,
-  setSoTang,
   banVeThietKe,
   setBanVeThietKe,
   suaChuaLanCuoi,
@@ -31,6 +30,11 @@ export const CanHoForm = ({
   setHoanThanh,
   danhSachTienNghi,
   setDanhSachTienNghi,
+  dienTichGarage,
+  setDienTichGarage,
+  dienTichHoBoi,
+  setDienTichHoBoi,
+  danhMucValue,
 }) => {
   const form = useForm<z.infer<typeof canHoSchema>>({
     resolver: zodResolver(canHoSchema),
@@ -43,9 +47,13 @@ export const CanHoForm = ({
           setPhongNgu={setPhongNgu}
           setPhongTam={setPhongTam}
           setNoiThat={setNoiThat}
-          setSoTang={setSoTang}
           danhSachTienNghi={danhSachTienNghi}
           setDanhSachTienNghi={setDanhSachTienNghi}
+          setDienTichGarage={setDienTichGarage}
+          setDienTichHoBoi={setDienTichHoBoi}
+          dienTichGarage={dienTichGarage}
+          dienTichHoBoi={dienTichHoBoi}
+          danhMucValue={danhMucValue}
         />
         <div className="flex flex-col space-y-3">
           <div className="font-bold text-sm"> Bản vẽ thiết kế</div>

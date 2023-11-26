@@ -21,7 +21,9 @@ import DialogCustom from "@/components/ui/dialogCustom";
 import { Spinner } from "@nextui-org/react";
 import { ImageList } from "@/components/ui/ImageList";
 import { DatePicker } from "@/components/ui/date-picker";
+import { NhaForm } from "./(nha)/NhaForm";
 import { Nhan } from "./Nhan";
+import { VanPhongForm } from "./(vanphong)/VanPhongForm";
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
@@ -56,12 +58,25 @@ export const BaiVietForm = ({
   const [suaChuaLanCuoi, setSuaChuaLanCuoi] = React.useState();
   const [hoanThanh, setHoanThanh] = React.useState();
   const [danhSachTienNghi, setDanhSachTienNghi] = React.useState([]);
+  const [dienTichGarage, setDienTichGarage] = React.useState();
+  const [dienTichHoBoi, setDienTichHoBoi] = React.useState();
   const [nhan, setNhan] = React.useState();
   const { onCreateBaiViet } = useBaiViet();
 
+
+
   const onSubmit = async () => {
     if (productImageFiles.length <= 0) {
-      toast.error("Vui lòng chọn hình ảnh sản phẩm");
+      toast.error("Vui lòng chọn hình ảnh bất động sản");
+    }
+    if (productImageFiles.length < 7){
+      toast.error("Vui lòng chọn tói thiểu 7 hình ảnh bất động sản");
+    }
+    if (phapLyImageFiles.length <= 0){
+      toast.error("Vui lòng chọn hình ảnh pháp lý");
+    }
+    if (banVeThietKe.length <= 0){
+      toast.error("Vui lòng chọn hình ảnh bản vẽ thiết kế");
     }
     if (
       !addressValue ||
@@ -82,8 +97,32 @@ export const BaiVietForm = ({
         !phongTam ||
         !noiThat ||
         !huongBanCong ||
-        !huongCuaChinh ||
+        !huongCuaChinh
+      ) {
+        toast.error("Vui lòng nhập đầy đủ thông tin");
+        return;
+      }
+    }
+
+    if (danhMucValue === "Nhà ở") {
+      if (
+        !phongNgu ||
+        !phongTam ||
+        !noiThat ||
+        !dienTichGarage ||
+        !dienTichHoBoi ||
         !soTang
+      ) {
+        toast.error("Vui lòng nhập đầy đủ thông tin");
+        return;
+      }
+    }
+
+    
+    if (danhMucValue === "Văn phòng") {
+      if (
+        !noiThat ||
+        !huongCuaChinh 
       ) {
         toast.error("Vui lòng nhập đầy đủ thông tin");
         return;
@@ -127,6 +166,8 @@ export const BaiVietForm = ({
       chieuDai: parseFloat(chieuDai),
       chieuRong: parseFloat(chieuRong),
       dienTich: chieuDai * chieuRong,
+      dienTichGarage: parseFloat(dienTichGarage),
+      dienTichHoBoi: parseFloat(dienTichHoBoi),
       tinhTrangPhapLy: phapLy,
       nhan: nhan,
       gia: parseFloat(giaBan),
@@ -166,6 +207,7 @@ export const BaiVietForm = ({
       <SelectAddress
         setAddressValue={setAddressValue}
         addressValue={addressValue}
+        danhMucValue={danhMucValue}
       />
       <LoaiHinh
         danhMucValue={danhMucValue}
@@ -183,10 +225,34 @@ export const BaiVietForm = ({
         setPhapLy={setPhapLy}
       />
 
-      {/* <CanHoForm /> */}
       {
         danhMucValue === "Căn hộ" && (
           <CanHoForm
+            setHuongBanCong={setHuongBanCong}
+            setHuongCuaChinh={setHuongCuaChinh}
+            setNoiThat={setNoiThat}
+            setPhongNgu={setPhongNgu}
+            setPhongTam={setPhongTam}
+            banVeThietKe={banVeThietKe}
+            setBanVeThietKe={setBanVeThietKe}
+            suaChuaLanCuoi={suaChuaLanCuoi}
+            setSuaChuaLanCuoi={setSuaChuaLanCuoi}
+            hoanThanh={hoanThanh}
+            setHoanThanh={setHoanThanh}
+            danhSachTienNghi={danhSachTienNghi}
+            setDanhSachTienNghi={setDanhSachTienNghi}
+            dienTichGarage={dienTichGarage}
+            setDienTichGarage={setDienTichGarage}
+            dienTichHoBoi={dienTichHoBoi}
+            setDienTichHoBoi={setDienTichHoBoi}
+            danhMucValue={danhMucValue}
+          />
+        )
+      }
+
+      {
+        danhMucValue === "Nhà ở" && (
+          <NhaForm
             setHuongBanCong={setHuongBanCong}
             setHuongCuaChinh={setHuongCuaChinh}
             setNoiThat={setNoiThat}
@@ -201,12 +267,26 @@ export const BaiVietForm = ({
             setHoanThanh={setHoanThanh}
             danhSachTienNghi={danhSachTienNghi}
             setDanhSachTienNghi={setDanhSachTienNghi}
+            dienTichGarage={dienTichGarage}
+            setDienTichGarage={setDienTichGarage}
+            dienTichHoBoi={dienTichHoBoi}
+            setDienTichHoBoi={setDienTichHoBoi}
           />
         )
         // <CanHoForm />
       }
 
-      {/* <CanHoForm /> */}
+      {
+        danhMucValue === "Văn phòng" && (
+          <VanPhongForm
+            setNoiThat={setNoiThat}
+            setHuongCuaChinh={setHuongCuaChinh}
+            danhSachTienNghi={danhSachTienNghi}
+            setDanhSachTienNghi={setDanhSachTienNghi}
+            />
+        )
+        // <CanHoForm />
+      }
 
       <GiaBan giaBan={giaBan} setGiaBan={setGiaBan} />
       <div className="flex flex-col gap-y-3 w-full">

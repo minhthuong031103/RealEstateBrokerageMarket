@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import DialogCustom from "@/components/ui/dialogCustom";
 import { Button } from "@/components/ui/button";
 
-export const SelectAddress = ({ addressValue, setAddressValue }) => {
+export const SelectAddress = ({ addressValue, setAddressValue, danhMucValue }) => {
   const [selectedProvince, setSelectedProvince] = React.useState(new Set([]));
   const [selectedDistrict, setSelectedDistrict] = React.useState(new Set([]));
   const [selectedWard, setSelectedWard] = React.useState(new Set([]));
@@ -30,6 +30,12 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
 
   const [streetValue, setStreetValue] = React.useState("");
   const [houseNumberValue, setHouseNumberValue] = React.useState("");
+  const [tangSoValue, setTangSoValue] = React.useState("");
+  const [blockValue, setBlockValue] = React.useState("");
+  const [maCanValue, setMaCanValue] = React.useState("");
+  const [phanKhuLoValue, setPhanKhuLoValue] = React.useState("");
+  const [tenPhanKhuValue, setTenPhanKhuValue] = React.useState("");
+  const [maLoValue, setMaLoValue] = React.useState("");
 
   useEffect(() => {
     async function getProvince() {
@@ -77,6 +83,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
     getWard();
   }, [selectedDistrict]);
   console.log(wards);
+  console.log(danhMucValue);
   const isProvinceValid = selectedProvince.size > 0;
   const isDistrictValid = selectedDistrict.size > 0;
   const isWardValid = selectedWard.size > 0;
@@ -104,9 +111,15 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
       streetValue,
       houseNumberValue
     );
-    setAddressValue(
-      `${houseNumberValue}, ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
-    );
+    if (danhMucValue === "Căn hộ" || danhMucValue === "Văn phòng") {
+      setAddressValue(
+        ` ${maCanValue}, ${blockValue}, ${tangSoValue} ,${houseNumberValue}, ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
+      );
+    } else if (danhMucValue === "Nhà ở") {
+      ` ${maCanValue}, ${phanKhuLoValue} ,${houseNumberValue}, ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
+    } else {
+      ` ${tenPhanKhuValue}, ${maLoValue} ,${houseNumberValue}, ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
+    }
     setIsModalOpen(false);
   };
   return (
@@ -123,9 +136,11 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
           isChild={true}
         >
           <div className="flex flex-col gap-y-6 w-full px-1">
+            <p className="font-medium">Địa chỉ</p>
             <Select
               key={"province"}
-              radius={"md"}
+              radius={"sm"}
+              variant={"bordered"}
               label="Thành phố, tỉnh thành"
               isInvalid={isProvinceValid || !provinceTouched ? false : true}
               errorMessage={
@@ -149,7 +164,8 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
             </Select>
             <Select
               key={"district"}
-              radius={"md"}
+              radius={"sm"}
+              variant={"bordered"}
               label="Quận, huyện"
               isInvalid={isDistrictValid || !districtTouched ? false : true}
               errorMessage={
@@ -173,7 +189,8 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
             </Select>
             <Select
               key={"ward"}
-              radius={"md"}
+              radius={"sm"}
+              variant={"bordered"}
               label="Xã, phường"
               isInvalid={isWardValid || !wardTouched ? false : true}
               errorMessage={
@@ -193,23 +210,134 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
                 </SelectItem>
               ))}
             </Select>
+            <div className="flex flex-row gap-3 ">
 
-            <Input
-              value={streetValue}
-              onChange={(e) => {
-                setStreetValue(e.target.value);
-              }}
-              className="w-full "
-              placeholder="Tên đường"
-            />
-            <Input
-              value={houseNumberValue}
-              onChange={(e) => {
-                setHouseNumberValue(e.target.value);
-              }}
-              className="w-full "
-              placeholder="Số nhà"
-            />
+              <Input
+                value={streetValue}
+                onChange={(e) => {
+                  setStreetValue(e.target.value);
+                }}
+                className="w-full "
+                placeholder="Tên đường"
+              />
+              <Input
+                value={houseNumberValue}
+                onChange={(e) => {
+                  setHouseNumberValue(e.target.value);
+                }}
+                className="w-full "
+                placeholder="Số nhà"
+              />
+            </div>
+
+            {danhMucValue === "Căn hộ" && (
+              <>
+                <p className="font-medium">Vị trí BĐS</p>
+                <Input
+                  value={tangSoValue}
+                  onChange={(e) => {
+                    setTangSoValue(e.target.value);
+                  }}
+                  className="w-full "
+                  placeholder="Tầng số"
+                />
+                <div className="flex flex-row gap-3 ">
+                  <Input
+                    value={blockValue}
+                    onChange={(e) => {
+                      setBlockValue(e.target.value);
+                    }}
+                    className="w-full "
+                    placeholder="Block/Tháp"
+                  />
+                  <Input
+                    value={maCanValue}
+                    onChange={(e) => {
+                      setMaCanValue(e.target.value);
+                    }}
+                    className="w-full "
+                    placeholder="Mã căn"
+                  />
+                </div>
+
+              </>
+            )}
+            {danhMucValue === "Văn phòng" && (
+              <>
+                <p className="font-medium">Vị trí BĐS</p>
+                <Input
+                  value={tangSoValue}
+                  onChange={(e) => {
+                    setTangSoValue(e.target.value);
+                  }}
+                  className="w-full "
+                  placeholder="Tầng số"
+                />
+                <div className="flex flex-row gap-3 ">
+                  <Input
+                    value={blockValue}
+                    onChange={(e) => {
+                      setBlockValue(e.target.value);
+                    }}
+                    className="w-full "
+                    placeholder="Block/Tháp"
+                  />
+                  <Input
+                    value={maCanValue}
+                    onChange={(e) => {
+                      setMaCanValue(e.target.value);
+                    }}
+                    className="w-full "
+                    placeholder="Mã căn"
+                  />
+                </div>
+
+              </>
+            )}
+            {danhMucValue === "Nhà ở" && (
+              <>
+                <p className="font-medium">Vị trí BĐS</p>
+                <Input
+                  value={phanKhuLoValue}
+                  onChange={(e) => {
+                    setPhanKhuLoValue(e.target.value);
+                  }}
+                  className="w-full "
+                  placeholder="Phân khu lô"
+                />
+                <Input
+                  value={maCanValue}
+                  onChange={(e) => {
+                    setMaCanValue(e.target.value);
+                  }}
+                  className="w-full "
+                  placeholder="Mã căn"
+                />
+              </>
+            )}
+            {danhMucValue === "Đất" && (
+              <>
+                <p className="font-medium">Vị trí BĐS</p>
+                <Input
+                  value={maLoValue}
+                  onChange={(e) => {
+                    setMaLoValue(e.target.value);
+                  }}
+                  className="w-full "
+                  placeholder="Mã lô"
+                />
+                <Input
+                  value={tenPhanKhuValue}
+                  onChange={(e) => {
+                    setTenPhanKhuValue(e.target.value);
+                  }}
+                  className="w-full "
+                  placeholder="Tên phân khu"
+                />
+              </>
+            )}
+
+
             <div className="w-full flex items-center justify-center">
               <Button
                 disabled={

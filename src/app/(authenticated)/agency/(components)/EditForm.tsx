@@ -25,7 +25,10 @@ import { parse } from "path";
 import { SelectAddress } from "./(editPost)/SelectAddress";
 import { TieuDe } from "@/app/(authenticated)/agency/(components)/(addPost)/TieuDe";
 import { MoTaChiTiet } from "@/app/(authenticated)/agency/(components)/(addPost)/MoTaChiTiet";
+import { NhaForm } from "./(editPost)/(nha)/NhaForm";
 import Loader from "@/components/Loader";
+import { VanPhongForm } from "./(editPost)/(vanphong)/VanPhongForm";
+import toast from "react-hot-toast";
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
@@ -55,7 +58,10 @@ export const EditForm = ({ id }) => {
   const [danhMucValue, setDanhMucValue] = React.useState(null);
   const [thue, setThue] = React.useState(false);
   const [ban, setBan] = React.useState(false);
-  const [productImageFiles, setProductImagesFile] = React.useState([]);
+  const [dienTichGarage, setDienTichGarage] = React.useState();
+  const [dienTichHoBoi, setDienTichHoBoi] = React.useState();
+  const [productImageFiles, setProductImagesFile] = React.useState([]
+  );
   const [phapLyImageFiles, setPhapLyImageFiles] = React.useState([]);
   const [banVeThietKeImageFiles, setBanVeThietKeImageFiles] = React.useState(
     []
@@ -73,6 +79,59 @@ export const EditForm = ({ id }) => {
 
   const { onUpdateBaiViet } = useBaiViet();
   const onSubmit = async () => {
+
+
+    if (
+      !diaChi ||
+      !loaiHinhValue ||
+      !chieuDai ||
+      !chieuRong ||
+      !phapLy ||
+      !giaBan ||
+      !tieuDe ||
+      !moTa
+    ) {
+      toast.error("Vui lòng nhập đầy đủ thông tin ");
+      return;
+    }
+    if (danhMucValue === "Căn hộ") {
+      if (
+        !phongNgu ||
+        !phongTam ||
+        !noiThat ||
+        !huongBanCong ||
+        !huongCuaChinh
+      ) {
+        toast.error("Vui lòng nhập đầy đủ thông tin");
+        return;
+      }
+    }
+
+    if (danhMucValue === "Nhà ở") {
+      if (
+        !phongNgu ||
+        !phongTam ||
+        !noiThat ||
+        !dienTichGarage ||
+        !dienTichHoBoi ||
+        !soTang
+      ) {
+        toast.error("Vui lòng nhập đầy đủ thông tin");
+        return;
+      }
+    }
+
+    
+    if (danhMucValue === "Văn phòng") {
+      if (
+        !noiThat ||
+        !huongCuaChinh 
+      ) {
+        toast.error("Vui lòng nhập đầy đủ thông tin");
+        return;
+      }
+    }
+
     const productfileArray = [];
     const phaplyfileArray = [];
     const banVeThietKeArray = [];
@@ -155,6 +214,8 @@ export const EditForm = ({ id }) => {
       chieuDai: parseFloat(chieuDai),
       chieuRong: parseFloat(chieuRong),
       dienTich: chieuDai * chieuRong,
+      dienTichGarage: parseFloat(dienTichGarage),
+      dienTichHoBoi: parseFloat(dienTichHoBoi),
       tinhTrangPhapLy: phapLy,
       gia: parseFloat(giaBan),
       tieuDe: tieuDe,
@@ -239,7 +300,11 @@ export const EditForm = ({ id }) => {
       setHoanThanh(Date.parse(chiTietBDS?.hoanThanh));
       setDanhSachTienNghi(JSON.parse(chiTietBDS?.danhSachTienNghi));
       setSoTang(chiTietBDS?.soTang?.toString());
+      setDienTichGarage(chiTietBDS?.dienTichGarage);
+      setDienTichHoBoi(chiTietBDS?.dienTichHoBoi);
       setIsLoaded(true);
+      console.log(chiTietBDS);
+      console.log(danhMucValue);
     }
   }, [chiTietBDS]);
 
@@ -265,7 +330,7 @@ export const EditForm = ({ id }) => {
             setLoadingDanhMuc={setLoadingDanhMuc}
           />
 
-          <SelectAddress addressValue={diaChi} setAddressValue={setDiaChi} />
+          <SelectAddress addressValue={diaChi} setAddressValue={setDiaChi} danhMucValue={danhMucValue} />
 
           <LoaiHinh
             danhMucValue={danhMucValue}
@@ -314,6 +379,50 @@ export const EditForm = ({ id }) => {
               }
             />
           )}
+
+          {
+            danhMucValue === "Nhà ở" && (
+              <NhaForm
+                setHuongBanCong={setHuongBanCong}
+                setHuongCuaChinh={setHuongCuaChinh}
+                setNoiThat={setNoiThat}
+                setPhongNgu={setPhongNgu}
+                setPhongTam={setPhongTam}
+                setSoTang={setSoTang}
+                phongNguValue={phongNgu}
+                phongTamValue={phongTam}
+                soTangValue={soTang}
+                noiThatValue={noiThat}
+                banVeThietKe={banVeThietKeImageFiles}
+                setBanVeThietKe={setBanVeThietKeImageFiles}
+                suaChuaLanCuoi={suaChuaLanCuoi}
+                setSuaChuaLanCuoi={setSuaChuaLanCuoi}
+                hoanThanh={hoanThanh}
+                setHoanThanh={setHoanThanh}
+                danhSachTienNghi={danhSachTienNghi}
+                setDanhSachTienNghi={setDanhSachTienNghi}
+                dienTichGarage={dienTichGarage}
+                setDienTichGarage={setDienTichGarage}
+                dienTichHoBoi={dienTichHoBoi}
+                setDienTichHoBoi={setDienTichHoBoi}
+              />
+            )
+            // <CanHoForm />
+          }
+          {
+            danhMucValue === "Văn phòng" && (
+              <VanPhongForm
+                setNoiThat={setNoiThat}
+                noiThatValue={noiThat}
+                huongCuaChinhValue={huongCuaChinh}
+                setHuongCuaChinh={setHuongCuaChinh}
+                danhSachTienNghi={danhSachTienNghi}
+                setDanhSachTienNghi={setDanhSachTienNghi}
+              />
+            )
+            // <CanHoForm />
+          }
+
 
           <GiaBan giaBan={giaBan} setGiaBan={setGiaBan} />
 
