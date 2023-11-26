@@ -1,10 +1,10 @@
-import { getSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { LayoutBatDongSanYeuThich } from "./(components)/LayoutBatDongSanYeuThich";
+import { redirect } from 'next/navigation';
+import { LayoutBatDongSanYeuThich } from './(components)/LayoutBatDongSanYeuThich';
+import { getSession } from '@/lib/auth';
 
 async function page() {
   const session = await getSession();
-  if (!session) redirect("/auth/login");
+  if (!session) redirect('/auth/login');
   return (
     <div className="container mx-auto lg:px-[52px]">
       <div className="ml-4">

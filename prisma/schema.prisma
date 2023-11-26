@@ -21,6 +21,7 @@ model User {
   otp                    String?
   anhCCCDTruoc           String?
   anhCCCDSau             String?
+  maSoCmnd               String?
   anhGiayPhepKinhDoanh   String?
   anhChanDung            String?
   luot                   Int?            @default(0)
@@ -34,11 +35,15 @@ model User {
   createdAt              DateTime        @default(now())
   giamGia                Int?            @default(0)
   duyetKhachHang         String?
+  isOnline               Boolean         @default(false)
+  lastSeen               DateTime?
   directMessages         DirectMessage[]
   seenMessages           SeenMessage[]
   BaiViets               BaiViet[]
   Revenues               Revenue[]
   Favourite              Favourite?
+    conversationsInitiated Conversation[]    @relation("userOne")
+  conversationsReceived  Conversation[]    @relation("userTwo")
 }
 
 model LoaiBDS {
@@ -114,6 +119,7 @@ model DirectMessage {
   updatedAt      DateTime      @updatedAt
   user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   seenBy         SeenMessage[]
+  conversation   Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([conversationId])
@@ -124,7 +130,6 @@ model SeenMessage {
   userId          Int
   directMessageId String
   seenAt          DateTime?
-  createdAt       DateTime      @default(now())
   user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   directMessage   DirectMessage @relation(fields: [directMessageId], references: [id], onDelete: Cascade)
 
@@ -212,3 +217,18 @@ model BaiVietToFavourite {
   @@index([B], map: "_BaiVietToFavourite_B_index")
   @@map("_BaiVietToFavourite")
 }
+
+model Conversation {
+  id             String          @id @default(uuid())
+  userOneId      Int
+  userTwoId      Int
+  lastMessageAt  DateTime        @updatedAt
+  lastMessage    String?
+  userOne        User            @relation("userOne", fields: [userOneId], references: [id], onDelete: Cascade)
+  userTwo        User            @relation("userTwo", fields: [userTwoId], references: [id], onDelete: Cascade)
+  directMessages DirectMessage[]
+
+  @@unique([userOneId, userTwoId])
+  @@index([userTwoId])
+}
+

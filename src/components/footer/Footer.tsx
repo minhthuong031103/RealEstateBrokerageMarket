@@ -1,12 +1,12 @@
-"use client";
-import Link from "next/link";
-import React from "react";
-import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from "react-icons/fa";
-import { useOffice } from "@/hooks/useOffice";
-import { useEffect, useState } from "react";
-import { AiOutlinePhone } from "react-icons/ai";
-import { HiOutlineMail } from "react-icons/hi";
-import { IoLocationOutline } from "react-icons/io5";
+'use client';
+import Link from 'next/link';
+import React from 'react';
+import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from 'react-icons/fa';
+import { useOffice } from '@/hooks/useOffice';
+import { useEffect, useState } from 'react';
+import { AiOutlinePhone } from 'react-icons/ai';
+import { HiOutlineMail } from 'react-icons/hi';
+import { IoLocationOutline } from 'react-icons/io5';
 
 const Footer = () => {
   const [info, setInfo] = useState();
@@ -29,17 +29,17 @@ const Footer = () => {
         <div className="flex gap-[50px] md:gap-[75px] lg:gap-[100px] flex-col md:flex-row">
           {/* MENU START */}
           <div className="flex flex-col gap-3 shrink-0">
-            <Link href={"/bat-dong-san"}>
+            <Link href={'/bat-dong-san'}>
               <div className="font-oswald font-medium text-sm cursor-pointer">
                 Tìm kiếm bất động sản
               </div>
             </Link>
-            <Link href={"/doi-tac"}>
+            <Link href={'/doi-tac'}>
               <div className="font-oswald font-medium text-sm cursor-pointer">
                 Tìm kiếm đối tác
               </div>
             </Link>
-            <Link href={"/agency"}>
+            <Link href={'/agency'}>
               <div className="font-oswald font-medium text-sm cursor-pointer">
                 Trở thành đối tác
               </div>
@@ -102,7 +102,7 @@ const Footer = () => {
 
         {/* RIGHT START */}
         <div className="flex gap-2 md:gap-5 text-center md:text-left flex-wrap justify-center">
-          <Link href={"/chinh-sach"}>
+          <Link href={'/chinh-sach'}>
             <div className="text-[12px] text-white/[0.5] hover:text-white cursor-pointer">
               Chính sách sử dụng
             </div>

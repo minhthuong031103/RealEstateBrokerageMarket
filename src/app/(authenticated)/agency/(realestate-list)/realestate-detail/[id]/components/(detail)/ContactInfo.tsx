@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { AiOutlinePhone } from "react-icons/ai";
-import { HiOutlineMail } from "react-icons/hi";
-import { IoLocationOutline, IoStorefrontOutline } from "react-icons/io5";
+import { Button } from '@/components/ui/button';
+import { AiOutlinePhone } from 'react-icons/ai';
+import { HiOutlineMail } from 'react-icons/hi';
+import { IoLocationOutline, IoStorefrontOutline } from 'react-icons/io5';
 
 export function ContactInfo({ doiTacInfo, nhan }) {
   return (
@@ -23,7 +23,7 @@ export function ContactInfo({ doiTacInfo, nhan }) {
           <div className="text-[14px] mt-2 overflow-hidden text-slate-800">
             <div className="flex flex-row gap-2 text-red-400">
               <IoStorefrontOutline className="py-auto" />
-              {doiTacInfo?.anhGiayPhepKinhDoanh ? "Doanh nghiệp" : "Cá nhân"}
+              {doiTacInfo?.anhGiayPhepKinhDoanh ? 'Doanh nghiệp' : 'Cá nhân'}
             </div>
             <div className="flex flex-row gap-2">
               <AiOutlinePhone className="py-auto" />
@@ -40,7 +40,7 @@ export function ContactInfo({ doiTacInfo, nhan }) {
         <IoLocationOutline className="text-[28px]" />
         {doiTacInfo?.diaChi}
       </div>
-      {nhan === "Hoàn thành" ? (
+      {nhan === 'Hoàn thành' ? (
         <p className="text-sm mt-4 w-full font-semibold text-emerald-500">
           Bất động sản đã hoàn thành giao dịch
         </p>

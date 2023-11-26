@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useBatDongSan } from "@/hooks/useBatDongSan";
-import { parseJSON } from "@/lib/utils";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { Carousel } from "react-responsive-carousel";
+import { useBatDongSan } from '@/hooks/useBatDongSan';
+import { parseJSON } from '@/lib/utils';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { Carousel } from 'react-responsive-carousel';
 
 const CURRENCY_FORMAT = new Intl.NumberFormat(undefined, {
-  currency: "VND",
-  style: "currency",
+  currency: 'VND',
+  style: 'currency',
 });
 export function formatCurrency(value: number) {
   return CURRENCY_FORMAT.format(value);
@@ -42,7 +42,7 @@ export const BatDongSanNoiBat = () => {
                   <img
                     src={url?.url}
                     className="w-full rounded-md lg:h-[180px] xl:h-[200px] md:h-[480px] h-[280px]"
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: 'cover' }}
                   />
                 ) : (
                   <></>
@@ -72,11 +72,11 @@ export const BatDongSanNoiBat = () => {
 };
 
 function BranchPost(type) {
-  return type?.type === "Yêu thích" ? (
+  return type?.type === 'Yêu thích' ? (
     <p className="bg-blue-500 w-[82px] h-[36px] rounded-md text-white text-[14px] text-center py-2">
       Yêu thích
     </p>
-  ) : type?.type === "Nổi bật" ? (
+  ) : type?.type === 'Nổi bật' ? (
     <p className="bg-red-500 w-[82px] h-[36px] rounded-md text-white text-[14px] text-center py-2">
       Nổi bật
     </p>
@@ -88,7 +88,7 @@ function BranchPost(type) {
 function HinhThuc(type) {
   return (
     <p className="bg-[#3E4C66] w-[82px] h-[36px] rounded-md text-white text-[14px] text-center py-2">
-      {type?.type === false ? "Đăng bán" : "Cho thuê"}
+      {type?.type === false ? 'Đăng bán' : 'Cho thuê'}
     </p>
   );
 }

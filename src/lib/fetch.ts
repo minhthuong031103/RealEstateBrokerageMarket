@@ -7,13 +7,26 @@ export const getRequest = async ({ endPoint }) => {
   return res;
 };
 
-export const postRequest = async ({ endPoint, formData, isFormData }) => {
+interface IPostRequest {
+  endPoint: string;
+  formData: any;
+  isFormData: boolean;
+  customHeaders?: any;
+}
+
+export const postRequest = async ({
+  endPoint,
+  formData,
+  isFormData,
+  customHeaders,
+}: IPostRequest) => {
   const res = await axiosClient.post(
     endPoint,
     isFormData ? formData : JSON.stringify(formData),
-    isFormData && {
+    {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        ...customHeaders,
+        'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
       },
     }
   );

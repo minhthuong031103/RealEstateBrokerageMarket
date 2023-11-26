@@ -5,12 +5,14 @@ import prisma from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 
 const page = async ({ searchParams }: { searchParams: any }) => {
+  console.log('🚀 ~ file: page.tsx:8 ~ page ~ searchParams:', searchParams);
   let email = null;
 
   jwt.verify(
     searchParams.payload,
     process.env.NEXT_PUBLIC_JWT_SECRET,
     async (err, decoded) => {
+      console.log('🚀 ~ file: page.tsx:14 ~ decoded:', decoded);
       if (err) {
         console.log(err);
         return;
@@ -64,9 +66,12 @@ const page = async ({ searchParams }: { searchParams: any }) => {
       //   });
     }
   );
+  if (!email) {
+    redirect('/auth/register');
+  }
   console.log('email', email);
-  if (!email) redirect('/auth/register');
   // send mail with defined transport object
+  console.log('🚀 ~ file: page.tsx:10 ~ page ~ email:', email);
 
   return (
     <>
@@ -75,10 +80,10 @@ const page = async ({ searchParams }: { searchParams: any }) => {
           <div className="mx-auto h-full flex w-full flex-col justify-center space-y-6 ">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
-                Your OTP code has been sent to your email
+                Mã OTP đã được gửi tới email của bạn
               </h1>
               <p className="text-sm text-muted-foreground">
-                Enter the 6 digits code to verify your account
+                Nhập mã gồm 6 chữ số để xác thực email
               </p>
             </div>
             <Otp email={email} />

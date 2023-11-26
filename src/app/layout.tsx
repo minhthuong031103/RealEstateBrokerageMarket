@@ -1,23 +1,22 @@
-import { ReduxProvider } from "@/redux/Provider";
-import "./globals.css";
-import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
-import { Toaster } from "react-hot-toast";
-import AuthProvider from "../../context/AuthProvider";
-import { QueryProvider } from "@/components/providers/QueryProvider";
+import './globals.css';
+import type { Metadata } from 'next';
+import { Montserrat } from 'next/font/google';
+import { Toaster } from 'react-hot-toast';
+import AuthProvider from '../../context/AuthProvider';
+import { QueryProvider } from '@/components/providers/QueryProvider';
 
 const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-mont",
-  weight: "500",
+  subsets: ['latin'],
+  variable: '--font-mont',
+  weight: '500',
 });
 
 const metadata: Metadata = {
-  title: "UITEstate",
-  description: "Real Estate By UIT",
+  title: 'UITEstate',
+  description: 'Real Estate By UIT',
   openGraph: {
     images: [
-      "https://wallpapers.com/images/hd/house-corner-architecture-7vl0mtz3dfxod0fd.webp",
+      'https://wallpapers.com/images/hd/house-corner-architecture-7vl0mtz3dfxod0fd.webp',
     ],
   },
 };
@@ -36,15 +35,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
       </head>
       <body
-        className={`${montserrat.variable} ${montserrat.style.fontWeight}`}
-        style={{ fontFamily: "'Nunito', sans-serif" }}
+        className={`${montserrat.variable} ${montserrat.style.fontWeight} font-mont`}
       >
         <QueryProvider>
           <AuthProvider>
-            <ReduxProvider>
-              <Toaster />
-              {children}
-            </ReduxProvider>
+            <Toaster />
+            {children}
           </AuthProvider>
         </QueryProvider>
       </body>

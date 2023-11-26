@@ -6,7 +6,7 @@ async function layout({ children }: { children: React.ReactNode }) {
     <div className="h-screen w-screen flex-row flex overflow-hidden">
       <AuthCarousel />
 
-      <div className="h-screen w-screen lg:w-1/2 overflow-auto">{children}</div>
+      <div className="h-full w-screen lg:w-1/2 overflow-auto">{children}</div>
     </div>
   );
 }

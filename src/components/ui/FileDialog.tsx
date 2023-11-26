@@ -124,7 +124,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
           <span className="sr-only">Tải ảnh lên</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[480px]">
+      <DialogContent className="w-[90%] lg:w-[30%]">
         <p className="absolute left-5 top-4 text-base font-medium text-muted-foreground">
           Tải ảnh của bạn lên
         </p>

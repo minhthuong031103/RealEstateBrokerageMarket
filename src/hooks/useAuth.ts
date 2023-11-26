@@ -1,7 +1,7 @@
 import { getRequest, postRequest, putRequest } from '@/lib/fetch';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useQuery } from '@tanstack/react-query';
 
 export const useAuth = () => {
@@ -15,7 +15,7 @@ export const useAuth = () => {
     });
     callback?.();
 
-    if (response?.message === 'User already exists') {
+    if (response?.message === 'Tài khoản đã được đăng ký') {
       toast.error(response.message);
     }
     if (response?.message === 'User created') {
@@ -25,32 +25,25 @@ export const useAuth = () => {
   };
 
   const onRegister = async (data, callback) => {
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      }),
+    console.log('🚀 ~ file: useAuth.ts:28 ~ onRegister ~ data:', data);
+    const res = await postRequest({
+      endPoint: '/api/auth/register',
+      isFormData: true,
+      formData: data,
     });
 
-    const response = await res.json();
-
-    if (response?.message === 'User already exists') {
+    if (res?.message === 'Tài khoản đã được đăng ký') {
       callback?.();
-      toast.error(response.message);
+      toast.error(res.message);
     }
-    if (response?.message === 'User created and OTP sent') {
+    if (res?.message === 'Đăng ký thành công, vui lòng xác thực OTP') {
       await signIn('credentials', {
-        email: data.email,
-        password: data.password,
+        email: data.get('email'),
+        password: data.get('password'),
         redirect: false,
       });
       callback?.();
-      router.push(`/auth/register/otp?payload=${response.payload}`);
+      router.push(`/auth/register/otp?payload=${res.payload}`);
     }
   };
 
@@ -82,7 +75,7 @@ export const useAuth = () => {
     toast.success('OTP has been sent to your email');
   };
   const onFirstSend = async (data) => {
-    toast.success('OTP has been sent to your email');
+    toast.success('OTP đã được gửi đến email của bạn');
     await putRequest({
       endPoint: '/api/auth/register/otp',
 
@@ -102,7 +95,10 @@ export const useAuth = () => {
       },
     });
   };
-
+  const getSessionClient = () => {
+    const session = useSession();
+    return session?.data?.user?.id;
+  };
   return {
     onRegister,
     onRegister1,
@@ -110,5 +106,6 @@ export const useAuth = () => {
     onVerifyOtp,
     onFirstSend,
     queryUser,
+    getSessionClient,
   };
 };

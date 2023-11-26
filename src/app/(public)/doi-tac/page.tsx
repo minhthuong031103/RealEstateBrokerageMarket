@@ -1,6 +1,6 @@
-import { BatDongSanNoiBat } from "../bat-dong-san/(components)/BatDongSanNoiBat";
-import { CacLoaiHinhBatDongSan } from "../bat-dong-san/(components)/CacLoaiHinhBatDongSan";
-import { ListComponent } from "./(components)/ListComponent";
+import { BatDongSanNoiBat } from '../bat-dong-san/(components)/BatDongSanNoiBat';
+import { CacLoaiHinhBatDongSan } from '../bat-dong-san/(components)/CacLoaiHinhBatDongSan';
+import { ListComponent } from './(components)/ListComponent';
 
 async function page() {
   return (

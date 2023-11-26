@@ -1,8 +1,14 @@
-"use client";
-import { Separator } from "@/components/ui/separator";
-import { BatDongSanNoiBat } from "../../bat-dong-san/(components)/BatDongSanNoiBat";
-import { CacLoaiHinhBatDongSan } from "../../bat-dong-san/(components)/CacLoaiHinhBatDongSan";
-import { ListComponent } from "./ListComponent";
+'use client';
+import { Separator } from '@/components/ui/separator';
+import { CacLoaiHinhBatDongSan } from '../../bat-dong-san/(components)/CacLoaiHinhBatDongSan';
+import { ListComponent } from './ListComponent';
+import { BatDongSanNoiBat } from '../../bat-dong-san/(components)/BatDongSanNoiBat';
+// const BatDongSanNoiBat = dynamic(
+//   () => import('../../bat-dong-san/(components)/BatDongSanNoiBat'),
+//   {
+//     ssr: false,
+//   }
+// );
 
 export interface searchType {
   searchWord: string;

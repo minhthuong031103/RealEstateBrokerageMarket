@@ -16,6 +16,7 @@ import { CheckIcon } from 'lucide-react';
 import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import { MuaLe } from './MuaLe';
+import ManageButton from './ManageButton';
 
 const page = async () => {
   const currentlyPlan = await getUserSubscriptionPlan();
@@ -142,7 +143,7 @@ const page = async () => {
                   />
                 ) : null}
                 {product.id === subscribedPlan?.id ? (
-                  <UpgradeButton
+                  <ManageButton
                     product={plans.data.find((p) => p.product === product.id)}
                   />
                 ) : null}

@@ -7,22 +7,24 @@ export const metadata: Metadata = {
   title: 'Authentication',
   description: 'Authentication forms built using the components.',
 };
-
-const LoginPage = async ({ searchParams }: { searchParams: unknown }) => {
+const LoginPage = async ({ searchParams }: { searchParams: any }) => {
   let email = null;
   let name = null;
-  jwt.verify(
-    searchParams.payload,
-    process.env.NEXT_PUBLIC_JWT_SECRET,
-    (err, decoded) => {
-      if (err) {
-        console.log(err);
-        return;
+  if (searchParams.payload) {
+    jwt.verify(
+      searchParams.payload,
+      process.env.NEXT_PUBLIC_JWT_SECRET,
+      (err, decoded) => {
+        console.log('🚀 ~ file: page.tsx:19 ~ LoginPage ~ decoded:', decoded);
+        if (err) {
+          console.log(err);
+          return;
+        }
+        email = decoded?.email;
+        name = decoded?.name;
       }
-      email = decoded?.email;
-      name = decoded?.name;
-    }
-  );
+    );
+  }
 
   return (
     <>

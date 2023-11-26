@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const searchParams = new URLSearchParams(url.search);
-  const userId = searchParams.get('id');
+  const userId = searchParams.get('userId');
   if (!userId) {
     return { status: 400, body: { message: 'userId is required' } };
   }

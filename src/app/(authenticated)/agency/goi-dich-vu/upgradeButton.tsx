@@ -24,7 +24,7 @@ const UpgradeButton = ({ product }) => {
         onSubmit();
       }}
     >
-      Quản lý gói đăng ký <ArrowRight className="w-5 h-5 ml-1.5" />
+      Đăng ký ngay <ArrowRight className="w-5 h-5 ml-1.5" />
     </Button>
   );
 };

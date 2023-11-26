@@ -1,40 +1,58 @@
 import prisma from '@/lib/prisma';
+import { uploadthingApi } from '@/lib/uploadthingServer';
 import jwt from 'jsonwebtoken';
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  const body = await req.formData();
+  const email = body.get('email') as string;
+  const name = body.get('name') as string;
+  const password = body.get('password') as string;
+  const cmndMatTruoc = body.get('cmndMatTruoc');
+  const cmndMatSau = body.get('cmndMatSau');
+  const maSoCmnd = body.get('maSoCmnd') as string;
+  if (!email || !name || !password || !cmndMatTruoc || !cmndMatSau)
+    return new Response('no body', { status: 400 });
+
   if (!body) return new Response('no body', { status: 400 });
+
   try {
     const user = await prisma.user.findUnique({
       where: {
-        email: body.email,
+        email: email,
       },
     });
     if (user)
       return new Response(
         JSON.stringify({
-          message: 'User already exists',
+          message: 'Tài khoản đã được đăng ký',
           status: 400,
         })
       );
+    const cmndUrl = await uploadthingApi.uploadFiles([
+      cmndMatTruoc,
+      cmndMatSau,
+    ]);
 
     const create = await prisma.user.create({
       data: {
-        email: body.email,
-        name: body.name,
-        password: body.password,
-        phoneNumber: '1231',
+        email: email,
+        name: name,
+        password: password,
+        anhCCCDTruoc: cmndUrl[0].data.url,
+        anhCCCDSau: cmndUrl[1].data.url,
+        duyetKhachHang: 'cho_duyet',
+        maSoCmnd: maSoCmnd,
       },
     });
     if (create) {
       const payload = jwt.sign(
-        { email: body.email, name: body.name },
+        { email: email, name: name },
         process.env.NEXT_PUBLIC_JWT_SECRET,
-        { expiresIn: '5s' }
+        { expiresIn: '30s' }
       );
       return new Response(
         JSON.stringify({
-          message: 'User created and OTP sent',
+          message: 'Đăng ký thành công, vui lòng xác thực OTP',
           payload: payload,
           status: 200,
         })

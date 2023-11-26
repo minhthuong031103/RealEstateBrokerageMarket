@@ -14,6 +14,7 @@ export const Otp = ({ email }) => {
   const { onSendAgain, onVerifyOtp, onFirstSend } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const { update, data: session } = useSession();
+  console.log('🚀 ~ file: Otp.tsx:17 ~ Otp ~ session:', session);
   useEffect(() => {
     let timer;
     if (counter > 0 && !canResend) {
@@ -56,13 +57,13 @@ export const Otp = ({ email }) => {
         }}
       />
       <div className="w-full items-center justify-center flex flex-wrap gap-x-3">
-        <div className="font-semibold">Didn't receive your code?</div>
+        <div className="font-semibold">Không nhận được mã OTP?</div>
         <button
           onClick={handleResend}
           disabled={!canResend}
           className={`font-bold underline ${!canResend ? 'text-gray-400' : ''}`}
         >
-          Send Again ({counter}s)
+          Gửi lại ({counter}s)
         </button>
       </div>
       <Button
@@ -87,7 +88,7 @@ export const Otp = ({ email }) => {
         }}
         className="w-[100px]"
       >
-        Verify
+        Xác thực
       </Button>
     </div>
   );

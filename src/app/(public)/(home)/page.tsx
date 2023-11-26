@@ -1,10 +1,19 @@
-import React from "react";
-import SearchHome from "./(components)/SearchHome";
-import TypeCollection from "./(components)/TypeCollection";
-import BatDongSanNoiBatHome from "./(components)/BatDongSanNoiBat";
-import BatDongSanKhuVuc from "./(components)/BatDongSanKhuVuc";
-import Banner from "./(components)/Banner";
-import FindMore from "./(components)/FindMore";
+import React from 'react';
+import dynamic from 'next/dynamic';
+import SearchHome from './(components)/SearchHome';
+import TypeCollection from './(components)/TypeCollection';
+const BatDongSanNoiBatHome = dynamic(
+  () => import('./(components)/BatDongSanNoiBat'),
+  { ssr: false }
+);
+const BatDongSanKhuVuc = dynamic(
+  () => import('./(components)/BatDongSanKhuVuc'),
+  { ssr: false }
+);
+const Banner = dynamic(() => import('./(components)/Banner'), { ssr: false });
+const FindMore = dynamic(() => import('./(components)/FindMore'), {
+  ssr: false,
+});
 
 const page = async () => {
   return (
