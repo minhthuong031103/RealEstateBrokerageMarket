@@ -86,10 +86,10 @@ export const useAuth = () => {
 
   const queryUser = (session) => {
     return useQuery({
-      queryKey: ['user'],
+      queryKey: ['user', session?.data?.user?.id],
       queryFn: async () => {
         const res = await getRequest({
-          endPoint: `/api/user?id=${session?.data?.user?.id}`,
+          endPoint: `/api/user?userId=${session?.data?.user?.id}`,
         });
         return res;
       },

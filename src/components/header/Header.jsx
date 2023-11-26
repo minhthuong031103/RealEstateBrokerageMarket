@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import './styles.css';
-import { Button } from "@nextui-org/react";
+import { Button } from '@nextui-org/react';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar';
 import { signOut } from 'next-auth/react';
@@ -25,7 +25,7 @@ import { useRouter } from 'next/navigation';
 const avatarNav = [
   {
     name: 'Hồ sơ',
-    href: '/agency',
+    href: '/user',
   },
   {
     name: 'Tin nhắn',
@@ -105,8 +105,14 @@ const NavigationMenuDemo = ({ session }) => {
             <NavigationMenu.Viewport className="NavigationMenuViewport" />
           </div>
         </NavigationMenu.Root>
-        <Link href={'/agency'}>        
-        <Button className="w-48 bg-red-400 text-white font-medium shadow-lg transition ease-in-out hover:scale-105 hover:shadow-red-200" variant='shadow' radius='sm'>Dành cho đối tác</Button>
+        <Link href={'/agency'}>
+          <Button
+            className="w-48 bg-red-400 text-white font-medium shadow-lg transition ease-in-out hover:scale-105 hover:shadow-red-200"
+            variant="shadow"
+            radius="sm"
+          >
+            Dành cho đối tác
+          </Button>
         </Link>
         {user ? (
           <div className="flex flex-row gap-5 items-center justify-center">
@@ -116,9 +122,15 @@ const NavigationMenuDemo = ({ session }) => {
                   <AiOutlineHeart className="text-slate-600 stroke-zinc-950 w-4 h-4 " />
                 }
               </Button> */}
-              <Button isIconOnly  radius='sm' variant='bordered' className='ml-2 border-1 font-medium border-red-400 text-red-400 hover:bg-red-400 hover:text-white transition ease-in-out hover:scale-105 border-solid' aria-label="Like">
-                <AiOutlineHeart className='w-4 h-4'/>
-              </Button> 
+              <Button
+                isIconOnly
+                radius="sm"
+                variant="bordered"
+                className="ml-2 border-1 font-medium border-red-400 text-red-400 hover:bg-red-400 hover:text-white transition ease-in-out hover:scale-105 border-solid"
+                aria-label="Like"
+              >
+                <AiOutlineHeart className="w-4 h-4" />
+              </Button>
             </Link>
             <div className="w-full h-full">
               <Dropdown
@@ -157,7 +169,7 @@ const NavigationMenuDemo = ({ session }) => {
                     >
                       <div className="flex flex-row gap-2 items-center h-8  ">
                         <div className="">{AuthSvg.signIn()}</div>
-                        <div>Logout</div>
+                        <div>Đăng xuất</div>
                       </div>
                     </DropdownItem>
                   </DropdownSection>
@@ -192,7 +204,13 @@ const NavigationMenuDemo = ({ session }) => {
           </div>
         ) : (
           <Link href={'/auth/login'}>
-            <Button className="w-[70px] ml-2 border-1 font-medium border-red-400 text-red-400 hover:bg-red-400 hover:text-white transition ease-in-out hover:scale-105 border-solid" variant="bordered" radius='sm'>Login</Button>
+            <Button
+              className="w-[70px] ml-2 border-1 font-medium border-red-400 text-red-400 hover:bg-red-400 hover:text-white transition ease-in-out hover:scale-105 border-solid"
+              variant="bordered"
+              radius="sm"
+            >
+              Login
+            </Button>
           </Link>
         )}
       </div>
