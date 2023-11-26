@@ -123,6 +123,7 @@ const Body = ({ session }) => {
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor || null,
         keepPreviousData: true,
+        refetchOnWindowFocus: false,
       }
     );
   };
@@ -132,6 +133,10 @@ const Body = ({ session }) => {
     useInfiniteMessagesQuery(conversationId, pageSize);
   const [newMessage, setNewMessage] = useState('');
   const [temporaryMessages, setTemporaryMessages] = useState([]);
+  console.log(
+    '🚀 ~ file: Body.tsx:135 ~ Body ~ temporaryMessages:',
+    temporaryMessages
+  );
   const handleNewMessageChange = (e) => {
     setNewMessage(e.target.value);
   };
@@ -273,7 +278,7 @@ const Body = ({ session }) => {
       <div className="w-full h-[75%]">
         <div
           id="scrollableDiv"
-          className="h-[650px] lg:h-[550px] w-full overflow-y-auto flex flex-col-reverse "
+          className="h-[670px] lg:h-[530px] w-full overflow-y-auto flex flex-col-reverse "
         >
           <InfiniteScroll
             dataLength={
@@ -285,7 +290,7 @@ const Body = ({ session }) => {
                 : 0
             }
             next={() => {
-              toast.success('fetching next page');
+              // toast.success('fetching next page');
               fetchNextPage();
             }}
             style={{
@@ -297,9 +302,12 @@ const Body = ({ session }) => {
             loader={<h4>Loading...</h4>}
             scrollableTarget="scrollableDiv"
           >
-            {temporaryMessages.map((message) => (
-              <NewMessage key={message.id} data={message} />
-            ))}
+            {temporaryMessages
+              .slice() // Create a shallow copy to avoid modifying the original array
+              .reverse() // Reverse the order
+              .map((message) => (
+                <NewMessage key={message.id} data={message} />
+              ))}
             {data?.pages.map((page, index) => (
               <React.Fragment key={index}>
                 {page.messages.map((message) => (

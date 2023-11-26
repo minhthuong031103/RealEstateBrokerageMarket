@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useMemo } from 'react';
 import clsx from 'clsx';
@@ -21,13 +21,13 @@ const ConversationList: React.FC<ConversationListProps> = ({
 }) => {
   // const [items, setItems] = useState(initialItems);
   // console.log("🚀 ~ file: ConversationList.tsx:21 ~ initialItems:", initialItems)
-
+  const params = useParams();
+  console.log('🚀 ~ file: ConversationList.tsx:25 ~ params:', params);
   const router = useRouter();
   const session = useSession();
   console.log('🚀 ~ file: ConversationList.tsx:47 ~ session:', session);
 
   const { conversationId, isOpen } = useConversation();
-
   const pusherKey = useMemo(() => {
     return session.data?.user?.email;
   }, [session.data?.user?.email]);
@@ -59,13 +59,14 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   const { data, error, isFetching, fetchNextPage, hasNextPage } =
     useInfiniteMessagesQuery(pageSize);
-  console.log('🚀 ~ file: ConversationList.tsx:60 ~ data:', data);
+
+  // if()
   return (
     <>
       <aside
         className={clsx(
           `
-
+w-full h-full
         pb-20
         lg:pb-0 
         lg:block

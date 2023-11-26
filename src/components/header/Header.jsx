@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import './styles.css';
+import { FiMessageSquare } from 'react-icons/fi';
 import { Button } from '@nextui-org/react';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar';
@@ -29,7 +30,7 @@ const avatarNav = [
   },
   {
     name: 'Tin nhắn',
-    href: '/admin/add-product',
+    href: '/conversations',
   },
 ];
 
@@ -132,6 +133,24 @@ const NavigationMenuDemo = ({ session }) => {
                 <AiOutlineHeart className="w-4 h-4" />
               </Button>
             </Link>
+
+            <Link href={'/conversations'}>
+              {/* <Button variant="outline" size="icon" className="relative">
+                {
+                  <AiOutlineHeart className="text-slate-600 stroke-zinc-950 w-4 h-4 " />
+                }
+              </Button> */}
+              <Button
+                isIconOnly
+                radius="sm"
+                variant="bordered"
+                className="border-1 font-medium hover:text-white transition ease-in-out hover:scale-105 border-solid"
+                aria-label="Like"
+              >
+                <FiMessageSquare className="w-4 h-4" />
+              </Button>
+            </Link>
+
             <div className="w-full h-full">
               <Dropdown
                 shouldBlockScroll={true}

@@ -63,12 +63,10 @@ export const useChatSocket = ({
 
     socket.on('onMessage', (message) => {
       // Handle the received message, e.g., by updating the state
-      callback(message);
+      callback?.(message);
       console.log(message);
     });
     return () => {
-      socket.off(addKey);
-      socket.off(updateKey);
       socket.disconnect();
     };
   }, [socket]);

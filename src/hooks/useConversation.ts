@@ -7,6 +7,7 @@ const useConversation = () => {
   const router = useRouter();
 
   const goToConversation = async (userOneId, userTwoId) => {
+    if (!userOneId || !userTwoId) return;
     const res: any = await postRequest({
       endPoint: `${process.env.NEXT_PUBLIC_SOCKET_URL}/conversations`,
       formData: { userOneId, userTwoId },

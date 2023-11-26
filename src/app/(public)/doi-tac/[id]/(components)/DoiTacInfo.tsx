@@ -62,7 +62,7 @@ export const DoiTacInfo = ({ id }) => {
         }}
         className="mt-4 w-[94%] lg:w-[50%]"
       >
-        Liên hệ
+        Liên hệsdsad
       </Button>
     </div>
   );
