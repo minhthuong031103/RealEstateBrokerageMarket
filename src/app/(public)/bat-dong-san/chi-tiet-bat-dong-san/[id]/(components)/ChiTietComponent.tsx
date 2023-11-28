@@ -39,7 +39,7 @@ export type ToaDoDiaChi = {
   lon: number;
 };
 
-export function ChiTietComponent({ id }) {
+export function ChiTietComponent({ id, session }) {
   const [chiTietBDS, setChiTietBDS] = useState();
   const [toaDo, setToaDo] = useState<ToaDoDiaChi>();
   const { fetchBatDongSanTheoId } = useBatDongSan();
@@ -84,6 +84,7 @@ export function ChiTietComponent({ id }) {
                   <LikeShareGroup
                     userIdOfWriter={chiTietBDS?.userId}
                     postId={parseInt(id)}
+                    session={session}
                   />
                 </div>
               </div>
@@ -102,7 +103,7 @@ export function ChiTietComponent({ id }) {
                       {chiTietBDS?.loaiHinh?.name}
                     </div>
                     {chiTietBDS?.loaiHinh?.loaiBDS?.name === "Căn hộ" ||
-                      chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
+                    chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
                       <>
                         <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
                           Nhà tắm: {chiTietBDS?.soPhongTam}
@@ -256,7 +257,7 @@ export function ChiTietComponent({ id }) {
                           </div>
                         )}
                       </>
-                    ) :  (
+                    ) : (
                       <></>
                     )}
                     <div className="flex flex-row">

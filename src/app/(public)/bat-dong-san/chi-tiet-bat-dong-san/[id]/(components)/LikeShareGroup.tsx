@@ -5,10 +5,10 @@ import { Snippet } from "@nextui-org/react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
 import { useBatDongSan } from "@/hooks/useBatDongSan";
-export function LikeShareGroup({ userIdOfWriter, postId }) {
+export function LikeShareGroup({ userIdOfWriter, postId, session }) {
   const { checkTonTaiYeuThich, themVaoYeuThich, xoaKhoiYeuThich } =
     useBatDongSan();
-  const userId = 9;
+  const userId = session?.user?.id ? session?.user?.id : -1;
   const [isExists, setIsExists] = useState(true);
   useEffect(() => {
     const checkExist = async () => {
@@ -38,14 +38,14 @@ export function LikeShareGroup({ userIdOfWriter, postId }) {
   };
   return (
     <div className="flex flex-row space-x-4">
-      {userId !== userIdOfWriter && isExists ? (
+      {userId !== userIdOfWriter && isExists && userId !== -1 ? (
         <Button
           className="rounded-full text-slate-50 bg-red-400 w-[42px] h-[42px] text-[24px] p-0 hover:bg-pink-500 transition ease-in-out duration-200 hover:scale-[1.2]"
           onClick={removeFromFavourites}
         >
           <AiOutlineHeart />
         </Button>
-      ) : userId !== userIdOfWriter && !isExists ? (
+      ) : userId !== userIdOfWriter && !isExists && userId !== -1 ? (
         <Button
           className="rounded-full bg-slate-50 text-neutral-800 w-[42px] h-[42px] text-[24px] p-0 hover:bg-slate-50 hover:text-pink-500 transition ease-in-out duration-200 hover:scale-[1.2]"
           onClick={addToFavourites}

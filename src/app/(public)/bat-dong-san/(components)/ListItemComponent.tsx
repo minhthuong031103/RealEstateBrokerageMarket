@@ -64,7 +64,7 @@ export function ListItemComponent({ item }) {
             </p>
           </div>
           <div className="mt-6 space-y-2 mb-6">
-            <div className="text-red-500 text-sm flex flex-row gap-1">
+            <div className="text-red-500 text-sm flex flex-row gap-1 items-center">
               {item?.loaiHinh?.loaiBDS?.name === "Căn hộ" ? (
                 <MdApartment />
               ) : item?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
@@ -79,7 +79,7 @@ export function ListItemComponent({ item }) {
             </div>
             <div className="text-neutral-600 text-base">{item?.tieuDe}</div>
             <div className="text-neutral-500 text-sm leading-6">
-              <IoLocationOutline className="text-base float-left mr-1" />
+              <IoLocationOutline className="text-base float-left mr-1 mt-1" />
               {item?.diaChi}
             </div>
             <div className="text-neutral-500 text-sm flex justify-between gap-4 flex-wrap">
@@ -129,7 +129,7 @@ function BranchPost(type) {
       Nổi bật
     </p>
   ) : type?.type === "Hoàn thành" ? (
-    <p className="bg-emerald-500 w-[82px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
+    <p className="bg-emerald-500 w-[100px] h-[20px] rounded-md text-white text-[14px] text-center py-2">
       Hoàn thành
     </p>
   ) : (

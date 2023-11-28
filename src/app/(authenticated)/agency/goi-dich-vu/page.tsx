@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
-import React from 'react';
-import { getUserSubscriptionPlan, stripe } from '@/lib/stripe';
-import UpgradeButton from './upgradeButton';
+import React from "react";
+import { getUserSubscriptionPlan, stripe } from "@/lib/stripe";
+import UpgradeButton from "./upgradeButton";
 import {
   Card,
   CardContent,
@@ -10,13 +10,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { cn, currencyFormat } from '@/lib/utils';
-import { CheckIcon } from 'lucide-react';
-import prisma from '@/lib/prisma';
-import { getSession } from '@/lib/auth';
-import { MuaLe } from './MuaLe';
-import ManageButton from './ManageButton';
+} from "@/components/ui/card";
+import { cn, convertPrismaTimeToDateTime, currencyFormat } from "@/lib/utils";
+import { CheckIcon } from "lucide-react";
+import prisma from "@/lib/prisma";
+import { getSession } from "@/lib/auth";
+import { MuaLe } from "./MuaLe";
+import ManageButton from "./ManageButton";
 
 const page = async () => {
   const currentlyPlan = await getUserSubscriptionPlan();
@@ -45,55 +45,72 @@ const page = async () => {
     return getPriceForProduct(a.id) - getPriceForProduct(b.id);
   });
 
-  console.log('subscribedPlan', subscribedPlan);
+  console.log("subscribedPlan", subscribedPlan);
   return (
     <div className="w-full h-full">
-      <div className="mx-auto mb-10 sm:max-w-lg ">
-        <h1 className="text-6xl font-bold sm:text-7xl ">Pricing</h1>
+      <div className="mx-10 mb-10">
+        <h1 className="font-bold text-2xl mt-6">Thông tin gói dịch vụ</h1>
 
-        <p className="mt-5 text-gray-600 sm:text-lg">
+        <p className="mt-5 text-slate-800 sm:text-lg mb-1">
           Cho dù bạn chỉ đang thử nghiệm UIT Estate hoặc đang kinh doanh, chúng
           tôi có một gói phù hợp với bạn.
         </p>
         {currentlyPlan?.isSubscribed ? (
-          <p>
-            Bạn hiện đang đăng ký gói{' '}
+          <p className="text-gray-500 mb-3">
+            Bạn hiện đang đăng ký gói{" "}
             <span className="font-bold">{subscribedPlan?.name}</span>.
           </p>
         ) : (
-          <p>
+          <p className="text-gray-500 mb-3">
             Bạn chưa đăng ký gói nào. Hãy đăng ký ngay để trải nghiệm tất cả các
             tính năng của UIT Estate
           </p>
         )}
-        <p>
-          Bạn hiện có <span className="font-bold"> {user?.luot}</span> lượt đăng
-          bài viết.
-        </p>
-        <p>
-          Bạn hiện có{' '}
-          <span className="font-bold"> {user?.luotChuyenNghiep}</span> lượt đăng
-          bài viết <span className="font-bold"> Nổi bật</span>.
-        </p>
-        <p>
-          Bạn hiện có <span className="font-bold"> {user?.luotVip}</span> lượt
-          đăng bài viết <span className="font-bold"> Yêu thích</span>.
-        </p>
-        <MuaLe />
-        <p>
-          {currentlyPlan.isCanceled
-            ? `Gói đăng ký của bạn đã được hủy và sẽ hết hạn vào ${new Date(
-                currentlyPlan.stripeCurrentPeriodEnd
-              ).toLocaleDateString()}`
-            : currentlyPlan.isSubscribed
-            ? `Gói đăng ký của bạn sẽ được làm mới vào ${new Date(
-                currentlyPlan.stripeCurrentPeriodEnd
-              ).toLocaleDateString()} `
-            : null}
+        <div className="flex flex-row flex-wrap gap-3 text-slate-800">
+          <p>Bạn hiện có </p>
+          <div>
+            <p>
+              <span className="font-bold text-gray-500"> {user?.luot}</span>{" "}
+              lượt đăng bài viết.
+            </p>
+            <p>
+              <span className="font-bold text-blue-500">
+                {" "}
+                {user?.luotChuyenNghiep}
+              </span>{" "}
+              lượt đăng bài viết <span className="font-bold"> Yêu thích</span>.
+            </p>
+            <p>
+              <span className="font-bold text-red-500"> {user?.luotVip}</span>{" "}
+              lượt đăng bài viết <span className="font-bold"> Nổi bật</span>.
+            </p>
+            <MuaLe />
+          </div>
+        </div>
+        <p className="mt-2">
+          {currentlyPlan.isCanceled ? (
+            <p>
+              Gói đăng ký của bạn đã được hủy và sẽ hết hạn vào{" "}
+              <span className="font-semibold">
+                {convertPrismaTimeToDateTime(
+                  currentlyPlan.stripeCurrentPeriodEnd
+                )}
+              </span>
+            </p>
+          ) : currentlyPlan.isSubscribed ? (
+            <p>
+              Gói đăng ký của bạn sẽ được làm mới vào{" "}
+              <span className="font-semibold">
+                {convertPrismaTimeToDateTime(
+                  currentlyPlan.stripeCurrentPeriodEnd
+                )}
+              </span>
+            </p>
+          ) : null}
         </p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3 mx-10 ">
         {sortedProductsData?.map((product, i) => {
           const price = plans.data.find(
             (p) => p.product === product.id
@@ -102,11 +119,10 @@ const page = async () => {
             <Card
               key={product.name}
               className={cn(
-                'flex flex-col',
-                i === products.data.length - 1 &&
-                  'border-destructive shadow-md',
-                i === 1 && 'border-primary shadow-md',
-                i === 0 && 'border-muted shadow-md'
+                "flex flex-col transition ease-in-out hover:scale-[101%]",
+                i === products.data.length - 1 && "border-red-500 shadow-md",
+                i === 1 && "border-blue-500 shadow-md",
+                i === 0 && "border-muted shadow-md"
               )}
             >
               <CardHeader>
@@ -129,8 +145,11 @@ const page = async () => {
                         key={feature.name}
                         className="flex items-center gap-2"
                       >
-                        <CheckIcon className="h-4 w-4" aria-hidden="true" />
-                        <span>{feature.name}</span>
+                        <CheckIcon
+                          className="h-4 w-4 text-emerald-500"
+                          aria-hidden="true"
+                        />
+                        <div>{feature.name}</div>
                       </div>
                     );
                   })}

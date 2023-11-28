@@ -1,17 +1,17 @@
-'use client';
-import { Button } from '@/components/ui/button';
-import useConversation from '@/hooks/useConversation';
-import { useDoiTac } from '@/hooks/useDoiTac';
-import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
-import { AiOutlinePhone } from 'react-icons/ai';
-import { HiOutlineMail } from 'react-icons/hi';
-import { IoLocationOutline, IoStorefrontOutline } from 'react-icons/io5';
+"use client";
+import { Button } from "@/components/ui/button";
+import useConversation from "@/hooks/useConversation";
+import { useDoiTac } from "@/hooks/useDoiTac";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { AiOutlinePhone } from "react-icons/ai";
+import { HiOutlineMail } from "react-icons/hi";
+import { IoLocationOutline, IoStorefrontOutline } from "react-icons/io5";
 export const DoiTacInfo = ({ id }) => {
-  console.log('🚀 ~ file: DoiTacInfo.tsx:11 ~ DoiTacInfo ~ id:', id);
+  console.log("🚀 ~ file: DoiTacInfo.tsx:11 ~ DoiTacInfo ~ id:", id);
   const [doiTacInformation, setDoiTacInformation] = useState();
   const session = useSession();
-  console.log('🚀 ~ file: DoiTacInfo.tsx:13 ~ DoiTacInfo ~ session:', session);
+  console.log("🚀 ~ file: DoiTacInfo.tsx:13 ~ DoiTacInfo ~ session:", session);
   const { goToConversation } = useConversation();
   const { fetchDoiTacTheoId } = useDoiTac();
   useEffect(() => {
@@ -35,24 +35,24 @@ export const DoiTacInfo = ({ id }) => {
             {doiTacInformation?.name}
           </div>
           <div className="text-[14px] mt-2">
-            <div className="flex flex-row gap-2 text-red-400">
+            <div className="flex flex-row items-center gap-2 text-red-400">
               <IoStorefrontOutline className="py-auto" />
               {doiTacInformation?.anhGiayPhepKinhDoanh
-                ? 'Doanh nghiệp'
-                : 'Cá nhân'}
+                ? "Doanh nghiệp"
+                : "Cá nhân"}
             </div>
-            <div className="flex flex-row gap-2 w-full">
+            <div className="flex flex-row items-center gap-2 w-full">
               <AiOutlinePhone className="py-auto" />
               {doiTacInformation?.phoneNumber}
             </div>
-            <div className="flex flex-row gap-2 w-full">
+            <div className="flex flex-row items-center gap-2 w-full">
               <HiOutlineMail />
               {doiTacInformation?.email}
             </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-row gap-2 text-[14px] mt-1 text-gray-400">
+      <div className="flex flex-row items-center gap-2 text-[14px] mt-1 text-gray-400">
         <IoLocationOutline className="text-[24px]" />
         {doiTacInformation?.diaChi}
       </div>
@@ -62,7 +62,7 @@ export const DoiTacInfo = ({ id }) => {
         }}
         className="mt-4 w-[94%] lg:w-[50%]"
       >
-        Liên hệsdsad
+        Liên hệ
       </Button>
     </div>
   );

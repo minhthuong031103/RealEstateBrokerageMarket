@@ -60,7 +60,7 @@ export function ListItemNoiBat({ item }) {
           </p>
         </div>
         <div className="mt-6 space-y-2 mb-6">
-          <div className="text-red-500 text-sm flex flex-row gap-1">
+          <div className="text-red-500 text-sm flex flex-row gap-1 items-center">
             {item?.loaiHinh?.loaiBDS?.name === "Căn hộ" ? (
               <MdApartment />
             ) : item?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
@@ -74,8 +74,8 @@ export function ListItemNoiBat({ item }) {
             {item?.loaiHinh?.name}
           </div>
           <div className="text-neutral-600 text-base">{item?.tieuDe}</div>
-          <div className="text-neutral-500 text-sm leading-6">
-            <IoLocationOutline className="text-base float-left mr-1" />
+          <div className="text-neutral-500 text-sm leading-6 items-center">
+            <IoLocationOutline className="text-base float-left mr-1 mt-1" />
             {item?.diaChi}
           </div>
           <div className="text-neutral-500 text-sm flex justify-between gap-4 flex-wrap">
