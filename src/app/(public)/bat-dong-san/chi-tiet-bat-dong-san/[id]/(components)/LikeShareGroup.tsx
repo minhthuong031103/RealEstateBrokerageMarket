@@ -10,6 +10,7 @@ export function LikeShareGroup({ userIdOfWriter, postId, session }) {
     useBatDongSan();
   const userId = session?.user?.id ? session?.user?.id : -1;
   const [isExists, setIsExists] = useState(true);
+  const [url, setUrl] = useState("");
   useEffect(() => {
     const checkExist = async () => {
       await checkTonTaiYeuThich(userId, postId).then((data) => {
@@ -19,6 +20,7 @@ export function LikeShareGroup({ userIdOfWriter, postId, session }) {
       });
     };
     checkExist();
+    setUrl(window.location.href);
   }, []);
   const addToFavourites = async () => {
     setIsExists(true);
@@ -66,7 +68,7 @@ export function LikeShareGroup({ userIdOfWriter, postId, session }) {
             <div className="flex flex-col gap-2">
               Share
               <a
-                href={`https://www.facebook.com/dialog/share?app_id=87741124305&href=${window.location.href}&display=popup`}
+                href={`https://www.facebook.com/dialog/share?app_id=87741124305&href=${url}&display=popup`}
               >
                 <img
                   src="https://th.bing.com/th/id/OIP.CDaJK2XeVL95udO-fw0uKwHaHa?pid=ImgDet&rs=1"
@@ -76,7 +78,7 @@ export function LikeShareGroup({ userIdOfWriter, postId, session }) {
             </div>
             <div className="flex flex-col gap-2 mt-6">
               Sao chép địa chỉ liên kết
-              <Snippet variant="bordered">{window.location.href}</Snippet>
+              <Snippet variant="bordered">{url}</Snippet>
             </div>
           </div>
         </DialogContent>

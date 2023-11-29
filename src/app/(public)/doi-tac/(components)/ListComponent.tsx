@@ -1,6 +1,6 @@
 "use client";
 import { useDoiTac } from "@/hooks/useDoiTac";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ListItemComponent } from "./ListItemComponent";
 import { Pagination } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";

@@ -59,10 +59,10 @@ export const CanHoForm = ({
           <div className="font-bold text-sm"> Bản vẽ thiết kế</div>
           <div className="h-44 w-full overflow-hidden rounded-md flex justify-center">
             <ImageList
-              className={"w-32 h-44 border-1 border-gray-400 rounded-md"}
+              className={"w-64 h-44 border-1 border-gray-400 rounded-md"}
               files={banVeThietKe}
               height={44}
-              width={32}
+              width={64}
             />
           </div>
           <FileDialog

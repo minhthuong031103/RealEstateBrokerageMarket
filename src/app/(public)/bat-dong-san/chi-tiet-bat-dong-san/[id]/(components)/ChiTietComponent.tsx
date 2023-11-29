@@ -39,7 +39,7 @@ export type ToaDoDiaChi = {
   lon: number;
 };
 
-export function ChiTietComponent({ id, session }) {
+export function ChiTietComponent({ id }) {
   const [chiTietBDS, setChiTietBDS] = useState();
   const [toaDo, setToaDo] = useState<ToaDoDiaChi>();
   const { fetchBatDongSanTheoId } = useBatDongSan();
@@ -84,7 +84,6 @@ export function ChiTietComponent({ id, session }) {
                   <LikeShareGroup
                     userIdOfWriter={chiTietBDS?.userId}
                     postId={parseInt(id)}
-                    session={session}
                   />
                 </div>
               </div>
@@ -305,7 +304,7 @@ export function ChiTietComponent({ id, session }) {
                     </div>
                   </div>
                   <img
-                    src={chiTietBDS?.hinhAnhBanVeThietKe}
+                    src={parseJSON(chiTietBDS?.hinhAnhBanVeThietKe)[0]?.url}
                     className="mt-8 w-full rounded-md h-[360px] md:h-[540px] lg:h-[630px]"
                     style={{ objectFit: "cover" }}
                   />
@@ -322,7 +321,7 @@ export function ChiTietComponent({ id, session }) {
                   <iframe
                     className="mt-8 rounded-md w-full h-[270px] md:h-[450px] lg:h-[540px]"
                     style={{ objectFit: "cover" }}
-                    src="https://www.youtube.com/embed/KudedLV0tP0"
+                    src={chiTietBDS?.video}
                   ></iframe>
                 </div>
               </div>

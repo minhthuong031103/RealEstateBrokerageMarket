@@ -7,18 +7,25 @@ export async function GET(request: Request) {
   const limit = parseInt(searchParams?.get('limit')); // Retrieves the value of the 'limit' parameter
   
   const users = await prisma.user.findMany({
+    where: {
+      role: {
+          contains: "doi_tac"
+      }
+  },
     skip: (page - 1) * limit,
     take: limit,
-    where: {
-        role: {
-            contains: "doi_tac"
-        }
+  });
+  const usersCount = await prisma.user.count({
+    where:{
+      role: {
+        contains: "doi_tac"
+      }
     }
   });
   const data = {
     data: users,
-    totalPages: Math.ceil(users.length / limit),
-    totalItems: users.length,
+    totalPages: Math.ceil(usersCount / limit),
+    totalItems: usersCount,
   };
   return new Response(JSON.stringify(data), { status: 200 });
 }
