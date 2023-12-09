@@ -150,6 +150,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
       diaChi: addressValue,
       phoneNumber: phoneNumber,
       maSoCmnd: maSoCmnd,
+      duyetDoiTac: "cho_duyet",
       avatar: avatarImage ? avatarImage[0]?.url : defaultAvatar,
       anhCCCDTruoc: nationalIDFrontImage
         ? nationalIDFrontImage[0]?.url

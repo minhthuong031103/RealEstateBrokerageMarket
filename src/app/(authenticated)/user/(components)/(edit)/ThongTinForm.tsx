@@ -138,6 +138,7 @@ export const ThongTinForm = ({ userInfo }) => {
       diaChi: addressValue,
       phoneNumber: phoneNumber,
       maSoCmnd: maSoCmnd,
+      duyetKhachHang: "cho_duyet",
       avatar: avatarImage ? avatarImage[0]?.url : defaultAvatar,
       anhCCCDTruoc: nationalIDFrontImage
         ? nationalIDFrontImage[0]?.url

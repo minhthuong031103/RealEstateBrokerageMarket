@@ -106,7 +106,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
       houseNumberValue
     );
     setAddressValue(
-      `${houseNumberValue}, ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
+      `${houseNumberValue}, đường ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
     );
     setIsModalOpen(false);
   };
