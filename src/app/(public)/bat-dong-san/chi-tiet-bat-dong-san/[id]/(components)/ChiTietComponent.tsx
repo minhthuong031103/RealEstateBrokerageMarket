@@ -102,7 +102,7 @@ export function ChiTietComponent({ id }) {
                       {chiTietBDS?.loaiHinh?.name}
                     </div>
                     {chiTietBDS?.loaiHinh?.loaiBDS?.name === "Căn hộ" ||
-                      chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
+                    chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
                       <>
                         <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
                           Nhà tắm: {chiTietBDS?.soPhongTam}
@@ -256,7 +256,7 @@ export function ChiTietComponent({ id }) {
                           </div>
                         )}
                       </>
-                    ) :  (
+                    ) : (
                       <></>
                     )}
                     <div className="flex flex-row">
@@ -304,7 +304,7 @@ export function ChiTietComponent({ id }) {
                     </div>
                   </div>
                   <img
-                    src={chiTietBDS?.hinhAnhBanVeThietKe}
+                    src={parseJSON(chiTietBDS?.hinhAnhBanVeThietKe)[0]?.url}
                     className="mt-8 w-full rounded-md h-[360px] md:h-[540px] lg:h-[630px]"
                     style={{ objectFit: "cover" }}
                   />
@@ -321,7 +321,7 @@ export function ChiTietComponent({ id }) {
                   <iframe
                     className="mt-8 rounded-md w-full h-[270px] md:h-[450px] lg:h-[540px]"
                     style={{ objectFit: "cover" }}
-                    src="https://www.youtube.com/embed/KudedLV0tP0"
+                    src={chiTietBDS?.video}
                   ></iframe>
                 </div>
               </div>

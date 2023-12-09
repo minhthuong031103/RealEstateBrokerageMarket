@@ -23,7 +23,7 @@ function AgencyImageAndName({ session }) {
 
   useEffect(() => {
     if (userInfo) {
-      if (userInfo?.giayPhepKinhDoanh !== undefined) {
+      if (userInfo?.giayPhepKinhDoanh !== "" && !userInfo?.giayPhepKinhDoanh) {
         setLoaiDoiTacValue("doanhnghiep");
       } else {
         setLoaiDoiTacValue("canhan");

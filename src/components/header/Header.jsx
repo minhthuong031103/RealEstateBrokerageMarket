@@ -116,7 +116,7 @@ const NavigationMenuDemo = ({ session }) => {
           </Button>
         </Link>
         {user ? (
-          <div className="flex flex-row gap-5 items-center justify-center">
+          <div className="flex flex-row gap-2 items-center justify-center">
             <Link href={'/yeu-thich'}>
               {/* <Button variant="outline" size="icon" className="relative">
                 {
@@ -144,7 +144,7 @@ const NavigationMenuDemo = ({ session }) => {
                 isIconOnly
                 radius="sm"
                 variant="bordered"
-                className="border-1 font-medium hover:text-white transition ease-in-out hover:scale-105 border-solid"
+                className="mr-2 border-1 font-medium border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white transition ease-in-out hover:scale-105 border-solid"
                 aria-label="Like"
               >
                 <FiMessageSquare className="w-4 h-4" />

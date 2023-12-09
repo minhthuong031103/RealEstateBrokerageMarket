@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useCallback, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
-import { format } from 'date-fns';
-import clsx from 'clsx';
+import { useCallback, useMemo } from "react";
+import { useRouter } from "next/navigation";
+import { format } from "date-fns";
+import clsx from "clsx";
 
-import Avatar1 from '@/components/Avatar';
-import { FullConversationType } from '@/types';
-import useOtherUser from '@hooks/useOtherUser';
+import Avatar1 from "@/components/Avatar";
+import { FullConversationType } from "@/types";
+import useOtherUser from "@hooks/useOtherUser";
 
 interface ConversationBoxProps {
   data: FullConversationType;
@@ -57,7 +57,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
       return lastMessage;
     }
 
-    return 'Started a conversation';
+    return "Started a conversation";
   }, [lastMessage]);
 
   return (
@@ -70,13 +70,13 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         flex 
         items-center 
         space-x-3 
-        p-3 
+        p-4 
         hover:bg-neutral-100
         rounded-lg
         transition
         cursor-pointer
         `,
-        selected ? 'bg-neutral-100' : 'bg-white'
+        selected ? "bg-neutral-100" : "bg-white"
       )}
     >
       <Avatar1 user={otherUser} />
@@ -86,7 +86,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
           <span className="absolute inset-0" aria-hidden="true" />
           <div className="flex justify-between items-center mb-1">
             <p className="text-md font-medium text-gray-900">
-              {otherUser?.name?.length ? otherUser.name : 'Demo'}
+              {otherUser?.name?.length ? otherUser.name : "Demo"}
             </p>
             {data.lastMessageAt && (
               <p
@@ -96,7 +96,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
                   font-light
                 "
               >
-                {format(new Date(data.lastMessageAt), 'p')}
+                {format(new Date(data.lastMessageAt), "p")}
               </p>
             )}
           </div>

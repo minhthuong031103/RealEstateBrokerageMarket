@@ -17,7 +17,7 @@ import { Label } from "@/components/ui/label";
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
-export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
+export const ThongTinForm = ({ userInfo }) => {
   const { startUpload } = useUploadThing("imageUploader");
 
   const [addressValue, setAddressValue] = React.useState("");
@@ -27,8 +27,6 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
   const [nationalIDBackImageFile, setNationalIDBackImageFile] = React.useState(
     []
   );
-  const [giayPhepKinhDoanhImageFiles, setGiayPhepKinhDoanhImageFiles] =
-    React.useState([]);
   const [avatarImageFiles, setAvatarImageFiles] = React.useState([]);
 
   const [anhChanDungImageFiles, setAnhChanDungImageFiles] = React.useState([]);
@@ -38,7 +36,6 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
   const [defaultPortrait, setDefaultPortrait] = React.useState("");
   const [defaultFrontID, setDefaultFrontID] = React.useState("");
   const [defaultBackID, setDefaultBackID] = React.useState("");
-  const [defaultLawPaper, setDefaultLawPaper] = React.useState("");
   const [maSoCmnd, setMaSoCmnd] = useState("");
 
   useEffect(() => {
@@ -100,7 +97,6 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
       avatarImage,
       nationalIDFrontImage,
       nationalIDBackImage,
-      giayPhepKinhDoanhImage,
       anhChanDungImage,
     ] = await Promise.all([
       startUpload([...avatarImageFiles]).then((res) => {
@@ -127,14 +123,6 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
         }));
         return formattedImages ?? null;
       }),
-      startUpload([...giayPhepKinhDoanhImageFiles]).then((res) => {
-        const formattedImages = res?.map((image) => ({
-          id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
-          url: image.url,
-        }));
-        return formattedImages ?? null;
-      }),
       startUpload([...anhChanDungImageFiles]).then((res) => {
         const formattedImages = res?.map((image) => ({
           id: image.key,
@@ -150,7 +138,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
       diaChi: addressValue,
       phoneNumber: phoneNumber,
       maSoCmnd: maSoCmnd,
-      duyetDoiTac: "cho_duyet",
+      duyetKhachHang: "cho_duyet",
       avatar: avatarImage ? avatarImage[0]?.url : defaultAvatar,
       anhCCCDTruoc: nationalIDFrontImage
         ? nationalIDFrontImage[0]?.url
@@ -158,9 +146,6 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
       anhCCCDSau: nationalIDBackImage
         ? nationalIDBackImage[0]?.url
         : defaultBackID,
-      anhGiayPhepKinhDoanh: giayPhepKinhDoanhImage
-        ? giayPhepKinhDoanhImage[0]?.url
-        : defaultLawPaper,
       anhChanDung: anhChanDungImage
         ? anhChanDungImage[0]?.url
         : defaultPortrait,
@@ -177,7 +162,6 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
       setAddressValue(userInfo?.diaChi);
       setDefaultFrontID(userInfo?.anhCCCDTruoc);
       setDefaultBackID(userInfo?.anhCCCDSau);
-      setDefaultLawPaper(userInfo?.anhGiayPhepKinhDoanh);
       setMaSoCmnd(userInfo?.maSoCmnd);
       setDefaultPortrait(userInfo?.anhChanDung);
       setDefaultAvatar(userInfo?.avatar);
@@ -205,6 +189,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
           </div>
           <FileDialog
             name="images"
+            className="py-0"
             maxFiles={1}
             maxSize={1024 * 1024 * 4}
             files={avatarImageFiles}
@@ -271,6 +256,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
           </div>
           <FileDialog
             name="images"
+            className="p-0"
             maxFiles={1}
             maxSize={1024 * 1024 * 4}
             files={anhChanDungImageFiles}
@@ -297,6 +283,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
           </div>
           <FileDialog
             name="images"
+            className="p-0"
             maxFiles={1}
             maxSize={1024 * 1024 * 4}
             files={nationalIDFrontImageFile}
@@ -323,6 +310,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
           </div>
           <FileDialog
             name="images"
+            className="p-0"
             maxFiles={1}
             maxSize={1024 * 1024 * 4}
             files={nationalIDBackImageFile}
@@ -330,34 +318,6 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
             disabled={false}
           />
         </div>
-        {loaiDoiTac === "doanhnghiep" ? (
-          <div className="flex flex-col gap-y-3 w-28">
-            <div className="font-bold text-sm w-44">
-              Hình ảnh giấy phép <span className="text-red-500">*</span>
-            </div>
-            <div className=" w-28 h-36 border-2 rounded">
-              <Zoom key={3} className={"w-full "}>
-                <img
-                  src={
-                    giayPhepKinhDoanhImageFiles[0]?.preview ||
-                    giayPhepKinhDoanhImageFiles[0]?.url ||
-                    defaultLawPaper
-                  }
-                  alt={giayPhepKinhDoanhImageFiles[0]?.name}
-                  className={`h-36 w-28 rounded-md object-cover object-center`}
-                />
-              </Zoom>
-            </div>
-            <FileDialog
-              name="images"
-              maxFiles={1}
-              maxSize={1024 * 1024 * 4}
-              files={giayPhepKinhDoanhImageFiles}
-              setFiles={setGiayPhepKinhDoanhImageFiles}
-              disabled={false}
-            />
-          </div>
-        ) : null}
       </div>
       <div className="w-full flex items-center justify-center pt-10">
         <Button
@@ -365,7 +325,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
           onClick={() => {
             onSubmit();
           }}
-          className="w-[50%]"
+          className="w-[50%] p-0"
         >
           Gửi yêu cầu
         </Button>

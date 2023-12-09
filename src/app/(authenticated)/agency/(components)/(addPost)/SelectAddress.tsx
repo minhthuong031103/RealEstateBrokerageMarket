@@ -7,7 +7,11 @@ import { Input } from "@/components/ui/input";
 import DialogCustom from "@/components/ui/dialogCustom";
 import { Button } from "@/components/ui/button";
 
-export const SelectAddress = ({ addressValue, setAddressValue, danhMucValue }) => {
+export const SelectAddress = ({
+  addressValue,
+  setAddressValue,
+  danhMucValue,
+}) => {
   const [selectedProvince, setSelectedProvince] = React.useState(new Set([]));
   const [selectedDistrict, setSelectedDistrict] = React.useState(new Set([]));
   const [selectedWard, setSelectedWard] = React.useState(new Set([]));
@@ -113,12 +117,12 @@ export const SelectAddress = ({ addressValue, setAddressValue, danhMucValue }) =
     );
     if (danhMucValue === "Căn hộ" || danhMucValue === "Văn phòng") {
       setAddressValue(
-        ` ${maCanValue}, ${blockValue}, ${tangSoValue} ,${houseNumberValue}, ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
+        `Mã căn ${maCanValue}, tháp ${blockValue}, tầng ${tangSoValue} , ${houseNumberValue}, đường ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
       );
     } else if (danhMucValue === "Nhà ở") {
-      ` ${maCanValue}, ${phanKhuLoValue} ,${houseNumberValue}, ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
+      `Mã căn ${maCanValue}, phân khu lô ${phanKhuLoValue} , ${houseNumberValue}, đường ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`;
     } else {
-      ` ${tenPhanKhuValue}, ${maLoValue} ,${houseNumberValue}, ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
+      `Phân khu ${tenPhanKhuValue}, mã lô ${maLoValue} ,${houseNumberValue}, đường ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`;
     }
     setIsModalOpen(false);
   };
@@ -132,7 +136,7 @@ export const SelectAddress = ({ addressValue, setAddressValue, danhMucValue }) =
           // }}
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
-          className="w-[50%] "
+          className="w-full md:w-[50%]"
           isChild={true}
         >
           <div className="flex flex-col gap-y-6 w-full px-1">
@@ -211,7 +215,6 @@ export const SelectAddress = ({ addressValue, setAddressValue, danhMucValue }) =
               ))}
             </Select>
             <div className="flex flex-row gap-3 ">
-
               <Input
                 value={streetValue}
                 onChange={(e) => {
@@ -259,7 +262,6 @@ export const SelectAddress = ({ addressValue, setAddressValue, danhMucValue }) =
                     placeholder="Mã căn"
                   />
                 </div>
-
               </>
             )}
             {danhMucValue === "Văn phòng" && (
@@ -291,7 +293,6 @@ export const SelectAddress = ({ addressValue, setAddressValue, danhMucValue }) =
                     placeholder="Mã căn"
                   />
                 </div>
-
               </>
             )}
             {danhMucValue === "Nhà ở" && (
@@ -336,7 +337,6 @@ export const SelectAddress = ({ addressValue, setAddressValue, danhMucValue }) =
                 />
               </>
             )}
-
 
             <div className="w-full flex items-center justify-center">
               <Button

@@ -21,15 +21,15 @@ export function ContactInfo({ doiTacInfo, nhan }) {
             {doiTacInfo?.name}
           </div>
           <div className="text-[14px] mt-2 overflow-hidden text-slate-800">
-            <div className="flex flex-row gap-2 text-red-400">
+            <div className="flex flex-row gap-2 text-red-400 items-center">
               <IoStorefrontOutline className="py-auto" />
               {doiTacInfo?.anhGiayPhepKinhDoanh ? "Doanh nghiệp" : "Cá nhân"}
             </div>
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row gap-2 items-center">
               <AiOutlinePhone className="py-auto" />
               {doiTacInfo?.phoneNumber}
             </div>
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row gap-2 items-center">
               <HiOutlineMail />
               {doiTacInfo?.email}
             </div>

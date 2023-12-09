@@ -120,13 +120,13 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
           // }}
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
-          className="w-[50%] "
+          className="w-full md:w-[50%] "
           isChild={true}
         >
           <div className="flex flex-col gap-y-6 w-full px-1">
             <Select
               key={"province"}
-              radius={"md"}
+              radius={"sm"}
               label="Thành phố, tỉnh thành"
               isInvalid={isProvinceValid || !provinceTouched ? false : true}
               errorMessage={
@@ -139,7 +139,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
               selectedKeys={selectedProvince}
               isLoading={isLoadingProvince}
               onSelectionChange={setSelectedProvince}
-              className="w-full "
+              className="w-[94%] p-0"
               sm
               onClose={() => setProvinceTouched(true)}
             >
@@ -151,7 +151,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
             </Select>
             <Select
               key={"district"}
-              radius={"md"}
+              radius={"sm"}
               label="Quận, huyện"
               isInvalid={isDistrictValid || !districtTouched ? false : true}
               errorMessage={
@@ -164,7 +164,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
               selectedKeys={selectedDistrict}
               isLoading={isLoadingDistrict}
               onSelectionChange={setSelectedDistrict}
-              className="w-full "
+              className="w-[94%] p-0"
               onClose={() => setDistrictTouched(true)}
             >
               {districts?.map((district) => (
@@ -175,7 +175,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
             </Select>
             <Select
               key={"ward"}
-              radius={"md"}
+              radius={"sm"}
               label="Xã, phường"
               isInvalid={isWardValid || !wardTouched ? false : true}
               errorMessage={
@@ -186,7 +186,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
               selectedKeys={selectedWard}
               isLoading={isLoadingWard}
               onSelectionChange={setSelectedWard}
-              className="w-full "
+              className="w-[94%] p-0"
               onClose={() => setWardTouched(true)}
             >
               {wards?.map((ward) => (
@@ -222,7 +222,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
                   !houseNumberValue
                 }
                 onClick={onSubmit}
-                className="w-[50%]"
+                className="w-[50%] p-0"
               >
                 Xác nhận
               </Button>
@@ -253,7 +253,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
         errorMessage={
           addressValue !== "" || !diaChiTouched ? "" : "Vui lòng chọn địa chỉ"
         }
-        className="w-full"
+        className="w-[98%] p-0 "
         variant="bordered"
         radius="sm"
         onClick={() => {

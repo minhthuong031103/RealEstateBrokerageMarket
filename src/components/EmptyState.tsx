@@ -16,7 +16,7 @@ const EmptyState = () => {
     >
       <div className="text-center items-center flex flex-col">
         <h3 className="mt-2 text-2xl font-semibold text-gray-900">
-          Không có đoạn tin nhắn nào
+          Chưa có đoạn hội thoại được chọn
         </h3>
       </div>
     </div>

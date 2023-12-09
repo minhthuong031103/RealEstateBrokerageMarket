@@ -88,17 +88,22 @@ function AgencyInfo({ session }) {
             Giấy tờ cá nhân / đại diện tổ chức
           </h1>
           <div className="flex flex-row flex-wrap gap-10 justify-center md:justify-start">
-            <div className="flex flex-col gap-y-3">
-              <div className="font-bold text-sm">Giấy phép kinh doanh</div>
-              <div className="w-full flex justify-start">
-                <Zoom>
-                  <img
-                    className={"w-28 h-36 rounded-md border-1 border-gray-400"}
-                    src={userInfo?.anhGiayPhepKinhDoanh}
-                  />
-                </Zoom>
+            {userInfo?.giayPhepKinhDoanh !== "" &&
+            !userInfo?.giayPhepKinhDoanh ? (
+              <div className="flex flex-col gap-y-3">
+                <div className="font-bold text-sm">Giấy phép kinh doanh</div>
+                <div className="w-full flex justify-start">
+                  <Zoom>
+                    <img
+                      className={
+                        "w-28 h-36 rounded-md border-1 border-gray-400"
+                      }
+                      src={userInfo?.anhGiayPhepKinhDoanh}
+                    />
+                  </Zoom>
+                </div>
               </div>
-            </div>
+            ) : null}
             <div className="flex flex-col gap-y-3">
               <div className="font-bold text-sm">Ảnh chân dung</div>
               <div className="w-full flex justify-start">
@@ -158,7 +163,7 @@ function AgencyInfo({ session }) {
               <p>
                 {convertPrismaTimeToDateTime(userInfo?.stripeCurrentPeriodEnd)}
               </p>
-              {new Date(userInfo?.stripeCurrentPeriodEnd).getTime() <
+              {new Date(userInfo?.stripeCurrentPeriodEnd).getTime() >=
               new Date().getTime() ? (
                 <Chip
                   color="success"

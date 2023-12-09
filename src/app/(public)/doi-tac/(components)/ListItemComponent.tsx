@@ -32,19 +32,19 @@ export function ListItemComponent({ item }) {
           </div>
           <div className="mt-6 space-y-2 mb-6">
             <div className="font-medium text-[20px]">{item?.name}</div>
-            <div className="text-red-400 flex flex-row gap-2 text-sm">
+            <div className="text-red-400 flex flex-row items-center gap-2 text-sm">
               <IoStorefrontOutline />
               {item?.anhGiayPhepKinhDoanh ? "Doanh nghiệp" : "Cá nhân"}
             </div>
-            <div className="flex flex-row gap-2 text-sm mt-1">
+            <div className="flex flex-row items-center gap-2 text-sm mt-1">
               <IoLocationOutline className="text-[24px]" />
               {item?.diaChi}
             </div>
-            <div className="flex flex-row gap-2 w-full text-sm">
+            <div className="flex flex-row items-center gap-2 w-full text-sm">
               <AiOutlinePhone className="py-auto" />
               {item?.phoneNumber}
             </div>
-            <div className="flex flex-row gap-2 w-full text-sm">
+            <div className="flex flex-row items-center gap-2 w-full text-sm">
               <HiOutlineMail />
               {item?.email}
             </div>

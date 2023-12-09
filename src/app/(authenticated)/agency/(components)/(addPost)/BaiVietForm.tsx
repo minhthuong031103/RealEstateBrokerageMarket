@@ -58,76 +58,70 @@ export const BaiVietForm = ({
   const [suaChuaLanCuoi, setSuaChuaLanCuoi] = React.useState();
   const [hoanThanh, setHoanThanh] = React.useState();
   const [danhSachTienNghi, setDanhSachTienNghi] = React.useState([]);
-  const [dienTichGarage, setDienTichGarage] = React.useState();
-  const [dienTichHoBoi, setDienTichHoBoi] = React.useState();
+  const [dienTichGarage, setDienTichGarage] = React.useState("");
+  const [dienTichHoBoi, setDienTichHoBoi] = React.useState("");
   const [nhan, setNhan] = React.useState();
   const { onCreateBaiViet } = useBaiViet();
 
-
-
   const onSubmit = async () => {
-    if (productImageFiles.length <= 0) {
-      toast.error("Vui lòng chọn hình ảnh bất động sản");
-    }
-    if (productImageFiles.length < 7){
-      toast.error("Vui lòng chọn tói thiểu 7 hình ảnh bất động sản");
-    }
-    if (phapLyImageFiles.length <= 0){
-      toast.error("Vui lòng chọn hình ảnh pháp lý");
-    }
-    if (banVeThietKe.length <= 0){
-      toast.error("Vui lòng chọn hình ảnh bản vẽ thiết kế");
-    }
-    if (
-      !addressValue ||
-      !loaiHinhValue ||
-      !chieuDai ||
-      !chieuRong ||
-      !phapLy ||
-      !giaBan ||
-      !tieuDe ||
-      !moTa
-    ) {
-      toast.error("Vui lòng nhập đầy đủ thông tin ");
-      return;
-    }
-    if (danhMucValue === "Căn hộ") {
-      if (
-        !phongNgu ||
-        !phongTam ||
-        !noiThat ||
-        !huongBanCong ||
-        !huongCuaChinh
-      ) {
-        toast.error("Vui lòng nhập đầy đủ thông tin");
-        return;
-      }
-    }
+    // if (productImageFiles.length <= 0) {
+    //   toast.error("Vui lòng chọn hình ảnh bất động sản");
+    // }
+    // if (productImageFiles.length < 7) {
+    //   toast.error("Vui lòng chọn tói thiểu 7 hình ảnh bất động sản");
+    // }
+    // if (phapLyImageFiles.length <= 0) {
+    //   toast.error("Vui lòng chọn hình ảnh pháp lý");
+    // }
+    // if (banVeThietKe.length <= 0) {
+    //   toast.error("Vui lòng chọn hình ảnh bản vẽ thiết kế");
+    // }
+    // if (
+    //   !addressValue ||
+    //   !loaiHinhValue ||
+    //   !chieuDai ||
+    //   !chieuRong ||
+    //   !phapLy ||
+    //   !giaBan ||
+    //   !tieuDe ||
+    //   !moTa
+    // ) {
+    //   toast.error("Vui lòng nhập đầy đủ thông tin ");
+    //   return;
+    // }
+    // if (danhMucValue === "Căn hộ") {
+    //   if (
+    //     !phongNgu ||
+    //     !phongTam ||
+    //     !noiThat ||
+    //     !huongBanCong ||
+    //     !huongCuaChinh
+    //   ) {
+    //     toast.error("Vui lòng nhập đầy đủ thông tin");
+    //     return;
+    //   }
+    // }
 
-    if (danhMucValue === "Nhà ở") {
-      if (
-        !phongNgu ||
-        !phongTam ||
-        !noiThat ||
-        !dienTichGarage ||
-        !dienTichHoBoi ||
-        !soTang
-      ) {
-        toast.error("Vui lòng nhập đầy đủ thông tin");
-        return;
-      }
-    }
+    // if (danhMucValue === "Nhà ở") {
+    //   if (
+    //     !phongNgu ||
+    //     !phongTam ||
+    //     !noiThat ||
+    //     !dienTichGarage ||
+    //     !dienTichHoBoi ||
+    //     !soTang
+    //   ) {
+    //     toast.error("Vui lòng nhập đầy đủ thông tin");
+    //     return;
+    //   }
+    // }
 
-    
-    if (danhMucValue === "Văn phòng") {
-      if (
-        !noiThat ||
-        !huongCuaChinh 
-      ) {
-        toast.error("Vui lòng nhập đầy đủ thông tin");
-        return;
-      }
-    }
+    // if (danhMucValue === "Văn phòng") {
+    //   if (!noiThat || !huongCuaChinh) {
+    //     toast.error("Vui lòng nhập đầy đủ thông tin");
+    //     return;
+    //   }
+    // }
     setIsSubmitting(true);
 
     // let productImages;
@@ -187,18 +181,19 @@ export const BaiVietForm = ({
         danhSachTienNghi.length > 0
           ? JSON.stringify([...danhSachTienNghi])
           : null,
-      hinhAnhBanVeThietKe: banVeThietKe
-        ? JSON.stringify([...banVeThietKe])
+      hinhAnhBanVeThietKe: banVeImages
+        ? JSON.stringify([...banVeImages])
         : null,
       isChothue: isChoThue,
       video: videoUrl,
     };
+    console.log(baiViet);
 
-    const success = await onCreateBaiViet(baiViet);
+    // const success = await onCreateBaiViet(baiViet);
     setIsSubmitting(false);
-    if (success) {
-      setOpen(false);
-    }
+    // if (success) {
+    //   setOpen(false);
+    // }
   };
   return (
     <div className="w-full h-full flex flex-col space-y-6">
@@ -225,30 +220,28 @@ export const BaiVietForm = ({
         setPhapLy={setPhapLy}
       />
 
-      {
-        danhMucValue === "Căn hộ" && (
-          <CanHoForm
-            setHuongBanCong={setHuongBanCong}
-            setHuongCuaChinh={setHuongCuaChinh}
-            setNoiThat={setNoiThat}
-            setPhongNgu={setPhongNgu}
-            setPhongTam={setPhongTam}
-            banVeThietKe={banVeThietKe}
-            setBanVeThietKe={setBanVeThietKe}
-            suaChuaLanCuoi={suaChuaLanCuoi}
-            setSuaChuaLanCuoi={setSuaChuaLanCuoi}
-            hoanThanh={hoanThanh}
-            setHoanThanh={setHoanThanh}
-            danhSachTienNghi={danhSachTienNghi}
-            setDanhSachTienNghi={setDanhSachTienNghi}
-            dienTichGarage={dienTichGarage}
-            setDienTichGarage={setDienTichGarage}
-            dienTichHoBoi={dienTichHoBoi}
-            setDienTichHoBoi={setDienTichHoBoi}
-            danhMucValue={danhMucValue}
-          />
-        )
-      }
+      {danhMucValue === "Căn hộ" && (
+        <CanHoForm
+          setHuongBanCong={setHuongBanCong}
+          setHuongCuaChinh={setHuongCuaChinh}
+          setNoiThat={setNoiThat}
+          setPhongNgu={setPhongNgu}
+          setPhongTam={setPhongTam}
+          banVeThietKe={banVeThietKe}
+          setBanVeThietKe={setBanVeThietKe}
+          suaChuaLanCuoi={suaChuaLanCuoi}
+          setSuaChuaLanCuoi={setSuaChuaLanCuoi}
+          hoanThanh={hoanThanh}
+          setHoanThanh={setHoanThanh}
+          danhSachTienNghi={danhSachTienNghi}
+          setDanhSachTienNghi={setDanhSachTienNghi}
+          dienTichGarage={dienTichGarage}
+          setDienTichGarage={setDienTichGarage}
+          dienTichHoBoi={dienTichHoBoi}
+          setDienTichHoBoi={setDienTichHoBoi}
+          danhMucValue={danhMucValue}
+        />
+      )}
 
       {
         danhMucValue === "Nhà ở" && (
@@ -283,7 +276,7 @@ export const BaiVietForm = ({
             setHuongCuaChinh={setHuongCuaChinh}
             danhSachTienNghi={danhSachTienNghi}
             setDanhSachTienNghi={setDanhSachTienNghi}
-            />
+          />
         )
         // <CanHoForm />
       }
