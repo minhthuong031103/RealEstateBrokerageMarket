@@ -1,8 +1,12 @@
 import React from 'react';
 import { getSession } from '@/lib/auth';
-import RealEstateListLayout from '../(components)/RealEstateListLayout';
-
-
+import dynamic from 'next/dynamic';
+const RealEstateListLayout = dynamic(
+  () => import('../(components)/RealEstateListLayout'),
+  {
+    ssr: false,
+  }
+);
 const page = async () => {
   const session = await getSession();
   return (

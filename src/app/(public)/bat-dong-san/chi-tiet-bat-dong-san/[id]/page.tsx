@@ -1,6 +1,9 @@
-import { getSession } from "@/lib/auth";
-import { ChiTietComponent } from "./(components)/ChiTietComponent";
-
+import { getSession } from '@/lib/auth';
+import dynamic from 'next/dynamic';
+const ChiTietComponent = dynamic(
+  () => import('./(components)/ChiTietComponent'),
+  { ssr: false }
+);
 export default async function page({ params }) {
   const session = await getSession();
 

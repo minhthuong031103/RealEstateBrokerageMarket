@@ -15,7 +15,7 @@ model User {
   phoneNumber            String?
   password               String
   diaChi                 String?
-  role                   String?         @default("user")
+  role                   String?         @default("khach_hang")
   avatar                 String?         @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
   isEmailVerified        Boolean         @default(false)
   otp                    String?

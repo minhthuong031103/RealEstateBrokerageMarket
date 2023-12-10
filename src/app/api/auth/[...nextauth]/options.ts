@@ -36,6 +36,8 @@ const options: AuthOptions = {
           avatar: user.avatar,
           role: user.role,
           isVerified: user.isEmailVerified,
+          duyetDoiTac: user.duyetDoiTac,
+          duyetKhachHang: user.duyetKhachHang,
         };
       },
     }),
@@ -64,6 +66,8 @@ const options: AuthOptions = {
           avatar: user.avatar,
           role: user.role,
           isVerified: user.isEmailVerified,
+          duyetDoiTac: user.duyetDoiTac,
+          duyetKhachHang: user.duyetKhachHang,
         };
       },
     }),
@@ -98,6 +102,8 @@ const options: AuthOptions = {
           avatar: user.avatar,
           role: user.role,
           isVerified: user.isEmailVerified,
+          duyetDoiTac: user.duyetDoiTac,
+          duyetKhachHang: user.duyetKhachHang,
         };
       },
     }),
@@ -127,6 +133,8 @@ const options: AuthOptions = {
           id: user.id,
           avatar: user.avatar,
           isVerified: user.isEmailVerified,
+          duyetDoiTac: user.duyetDoiTac,
+          duyetKhachHang: user.duyetKhachHang,
         };
       },
     }),
@@ -164,6 +172,8 @@ const options: AuthOptions = {
         token.name = user.name;
         token.email = user.email;
         token.isEmailVerified = user.isVerified;
+        token.duyetDoiTac = user.duyetDoiTac;
+        token.duyetKhachHang = user.duyetKhachHang;
       }
       //user is from the oauth config or in the credentials setting options
 
@@ -185,6 +195,10 @@ const options: AuthOptions = {
         (session.user as { email: string }).email = token.email as string;
         (session.user as { isEmailVerified: boolean }).isEmailVerified =
           token.isEmailVerified as boolean;
+        (session.user as { duyetDoiTac: string }).duyetDoiTac =
+          token.duyetDoiTac as string;
+        (session.user as { duyetKhachHang: string }).duyetKhachHang =
+          token.duyetKhachHang as string;
       }
       return session;
     },
