@@ -93,6 +93,7 @@ export const useAuth = () => {
         });
         return res;
       },
+      refetchInterval: 3000, // Refetch the data every 3 seconds
     });
   };
   const getSessionClient = () => {

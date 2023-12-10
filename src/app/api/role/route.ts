@@ -12,6 +12,7 @@ export async function GET(request) {
     select: {
       role: true,
       duyetDoiTac: true,
+      duyetKhachHang: true,
     },
   });
 

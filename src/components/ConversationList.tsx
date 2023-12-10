@@ -85,17 +85,25 @@ w-full h-full
           <div className="flex justify-center mb-4 pt-4">
             <Logo />
           </div>
-          {data?.pages.map((page, index) => (
-            <React.Fragment key={index}>
-              {page.conversations.map((item) => (
-                <ConversationBox
-                  key={item.id}
-                  data={item}
-                  selected={conversationId === item.id}
-                />
-              ))}
-            </React.Fragment>
-          ))}
+          {data?.pages.map((page, index) =>
+            page?.conversations?.length > 0 ? (
+              <React.Fragment key={index}>
+                {page?.conversations?.map((item) => (
+                  <ConversationBox
+                    key={item.id}
+                    data={item}
+                    selected={conversationId === item.id}
+                  />
+                ))}
+              </React.Fragment>
+            ) : (
+              <div className="flex justify-center items-center h-full">
+                <div className="text-sm text-gray-400">
+                  Không có cuộc trò chuyện nào
+                </div>
+              </div>
+            )
+          )}
         </div>
       </aside>
     </>

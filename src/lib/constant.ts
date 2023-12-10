@@ -133,15 +133,15 @@ export const TinhTrangPhapLy = [
 
 export const MuaLeConst = [
   { value: 'Luợt đăng bài', price: 20000 },
-  { value: 'Lượt nổi bật', price: 30000 },
-  { value: 'Lượt yêu thích', price: 50000 },
+  { value: 'Lượt yêu thích', price: 30000 },
+  { value: 'Lượt nổi bật', price: 50000 },
 ];
 
 export const NhanBaiVietConst = [
   {
     value: 'Nổi bật',
-    label: 'luotChuyenNghiep',
+    label: 'luotVip',
   },
-  { value: 'Yêu thích', label: 'luotVip' },
+  { value: 'Yêu thích', label: 'luotChuyenNghiep' },
   { value: 'Thông thường', label: 'luot' },
 ];

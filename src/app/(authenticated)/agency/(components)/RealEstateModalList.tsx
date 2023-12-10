@@ -1,11 +1,14 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { CheckIcon, Pencil1Icon } from "@radix-ui/react-icons";
-import DialogCustom from "@/components/ui/dialogCustom";
-import { EditForm } from "./EditForm";
-import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
-import { ChiTietComponent } from "../(realestate-list)/realestate-detail/[id]/components/(detail)/ChiTietComponent";
-import { CompleteButton } from "../(realestate-list)/realestate-detail/[id]/components/CompleteButton";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { CheckIcon, Pencil1Icon } from '@radix-ui/react-icons';
+import DialogCustom from '@/components/ui/dialogCustom';
+import dynamic from 'next/dynamic';
+const EditForm = dynamic(() => import('./EditForm'), {
+  ssr: false,
+});
+import { HiOutlineMagnifyingGlass } from 'react-icons/hi2';
+import { ChiTietComponent } from '../(realestate-list)/realestate-detail/[id]/components/(detail)/ChiTietComponent';
+import { CompleteButton } from '../(realestate-list)/realestate-detail/[id]/components/CompleteButton';
 
 export const RealEstateModalList = ({ id }) => {
   const [openEdit, setOpenEdit] = React.useState(false);

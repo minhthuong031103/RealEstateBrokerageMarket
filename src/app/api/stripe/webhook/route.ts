@@ -178,7 +178,7 @@ export async function POST(request: Request) {
             parseInt(session.metadata.luotVip),
           amount: session.metadata.amount
             ? parseInt(session.metadata.amount)
-            : undefined,
+            : 0,
           user: {
             connect: {
               id: parseInt(session.metadata.userId),

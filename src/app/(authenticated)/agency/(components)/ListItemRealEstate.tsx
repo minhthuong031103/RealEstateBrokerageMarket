@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useState } from "react";
-import { RealEstateCard } from "./RealEstateCard";
+import React from 'react';
+import { useState } from 'react';
+import { RealEstateCard } from './RealEstateCard';
 // import { useBaiVietDoiTac } from '@/hooks/useBaiVietDoiTac';
-import { useQuery } from "@tanstack/react-query";
-import { useBatDongSan } from "@/hooks/useBatDongSan";
-import { searchType } from "./RealEstateListLayout";
-import { Pagination } from "@nextui-org/react";
-import Loader from "@/components/Loader";
+import { useQuery } from '@tanstack/react-query';
+import { useBatDongSan } from '@/hooks/useBatDongSan';
+import { searchType } from './RealEstateListLayout';
+import { Pagination } from '@nextui-org/react';
+import Loader from '@/components/Loader';
 
 type props = {
   searchProps: searchType | unknown;
@@ -21,9 +21,9 @@ function ListItemRealEstate({ searchProps, id }: props) {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const { data } = useQuery({
     queryKey: [
-      ["bat-dong-san", currentPage],
-      ["props", searchProps],
-      ["iduser", id],
+      ['bat-dong-san', currentPage],
+      ['props', searchProps],
+      ['iduser', id],
     ],
     queryFn: () =>
       fetchAllBatDongSanCuaDoiTacTatCaTrangThai(currentPage, searchProps, id),
@@ -33,10 +33,14 @@ function ListItemRealEstate({ searchProps, id }: props) {
       setIsLoaded(true);
     },
   });
+  console.log(
+    '🚀 ~ file: ListItemRealEstate.tsx:36 ~ ListItemRealEstate ~ data:',
+    data
+  );
   const ref = React.useRef(null);
 
   const onPageChange = (page) => {
-    ref.current?.scrollIntoView({ behavior: "smooth" });
+    ref.current?.scrollIntoView({ behavior: 'smooth' });
     setCurrentPage(page);
   };
 

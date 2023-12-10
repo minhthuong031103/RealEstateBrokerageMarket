@@ -9,8 +9,8 @@ export const useImage = () => {
       const res = await postRequest({
         endPoint: '/api/image/upload',
         formData,
-        isFormData: true,
-      });
+          isFormData: true,
+        });
       if (res?.status === 200 || res?.message === 'create success') {
         console.log(
           '🚀 ~ file: useProduct.ts:49 ~ onCreateProduct ~ res:',

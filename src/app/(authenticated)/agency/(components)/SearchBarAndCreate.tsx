@@ -1,11 +1,13 @@
-"use client";
+'use client';
 
-import { AddPostModal } from "./AddPostModal";
-import { SelectTrangThai } from "./SelectTrangThai";
-import React, { useEffect } from "react";
-import { Dispatch, SetStateAction } from "react";
-import { searchType } from "./RealEstateListLayout";
-
+import { SelectTrangThai } from './SelectTrangThai';
+import React, { useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
+import { searchType } from './RealEstateListLayout';
+import dynamic from 'next/dynamic';
+const AddPostModal = dynamic(() => import('./AddPostModal'), {
+  ssr: false,
+});
 type props = {
   setSearchProps: Dispatch<SetStateAction<searchType>>;
 };
@@ -14,24 +16,24 @@ export function SearchBarAndCreate({ setSearchProps }: props) {
   const [trangThaiValue, setTrangThaiValue] = React.useState();
   function onSubmit() {
     setSearchProps({
-      searchWord: "",
-      location: "",
-      type: "",
-      branch: "",
-      isRent: "",
-      loaiCanHo: "",
-      loaiNhaO: "",
-      loaiVanPhong: "",
-      loaiDatDai: "",
-      huongBanCong: "",
-      huongCuaChinh: "",
-      huongDat: "",
-      soPhongNgu: "",
-      soPhongTam: "",
-      minPrice: "",
-      maxPrice: "",
-      minSquare: "",
-      maxSquare: "",
+      searchWord: '',
+      location: '',
+      type: '',
+      branch: '',
+      isRent: '',
+      loaiCanHo: '',
+      loaiNhaO: '',
+      loaiVanPhong: '',
+      loaiDatDai: '',
+      huongBanCong: '',
+      huongCuaChinh: '',
+      huongDat: '',
+      soPhongNgu: '',
+      soPhongTam: '',
+      minPrice: '',
+      maxPrice: '',
+      minSquare: '',
+      maxSquare: '',
       trangThai: trangThaiValue,
     });
   }
@@ -39,7 +41,7 @@ export function SearchBarAndCreate({ setSearchProps }: props) {
   useEffect(() => {
     if (trangThaiValue) {
       onSubmit();
-    } else if (trangThaiValue == "") {
+    } else if (trangThaiValue == '') {
       onSubmit();
     }
   }, [trangThaiValue]);

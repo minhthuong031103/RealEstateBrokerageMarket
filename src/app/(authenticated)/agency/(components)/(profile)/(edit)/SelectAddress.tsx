@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { Select, SelectItem } from "@nextui-org/react";
-import { getRequest } from "@/lib/fetch";
-import { Input } from "@/components/ui/input";
-import DialogCustom from "@/components/ui/dialogCustom";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import React, { useEffect } from 'react';
+import { Select, SelectItem } from '@nextui-org/react';
+import { getRequest } from '@/lib/fetch';
+import { Input } from '@/components/ui/input';
+import DialogCustom from '@/components/ui/dialogCustom';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
 export const SelectAddress = ({ addressValue, setAddressValue }) => {
   const [selectedProvince, setSelectedProvince] = React.useState(new Set([]));
@@ -29,14 +29,14 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  const [streetValue, setStreetValue] = React.useState("");
-  const [houseNumberValue, setHouseNumberValue] = React.useState("");
+  const [streetValue, setStreetValue] = React.useState('');
+  const [houseNumberValue, setHouseNumberValue] = React.useState('');
 
   useEffect(() => {
     async function getProvince() {
       setIsLoadingProvince(true);
       const res = await getRequest({
-        endPoint: "https://provinces.open-api.vn/api/p/",
+        endPoint: 'https://provinces.open-api.vn/api/p/',
       });
 
       setProvince(res);
@@ -106,7 +106,7 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
       houseNumberValue
     );
     setAddressValue(
-      `${houseNumberValue}, đường ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
+      `số nhà ${houseNumberValue}, đường ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`
     );
     setIsModalOpen(false);
   };
@@ -125,14 +125,14 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
         >
           <div className="flex flex-col gap-y-6 w-full px-1">
             <Select
-              key={"province"}
-              radius={"md"}
+              key={'province'}
+              radius={'md'}
               label="Thành phố, tỉnh thành"
               isInvalid={isProvinceValid || !provinceTouched ? false : true}
               errorMessage={
                 isProvinceValid || !provinceTouched
-                  ? ""
-                  : "Vui lòng chọn thành phố, tỉnh thành"
+                  ? ''
+                  : 'Vui lòng chọn thành phố, tỉnh thành'
               }
               autoFocus={false}
               placeholder="Chọn thành phố, tỉnh thành"
@@ -150,14 +150,14 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
               ))}
             </Select>
             <Select
-              key={"district"}
-              radius={"md"}
+              key={'district'}
+              radius={'md'}
               label="Quận, huyện"
               isInvalid={isDistrictValid || !districtTouched ? false : true}
               errorMessage={
                 isDistrictValid || !districtTouched
-                  ? ""
-                  : "Vui lòng chọn quận, huyện"
+                  ? ''
+                  : 'Vui lòng chọn quận, huyện'
               }
               autoFocus={false}
               placeholder="Chọn quận, huyện"
@@ -174,12 +174,12 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
               ))}
             </Select>
             <Select
-              key={"ward"}
-              radius={"md"}
+              key={'ward'}
+              radius={'md'}
               label="Xã, phường"
               isInvalid={isWardValid || !wardTouched ? false : true}
               errorMessage={
-                isWardValid || !wardTouched ? "" : "Vui lòng chọn xã, phường"
+                isWardValid || !wardTouched ? '' : 'Vui lòng chọn xã, phường'
               }
               autoFocus={false}
               placeholder="Chọn xã, phường"
@@ -248,10 +248,10 @@ export const SelectAddress = ({ addressValue, setAddressValue }) => {
         isOpen={false}
         label="Địa chỉ"
         placeholder="Chọn địa chỉ"
-        selectedKeys={addressValue !== "" ? [addressValue] : null}
-        isInvalid={addressValue !== "" || !diaChiTouched ? false : true}
+        selectedKeys={addressValue !== '' ? [addressValue] : null}
+        isInvalid={addressValue !== '' || !diaChiTouched ? false : true}
         errorMessage={
-          addressValue !== "" || !diaChiTouched ? "" : "Vui lòng chọn địa chỉ"
+          addressValue !== '' || !diaChiTouched ? '' : 'Vui lòng chọn địa chỉ'
         }
         className="w-full"
         variant="bordered"

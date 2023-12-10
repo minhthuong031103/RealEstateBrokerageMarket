@@ -12,7 +12,7 @@ import { MuaLeModal } from "../goi-dich-vu/MuaLeModal";
 import { useAuth } from "@/hooks/useAuth";
 import { PlusIcon } from "@radix-ui/react-icons";
 // const formSchema = z.object({});
-export const AddPostModal = () => {
+ const AddPostModal = () => {
   const [open, setOpen] = React.useState(false);
   const [danhMucValue, setDanhMucValue] = React.useState(null);
   const [thue, setThue] = React.useState(false);
@@ -124,3 +124,4 @@ export const AddPostModal = () => {
     </div>
   );
 };
+export default AddPostModal;

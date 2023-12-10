@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
-import React from "react";
-import { getUserSubscriptionPlan, stripe } from "@/lib/stripe";
-import UpgradeButton from "./upgradeButton";
+import React from 'react';
+import { getUserSubscriptionPlan, stripe } from '@/lib/stripe';
+import UpgradeButton from './upgradeButton';
 import {
   Card,
   CardContent,
@@ -10,17 +10,18 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { cn, convertPrismaTimeToDateTime, currencyFormat } from "@/lib/utils";
-import { CheckIcon } from "lucide-react";
-import prisma from "@/lib/prisma";
-import { getSession } from "@/lib/auth";
-import { MuaLe } from "./MuaLe";
-import ManageButton from "./ManageButton";
+} from '@/components/ui/card';
+import { cn, convertPrismaTimeToDateTime, currencyFormat } from '@/lib/utils';
+import { CheckIcon } from 'lucide-react';
+import prisma from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
+import { MuaLe } from './MuaLe';
+import ManageButton from './ManageButton';
 
 const page = async () => {
   const currentlyPlan = await getUserSubscriptionPlan();
   const session = await getSession();
+
   const plans = await stripe.plans.list();
   const getPriceForProduct = (productId) => {
     const plan = plans.data.find((plan) => plan.product === productId);
@@ -45,7 +46,7 @@ const page = async () => {
     return getPriceForProduct(a.id) - getPriceForProduct(b.id);
   });
 
-  console.log("subscribedPlan", subscribedPlan);
+  console.log('subscribedPlan', subscribedPlan);
   return (
     <div className="w-full h-full">
       <div className="mx-10 mb-10">
@@ -57,7 +58,7 @@ const page = async () => {
         </p>
         {currentlyPlan?.isSubscribed ? (
           <p className="text-gray-500 mb-3">
-            Bạn hiện đang đăng ký gói{" "}
+            Bạn hiện đang đăng ký gói{' '}
             <span className="font-bold">{subscribedPlan?.name}</span>.
           </p>
         ) : (
@@ -70,18 +71,18 @@ const page = async () => {
           <p>Bạn hiện có </p>
           <div>
             <p>
-              <span className="font-bold text-gray-500"> {user?.luot}</span>{" "}
+              <span className="font-bold text-gray-500"> {user?.luot}</span>{' '}
               lượt đăng bài viết.
             </p>
             <p>
               <span className="font-bold text-blue-500">
-                {" "}
+                {' '}
                 {user?.luotChuyenNghiep}
-              </span>{" "}
+              </span>{' '}
               lượt đăng bài viết <span className="font-bold"> Yêu thích</span>.
             </p>
             <p>
-              <span className="font-bold text-red-500"> {user?.luotVip}</span>{" "}
+              <span className="font-bold text-red-500"> {user?.luotVip}</span>{' '}
               lượt đăng bài viết <span className="font-bold"> Nổi bật</span>.
             </p>
             <MuaLe />
@@ -90,7 +91,7 @@ const page = async () => {
         <p className="mt-2">
           {currentlyPlan.isCanceled ? (
             <p>
-              Gói đăng ký của bạn đã được hủy và sẽ hết hạn vào{" "}
+              Gói đăng ký của bạn đã được hủy và sẽ hết hạn vào{' '}
               <span className="font-semibold">
                 {convertPrismaTimeToDateTime(
                   currentlyPlan.stripeCurrentPeriodEnd
@@ -99,7 +100,7 @@ const page = async () => {
             </p>
           ) : currentlyPlan.isSubscribed ? (
             <p>
-              Gói đăng ký của bạn sẽ được làm mới vào{" "}
+              Gói đăng ký của bạn sẽ được làm mới vào{' '}
               <span className="font-semibold">
                 {convertPrismaTimeToDateTime(
                   currentlyPlan.stripeCurrentPeriodEnd
@@ -119,10 +120,10 @@ const page = async () => {
             <Card
               key={product.name}
               className={cn(
-                "flex flex-col transition ease-in-out hover:scale-[101%]",
-                i === products.data.length - 1 && "border-red-500 shadow-md",
-                i === 1 && "border-blue-500 shadow-md",
-                i === 0 && "border-muted shadow-md"
+                'flex flex-col transition ease-in-out hover:scale-[101%]',
+                i === products.data.length - 1 && 'border-red-500 shadow-md',
+                i === 1 && 'border-blue-500 shadow-md',
+                i === 0 && 'border-muted shadow-md'
               )}
             >
               <CardHeader>

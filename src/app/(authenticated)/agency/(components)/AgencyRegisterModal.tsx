@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -12,6 +13,7 @@ function AgencyRegisterModal({ session }) {
   const { getUserRole } = useRole();
   const [userRole, setUserRole] = useState('');
   const [duyetDoiTac, setDuyetDoiTac] = useState('');
+  const [duyetKhachHang, setDuyetKhachHang] = useState('');
   const [isUser, setIsuser] = React.useState(false);
   const [loaiDoiTac, setLoaiDoiTacValue] = React.useState(null);
   const [canhan, setCaNhan] = React.useState(false);
@@ -21,13 +23,19 @@ function AgencyRegisterModal({ session }) {
     const fetchUserRole = async () => {
       try {
         const userRoleFetch = await getUserRole(session?.user?.id);
+        console.log(
+          '🚀 ~ file: AgencyRegisterModal.tsx:24 ~ fetchUserRole ~ userRoleFetch:',
+          userRoleFetch
+        );
         const role = userRoleFetch?.role;
         const duyetDoiTac = userRoleFetch?.duyetDoiTac;
+        const duyetKhachHang = userRoleFetch?.duyetKhachHang;
         setUserRole(role);
         if (role === 'khach_hang') {
           setIsuser(true);
         }
         setDuyetDoiTac(duyetDoiTac);
+        setDuyetKhachHang(duyetKhachHang);
         console.log(userRole, duyetDoiTac);
       } catch (error) {
         console.error('Error fetching user role:', error);
@@ -36,7 +44,7 @@ function AgencyRegisterModal({ session }) {
 
     fetchUserRole();
   }, []);
-  return userRole === 'khach_hang' ? (  
+  return userRole === 'khach_hang' ? (
     <div>
       {userRole === 'khach_hang' && !duyetDoiTac ? (
         <DialogCustom
