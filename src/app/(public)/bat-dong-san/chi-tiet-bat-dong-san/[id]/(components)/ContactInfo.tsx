@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import useConversation from '@/hooks/useConversation';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { AiOutlinePhone } from 'react-icons/ai';
-import { HiOutlineMail } from 'react-icons/hi';
-import { IoLocationOutline, IoStorefrontOutline } from 'react-icons/io5';
+import { Button } from "@/components/ui/button";
+import useConversation from "@/hooks/useConversation";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { AiOutlinePhone } from "react-icons/ai";
+import { HiOutlineMail } from "react-icons/hi";
+import { IoLocationOutline, IoStorefrontOutline } from "react-icons/io5";
 
 export function ContactInfo({ doiTacInfo, nhan }) {
   const session = useSession();
   console.log(
-    '🚀 ~ file: ContactInfo.tsx:12 ~ ContactInfo ~ session:',
+    "🚀 ~ file: ContactInfo.tsx:12 ~ ContactInfo ~ session:",
     session
   );
   const { goToConversation } = useConversation();
   const router = useRouter();
   console.log(
-    '🚀 ~ file: ContactInfo.tsx:9 ~ ContactInfo ~ doiTacInfo:',
+    "🚀 ~ file: ContactInfo.tsx:9 ~ ContactInfo ~ doiTacInfo:",
     doiTacInfo
   );
   return (
@@ -45,7 +45,7 @@ export function ContactInfo({ doiTacInfo, nhan }) {
           <div className="text-[14px] mt-2 overflow-hidden text-slate-800">
             <div className="flex flex-row gap-2 text-red-400 items-center">
               <IoStorefrontOutline className="py-auto" />
-              {doiTacInfo?.anhGiayPhepKinhDoanh ? 'Doanh nghiệp' : 'Cá nhân'}
+              {doiTacInfo?.anhGiayPhepKinhDoanh ? "Doanh nghiệp" : "Cá nhân"}
             </div>
             <div className="flex flex-row gap-2 items-center">
               <AiOutlinePhone className="py-auto" />
@@ -62,11 +62,11 @@ export function ContactInfo({ doiTacInfo, nhan }) {
         <IoLocationOutline className="text-[28px]" />
         {doiTacInfo?.diaChi}
       </div>
-      {nhan === 'Hoàn thành' ? (
+      {nhan === "Hoàn thành" ? (
         <p className="text-sm mt-4 w-full font-semibold text-emerald-500">
           Bất động sản đã hoàn thành giao dịch
         </p>
-      ) : session?.data?.user?.duyetKhachHang == 'da_duyet' ? (
+      ) : session?.data?.user?.duyetKhachHang == "da_duyet" ? (
         <Button
           onClick={() => {
             goToConversation(doiTacInfo.id, session?.data?.user?.id);
@@ -76,7 +76,7 @@ export function ContactInfo({ doiTacInfo, nhan }) {
           Liên hệ
         </Button>
       ) : (
-        <p className="text-sm mt-4 w-full font-semibold text-emerald-500">
+        <p className="text-sm mt-4 w-full font-semibold text-red-400">
           Tài khoản của bạn chưa được duyệt để liên hệ
         </p>
       )}
