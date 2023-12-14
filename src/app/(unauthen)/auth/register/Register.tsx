@@ -144,6 +144,7 @@ const Register = ({
       toast.error(
         "Vui lòng đọc điều khoản chính sách ở trang chủ và chấp thuận với chính sách của chúng tôi"
       );
+      return;
     }
     const formData = new FormData();
     Object.keys(data).forEach((key) => {
@@ -325,7 +326,7 @@ const Register = ({
                     </div>
                     <div className="flex w-full justify-center">
                       <FileDialog
-                        className="w-32"
+                        className="w-full"
                         name="phapLyImages"
                         maxFiles={1}
                         maxSize={1024 * 1024 * 4}
@@ -348,7 +349,7 @@ const Register = ({
                   </div>
                   <div className="flex w-full justify-center">
                     <FileDialog
-                      className="w-56"
+                      className="w-full"
                       name="phapLyImages"
                       maxFiles={1}
                       maxSize={1024 * 1024 * 4}
@@ -371,7 +372,7 @@ const Register = ({
                   </div>
                   <div className="flex w-full justify-center">
                     <FileDialog
-                      className="w-56"
+                      className="w-full"
                       name="phapLyImages"
                       maxFiles={1}
                       maxSize={1024 * 1024 * 4}
