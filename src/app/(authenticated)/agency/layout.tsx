@@ -7,7 +7,6 @@ import AgencyRegisterModal from "./(components)/AgencyRegisterModal";
 import { Footer } from "@/components/footer";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { CiCoinInsert, CiUser } from "react-icons/ci";
-import { MdOutlineCancel } from "react-icons/md";
 
 const navItems = [
   {
@@ -55,9 +54,9 @@ export default async function AgencyLayout({
     );
   } else {
     return (
-      <div className="w-full h-full flex flex-row items-center justify-center text-red-400 text-xl mt-6">
-        <MdOutlineCancel /> Tài khoản khách hàng của bạn cần được duyệt để sử
-        dụng chức năng này
+      <div className="w-full h-full flex flex-col items-center justify-center text-red-400 text-xl mt-6 gap-3">
+        <img src="https://cdn.dribbble.com/users/251873/screenshots/9288094/13539-sign-for-error-or-explanation-alert.gif" />
+        Tài khoản của bạn cần được duyệt để sử dụng chức năng này
       </div>
     );
   }

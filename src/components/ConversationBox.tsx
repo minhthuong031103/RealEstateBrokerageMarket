@@ -100,7 +100,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
               </p>
             )}
           </div>
-          <p
+          <div
             className={
               clsx(`
               truncate 
@@ -110,7 +110,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
             }
           >
             {lastMessageText}
-          </p>
+          </div>
         </div>
       </div>
     </div>

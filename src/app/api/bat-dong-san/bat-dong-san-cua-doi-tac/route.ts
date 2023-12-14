@@ -178,7 +178,7 @@ export async function GET(request: Request) {
   const data = {
     data: bds,
     totalPages: Math.ceil(countItem / limit),
-    totalItems: bds.length,
+    totalItems: countItem,
   };
   // console.log(bds[0].sanPham.chiTietCanHo)
   // console.log(bds)
