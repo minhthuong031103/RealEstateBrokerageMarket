@@ -75,7 +75,7 @@ export const Sidebar = React.forwardRef<SidebarElement, Readonly<SidebarProps>>(
 
             {navItems && navItems.length > 0 && (
               <>
-                <Collapsible.Content className="relative mt-3 md:block hidden">
+                <Collapsible.Content className="relative mt-3 lg:block hidden">
                   <div className="absolute left-2.5 w-px h-full bg-slate-6" />
 
                   <div className="py-2 flex flex-col truncate">
@@ -117,7 +117,7 @@ export const Sidebar = React.forwardRef<SidebarElement, Readonly<SidebarProps>>(
                   <AccordionItem
                     key="anchor"
                     aria-label="Anchor"
-                    className="md:hidden block"
+                    className="lg:hidden block"
                     indicator={<LuMenu />}
                   >
                     <Collapsible.Content className="relative mt-3">

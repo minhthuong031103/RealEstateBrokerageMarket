@@ -62,7 +62,7 @@ function MapComponent({ lat, lon }) {
   return (
     <div className="w-full">
       <Button
-        className="bg-neutral-800 text-white font-medium w-[100%] px-0 py-2"
+        className="bg-red-400 text-white font-medium w-[100%] px-0 py-2"
         onClick={() => {
           setPosition({ lat: lat, lng: lon });
         }}
