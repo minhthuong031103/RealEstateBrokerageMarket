@@ -54,7 +54,7 @@ export const BaiVietForm = ({
   const [productImageFiles, setProductImagesFile] = React.useState([]);
   const [phapLyImageFiles, setPhapLyImageFiles] = React.useState([]);
   const [banVeThietKe, setBanVeThietKe] = React.useState([]);
-  const [videoUrl, setVideoUrl] = React.useState();
+  const [videoUrl, setVideoUrl] = React.useState("");
   const [suaChuaLanCuoi, setSuaChuaLanCuoi] = React.useState();
   const [hoanThanh, setHoanThanh] = React.useState();
   const [danhSachTienNghi, setDanhSachTienNghi] = React.useState([]);
@@ -64,26 +64,26 @@ export const BaiVietForm = ({
   const { onCreateBaiViet } = useBaiViet();
 
   const onSubmit = async () => {
-    if (productImageFiles.length <= 0) {
-      toast.error("Vui lòng chọn hình ảnh bất động sản");
-      return;
-    }
-    if (productImageFiles.length < 7) {
-      toast.error("Vui lòng chọn tói thiểu 7 hình ảnh bất động sản");
-      return;
-    }
-    if (phapLyImageFiles.length <= 0) {
-      toast.error("Vui lòng chọn hình ảnh pháp lý");
-      return;
-    }
-    if (banVeThietKe.length <= 0) {
-      toast.error("Vui lòng chọn hình ảnh bản vẽ thiết kế");
-      return;
-    }
-    if (videoUrl === "") {
-      toast.error("Vui lòng chọn video giới thiệu bất động sản");
-      return;
-    }
+    // if (productImageFiles.length <= 0) {
+    //   toast.error("Vui lòng chọn hình ảnh bất động sản");
+    //   return;
+    // }
+    // if (productImageFiles.length < 7) {
+    //   toast.error("Vui lòng chọn tói thiểu 7 hình ảnh bất động sản");
+    //   return;
+    // }
+    // if (phapLyImageFiles.length <= 0) {
+    //   toast.error("Vui lòng chọn hình ảnh pháp lý");
+    //   return;
+    // }
+    // if (banVeThietKe.length <= 0) {
+    //   toast.error("Vui lòng chọn hình ảnh bản vẽ thiết kế");
+    //   return;
+    // }
+    // if (videoUrl === "") {
+    //   toast.error("Vui lòng chọn video giới thiệu bất động sản");
+    //   return;
+    // }
     if (
       !addressValue ||
       !loaiHinhValue ||
@@ -134,32 +134,32 @@ export const BaiVietForm = ({
 
     // let productImages;
     // let phapLyImages;
-    const [productImages, phapLyImages, banVeImages] = await Promise.all([
-      startUpload([...productImageFiles]).then((res) => {
-        const formattedImages = res?.map((image) => ({
-          id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
-          url: image.url,
-        }));
-        return formattedImages ?? null;
-      }),
-      startUpload([...phapLyImageFiles]).then((res) => {
-        const formattedImages = res?.map((image) => ({
-          id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
-          url: image.url,
-        }));
-        return formattedImages ?? null;
-      }),
-      startUpload([...banVeThietKe]).then((res) => {
-        const formattedImages = res?.map((image) => ({
-          id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
-          url: image.url,
-        }));
-        return formattedImages ?? null;
-      }),
-    ]);
+    // const [productImages, phapLyImages, banVeImages] = await Promise.all([
+    //   startUpload([...productImageFiles]).then((res) => {
+    //     const formattedImages = res?.map((image) => ({
+    //       id: image.key,
+    //       name: image.key.split("_")[1] ?? image.key,
+    //       url: image.url,
+    //     }));
+    //     return formattedImages ?? null;
+    //   }),
+    //   startUpload([...phapLyImageFiles]).then((res) => {
+    //     const formattedImages = res?.map((image) => ({
+    //       id: image.key,
+    //       name: image.key.split("_")[1] ?? image.key,
+    //       url: image.url,
+    //     }));
+    //     return formattedImages ?? null;
+    //   }),
+    //   startUpload([...banVeThietKe]).then((res) => {
+    //     const formattedImages = res?.map((image) => ({
+    //       id: image.key,
+    //       name: image.key.split("_")[1] ?? image.key,
+    //       url: image.url,
+    //     }));
+    //     return formattedImages ?? null;
+    //   }),
+    // ]);
 
     console.log(productImages, phapLyImages);
     const baiViet = {
@@ -183,17 +183,17 @@ export const BaiVietForm = ({
       suaChuaLanCuoi: suaChuaLanCuoi ? new Date(suaChuaLanCuoi) : null,
       huongCuaChinh: huongCuaChinh,
       soTang: soTang ? parseInt(soTang) : null,
-      hinhAnhSanPham: productImages ? JSON.stringify([...productImages]) : null,
-      hinhAnhGiayTo: phapLyImages ? JSON.stringify([...phapLyImages]) : null,
+      // hinhAnhSanPham: productImages ? JSON.stringify([...productImages]) : null,
+      // hinhAnhGiayTo: phapLyImages ? JSON.stringify([...phapLyImages]) : null,
       danhSachTienNghi:
         danhSachTienNghi.length > 0
           ? JSON.stringify([...danhSachTienNghi])
           : null,
-      hinhAnhBanVeThietKe: banVeImages
-        ? JSON.stringify([...banVeImages])
-        : null,
+      // hinhAnhBanVeThietKe: banVeImages
+      //   ? JSON.stringify([...banVeImages])
+      //   : null,
       isChothue: isChoThue,
-      video: videoUrl,
+      // video: videoUrl,
       trangThai: "Chờ duyệt",
     };
     console.log(baiViet);

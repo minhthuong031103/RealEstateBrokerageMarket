@@ -282,7 +282,7 @@ export function ChiTietComponent({ id }) {
                     </div>
                   </div>
                   <img
-                    src={chiTietBDS?.hinhAnhBanVeThietKe}
+                    src={parseJSON(chiTietBDS?.hinhAnhBanVeThietKe)[0]?.url}
                     className="mt-8 w-full rounded-md h-[360px] md:h-[540px] lg:h-[630px]"
                     style={{ objectFit: "cover" }}
                   />

@@ -1,46 +1,46 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { useBatDongSan } from '@/hooks/useBatDongSan';
-import { Input, Textarea } from '@nextui-org/react';
-import { useBaiViet } from '@/hooks/useBaiViet';
-import DialogCustom from '@/components/ui/dialogCustom';
-import { Button } from '@/components/ui/button';
-import { Spinner } from '@nextui-org/react';
-import { DienTich } from '@/app/(authenticated)/agency/(components)/(addPost)/DienTich';
-import { SelectDanhMuc } from './(editPost)/SelectDanhMuc';
-import { GiaBan } from '@/app/(authenticated)/agency/(components)/(addPost)/GiaBan';
-import { FileDialog } from '@/components/ui/FileDialog';
-import { ImageList } from '@/components/ui/ImageList';
-import { generateReactHelpers } from '@uploadthing/react/hooks';
-import { OurFileRouter } from '@/app/api/uploadthing/core';
-import { useQueryClient } from '@tanstack/react-query';
-import { LoaiHinh } from './(editPost)/LoaiHinh';
-import { GiayToPhapLy } from './(editPost)/GiayToPhapLy';
-import { CanHoForm } from './(editPost)/(canho)/CanHoForm';
-import { set } from 'date-fns';
-import { useQuery } from '@tanstack/react-query';
-import { parse } from 'path';
-import { SelectAddress } from './(editPost)/SelectAddress';
-import { TieuDe } from '@/app/(authenticated)/agency/(components)/(addPost)/TieuDe';
-import { MoTaChiTiet } from '@/app/(authenticated)/agency/(components)/(addPost)/MoTaChiTiet';
-import { NhaForm } from './(editPost)/(nha)/NhaForm';
-import Loader from '@/components/Loader';
-import { VanPhongForm } from './(editPost)/(vanphong)/VanPhongForm';
-import toast from 'react-hot-toast';
+import React, { useEffect, useState } from "react";
+import { useBatDongSan } from "@/hooks/useBatDongSan";
+import { Input, Textarea } from "@nextui-org/react";
+import { useBaiViet } from "@/hooks/useBaiViet";
+import DialogCustom from "@/components/ui/dialogCustom";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@nextui-org/react";
+import { DienTich } from "@/app/(authenticated)/agency/(components)/(addPost)/DienTich";
+import { SelectDanhMuc } from "./(editPost)/SelectDanhMuc";
+import { GiaBan } from "@/app/(authenticated)/agency/(components)/(addPost)/GiaBan";
+import { FileDialog } from "@/components/ui/FileDialog";
+import { ImageList } from "@/components/ui/ImageList";
+import { generateReactHelpers } from "@uploadthing/react/hooks";
+import { OurFileRouter } from "@/app/api/uploadthing/core";
+import { useQueryClient } from "@tanstack/react-query";
+import { LoaiHinh } from "./(editPost)/LoaiHinh";
+import { GiayToPhapLy } from "./(editPost)/GiayToPhapLy";
+import { CanHoForm } from "./(editPost)/(canho)/CanHoForm";
+import { set } from "date-fns";
+import { useQuery } from "@tanstack/react-query";
+import { parse } from "path";
+import { SelectAddress } from "./(editPost)/SelectAddress";
+import { TieuDe } from "@/app/(authenticated)/agency/(components)/(addPost)/TieuDe";
+import { MoTaChiTiet } from "@/app/(authenticated)/agency/(components)/(addPost)/MoTaChiTiet";
+import { NhaForm } from "./(editPost)/(nha)/NhaForm";
+import Loader from "@/components/Loader";
+import { VanPhongForm } from "./(editPost)/(vanphong)/VanPhongForm";
+import toast from "react-hot-toast";
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
 const EditForm = ({ id }) => {
   const queryClient = useQueryClient();
-  const { startUpload } = useUploadThing('imageUploader');
+  const { startUpload } = useUploadThing("imageUploader");
   const [isLoaded, setIsLoaded] = React.useState(false);
   const { fetchBatDongSanTheoId } = useBatDongSan();
   // const [chiTietBDS, setChiTietBDS] = useState();
-  const [tieuDe, setTieuDe] = React.useState('');
-  const [moTa, setMoTa] = React.useState('');
-  const [diaChi, setDiaChi] = React.useState('');
+  const [tieuDe, setTieuDe] = React.useState("");
+  const [moTa, setMoTa] = React.useState("");
+  const [diaChi, setDiaChi] = React.useState("");
   const [giaBan, setGiaBan] = React.useState(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [chieuDai, setChieuDai] = React.useState();
@@ -65,6 +65,7 @@ const EditForm = ({ id }) => {
   const [banVeThietKeImageFiles, setBanVeThietKeImageFiles] = React.useState(
     []
   );
+  const [videoUrl, setVideoUrl] = React.useState("");
   const [deletedImageProductFiles, setDeletedImageProductFiles] =
     React.useState([]);
   const [deletedImagePhapLyFiles, setDeletedImagePhapLyFiles] = React.useState(
@@ -78,6 +79,26 @@ const EditForm = ({ id }) => {
 
   const { onUpdateBaiViet } = useBaiViet();
   const onSubmit = async () => {
+    // if (productImageFiles.length <= 0) {
+    //   toast.error("Vui lòng chọn hình ảnh bất động sản");
+    //   return;
+    // }
+    // if (productImageFiles.length < 7) {
+    //   toast.error("Vui lòng chọn tói thiểu 7 hình ảnh bất động sản");
+    //   return;
+    // }
+    // if (phapLyImageFiles.length <= 0) {
+    //   toast.error("Vui lòng chọn hình ảnh pháp lý");
+    //   return;
+    // }
+    // if (banVeThietKe.length <= 0) {
+    //   toast.error("Vui lòng chọn hình ảnh bản vẽ thiết kế");
+    //   return;
+    // }
+    // if (videoUrl === "") {
+    //   toast.error("Vui lòng chọn video giới thiệu bất động sản");
+    //   return;
+    // }
     if (
       !diaChi ||
       !loaiHinhValue ||
@@ -88,10 +109,10 @@ const EditForm = ({ id }) => {
       !tieuDe ||
       !moTa
     ) {
-      toast.error('Vui lòng nhập đầy đủ thông tin ');
+      toast.error("Vui lòng nhập đầy đủ thông tin ");
       return;
     }
-    if (danhMucValue === 'Căn hộ') {
+    if (danhMucValue === "Căn hộ") {
       if (
         !phongNgu ||
         !phongTam ||
@@ -99,12 +120,12 @@ const EditForm = ({ id }) => {
         !huongBanCong ||
         !huongCuaChinh
       ) {
-        toast.error('Vui lòng nhập đầy đủ thông tin');
+        toast.error("Vui lòng nhập đầy đủ thông tin");
         return;
       }
     }
 
-    if (danhMucValue === 'Nhà ở') {
+    if (danhMucValue === "Nhà ở") {
       if (
         !phongNgu ||
         !phongTam ||
@@ -113,93 +134,93 @@ const EditForm = ({ id }) => {
         !dienTichHoBoi ||
         !soTang
       ) {
-        toast.error('Vui lòng nhập đầy đủ thông tin');
+        toast.error("Vui lòng nhập đầy đủ thông tin");
         return;
       }
     }
 
-    if (danhMucValue === 'Văn phòng') {
+    if (danhMucValue === "Văn phòng") {
       if (!noiThat || !huongCuaChinh) {
-        toast.error('Vui lòng nhập đầy đủ thông tin');
+        toast.error("Vui lòng nhập đầy đủ thông tin");
         return;
       }
     }
 
-    const productfileArray = [];
-    const phaplyfileArray = [];
-    const banVeThietKeArray = [];
+    // const productfileArray = [];
+    // const phaplyfileArray = [];
+    // const banVeThietKeArray = [];
 
-    productImageFiles.forEach((file) => {
-      if (file?.lastModified) {
-        productfileArray.push(file);
-      }
-    });
+    // productImageFiles.forEach((file) => {
+    //   if (file?.lastModified) {
+    //     productfileArray.push(file);
+    //   }
+    // });
 
-    phapLyImageFiles.forEach((file) => {
-      if (file?.lastModified) {
-        phaplyfileArray.push(file);
-      }
-    });
+    // phapLyImageFiles.forEach((file) => {
+    //   if (file?.lastModified) {
+    //     phaplyfileArray.push(file);
+    //   }
+    // });
 
-    banVeThietKeImageFiles.forEach((file) => {
-      if (file?.lastModified) {
-        banVeThietKeArray.push(file);
-      }
-    });
+    // banVeThietKeImageFiles.forEach((file) => {
+    //   if (file?.lastModified) {
+    //     banVeThietKeArray.push(file);
+    //   }
+    // });
 
-    const [productImages, phapLyImages, banVeThietKeImages] = await Promise.all(
-      [
-        startUpload([...productfileArray]).then((res) => {
-          const formattedImages = res?.map((image) => ({
-            id: image.key,
-            name: image.key.split('_')[1] ?? image.key,
-            url: image.url,
-          }));
-          return formattedImages ?? null;
-        }),
-        startUpload([...phaplyfileArray]).then((res) => {
-          const formattedImages = res?.map((image) => ({
-            id: image.key,
-            name: image.key.split('_')[1] ?? image.key,
-            url: image.url,
-          }));
-          return formattedImages ?? null;
-        }),
-        startUpload([...banVeThietKeArray]).then((res) => {
-          const formattedImages = res?.map((image) => ({
-            id: image.key,
-            name: image.key.split('_')[1] ?? image.key,
-            url: image.url,
-          }));
-          return formattedImages ?? null;
-        }),
-      ]
-    );
+    // const [productImages, phapLyImages, banVeThietKeImages] = await Promise.all(
+    //   [
+    //     startUpload([...productfileArray]).then((res) => {
+    //       const formattedImages = res?.map((image) => ({
+    //         id: image.key,
+    //         name: image.key.split("_")[1] ?? image.key,
+    //         url: image.url,
+    //       }));
+    //       return formattedImages ?? null;
+    //     }),
+    //     startUpload([...phaplyfileArray]).then((res) => {
+    //       const formattedImages = res?.map((image) => ({
+    //         id: image.key,
+    //         name: image.key.split("_")[1] ?? image.key,
+    //         url: image.url,
+    //       }));
+    //       return formattedImages ?? null;
+    //     }),
+    //     startUpload([...banVeThietKeArray]).then((res) => {
+    //       const formattedImages = res?.map((image) => ({
+    //         id: image.key,
+    //         name: image.key.split("_")[1] ?? image.key,
+    //         url: image.url,
+    //       }));
+    //       return formattedImages ?? null;
+    //     }),
+    //   ]
+    // );
 
-    const newArrayImagesProduct = productImageFiles?.filter((image) => {
-      return !deletedImageProductFiles.includes(image?.id) && image.id;
-    });
+    // const newArrayImagesProduct = productImageFiles?.filter((image) => {
+    //   return !deletedImageProductFiles.includes(image?.id) && image.id;
+    // });
 
-    const newArrayImagesPhapLy = phapLyImageFiles?.filter((image) => {
-      return !deletedImagePhapLyFiles.includes(image?.id) && image.id;
-    });
+    // const newArrayImagesPhapLy = phapLyImageFiles?.filter((image) => {
+    //   return !deletedImagePhapLyFiles.includes(image?.id) && image.id;
+    // });
 
-    const newArrayImagesThietKe = banVeThietKeImageFiles?.filter((image) => {
-      return !deletedImageBanVeThietKeFiles.includes(image?.id) && image.id;
-    });
+    // const newArrayImagesThietKe = banVeThietKeImageFiles?.filter((image) => {
+    //   return !deletedImageBanVeThietKeFiles.includes(image?.id) && image.id;
+    // });
 
-    const updateArrayImageProduct = [
-      ...newArrayImagesProduct,
-      ...(productImages || []),
-    ];
-    const updateArrayImagePhapLy = [
-      ...newArrayImagesPhapLy,
-      ...(phapLyImages || []),
-    ];
-    const updateArrayImageThietKe = [
-      ...newArrayImagesThietKe,
-      ...(banVeThietKeImages || []),
-    ];
+    // const updateArrayImageProduct = [
+    //   ...newArrayImagesProduct,
+    //   ...(productImages || []),
+    // ];
+    // const updateArrayImagePhapLy = [
+    //   ...newArrayImagesPhapLy,
+    //   ...(phapLyImages || []),
+    // ];
+    // const updateArrayImageThietKe = [
+    //   ...newArrayImagesThietKe,
+    //   ...(banVeThietKeImages || []),
+    // ];
 
     const baiVietUpdated = {
       diaChi: diaChi,
@@ -221,39 +242,39 @@ const EditForm = ({ id }) => {
       suaChuaLanCuoi: suaChuaLanCuoi ? new Date(suaChuaLanCuoi) : null,
       huongCuaChinh: huongCuaChinh,
       soTang: soTang ? parseInt(soTang) : null,
-      hinhAnhSanPham: updateArrayImageProduct
-        ? JSON.stringify([...updateArrayImageProduct])
-        : null,
-      hinhAnhGiayTo: updateArrayImagePhapLy
-        ? JSON.stringify([...updateArrayImagePhapLy])
-        : null,
-      hinhAnhBanVeThietKe: updateArrayImageThietKe
-        ? JSON.stringify([...updateArrayImageThietKe])
-        : null,
+      // hinhAnhSanPham: updateArrayImageProduct
+      //   ? JSON.stringify([...updateArrayImageProduct])
+      //   : null,
+      // hinhAnhGiayTo: updateArrayImagePhapLy
+      //   ? JSON.stringify([...updateArrayImagePhapLy])
+      //   : null,
+      // hinhAnhBanVeThietKe: updateArrayImageThietKe
+      //   ? JSON.stringify([...updateArrayImageThietKe])
+      //   : null,
       danhSachTienNghi:
         danhSachTienNghi.length > 0
           ? JSON.stringify([...danhSachTienNghi])
           : null,
       isChothue: thue,
-      trangThai: 'Chờ duyệt',
-      deletedImageProductFiles: deletedImageProductFiles
-        ? JSON.stringify([...deletedImageProductFiles])
-        : null,
+      trangThai: "Chờ duyệt",
+      // deletedImageProductFiles: deletedImageProductFiles
+      //   ? JSON.stringify([...deletedImageProductFiles])
+      //   : null,
     };
 
-    if (oldloaiHinhValue == loaiHinhValue) {
+    if (oldloaiHinhValue === loaiHinhValue) {
       delete baiVietUpdated.loaiHinh;
     }
 
     const success = await onUpdateBaiViet(id, baiVietUpdated);
     if (success) {
       setIsSubmitting(true);
-      console.log('Thay đổi thông tin bài viết thành công');
+      console.log("Thay đổi thông tin bài viết thành công");
     }
   };
 
   const { data: chiTietBDS } = useQuery({
-    queryKey: ['chiTietBDS', id],
+    queryKey: ["chiTietBDS", id],
     queryFn: async () => {
       const res = await fetchBatDongSanTheoId(id);
       return res?.[0];
@@ -263,7 +284,7 @@ const EditForm = ({ id }) => {
   useEffect(() => {
     if (chiTietBDS) {
       console.log(
-        '🚀 ~ file: EditForm.tsx:191 ~ useEffect ~ chiTietBDS:',
+        "🚀 ~ file: EditForm.tsx:191 ~ useEffect ~ chiTietBDS:",
         chiTietBDS
       );
       setDanhMucValue(chiTietBDS?.loaiHinh?.loaiBDS?.name);
@@ -282,6 +303,7 @@ const EditForm = ({ id }) => {
       setProductImagesFile(JSON.parse(chiTietBDS?.hinhAnhSanPham));
       setPhapLyImageFiles(JSON.parse(chiTietBDS?.hinhAnhGiayTo));
       setBanVeThietKeImageFiles(JSON.parse(chiTietBDS?.hinhAnhBanVeThietKe));
+      setVideoUrl(chiTietBDS?.video);
       setGiaBan(chiTietBDS?.gia?.toString());
       setPhapLy(chiTietBDS?.tinhTrangPhapLy);
       setPhongNgu(chiTietBDS?.soPhongNgu?.toString());
@@ -309,10 +331,9 @@ const EditForm = ({ id }) => {
         </div>
       ) : (
         <div className="w-full h-full flex flex-col space-y-6">
-          <TieuDe tieuDe={tieuDe} setTieuDe={setTieuDe} />
-
-          <MoTaChiTiet setMota={MoTaChiTiet} moTa={moTa} />
-
+          <div className="flex flex-row justify-between items-center">
+            <div className="text-lg font-bold">{`Chỉnh sửa tin bất động sản #${chiTietBDS?.id}`}</div>
+          </div>
           <SelectDanhMuc
             setThue={setThue}
             setBan={setBan}
@@ -322,6 +343,8 @@ const EditForm = ({ id }) => {
             danhMucValue={danhMucValue}
             setLoadingDanhMuc={setLoadingDanhMuc}
           />
+          <TieuDe tieuDe={tieuDe} setTieuDe={setTieuDe} />
+          <MoTaChiTiet setMota={MoTaChiTiet} moTa={moTa} />
 
           <SelectAddress
             addressValue={diaChi}
@@ -349,7 +372,7 @@ const EditForm = ({ id }) => {
             setPhapLyImageFiles={setPhapLyImageFiles}
             setDeletedImagePhapLyFiles={setDeletedImagePhapLyFiles}
           />
-          {danhMucValue === 'Căn hộ' && (
+          {danhMucValue === "Căn hộ" && (
             <CanHoForm
               setHuongBanCong={setHuongBanCong}
               setHuongCuaChinh={setHuongCuaChinh}
@@ -376,9 +399,8 @@ const EditForm = ({ id }) => {
               }
             />
           )}
-
           {
-            danhMucValue === 'Nhà ở' && (
+            danhMucValue === "Nhà ở" && (
               <NhaForm
                 setHuongBanCong={setHuongBanCong}
                 setHuongCuaChinh={setHuongCuaChinh}
@@ -407,7 +429,7 @@ const EditForm = ({ id }) => {
             // <CanHoForm />
           }
           {
-            danhMucValue === 'Văn phòng' && (
+            danhMucValue === "Văn phòng" && (
               <VanPhongForm
                 setNoiThat={setNoiThat}
                 noiThatValue={noiThat}
@@ -427,7 +449,7 @@ const EditForm = ({ id }) => {
             <div className="border-1 border-gray-400 w-full h-64 overflow-hidden rounded-md">
               {productImageFiles?.length ? (
                 <ImageList
-                  className={'w-full h-64'}
+                  className={"w-full h-64"}
                   files={productImageFiles}
                   height={32}
                   width={32}
@@ -442,6 +464,10 @@ const EditForm = ({ id }) => {
               setFiles={setProductImagesFile}
               disabled={false}
             />
+          </div>
+          <div className="w-full flex flex-col gap-y-3w">
+            <div className="text-sm font-bold">Video bất động sản</div>
+            <VideoUploader videoUrl={videoUrl} setVideoUrl={setVideoUrl} />
           </div>
 
           <div className="w-full flex items-center justify-center pt-10">
