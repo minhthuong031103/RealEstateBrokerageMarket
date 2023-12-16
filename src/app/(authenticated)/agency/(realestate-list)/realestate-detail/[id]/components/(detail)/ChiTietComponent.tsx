@@ -299,7 +299,7 @@ export function ChiTietComponent({ id }) {
                   <iframe
                     className="mt-8 rounded-md w-full h-[270px] md:h-[450px] lg:h-[540px]"
                     style={{ objectFit: "cover" }}
-                    src="https://www.youtube.com/embed/KudedLV0tP0"
+                    src={chiTietBDS?.video}
                   ></iframe>
                 </div>
               </div>
@@ -313,7 +313,7 @@ export function ChiTietComponent({ id }) {
 
             <a
               href="#"
-              className="w-full flex flex-row gap-2 justify-center mb-8 font-medium text-[18px] bg-blue-500 text-white p-4 rounded-md"
+              className="w-full flex flex-row gap-2 justify-center mb-8 font-medium text-[18px] bg-red-400 text-white p-4 rounded-md"
             >
               <BiSolidArrowFromBottom className="mt-1" />
               Về đầu trang

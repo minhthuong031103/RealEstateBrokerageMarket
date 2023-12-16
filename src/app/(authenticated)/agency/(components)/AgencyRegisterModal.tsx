@@ -9,7 +9,6 @@ import { SelectLoaiDoiTac } from "./SelectLoaiDoiTac";
 import { FaRegClock, FaUserLock } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import { useDoiTac } from "@/hooks/useDoiTac";
-import { ThongTinForm } from "./(profile)/(edit)/ThongTinForm";
 
 function AgencyRegisterModal({ session }) {
   const { getUserRole } = useRole();

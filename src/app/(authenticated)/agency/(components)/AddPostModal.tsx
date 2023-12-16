@@ -12,7 +12,7 @@ import { MuaLeModal } from "../goi-dich-vu/MuaLeModal";
 import { useAuth } from "@/hooks/useAuth";
 import { PlusIcon } from "@radix-ui/react-icons";
 // const formSchema = z.object({});
- const AddPostModal = () => {
+const AddPostModal = () => {
   const [open, setOpen] = React.useState(false);
   const [danhMucValue, setDanhMucValue] = React.useState(null);
   const [thue, setThue] = React.useState(false);
@@ -60,7 +60,7 @@ import { PlusIcon } from "@radix-ui/react-icons";
                   Bạn hiện có{" "}
                   <span className="font-semibold text-red-500">
                     {" "}
-                    {user?.luot}
+                    {user?.luot + user?.luotChuyenNghiep + user?.luotVip}
                   </span>{" "}
                   lượt đăng bài viết.
                 </p>
