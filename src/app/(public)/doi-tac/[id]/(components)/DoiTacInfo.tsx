@@ -2,6 +2,8 @@
 import { Button } from "@/components/ui/button";
 import useConversation from "@/hooks/useConversation";
 import { useDoiTac } from "@/hooks/useDoiTac";
+import { useUser } from "@/hooks/useUser";
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { AiOutlinePhone } from "react-icons/ai";
@@ -14,6 +16,14 @@ export const DoiTacInfo = ({ id }) => {
   console.log("🚀 ~ file: DoiTacInfo.tsx:13 ~ DoiTacInfo ~ session:", session);
   const { goToConversation } = useConversation();
   const { fetchDoiTacTheoId } = useDoiTac();
+  const { onGetUserDetail } = useUser();
+  const { data: userInfo } = useQuery({
+    queryKey: ["userInfo", session?.data?.user?.id],
+    queryFn: async () => {
+      const res = await onGetUserDetail(session?.data?.user?.id);
+      return res?.[0];
+    },
+  });
   useEffect(() => {
     const getDoiTacInformation = async () => {
       await fetchDoiTacTheoId(id).then((data) => {
@@ -56,7 +66,7 @@ export const DoiTacInfo = ({ id }) => {
         <IoLocationOutline className="text-[24px]" />
         {doiTacInformation?.diaChi}
       </div>
-      {session?.data?.user?.duyetKhachHang == "da_duyet" ? (
+      {userInfo?.duyetKhachHang == "da_duyet" ? (
         <Button
           onClick={() => {
             goToConversation(id, session?.data?.user?.id);

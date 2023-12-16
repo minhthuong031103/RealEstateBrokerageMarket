@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import useConversation from "@/hooks/useConversation";
+import { useUser } from "@/hooks/useUser";
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { AiOutlinePhone } from "react-icons/ai";
@@ -20,6 +22,15 @@ export function ContactInfo({ doiTacInfo, nhan }) {
     "🚀 ~ file: ContactInfo.tsx:9 ~ ContactInfo ~ doiTacInfo:",
     doiTacInfo
   );
+  const { onGetUserDetail } = useUser();
+  const { data: userInfo } = useQuery({
+    queryKey: ["userInfo", session?.data?.user?.id],
+    queryFn: async () => {
+      const res = await onGetUserDetail(session?.data?.user?.id);
+      return res?.[0];
+    },
+  });
+
   return (
     <div className="lg:basis-1/4 h-fit rounded-md bg-white border-[1px] shadow p-6">
       <div className="font-semibold text-[24px] text-slate-800 w-full text-center">
@@ -66,7 +77,7 @@ export function ContactInfo({ doiTacInfo, nhan }) {
         <p className="text-sm mt-4 w-full font-semibold text-emerald-500">
           Bất động sản đã hoàn thành giao dịch
         </p>
-      ) : session?.data?.user?.duyetKhachHang == "da_duyet" ? (
+      ) : userInfo?.duyetKhachHang == "da_duyet" ? (
         <Button
           onClick={() => {
             goToConversation(doiTacInfo.id, session?.data?.user?.id);
