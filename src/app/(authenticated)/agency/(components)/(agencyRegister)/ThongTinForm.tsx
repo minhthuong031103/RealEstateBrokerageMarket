@@ -111,7 +111,7 @@ export const ThongTinForm = ({ loaiDoiTac }) => {
       anhChanDung: anhChanDungImageFiles
         ? JSON.stringify([...anhChanDungImageFiles])
         : null,
-      duyetDoiTac: "pending",
+      duyetDoiTac: "cho_duyet",
     };
 
     setIsSubmitting(true);

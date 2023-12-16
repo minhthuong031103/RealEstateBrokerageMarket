@@ -21,8 +21,11 @@ export default async function layout({ children }) {
     );
   }
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center text-red-400 text-xl mt-6 gap-3">
-      <img src="https://cdn.dribbble.com/users/251873/screenshots/9288094/13539-sign-for-error-or-explanation-alert.gif" />
+    <div className="w-full h-full flex flex-col items-center justify-center text-slate-800 text-center text-xl mt-6 gap-3">
+      <img
+        src="https://cdn.dribbble.com/users/251873/screenshots/9288094/13539-sign-for-error-or-explanation-alert.gif"
+        className="w-[360px] h-auto"
+      />
       Tài khoản của bạn cần được duyệt để sử dụng chức năng này
     </div>
   );
