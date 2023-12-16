@@ -6,7 +6,6 @@ import { getRequest } from "@/lib/fetch";
 import { Input } from "@/components/ui/input";
 import DialogCustom from "@/components/ui/dialogCustom";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 
 export const SelectAddress = ({
   addressValue,
