@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useBatDongSan } from '@/hooks/useBatDongSan';
-import { Select, SelectItem } from '@nextui-org/react';
-import React, { useEffect } from 'react';
-import { Checkbox } from '@nextui-org/react';
+import { useBatDongSan } from "@/hooks/useBatDongSan";
+import { Select, SelectItem } from "@nextui-org/react";
+import React, { useEffect } from "react";
+import { Checkbox } from "@nextui-org/react";
 
 export const SelectDanhMuc = ({
   setDanhMucValue,
@@ -45,15 +45,23 @@ export const SelectDanhMuc = ({
   const isProvinceValid = selectedDanhMuc.size > 0;
   return (
     <div className="flex flex-col h-full gap-y-6">
+      <div className="flex flex-row gap-2">
+        <Checkbox isDisabled={thue} isSelected={ban} onValueChange={setBan}>
+          Bán
+        </Checkbox>
+        <Checkbox isDisabled={ban} isSelected={thue} onValueChange={setThue}>
+          Thuê
+        </Checkbox>
+      </div>
       <Select
         isDisabled
-        key={'danhmuc'}
-        radius={'sm'}
+        key={"danhmuc"}
+        radius={"sm"}
         variant="bordered"
         label="Danh mục bất động sản"
         isInvalid={isProvinceValid || !danhMucTouched ? false : true}
         errorMessage={
-          isProvinceValid || !danhMucTouched ? '' : 'Vui lòng chọn danh mục'
+          isProvinceValid || !danhMucTouched ? "" : "Vui lòng chọn danh mục"
         }
         autoFocus={false}
         placeholder="Chọn danh mục bất động sản 12"
@@ -69,14 +77,6 @@ export const SelectDanhMuc = ({
           </SelectItem>
         ))}
       </Select>
-      <div className="flex flex-row gap-2">
-        <Checkbox isDisabled={thue} isSelected={ban} onValueChange={setBan}>
-          Bán
-        </Checkbox>
-        <Checkbox isDisabled={ban} isSelected={thue} onValueChange={setThue}>
-          Thuê
-        </Checkbox>
-      </div>
     </div>
   );
 };

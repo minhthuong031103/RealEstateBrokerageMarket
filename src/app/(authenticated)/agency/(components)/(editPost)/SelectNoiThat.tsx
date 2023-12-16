@@ -12,7 +12,6 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { LiaSwimmingPoolSolid } from "react-icons/lia";
 import { formatNumberWithCommas } from "@/lib/utils";
 
-
 interface SelectNoiThatProps {
   setPhongNgu: (value: string) => void;
   setPhongTam: (value: string) => void;
@@ -172,31 +171,31 @@ export const SelectNoiThat = ({
         ))}
       </Select>
 
-      <Select
-        key={"sotang"}
-        radius={"sm"}
-        variant="bordered"
-        label="Số tầng"
-        isInvalid={isSoTangValid || !soTangTouched ? false : true}
-        errorMessage={
-          isSoTangValid || !soTangTouched ? "" : "Vui lòng chọn số tầng"
-        }
-        autoFocus={false}
-        placeholder="Chọn số tầng"
-        selectedKeys={soTangValue ? [soTangValue] : []}
-        onSelectionChange={setSelectedSoTang}
-        onClose={() => setSoTangTouched(true)}
-        className="w-full"
-        startContent={<HiOutlineBuildingOffice2 className="w-3 h-3" />}
-      >
-        {noiThat?.map((noithat) => (
-          <SelectItem key={noithat.value} value={noithat.value}>
-            {noithat.value.toString()}
-          </SelectItem>
-        ))}
-      </Select>
-      {loaiHinh === "Nhà" && (
+      {loaiHinh === "Căn hộ" && (
         <div className="flex flex-col gap-y-4">
+          <Select
+            key={"sotang"}
+            radius={"sm"}
+            variant="bordered"
+            label="Số tầng"
+            isInvalid={isSoTangValid || !soTangTouched ? false : true}
+            errorMessage={
+              isSoTangValid || !soTangTouched ? "" : "Vui lòng chọn số tầng"
+            }
+            autoFocus={false}
+            placeholder="Chọn số tầng"
+            selectedKeys={soTangValue ? [soTangValue] : []}
+            onSelectionChange={setSelectedSoTang}
+            onClose={() => setSoTangTouched(true)}
+            className="w-full"
+            startContent={<HiOutlineBuildingOffice2 className="w-3 h-3" />}
+          >
+            {noiThat?.map((noithat) => (
+              <SelectItem key={noithat.value} value={noithat.value}>
+                {noithat.value.toString()}
+              </SelectItem>
+            ))}
+          </Select>
           <Input
             variant="bordered"
             radius="sm"

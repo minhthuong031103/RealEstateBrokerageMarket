@@ -12,7 +12,6 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { LiaSwimmingPoolSolid } from "react-icons/lia";
 import { formatNumberWithCommas } from "@/lib/utils";
 
-
 interface SelectNoiThatProps {
   setPhongNgu: (value: string) => void;
   setPhongTam: (value: string) => void;
@@ -165,7 +164,7 @@ export const SelectNoiThat = ({
           </SelectItem>
         ))}
       </Select>
-      {danhMucValue !== "Căn hộ" && (
+      {danhMucValue === "Căn hộ" && (
         <Select
           key={"sotang"}
           radius={"sm"}
@@ -183,7 +182,6 @@ export const SelectNoiThat = ({
           className="w-full"
           startContent={<HiOutlineBuildingOffice2 className="w-3 h-3" />}
         >
-
           {noiThat?.map((noithat) => (
             <SelectItem key={noithat.value} value={noithat.value}>
               {noithat.value.toString()}
