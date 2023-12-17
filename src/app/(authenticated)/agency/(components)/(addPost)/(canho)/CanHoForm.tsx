@@ -35,6 +35,7 @@ export const CanHoForm = ({
   dienTichHoBoi,
   setDienTichHoBoi,
   danhMucValue,
+  setSoTang,
 }) => {
   const form = useForm<z.infer<typeof canHoSchema>>({
     resolver: zodResolver(canHoSchema),
@@ -47,6 +48,7 @@ export const CanHoForm = ({
           setPhongNgu={setPhongNgu}
           setPhongTam={setPhongTam}
           setNoiThat={setNoiThat}
+          setSoTang={setSoTang}
           danhSachTienNghi={danhSachTienNghi}
           setDanhSachTienNghi={setDanhSachTienNghi}
           setDienTichGarage={setDienTichGarage}

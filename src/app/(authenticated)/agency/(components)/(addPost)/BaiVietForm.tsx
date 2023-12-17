@@ -249,6 +249,7 @@ export const BaiVietForm = ({
           dienTichHoBoi={dienTichHoBoi}
           setDienTichHoBoi={setDienTichHoBoi}
           danhMucValue={danhMucValue}
+          setSoTang={setSoTang}
         />
       )}
 

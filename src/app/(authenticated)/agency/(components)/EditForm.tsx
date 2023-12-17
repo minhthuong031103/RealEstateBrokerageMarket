@@ -8,6 +8,7 @@ import { useBaiViet } from "@/hooks/useBaiViet";
 import DialogCustom from "@/components/ui/dialogCustom";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@nextui-org/react";
+import { VideoUploader } from "@/components/videoUpload/VideoUploader";
 import { DienTich } from "@/app/(authenticated)/agency/(components)/(addPost)/DienTich";
 import { SelectDanhMuc } from "./(editPost)/SelectDanhMuc";
 import { GiaBan } from "@/app/(authenticated)/agency/(components)/(addPost)/GiaBan";
