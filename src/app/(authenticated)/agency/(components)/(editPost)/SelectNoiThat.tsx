@@ -172,62 +172,62 @@ export const SelectNoiThat = ({
       </Select>
 
       {loaiHinh === "Căn hộ" && (
-        <div className="flex flex-col gap-y-4">
-          <Select
-            key={"sotang"}
-            radius={"sm"}
-            variant="bordered"
-            label="Số tầng"
-            isInvalid={isSoTangValid || !soTangTouched ? false : true}
-            errorMessage={
-              isSoTangValid || !soTangTouched ? "" : "Vui lòng chọn số tầng"
-            }
-            autoFocus={false}
-            placeholder="Chọn số tầng"
-            selectedKeys={soTangValue ? [soTangValue] : []}
-            onSelectionChange={setSelectedSoTang}
-            onClose={() => setSoTangTouched(true)}
-            className="w-full"
-            startContent={<HiOutlineBuildingOffice2 className="w-3 h-3" />}
-          >
-            {noiThat?.map((noithat) => (
-              <SelectItem key={noithat.value} value={noithat.value}>
-                {noithat.value.toString()}
-              </SelectItem>
-            ))}
-          </Select>
-          <Input
-            variant="bordered"
-            radius="sm"
-            className="w-full"
-            label="Diện tích Garage"
-            value={dienTichGarage}
-            description="Nhập 0 nếu không có Garage"
-            startContent={<PiGarageFill className="w-3 h-3" />}
-            placeholder="Diện tích Garage"
-            onChange={(e) => {
-              if (/^\d*$/.test(e.target.value)) {
-                setDienTichGarage(e.target.value);
-              }
-            }}
-          />
-          <Input
-            variant="bordered"
-            radius="sm"
-            className="w-full"
-            label="Diện tích hồ bơi"
-            description="Nhập 0 nếu không có hồ bơi"
-            startContent={<LiaSwimmingPoolSolid className="w-3 h-3" />}
-            placeholder="Diện tích hồ bơi"
-            value={dienTichHoBoi}
-            onChange={(e) => {
-              if (/^\d*$/.test(e.target.value)) {
-                setDienTichHoBoi(e.target.value);
-              }
-            }}
-          />
-        </div>
+        <Select
+          key={"sotang"}
+          radius={"sm"}
+          variant="bordered"
+          label="Số tầng"
+          isInvalid={isSoTangValid || !soTangTouched ? false : true}
+          errorMessage={
+            isSoTangValid || !soTangTouched ? "" : "Vui lòng chọn số tầng"
+          }
+          autoFocus={false}
+          placeholder="Chọn số tầng"
+          selectedKeys={soTangValue ? [soTangValue] : []}
+          onSelectionChange={setSelectedSoTang}
+          onClose={() => setSoTangTouched(true)}
+          className="w-full"
+          startContent={<HiOutlineBuildingOffice2 className="w-3 h-3" />}
+        >
+          {noiThat?.map((noithat) => (
+            <SelectItem key={noithat.value} value={noithat.value}>
+              {noithat.value.toString()}
+            </SelectItem>
+          ))}
+        </Select>
       )}
+      <div className="flex flex-col gap-y-4">
+        <Input
+          variant="bordered"
+          radius="sm"
+          className="w-full"
+          label="Diện tích Garage"
+          value={dienTichGarage}
+          description="Nhập 0 nếu không có Garage"
+          startContent={<PiGarageFill className="w-3 h-3" />}
+          placeholder="Diện tích Garage"
+          onChange={(e) => {
+            if (/^\d*$/.test(e.target.value)) {
+              setDienTichGarage(e.target.value);
+            }
+          }}
+        />
+        <Input
+          variant="bordered"
+          radius="sm"
+          className="w-full"
+          label="Diện tích hồ bơi"
+          description="Nhập 0 nếu không có hồ bơi"
+          startContent={<LiaSwimmingPoolSolid className="w-3 h-3" />}
+          placeholder="Diện tích hồ bơi"
+          value={dienTichHoBoi}
+          onChange={(e) => {
+            if (/^\d*$/.test(e.target.value)) {
+              setDienTichHoBoi(e.target.value);
+            }
+          }}
+        />
+      </div>
       <DanhSachTienNghi
         danhSachTienNghi={danhSachTienNghi}
         setDanhSachTienNghi={setDanhSachTienNghi}

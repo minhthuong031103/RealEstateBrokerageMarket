@@ -103,7 +103,9 @@ export const BaiVietForm = ({
         !phongTam ||
         !noiThat ||
         !huongBanCong ||
-        !huongCuaChinh
+        !huongCuaChinh ||
+        !suaChuaLanCuoi ||
+        !hoanThanh
       ) {
         toast.error("Vui lòng nhập đầy đủ thông tin");
         return;
@@ -117,7 +119,9 @@ export const BaiVietForm = ({
         !noiThat ||
         !dienTichGarage ||
         !dienTichHoBoi ||
-        !soTang
+        !soTang ||
+        !suaChuaLanCuoi ||
+        !hoanThanh
       ) {
         toast.error("Vui lòng nhập đầy đủ thông tin");
         return;
@@ -160,8 +164,6 @@ export const BaiVietForm = ({
     //     return formattedImages ?? null;
     //   }),
     // ]);
-
-    console.log(productImages, phapLyImages);
     const baiViet = {
       diaChi: addressValue,
       loaiHinh: loaiHinhValue,
