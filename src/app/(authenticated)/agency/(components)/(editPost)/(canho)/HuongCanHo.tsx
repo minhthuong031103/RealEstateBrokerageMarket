@@ -66,7 +66,8 @@ export const HuongCanHo = ({
 
       <Select
         key={"cuaChinh"}
-        radius={"md"}
+        radius={"sm"}
+        variant="bordered"
         label="Hướng cửa chính"
         isInvalid={isCuaChinhValid || !cuaChinhTouched ? false : true}
         errorMessage={

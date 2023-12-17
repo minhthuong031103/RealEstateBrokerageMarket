@@ -44,15 +44,13 @@ export const DanhSachTienNghi = ({ danhSachTienNghi, setDanhSachTienNghi }) => {
           radius="sm"
           label="Tên tiện nghi"
           endContent={
-            <div className="py-3 ">
-              <Button
-                type="button"
-                className="rounded-full transition ease-in-out hover:scale-115 origin-center hover:rotate-180 w-8 h-8 p-0 border-1 border-red-400 bg-transparent text-red-400 hover:bg-red-400 hover:text-white -mt-4"
-                onClick={handleAddFruit}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
+            <Button
+              type="button"
+              className="rounded-full transition ease-in-out hover:scale-115 origin-center hover:rotate-180 w-8 h-8 p-0 border-1 border-red-400 bg-transparent text-red-400 hover:bg-red-400 hover:text-white -mt-4"
+              onClick={handleAddFruit}
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
           }
         />
       </div>

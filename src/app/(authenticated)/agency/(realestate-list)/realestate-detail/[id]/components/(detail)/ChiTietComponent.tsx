@@ -8,10 +8,8 @@ import { BiSolidArrowFromBottom } from "react-icons/bi";
 import { BsCheck2 } from "react-icons/bs";
 import { ContactInfo } from "./ContactInfo";
 import { ImagePost } from "./ImagePost";
-// import { LikeShareGroup } from "./LikeShareGroup";
 import MapComponent from "./MapComponent";
 import { useQuery } from "@tanstack/react-query";
-import { getRequest } from "@/lib/fetch";
 import Loader from "@/components/Loader";
 import { useRouter } from "next/navigation";
 
@@ -40,7 +38,7 @@ export type ToaDoDiaChi = {
 
 export function ChiTietComponent({ id }) {
   const { fetchBatDongSanTheoId } = useBatDongSan();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const router = useRouter();
 
   const { data: chiTietBDS } = useQuery({
@@ -71,7 +69,9 @@ export function ChiTietComponent({ id }) {
         <div className="ml-4">
           <div className="container pt-[48px]">
             <div>
-              <h1>Bản xem trước bài đăng của bạn</h1>
+              <h1 className="text-red-400 font-medium">
+                Bản xem trước bài đăng của bạn
+              </h1>
             </div>
             <div className="flex flex-col lg:flex-row justify-between mb-8">
               <div className="w-[60%]">
@@ -155,16 +155,6 @@ export function ChiTietComponent({ id }) {
                     {chiTietBDS?.loaiHinh?.loaiBDS?.name !== "Đất" ? (
                       <>
                         <div className="flex flex-row">
-                          <div className="w-1/2">Năm hoàn thành:</div>
-                          <div className="w-1/2 font-semibold">
-                            {
-                              new Date(chiTietBDS?.hoanThanh)
-                                .toLocaleDateString("en-GB")
-                                .split("/")[2]
-                            }
-                          </div>
-                        </div>
-                        <div className="flex flex-row">
                           <div className="w-1/2">Nội thất:</div>
                           <div className="w-1/2 font-semibold">
                             {chiTietBDS?.tinhTrangNoiThat}
@@ -211,6 +201,26 @@ export function ChiTietComponent({ id }) {
                             {chiTietBDS?.soPhongNgu}
                           </div>
                         </div>
+                        <div className="flex flex-row">
+                          <div className="w-1/2">Năm hoàn thành:</div>
+                          <div className="w-1/2 font-semibold">
+                            {
+                              new Date(chiTietBDS?.hoanThanh)
+                                .toLocaleDateString("en-GB")
+                                .split("/")[2]
+                            }
+                          </div>
+                        </div>
+                        <div className="flex flex-row">
+                          <div className="w-1/2">Sửa chữa lần cuối:</div>
+                          <div className="w-1/2 font-semibold">
+                            {
+                              new Date(chiTietBDS?.suaChuaLanCuoi)
+                                .toLocaleDateString("en-GB")
+                                .split("/")[2]
+                            }
+                          </div>
+                        </div>
                       </>
                     ) : chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
                       <>
@@ -236,6 +246,26 @@ export function ChiTietComponent({ id }) {
                           <div className="w-1/2">Hồ bơi:</div>
                           <div className="w-1/2 font-semibold">
                             {chiTietBDS?.dienTichHoBoi} m<sup>2</sup>
+                          </div>
+                        </div>
+                        <div className="flex flex-row">
+                          <div className="w-1/2">Năm hoàn thành:</div>
+                          <div className="w-1/2 font-semibold">
+                            {
+                              new Date(chiTietBDS?.hoanThanh)
+                                .toLocaleDateString("en-GB")
+                                .split("/")[2]
+                            }
+                          </div>
+                        </div>
+                        <div className="flex flex-row">
+                          <div className="w-1/2">Sửa chữa lần cuối:</div>
+                          <div className="w-1/2 font-semibold">
+                            {
+                              new Date(chiTietBDS?.suaChuaLanCuoi)
+                                .toLocaleDateString("en-GB")
+                                .split("/")[2]
+                            }
                           </div>
                         </div>
                       </>
@@ -275,18 +305,21 @@ export function ChiTietComponent({ id }) {
                   <div className="mt-8 w-full rounded-md overflow-hidden"></div>
                   <MapComponent lat={toaDo?.lat} lon={toaDo?.lon} />
                 </div>
-                <div className="mt-8 mb-8 w-full rounded-md bg-white border-[1px] shadow p-8">
-                  <div className="flex flex-row justify-between flex-wrap">
-                    <div className="text-gray-600 font-semibold">
-                      Bản vẽ nhà
+                {chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ||
+                chiTietBDS?.loaiHinh?.loaiBDS?.name === "Căn hộ" ? (
+                  <div className="mt-8 mb-8 w-full rounded-md bg-white border-[1px] shadow p-8">
+                    <div className="flex flex-row justify-between flex-wrap">
+                      <div className="text-gray-600 font-semibold">
+                        Bản vẽ nhà
+                      </div>
                     </div>
+                    <img
+                      src={parseJSON(chiTietBDS?.hinhAnhBanVeThietKe)[0]?.url}
+                      className="mt-8 w-full rounded-md h-[360px] md:h-[540px] lg:h-[630px]"
+                      style={{ objectFit: "cover" }}
+                    />
                   </div>
-                  <img
-                    src={parseJSON(chiTietBDS?.hinhAnhBanVeThietKe)[0]?.url}
-                    className="mt-8 w-full rounded-md h-[360px] md:h-[540px] lg:h-[630px]"
-                    style={{ objectFit: "cover" }}
-                  />
-                </div>
+                ) : null}
                 <div className="mt-8 mb-8 w-full rounded-md bg-white border-[1px] shadow p-8">
                   <div className="flex flex-row justify-between flex-wrap">
                     <div className="text-gray-600 font-semibold">Video</div>
@@ -311,10 +344,7 @@ export function ChiTietComponent({ id }) {
               </div>
             </div>
 
-            <a
-              href="#"
-              className="w-full flex flex-row gap-2 justify-center mb-8 font-medium text-[18px] bg-red-400 text-white p-4 rounded-md"
-            >
+            <a className="w-full flex flex-row gap-2 justify-center mb-8 font-medium text-[18px] bg-red-400 text-white p-4 rounded-md">
               <BiSolidArrowFromBottom className="mt-1" />
               Về đầu trang
             </a>

@@ -119,7 +119,12 @@ const EditForm = ({ id }) => {
         !phongTam ||
         !noiThat ||
         !huongBanCong ||
-        !huongCuaChinh
+        !huongCuaChinh ||
+        !dienTichGarage ||
+        !dienTichHoBoi ||
+        !soTang ||
+        !suaChuaLanCuoi ||
+        !hoanThanh
       ) {
         toast.error("Vui lòng nhập đầy đủ thông tin");
         return;
@@ -133,7 +138,8 @@ const EditForm = ({ id }) => {
         !noiThat ||
         !dienTichGarage ||
         !dienTichHoBoi ||
-        !soTang
+        !suaChuaLanCuoi ||
+        !hoanThanh
       ) {
         toast.error("Vui lòng nhập đầy đủ thông tin");
         return;

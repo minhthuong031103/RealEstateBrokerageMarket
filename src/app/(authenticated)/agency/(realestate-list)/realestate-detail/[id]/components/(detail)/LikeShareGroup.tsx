@@ -1,86 +1,15 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
-import { Snippet } from "@nextui-org/react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { useEffect, useState } from "react";
-import { useBatDongSan } from "@/hooks/useBatDongSan";
-export function LikeShareGroup({ userIdOfWriter, postId }) {
-  const { checkTonTaiYeuThich, themVaoYeuThich, xoaKhoiYeuThich } =
-    useBatDongSan();
-  const userId = 9;
-  const [isExists, setIsExists] = useState(true);
-  useEffect(() => {
-    const checkExist = async () => {
-      await checkTonTaiYeuThich(userId, postId).then((data) => {
-        if (data === null) {
-          setIsExists(false);
-        } else setIsExists(true);
-      });
-    };
-    checkExist();
-  }, []);
-  const addToFavourites = async () => {
-    setIsExists(true);
-    const data = {
-      userId: userId,
-      postId: postId,
-    };
-    await themVaoYeuThich(data);
-  };
-  const removeFromFavourites = async () => {
-    setIsExists(false);
-    const data = {
-      userId: userId,
-      postId: postId,
-    };
-    await xoaKhoiYeuThich(data);
-  };
+import { AiOutlineHeart } from "react-icons/ai";
+export function LikeShareGroup() {
   return (
     <div className="flex flex-row space-x-4">
-      {userId !== userIdOfWriter && isExists ? (
-        <Button
-          className="rounded-full text-slate-50 bg-red-400 w-[42px] h-[42px] text-[24px] p-0 hover:bg-pink-500 transition ease-in-out duration-200 hover:scale-[1.2]"
-          onClick={removeFromFavourites}
-        >
-          <AiOutlineHeart />
-        </Button>
-      ) : userId !== userIdOfWriter && !isExists ? (
-        <Button
-          className="rounded-full bg-slate-50 text-neutral-800 w-[42px] h-[42px] text-[24px] p-0 hover:bg-slate-50 hover:text-pink-500 transition ease-in-out duration-200 hover:scale-[1.2]"
-          onClick={addToFavourites}
-        >
-          <AiOutlineHeart />
-        </Button>
-      ) : (
-        <></>
-      )}
-      <Dialog>
-        <DialogTrigger>
-          <Button className="rounded-full bg-slate-50 text-neutral-800 w-[42px] h-[42px] text-[24px] p-0 border-transparent hover:bg-transparent hover:text-blue-500 transition ease-in-out duration-200 hover:scale-[1.2]">
-            <AiOutlineShareAlt />
-          </Button>
-        </DialogTrigger>
-        <DialogContent>
-          <div className="w-fit p-6">
-            <div className="flex flex-col gap-2">
-              Share
-              <a
-                href={`https://www.facebook.com/dialog/share?app_id=87741124305&href=${window.location.href}&display=popup`}
-              >
-                <img
-                  src="https://th.bing.com/th/id/OIP.CDaJK2XeVL95udO-fw0uKwHaHa?pid=ImgDet&rs=1"
-                  className="w-[42px] h-[42px]"
-                />
-              </a>
-            </div>
-            <div className="flex flex-col gap-2 mt-6">
-              Sao chép địa chỉ liên kết
-              <Snippet variant="bordered">{window.location.href}</Snippet>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <Button className="rounded-full text-slate-50 bg-red-400 w-[42px] h-[42px] text-[24px] p-0 hover:bg-pink-500 transition ease-in-out duration-200 hover:scale-[1.2]">
+        <AiOutlineHeart />
+      </Button>
+      <Button className="rounded-full bg-slate-50 text-neutral-800 w-[42px] h-[42px] text-[24px] p-0 hover:bg-slate-50 hover:text-pink-500 transition ease-in-out duration-200 hover:scale-[1.2]">
+        <AiOutlineHeart />
+      </Button>
     </div>
   );
 }
