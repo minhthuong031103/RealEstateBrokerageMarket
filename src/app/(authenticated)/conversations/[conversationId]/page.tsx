@@ -13,7 +13,6 @@ interface IParams {
 const ChatId = async ({ params }: { params: IParams }) => {
   const session = await getSession();
   const conversation = await getConversationById(params.conversationId);
-  console.log('🚀 ~ file: page.tsx:16 ~ ChatId ~ conversation:', conversation);
   // const messages = await getMessages(params.conversationId);
 
   // if (!conversation) {

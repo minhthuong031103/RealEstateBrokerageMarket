@@ -33,10 +33,7 @@ function ListItemRealEstate({ searchProps, id }: props) {
       setIsLoaded(true);
     },
   });
-  console.log(
-    '🚀 ~ file: ListItemRealEstate.tsx:36 ~ ListItemRealEstate ~ data:',
-    data
-  );
+
   const ref = React.useRef(null);
 
   const onPageChange = (page) => {

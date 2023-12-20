@@ -113,7 +113,6 @@ export const PickLocation = ({ addressValue, setAddressValue }) => {
           onClose={() => {
             setIsModalOpen(false);
             setDiaChiTouched(true);
-            console.log(diaChiTouched);
           }}
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}

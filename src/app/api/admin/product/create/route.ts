@@ -41,7 +41,6 @@ const size = [
 
 export async function POST(request: Request) {
   const re = await request.json();
-  console.log(re);
   const res = await prisma.product.create({
     data: {
       name: re.name,
@@ -52,5 +51,4 @@ export async function POST(request: Request) {
       thumbnail: JSON.stringify(re.image[0]),
     },
   });
-  console.log(res);
 }

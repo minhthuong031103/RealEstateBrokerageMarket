@@ -83,7 +83,6 @@ const Register = ({
   const [isSelected, setIsSelected] = useState(false);
   const [cmndMatTruoc, setCmndMatTruoc] = useState([]);
   const [maSoCmnd, setMaSoCmnd] = useState("");
-  console.log("🚀 ~ file: Register.tsx:85 ~ cmndMatTruoc:", cmndMatTruoc);
   const [cmndMatSau, setCmndMatSau] = useState([]);
   const [portrait, setPortrait] = useState([]);
   useEffect(() => {

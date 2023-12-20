@@ -28,7 +28,6 @@ export function ListComponent({ searchProps }) {
   });
   const ref = React.useRef(null);
   useEffect(() => {
-    console.log(searchProps);
   }, [searchProps]);
 
   //Set page state when change review page index

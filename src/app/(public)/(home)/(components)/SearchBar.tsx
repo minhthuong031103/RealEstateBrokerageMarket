@@ -56,7 +56,6 @@ export function SearchBar() {
   });
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(typeNumber);
     router.push(
       `/bat-dong-san?tukhoa=${values.searchWord}&diachi=${addressValue}&loaibds=${values.type}&hinhthuc=${values.isRent}`
     );

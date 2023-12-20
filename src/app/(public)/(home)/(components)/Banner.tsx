@@ -11,7 +11,6 @@ function Banner() {
     const getBanner = async () => {
       await fetchBanner().then((data) => {
         setListBanners(data?.items);
-        console.log(data);
       });
     };
     getBanner();

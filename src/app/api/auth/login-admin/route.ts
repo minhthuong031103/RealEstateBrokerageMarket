@@ -2,13 +2,11 @@ import prisma from '@/lib/prisma';
 
 export async function POST(req: Request) {
   const body = await req.json();
-  console.log('🚀 ~ file: route.ts:3 ~ POST ~ body:', body);
   const admin = await prisma.office.findFirst({
     where: {
       email: body.email,
     },
   });
-  console.log('🚀 ~ file: route.ts:11 ~ POST ~ admin:', admin);
 
   if (!admin) {
     return new Response(

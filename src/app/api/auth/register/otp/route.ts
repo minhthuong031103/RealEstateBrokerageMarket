@@ -35,8 +35,6 @@ export async function POST(req: Request) {
 
 export async function PUT(req: Request) {
   const body = await req.json();
-  console.log(body);
-  console.log('bodyyyyyyyyyyyyy');
   if (!body) return new Response('no body', { status: 400 });
   const email = body.email;
   const otp = Math.floor(100000 + Math.random() * 900000); // generate 6-digit OTP
@@ -97,6 +95,5 @@ export async function PUT(req: Request) {
       return new Response(JSON.stringify('OTP sent'), { status: 200 });
     }
   } catch (err) {
-    console.log(err);
   }
 }

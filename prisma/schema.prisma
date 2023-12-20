@@ -3,9 +3,11 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL") // Add charset here
   relationMode = "prisma"
+
+
 }
 
 model User {
@@ -58,7 +60,7 @@ model BaiViet {
   tieuDe              String
   moTa                String
   nhan                String
-  trangThai           String      @default("Chờ duyệt")
+  trangThai           String      @default("cho_duyet")
   ngayDang            DateTime    @default(now())
   userId              Int
   gia                 Float

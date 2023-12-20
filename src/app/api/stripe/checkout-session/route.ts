@@ -27,7 +27,6 @@ export async function POST(request: Request) {
       status: 200,
     });
   }
-  console.log('body in checkout-session', body);
 
   //handle if the user doesn't have a subscription
   //it will be create a new subscription, and call checkout.session.completed webhook

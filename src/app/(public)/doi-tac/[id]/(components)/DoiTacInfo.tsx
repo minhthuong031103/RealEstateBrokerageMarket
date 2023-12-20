@@ -1,17 +1,15 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import useConversation from "@/hooks/useConversation";
-import { useDoiTac } from "@/hooks/useDoiTac";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { AiOutlinePhone } from "react-icons/ai";
-import { HiOutlineMail } from "react-icons/hi";
-import { IoLocationOutline, IoStorefrontOutline } from "react-icons/io5";
+'use client';
+import { Button } from '@/components/ui/button';
+import useConversation from '@/hooks/useConversation';
+import { useDoiTac } from '@/hooks/useDoiTac';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { AiOutlinePhone } from 'react-icons/ai';
+import { HiOutlineMail } from 'react-icons/hi';
+import { IoLocationOutline, IoStorefrontOutline } from 'react-icons/io5';
 export const DoiTacInfo = ({ id }) => {
-  console.log("🚀 ~ file: DoiTacInfo.tsx:11 ~ DoiTacInfo ~ id:", id);
   const [doiTacInformation, setDoiTacInformation] = useState();
   const session = useSession();
-  console.log("🚀 ~ file: DoiTacInfo.tsx:13 ~ DoiTacInfo ~ session:", session);
   const { goToConversation } = useConversation();
   const { fetchDoiTacTheoId } = useDoiTac();
 
@@ -19,7 +17,6 @@ export const DoiTacInfo = ({ id }) => {
     const getDoiTacInformation = async () => {
       await fetchDoiTacTheoId(id).then((data) => {
         setDoiTacInformation(data[0]);
-        console.log(data);
       });
     };
     getDoiTacInformation();
@@ -39,8 +36,8 @@ export const DoiTacInfo = ({ id }) => {
             <div className="flex flex-row items-center gap-2 text-red-400">
               <IoStorefrontOutline className="py-auto" />
               {doiTacInformation?.anhGiayPhepKinhDoanh
-                ? "Doanh nghiệp"
-                : "Cá nhân"}
+                ? 'Doanh nghiệp'
+                : 'Cá nhân'}
             </div>
             <div className="flex flex-row items-center gap-2 w-full">
               <AiOutlinePhone className="py-auto" />
@@ -57,7 +54,7 @@ export const DoiTacInfo = ({ id }) => {
         <IoLocationOutline className="text-[24px]" />
         {doiTacInformation?.diaChi}
       </div>
-      {session?.data?.user?.duyetKhachHang === "da_duyet" ? (
+      {session?.data?.user?.duyetKhachHang === 'da_duyet' ? (
         <Button
           onClick={() => {
             goToConversation(id, session?.data?.user?.id);

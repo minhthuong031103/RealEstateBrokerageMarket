@@ -3,7 +3,6 @@ import { uploadthingApi } from '@/lib/uploadthingServer';
 export async function POST(req: Request) {
   const body = await req.json();
   const { imageKey } = body;
-  console.log('🚀 ~ file: route.ts:6 ~ POST ~ imageKey:', imageKey);
 
   if (!imageKey) {
     return { status: 400, body: { message: 'imageKey is required' } };

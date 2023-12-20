@@ -1,16 +1,16 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 import {
   GoogleMap,
   InfoWindowF,
   MarkerF,
   useJsApiLoader,
-} from "@react-google-maps/api";
-import { Button } from "@/components/ui/button";
+} from '@react-google-maps/api';
+import { Button } from '@/components/ui/button';
 
 const containerStyle = {
-  width: "100%",
-  height: "500px",
+  width: '100%',
+  height: '500px',
 };
 
 export type Place = {
@@ -22,13 +22,13 @@ export type Place = {
 
 function MapComponent({ lat, lon }) {
   const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
+    id: 'google-map-script',
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
   const [places, setPlaces] = useState<Place[]>([
     {
-      name: "Royal Holiday Hanoi Hotel",
-      address: "19 Ng. Hàng Hành, Hàng Trống, Hoàn Kiếm, Hà Nội, Vietnam",
+      name: 'Royal Holiday Hanoi Hotel',
+      address: '19 Ng. Hàng Hành, Hàng Trống, Hoàn Kiếm, Hà Nội, Vietnam',
       latitude: 21.031503,
       longitude: 105.850441,
     },
@@ -38,7 +38,6 @@ function MapComponent({ lat, lon }) {
     lat: 21.031503,
     lng: 105.850441,
   });
-  console.log(setPlaces);
   const [selectedPlace, setSelectedPlace] = useState<Place | undefined>(
     undefined
   );
@@ -54,7 +53,6 @@ function MapComponent({ lat, lon }) {
   const onUnmount = React.useCallback(
     function callback(map) {
       setMap(null);
-      console.log(map);
     },
     [map]
   );

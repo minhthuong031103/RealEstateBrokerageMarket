@@ -9,7 +9,6 @@ export const Nhan = ({ setIsMuaLeModalOpen, setNhan }) => {
   const [selectedType, setSelectedType] = React.useState(new Set([]));
   const [typeTouched, setTypeTouched] = React.useState(false);
   const session = useSession();
-  console.log('🚀 ~ file: Nhan.tsx:12 ~ Nhan ~ session:', session);
   useEffect(() => {
     if (selectedType.size > 0) {
       const phapLyValueArray = Array.from(selectedType);
@@ -20,12 +19,20 @@ export const Nhan = ({ setIsMuaLeModalOpen, setNhan }) => {
   const { queryUser } = useAuth();
 
   const { data: user } = queryUser(session);
+  const disabledKeys = [];
+  if (user?.luotChuyenNghiep <= 0) {
+    disabledKeys.push('Yêu thích');
+  }
+  if (user?.luotVip <= 0) {
+    disabledKeys.push('Nổi bật');
+  }
   return (
     <div className="flex flex-col gap-y-3">
       <div className="font-bold text-sm">Nhãn bài viết</div>
       <Select
         key={'nhan'}
         radius={'sm'}
+        disabledKeys={disabledKeys}
         variant="bordered"
         label="Nhãn"
         isInvalid={isTypeValid || !typeTouched ? false : true}
@@ -40,6 +47,7 @@ export const Nhan = ({ setIsMuaLeModalOpen, setNhan }) => {
         }}
         onClose={() => setTypeTouched(true)}
         className="w-full"
+        defaultSelectedKeys={['Thông thường']}
       >
         {NhanBaiVietConst?.map((item) => (
           <SelectItem key={item.value} value={item.value}>

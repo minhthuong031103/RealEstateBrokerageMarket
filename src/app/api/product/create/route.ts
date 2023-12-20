@@ -3,7 +3,6 @@ import prisma from '@/lib/prisma';
 export async function POST(req: Request) {
   const body = await req.json();
   if (!body) return new Response('no body', { status: 400 });
-  console.log(body);
   try {
     const create = await prisma.product.create({
       data: {
@@ -30,7 +29,6 @@ export async function POST(req: Request) {
       );
     }
   } catch (e) {
-    console.log(e);
     return new Response('error', { status: 500 });
   }
 }

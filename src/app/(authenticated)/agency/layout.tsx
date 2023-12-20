@@ -1,27 +1,29 @@
-import React from "react";
-import { getSession } from "@/lib/auth";
-import Header from "./(components)/Header";
-import { Sidebar } from "./(components)/Sidebar";
-import { redirect } from "next/navigation";
-import AgencyRegisterModal from "./(components)/AgencyRegisterModal";
-import { Footer } from "@/components/footer";
-import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
-import { CiCoinInsert, CiUser } from "react-icons/ci";
+import React from 'react';
+import { getSession } from '@/lib/auth';
+import Header from './(components)/Header';
+import { Sidebar } from './(components)/Sidebar';
+import { redirect } from 'next/navigation';
+import AgencyRegisterModal from './(components)/AgencyRegisterModal';
+import { Footer } from '@/components/footer';
+import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
+import { CiCoinInsert, CiUser } from 'react-icons/ci';
+import { MdOutlineCancel } from 'react-icons/md';
+import { getRequest } from '@/lib/fetch';
 
 const navItems = [
   {
-    title: "Bất động sản của tôi",
-    value: "/",
+    title: 'Bất động sản của tôi',
+    value: '/',
     icon: <HiOutlineBuildingOffice2 className="w-5 h-5" />,
   },
   {
-    title: "Hồ sơ đối tác",
-    value: "profile",
+    title: 'Hồ sơ đối tác',
+    value: 'profile',
     icon: <CiUser className="w-5 h-5" />,
   },
   {
-    title: "Dịch vụ",
-    value: "goi-dich-vu",
+    title: 'Dịch vụ',
+    value: 'goi-dich-vu',
     icon: <CiCoinInsert className="w-5 h-5" />,
   },
   // Add more items as needed
@@ -32,8 +34,11 @@ export default async function AgencyLayout({
   children: React.ReactNode;
 }) {
   const session = await getSession();
-  if (!session) redirect("/auth/login");
-  if (session?.user?.duyetKhachHang == "da_duyet") {
+  if (!session) redirect('/auth/login');
+  const user = await getRequest({
+    endPoint: '/api/user/status?userId=' + session?.user?.id,
+  });
+  if (user?.duyetKhachHang == 'da_duyet') {
     return (
       <div className="w-full h-full bg-slate-50">
         <Header session={session} />

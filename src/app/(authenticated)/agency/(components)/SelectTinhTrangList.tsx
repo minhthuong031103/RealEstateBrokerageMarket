@@ -15,19 +15,19 @@ export const SelectTinhTrangList = ({ setTrangThaiValue, onSubmit }) => {
     },
     {
       label: 'Đã duyệt',
-      value: 'Đã duyệt',
+      value: 'da_duyet',
     },
     {
       label: 'Đã khoá',
-      value: 'Đã khoá',
+      value: 'da_khoa',
     },
     {
       label: 'Chờ duyệt',
-      value: 'Chờ duyệt',
+      value: 'cho_duyet',
     },
     {
       label: 'Không duyệt',
-      value: 'Không duyệt',
+      value: 'khong_duyet',
     },
   ];
   useEffect(() => {

@@ -1,27 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { useRole } from "@/hooks/useRole";
-import DialogCustom from "@/components/ui/dialogCustom";
-import Logo from "@/components/logo";
-import { SelectLoaiDoiTac } from "./SelectLoaiDoiTac";
-import { FaRegClock, FaUserLock } from "react-icons/fa";
-import { useQuery } from "@tanstack/react-query";
-import { useDoiTac } from "@/hooks/useDoiTac";
+import React, { useState, useEffect } from 'react';
+import { useRole } from '@/hooks/useRole';
+import DialogCustom from '@/components/ui/dialogCustom';
+import Logo from '@/components/logo';
+import { SelectLoaiDoiTac } from './SelectLoaiDoiTac';
+import { FaRegClock, FaUserLock } from 'react-icons/fa';
+import { useQuery } from '@tanstack/react-query';
+import { useDoiTac } from '@/hooks/useDoiTac';
 
 function AgencyRegisterModal({ session }) {
   const { getUserRole } = useRole();
-  const [userRole, setUserRole] = useState("");
-  const [duyetDoiTac, setDuyetDoiTac] = useState("");
-  const [duyetKhachHang, setDuyetKhachHang] = useState("");
+  const [userRole, setUserRole] = useState('');
+  const [duyetDoiTac, setDuyetDoiTac] = useState('');
+  const [duyetKhachHang, setDuyetKhachHang] = useState('');
   const [isUser, setIsuser] = React.useState(false);
   const [loaiDoiTac, setLoaiDoiTacValue] = React.useState(null);
   const [canhan, setCaNhan] = React.useState(false);
   const [doanhnghiep, setDoanhNghiep] = React.useState(false);
   const { fetchDoiTacTheoId } = useDoiTac();
   const { data: userInfo } = useQuery({
-    queryKey: ["userInfo", session?.user?.id],
+    queryKey: ['userInfo', session?.user?.id],
     queryFn: async () => {
       const res = await fetchDoiTacTheoId(session?.user?.id);
       return res?.[0];
@@ -32,30 +32,25 @@ function AgencyRegisterModal({ session }) {
     const fetchUserRole = async () => {
       try {
         const userRoleFetch = await getUserRole(session?.user?.id);
-        console.log(
-          "🚀 ~ file: AgencyRegisterModal.tsx:24 ~ fetchUserRole ~ userRoleFetch:",
-          userRoleFetch
-        );
         const role = userRoleFetch?.role;
         const duyetDoiTac = userRoleFetch?.duyetDoiTac;
         const duyetKhachHang = userRoleFetch?.duyetKhachHang;
         setUserRole(role);
-        if (role === "khach_hang") {
+        if (role === 'khach_hang') {
           setIsuser(true);
         }
         setDuyetDoiTac(duyetDoiTac);
         setDuyetKhachHang(duyetKhachHang);
-        console.log(userRole, duyetDoiTac);
       } catch (error) {
-        console.error("Error fetching user role:", error);
+        console.error('Error fetching user role:', error);
       }
     };
 
     fetchUserRole();
   }, []);
-  return userRole === "khach_hang" ? (
+  return userRole === 'khach_hang' ? (
     <div>
-      {userRole === "khach_hang" && !duyetDoiTac ? (
+      {userRole === 'khach_hang' && !duyetDoiTac ? (
         <DialogCustom
           className="w-full lg:w-[70%] h-[80%] lg:h-[95%] flex items-center justify-center"
           isModalOpen={isUser}
@@ -102,7 +97,7 @@ function AgencyRegisterModal({ session }) {
         </DialogCustom>
       )}
     </div>
-  ) : userRole === "doi_tac" && duyetDoiTac === "da_khoa" ? (
+  ) : userRole === 'doi_tac' && duyetDoiTac === 'da_khoa' ? (
     <div>
       <DialogCustom
         className="w-full lg:w-[60%] h-[40%] lg:h-[30%] flex items-center justify-center"

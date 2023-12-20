@@ -1,31 +1,31 @@
-"use client";
+'use client';
 
-import { Select, SelectItem } from "@nextui-org/react";
-import React, { useEffect } from "react";
+import { Select, SelectItem } from '@nextui-org/react';
+import React, { useEffect } from 'react';
 
 export const SelectTrangThai = ({ setTrangThaiValue }) => {
   const [selectedTrangThai, setSelectedTrangThai] = React.useState(new Set([]));
 
   const trangthai = [
     {
-      label: "Tất cả",
-      value: "",
+      label: 'Tất cả',
+      value: '',
     },
     {
-      label: "Đã duyệt",
-      value: "Đã duyệt",
+      label: 'Đã duyệt',
+      value: 'da_duyet',
     },
     {
-      label: "Đã khoá",
-      value: "Đã khoá",
+      label: 'Đã khoá',
+      value: 'da_khoa',
     },
     {
-      label: "Chờ duyệt",
-      value: "Chờ duyệt",
+      label: 'Chờ duyệt',
+      value: 'cho_duyet',
     },
     {
-      label: "Không duyệt",
-      value: "Không duyệt",
+      label: 'Không duyệt',
+      value: 'khong_duyet',
     },
   ];
   useEffect(() => {
@@ -39,10 +39,10 @@ export const SelectTrangThai = ({ setTrangThaiValue }) => {
     <div className='"w-full md:w-[480px] mb-2 md:mb-0'>
       <div className="flex flex-row gap-2">
         <Select
-          key={"trangthai"}
-          radius={"sm"}
+          key={'trangthai'}
+          radius={'sm'}
           variant="bordered"
-          label={"Trạng thái"}
+          label={'Trạng thái'}
           placeholder="Tìm kiếm dựa trên trạng thái bài đăng"
           selectedKeys={selectedTrangThai}
           onSelectionChange={setSelectedTrangThai}
