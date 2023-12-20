@@ -16,6 +16,7 @@ export const SelectAddress = ({
   const [selectedDistrict, setSelectedDistrict] = React.useState(new Set([]));
   const [selectedWard, setSelectedWard] = React.useState(new Set([]));
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [diaChiTouched, setDiaChiTouched] = React.useState(false);
   const [provinceTouched, setProvinceTouched] = React.useState(false);
   const [districtTouched, setDistrictTouched] = React.useState(false);

@@ -60,7 +60,7 @@ export async function POST(req: Request) {
     }),
   ]);
 
-  if (baiViet) {
+  if (baiViet && created) {
     return new Response(JSON.stringify(baiViet), { status: 200 });
   }
 }

@@ -95,5 +95,6 @@ export async function PUT(req: Request) {
       return new Response(JSON.stringify('OTP sent'), { status: 200 });
     }
   } catch (err) {
+    return new Response(err.message, { status: 500 });
   }
 }

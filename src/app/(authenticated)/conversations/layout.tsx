@@ -2,7 +2,6 @@
 import { getSession } from '@/lib/auth';
 import { getRequest } from '@/lib/fetch';
 import dynamic from 'next/dynamic';
-import { MdOutlineCancel } from 'react-icons/md';
 const ConversationList = dynamic(
   () => import('@/components/ConversationList'),
   { ssr: false }

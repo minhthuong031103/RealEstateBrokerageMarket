@@ -7,7 +7,6 @@ import AgencyRegisterModal from './(components)/AgencyRegisterModal';
 import { Footer } from '@/components/footer';
 import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
 import { CiCoinInsert, CiUser } from 'react-icons/ci';
-import { MdOutlineCancel } from 'react-icons/md';
 import { getRequest } from '@/lib/fetch';
 
 const navItems = [

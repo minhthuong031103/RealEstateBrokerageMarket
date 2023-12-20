@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { Select, SelectItem } from "@nextui-org/react";
-import { getRequest } from "@/lib/fetch";
-import DialogCustom from "@/components/ui/dialogCustom";
-import { Button } from "@/components/ui/button";
-import { IoLocationOutline } from "react-icons/io5";
+import React, { useEffect } from 'react';
+import { Select, SelectItem } from '@nextui-org/react';
+import { getRequest } from '@/lib/fetch';
+import DialogCustom from '@/components/ui/dialogCustom';
+import { Button } from '@/components/ui/button';
+import { IoLocationOutline } from 'react-icons/io5';
 
 export const PickLocation = ({ addressValue, setAddressValue }) => {
   const [selectedProvince, setSelectedProvince] = React.useState(new Set([]));
   const [selectedDistrict, setSelectedDistrict] = React.useState(new Set([]));
   const [selectedWard, setSelectedWard] = React.useState(new Set([]));
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [diaChiTouched, setDiaChiTouched] = React.useState(false);
   const [provinceTouched, setProvinceTouched] = React.useState(false);
   const [districtTouched, setDistrictTouched] = React.useState(false);
@@ -31,7 +32,7 @@ export const PickLocation = ({ addressValue, setAddressValue }) => {
     async function getProvince() {
       setIsLoadingProvince(true);
       const res = await getRequest({
-        endPoint: "https://provinces.open-api.vn/api/p/",
+        endPoint: 'https://provinces.open-api.vn/api/p/',
       });
 
       setProvince(res);
@@ -92,14 +93,14 @@ export const PickLocation = ({ addressValue, setAddressValue }) => {
     const valuesArrayWard = Array.from(selectedWard);
     const wardCode = valuesArrayWard[0];
     const wardValue = wards.find((ward) => ward.code == wardCode)?.name;
-    let value = "";
-    if (typeof wardValue !== "undefined") {
-      value += wardValue + ", ";
+    let value = '';
+    if (typeof wardValue !== 'undefined') {
+      value += wardValue + ', ';
     }
-    if (typeof districtValue !== "undefined") {
-      value += districtValue + ", ";
+    if (typeof districtValue !== 'undefined') {
+      value += districtValue + ', ';
     }
-    if (typeof provinceValue !== "undefined") {
+    if (typeof provinceValue !== 'undefined') {
       value += provinceValue;
     }
     setAddressValue(value);
@@ -120,7 +121,7 @@ export const PickLocation = ({ addressValue, setAddressValue }) => {
           <div className="flex flex-col gap-y-6 px-1">
             <div className="mr-6">
               <Select
-                key={"province"}
+                key={'province'}
                 className="h-[52px]"
                 variant="bordered"
                 radius="sm"
@@ -143,7 +144,7 @@ export const PickLocation = ({ addressValue, setAddressValue }) => {
             </div>
             <div className="mr-6">
               <Select
-                key={"district"}
+                key={'district'}
                 className="h-[52px]"
                 variant="bordered"
                 radius="sm"
@@ -166,7 +167,7 @@ export const PickLocation = ({ addressValue, setAddressValue }) => {
             </div>
             <div className="mr-6">
               <Select
-                key={"ward"}
+                key={'ward'}
                 className="h-[52px]"
                 variant="bordered"
                 radius="sm"
@@ -205,7 +206,7 @@ export const PickLocation = ({ addressValue, setAddressValue }) => {
           radius="sm"
           size="sm"
           selectorIcon={<IoLocationOutline />}
-          selectedKeys={addressValue !== "" ? [addressValue] : null}
+          selectedKeys={addressValue !== '' ? [addressValue] : null}
           onClick={() => {
             setIsModalOpen(true);
           }}
