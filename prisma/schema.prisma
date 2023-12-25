@@ -3,11 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL") // Add charset here
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
-
-
 }
 
 model User {
@@ -23,7 +21,6 @@ model User {
   otp                    String?
   anhCCCDTruoc           String?
   anhCCCDSau             String?
-  maSoCmnd               String?
   anhGiayPhepKinhDoanh   String?
   anhChanDung            String?
   luot                   Int?            @default(0)
@@ -39,13 +36,14 @@ model User {
   duyetKhachHang         String?
   isOnline               Boolean         @default(false)
   lastSeen               DateTime?
+  maSoCmnd               String?
   directMessages         DirectMessage[]
   seenMessages           SeenMessage[]
   BaiViets               BaiViet[]
   Revenues               Revenue[]
   Favourite              Favourite?
-    conversationsInitiated Conversation[]    @relation("userOne")
-  conversationsReceived  Conversation[]    @relation("userTwo")
+  conversationsInitiated Conversation[]  @relation("userOne")
+  conversationsReceived  Conversation[]  @relation("userTwo")
 }
 
 model LoaiBDS {
@@ -233,4 +231,3 @@ model Conversation {
   @@unique([userOneId, userTwoId])
   @@index([userTwoId])
 }
-

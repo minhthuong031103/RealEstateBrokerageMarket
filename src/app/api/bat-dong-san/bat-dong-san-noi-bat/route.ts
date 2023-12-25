@@ -13,6 +13,9 @@ export async function GET() {
     where: {
         nhan: {
             contains: "Nổi bật"
+        },
+        trangThai: {
+          equals: "da_duyet"
         }
     },
     orderBy: {

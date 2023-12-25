@@ -54,7 +54,7 @@ export async function GET(request: Request) {
         },
       },
       trangThai: {
-        equals: 'Đã duyệt',
+        equals: 'da_duyet',
       },
       diaChi: {
         contains: location || '',

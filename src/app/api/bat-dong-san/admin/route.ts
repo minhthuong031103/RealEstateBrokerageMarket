@@ -43,7 +43,7 @@ export async function GET(request: Request) {
   const data = {
     data: bds,
     totalPages: Math.ceil(countItem / limit),
-    totalItems: bds.length,
+    totalItems: countItem,
   };
 
   return new Response(JSON.stringify(data), { status: 200 });
