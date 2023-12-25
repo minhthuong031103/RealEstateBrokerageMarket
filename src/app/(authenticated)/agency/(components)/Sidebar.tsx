@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Heading } from "lucide-react";
 import { LayoutGroup, motion } from "framer-motion";
 import Link from "next/link";
 import classnames from "classnames";
@@ -33,46 +32,6 @@ export const Sidebar = React.forwardRef<SidebarElement, Readonly<SidebarProps>>(
       >
         <nav className="flex flex-col gap-4">
           <Collapsible.Root defaultOpen>
-            <Collapsible.Trigger
-              className={classnames("flex items-center gap-1", {
-                "cursor-default": navItems && navItems.length === 0,
-              })}
-            >
-              <svg
-                className="text-slate-11"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {/* ... your SVG path ... */}
-              </svg>
-
-              <div className="flex items-center text-slate-11 transition ease-in-out duration-200 hover:text-slate-12">
-                <Heading
-                  // as="h3"
-                  color="gray"
-                  size="2"
-                  // weight="medium"
-                  className="transition ease-in-out duration-200 hover:text-slate-12"
-                >
-                  All emails
-                </Heading>
-                {navItems && navItems.length > 0 && (
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    {/* ... your SVG path ... */}
-                  </svg>
-                )}
-              </div>
-            </Collapsible.Trigger>
-
             {navItems && navItems.length > 0 && (
               <>
                 <Collapsible.Content className="relative mt-3 lg:block hidden">

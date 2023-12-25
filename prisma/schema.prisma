@@ -42,8 +42,8 @@ model User {
   BaiViets               BaiViet[]
   Revenues               Revenue[]
   Favourite              Favourite?
-    conversationsInitiated Conversation[]    @relation("userOne")
-  conversationsReceived  Conversation[]    @relation("userTwo")
+  conversationsInitiated Conversation[]  @relation("userOne")
+  conversationsReceived  Conversation[]  @relation("userTwo")
 }
 
 model LoaiBDS {
@@ -231,4 +231,3 @@ model Conversation {
   @@unique([userOneId, userTwoId])
   @@index([userTwoId])
 }
-
