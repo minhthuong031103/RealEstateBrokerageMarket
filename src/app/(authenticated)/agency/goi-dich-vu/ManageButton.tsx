@@ -14,7 +14,6 @@ const ManageButton = ({ product }) => {
         product,
       },
     });
-    console.log(res);
     window.location.href = res.url ?? '/agency/goi-dich-vu';
   };
 

@@ -8,7 +8,6 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const session = await getSession();
-  console.log(session);
   return (
     <div className="w-full h-full">
       <Header session={session} />

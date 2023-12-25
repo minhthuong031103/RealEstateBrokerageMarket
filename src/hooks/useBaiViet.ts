@@ -1,7 +1,9 @@
 import { postRequest } from '@/lib/fetch';
+import { useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
 export const useBaiViet = () => {
+  const queryClient = useQueryClient();
   const onCreateBaiViet = async (data) => {
     try {
       const res = await postRequest({
@@ -12,6 +14,7 @@ export const useBaiViet = () => {
       console.log(res);
       if (res) {
         toast.success('Đăng bài thành công');
+        queryClient.refetchQueries();
       }
       return true;
     } catch (e) {

@@ -7,14 +7,12 @@ import Loader from '@/components/Loader';
 import { useSession } from 'next-auth/react';
 
 export const Otp = ({ email }) => {
-  console.log(email);
   const [otp, setOtp] = useState('');
   const [counter, setCounter] = useState(30);
   const [canResend, setCanResend] = useState(false);
   const { onSendAgain, onVerifyOtp, onFirstSend } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const { update, data: session } = useSession();
-  console.log('🚀 ~ file: Otp.tsx:17 ~ Otp ~ session:', session);
   useEffect(() => {
     let timer;
     if (counter > 0 && !canResend) {

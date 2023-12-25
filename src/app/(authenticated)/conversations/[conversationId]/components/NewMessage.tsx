@@ -15,7 +15,6 @@ interface MessageBoxProps {
 }
 
 const NewMessage: React.FC<MessageBoxProps> = ({ data }) => {
-  console.log('🚀 ~ file: NewMessage.tsx:17 ~ data:', data);
   const session = useSession();
   const isOwn = true;
 

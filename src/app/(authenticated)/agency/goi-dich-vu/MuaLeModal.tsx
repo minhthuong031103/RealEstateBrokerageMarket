@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import DialogCustom from "@/components/ui/dialogCustom";
-import { MuaLeConst } from "@/lib/constant";
-import { getRequest, postRequest } from "@/lib/fetch";
-import { Select, SelectItem } from "@nextui-org/react";
-import React, { useEffect } from "react";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { PaymentForm } from "./PaymentForm";
-import Loader from "@/components/Loader";
-import { Input } from "@/components/ui/input";
-import { CommonSvg } from "@/assets/CommonSvg";
-import { currencyFormat } from "@/lib/utils";
-import { Label } from "@/components/ui/label";
-import { useSession } from "next-auth/react";
-import { useAuth } from "@/hooks/useAuth";
+import { Button } from '@/components/ui/button';
+import DialogCustom from '@/components/ui/dialogCustom';
+import { MuaLeConst } from '@/lib/constant';
+import { getRequest, postRequest } from '@/lib/fetch';
+import { Select, SelectItem } from '@nextui-org/react';
+import React, { useEffect } from 'react';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { PaymentForm } from './PaymentForm';
+import Loader from '@/components/Loader';
+import { Input } from '@/components/ui/input';
+import { CommonSvg } from '@/assets/CommonSvg';
+import { currencyFormat } from '@/lib/utils';
+import { Label } from '@/components/ui/label';
+import { useSession } from 'next-auth/react';
+import { useAuth } from '@/hooks/useAuth';
 
 interface MuaLeModalProps {
   setIsModalOpen: (value: boolean) => void;
@@ -31,7 +31,7 @@ export const MuaLeModal = ({
 }: MuaLeModalProps) => {
   const [selectedType, setSelectedType] = React.useState(new Set([]));
   const [typeTouched, setTypeTouched] = React.useState(false);
-  const [clientSecret, setClientSecret] = React.useState("");
+  const [clientSecret, setClientSecret] = React.useState('');
   const [stripePromise, setStripePromise] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [quantity, setQuantity] = React.useState(1);
@@ -42,7 +42,7 @@ export const MuaLeModal = ({
   useEffect(() => {
     const getConfig = async () => {
       const res = await getRequest({
-        endPoint: "/api/stripe/config",
+        endPoint: '/api/stripe/config',
       });
       setStripePromise(loadStripe(res?.publishableKey));
     };
@@ -52,8 +52,7 @@ export const MuaLeModal = ({
   const currentPrice = MuaLeConst?.find(
     (item) => item.value === selectedType?.values().next().value
   )?.price;
-  console.log("🚀 ~ file: MuaLeModal.tsx:61 ~ currentPrice:", currentPrice);
-  console.log("🚀 ~ file: MuaLeModal.tsx:40 ~ getUser ~ res:", user);
+
   const onSubmit = async () => {
     if (!stripePromise) return;
     setLoading(true);
@@ -72,7 +71,7 @@ export const MuaLeModal = ({
     }
 
     const checkoutSession = await postRequest({
-      endPoint: "/api/stripe/checkout-session/mua-le",
+      endPoint: '/api/stripe/checkout-session/mua-le',
       formData: {
         userId: session?.data?.user?.id,
         type: phapLyValueArray?.[0],
@@ -113,13 +112,13 @@ export const MuaLeModal = ({
         ) : (
           <div className="flex flex-col justify-between gap-y-6 h-full px-1">
             <Select
-              key={"sanpham"}
-              radius={"sm"}
+              key={'sanpham'}
+              radius={'sm'}
               variant="bordered"
               label="Sản phẩm"
               isInvalid={isTypeValid || !typeTouched ? false : true}
               errorMessage={
-                isTypeValid || !typeTouched ? "" : "Vui lòng chọn sản phẩm"
+                isTypeValid || !typeTouched ? '' : 'Vui lòng chọn sản phẩm'
               }
               autoFocus={false}
               placeholder="Chọn sản phẩm"
@@ -140,7 +139,7 @@ export const MuaLeModal = ({
             <div>
               {user?.giamGia && user.giamGia > 0 ? (
                 <div className="flex flex-row gap-x-2">
-                  Bạn được giảm giá{" "}
+                  Bạn được giảm giá{' '}
                   <p className="font-bold ">{user.giamGia}%</p> khi mua lẻ
                 </div>
               ) : null}
@@ -182,7 +181,7 @@ export const MuaLeModal = ({
                       // disabled={isPending}
                       disabled={quantity === 1}
                     >
-                      {CommonSvg.subtract({ className: "h-3 w-3" })}
+                      {CommonSvg.subtract({ className: 'h-3 w-3' })}
                     </Button>
                     <div>
                       <Input
@@ -218,13 +217,13 @@ export const MuaLeModal = ({
                       }}
                       // disabled={isPending}
                     >
-                      {CommonSvg.add({ className: "h-3 w-3" })}
+                      {CommonSvg.add({ className: 'h-3 w-3' })}
                       <span className="sr-only">Add one item</span>
                     </Button>
                   </div>
                 </div>
                 <div className="flex flex-row gap-x-3">
-                  Tổng tiền :{" "}
+                  Tổng tiền :{' '}
                   {currencyFormat(
                     currentPrice * quantity -
                       (currentPrice * quantity * user?.giamGia) / 100

@@ -31,13 +31,11 @@ export const SelectDanhMuc = ({
   }, []);
   useEffect(() => {
     if (danhMucValue) {
-      console.log(danhMucValue);
       setSelectedDanhMuc([danhMucValue]);
     }
   }, []);
   useEffect(() => {
     if (selectedDanhMuc) {
-      console.log(selectedDanhMuc);
       const danhMucValueArray = Array.from(selectedDanhMuc);
       setDanhMucValue(danhMucValueArray?.[0]);
     }

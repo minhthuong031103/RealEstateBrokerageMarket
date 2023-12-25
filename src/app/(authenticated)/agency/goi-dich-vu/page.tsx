@@ -33,11 +33,7 @@ const page = async () => {
       email: session?.user?.email,
     },
   });
-  console.log(user);
   const products = await stripe.products.list();
-  // console.log('plannnnnnnnnnnnnnnn', currentlyPlan);
-  // console.log('products', products);
-  // console.log('plans', plans);
 
   const subscribedPlan = products.data.find(
     (plan) => plan.id === currentlyPlan?.product
@@ -46,7 +42,6 @@ const page = async () => {
     return getPriceForProduct(a.id) - getPriceForProduct(b.id);
   });
 
-  console.log('subscribedPlan', subscribedPlan);
   return (
     <div className="w-full h-full">
       <div className="mx-10 mb-10">

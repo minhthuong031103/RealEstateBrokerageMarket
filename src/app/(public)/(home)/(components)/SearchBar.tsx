@@ -1,8 +1,9 @@
-"use client";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@nextui-org/react";
-import { Select, SelectItem } from "@nextui-org/react";
+import { Button } from '@/components/ui/button';
+import { Input } from '@nextui-org/react';
+import { Select, SelectItem } from '@nextui-org/react';
 
 import {
   Form,
@@ -10,27 +11,27 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { useEffect, useState } from "react";
-import { BiBuildingHouse } from "react-icons/bi";
-import { GiReceiveMoney } from "react-icons/gi";
-import { PickLocation } from "../../bat-dong-san/(components)/PickLocation";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { useEffect, useState } from 'react';
+import { BiBuildingHouse } from 'react-icons/bi';
+import { GiReceiveMoney } from 'react-icons/gi';
+import { PickLocation } from '../../bat-dong-san/(components)/PickLocation';
+import { useRouter } from 'next/navigation';
 
 const types = [
-  { label: "Căn hộ", value: "Căn hộ" },
-  { label: "Nhà ở", value: "Nhà ở" },
-  { label: "Văn phòng", value: "Văn phòng" },
-  { label: "Đất", value: "Đất" },
+  { label: 'Căn hộ', value: 'Căn hộ' },
+  { label: 'Nhà ở', value: 'Nhà ở' },
+  { label: 'Văn phòng', value: 'Văn phòng' },
+  { label: 'Đất', value: 'Đất' },
 ] as const;
 
 const isRents = [
-  { label: "Cho thuê", value: "true" },
-  { label: "Đăng bán", value: "false" },
+  { label: 'Cho thuê', value: 'true' },
+  { label: 'Đăng bán', value: 'false' },
 ] as const;
 
 const formSchema = z.object({
@@ -41,22 +42,21 @@ const formSchema = z.object({
 
 export function SearchBar() {
   const router = useRouter();
-  const [addressValue, setAddressValue] = useState("");
+  const [addressValue, setAddressValue] = useState('');
 
   useEffect(() => {}, []);
   // 1. Define your form.
-  const [typeNumber, setTypeNumber] = useState("0");
+  const [typeNumber, setTypeNumber] = useState('0');
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      searchWord: "",
-      type: "",
-      isRent: "",
+      searchWord: '',
+      type: '',
+      isRent: '',
     },
   });
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(typeNumber);
     router.push(
       `/bat-dong-san?tukhoa=${values.searchWord}&diachi=${addressValue}&loaibds=${values.type}&hinhthuc=${values.isRent}`
     );
@@ -121,13 +121,13 @@ export function SearchBar() {
                               value={type.value}
                               onClick={() => {
                                 setTypeNumber(
-                                  type.value === "Căn hộ"
-                                    ? "1"
-                                    : type.value === "Nhà ở"
-                                    ? "2"
-                                    : type.value === "Văn phòng"
-                                    ? "3"
-                                    : "4"
+                                  type.value === 'Căn hộ'
+                                    ? '1'
+                                    : type.value === 'Nhà ở'
+                                    ? '2'
+                                    : type.value === 'Văn phòng'
+                                    ? '3'
+                                    : '4'
                                 );
                               }}
                             >

@@ -15,9 +15,7 @@ const LoginPage = async ({ searchParams }: { searchParams: any }) => {
       searchParams.payload,
       process.env.NEXT_PUBLIC_JWT_SECRET,
       (err, decoded) => {
-        console.log('🚀 ~ file: page.tsx:19 ~ LoginPage ~ decoded:', decoded);
         if (err) {
-          console.log(err);
           return;
         }
         email = decoded?.email;

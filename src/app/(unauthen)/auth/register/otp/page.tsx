@@ -5,16 +5,13 @@ import prisma from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 
 const page = async ({ searchParams }: { searchParams: any }) => {
-  console.log('🚀 ~ file: page.tsx:8 ~ page ~ searchParams:', searchParams);
   let email = null;
 
   jwt.verify(
     searchParams.payload,
     process.env.NEXT_PUBLIC_JWT_SECRET,
     async (err, decoded) => {
-      console.log('🚀 ~ file: page.tsx:14 ~ decoded:', decoded);
       if (err) {
-        console.log(err);
         return;
       }
       email = decoded?.email;
@@ -69,9 +66,7 @@ const page = async ({ searchParams }: { searchParams: any }) => {
   if (!email) {
     redirect('/auth/register');
   }
-  console.log('email', email);
   // send mail with defined transport object
-  console.log('🚀 ~ file: page.tsx:10 ~ page ~ email:', email);
 
   return (
     <>

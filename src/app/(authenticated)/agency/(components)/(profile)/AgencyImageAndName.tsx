@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { CiEdit } from "react-icons/ci";
-import { Button } from "@/components/ui/button";
-import DialogCustom from "@/components/ui/dialogCustom";
-import { useDoiTac } from "@/hooks/useDoiTac";
-import { useQuery } from "@tanstack/react-query";
-import { ThongTinForm } from "./(edit)/ThongTinForm";
+import React, { useEffect } from 'react';
+import { CiEdit } from 'react-icons/ci';
+import { Button } from '@/components/ui/button';
+import DialogCustom from '@/components/ui/dialogCustom';
+import { useDoiTac } from '@/hooks/useDoiTac';
+import { useQuery } from '@tanstack/react-query';
+import { ThongTinForm } from './(edit)/ThongTinForm';
 
 function AgencyImageAndName({ session }) {
-  const [loaiDoiTac, setLoaiDoiTacValue] = React.useState("");
+  const [loaiDoiTac, setLoaiDoiTacValue] = React.useState('');
   const [isOpen, setOpen] = React.useState(false);
   const { fetchDoiTacTheoId } = useDoiTac();
 
   const { data: userInfo } = useQuery({
-    queryKey: ["userInfo", session?.user?.id],
+    queryKey: ['userInfo', session?.user?.id],
     queryFn: async () => {
       const res = await fetchDoiTacTheoId(session?.user?.id);
       return res?.[0];
@@ -23,11 +23,10 @@ function AgencyImageAndName({ session }) {
 
   useEffect(() => {
     if (userInfo) {
-      if (userInfo?.giayPhepKinhDoanh !== "" && !userInfo?.giayPhepKinhDoanh) {
-        setLoaiDoiTacValue("doanhnghiep");
+      if (userInfo?.giayPhepKinhDoanh !== '' && !userInfo?.giayPhepKinhDoanh) {
+        setLoaiDoiTacValue('doanhnghiep');
       } else {
-        setLoaiDoiTacValue("canhan");
-        console.log("done");
+        setLoaiDoiTacValue('canhan');
       }
     }
   }, [userInfo]);

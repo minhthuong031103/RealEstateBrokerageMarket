@@ -38,7 +38,6 @@ export const VanPhongForm = ({
     );
     const [cuaChinhTouched, setCuaChinhTouched] = React.useState(false);
 
-    console.log(form);
 
 
     useEffect(() => {

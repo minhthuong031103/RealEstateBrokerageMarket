@@ -19,7 +19,6 @@ export const CacLoaiHinhBatDongSan = () => {
     const getDanhMuc = async () => {
       await fetchAllDanhMuc().then((data) => {
         setListLoaiHinh(data);
-        console.log(data);
       });
     };
     getDanhMuc();

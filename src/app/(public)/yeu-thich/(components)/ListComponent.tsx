@@ -1,29 +1,28 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { useBatDongSan } from "@/hooks/useBatDongSan";
-import { useState } from "react";
-import { HiSortAscending } from "react-icons/hi";
-import { ListItemComponent } from "../../bat-dong-san/(components)/ListItemComponent";
+'use client';
+import { Button } from '@/components/ui/button';
+import { useBatDongSan } from '@/hooks/useBatDongSan';
+import { useState } from 'react';
+import { HiSortAscending } from 'react-icons/hi';
+import { ListItemComponent } from '../../bat-dong-san/(components)/ListItemComponent';
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@nextui-org/react";
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
+} from '@nextui-org/react';
+import { useQuery } from '@tanstack/react-query';
+import React from 'react';
 
 export function ListComponent({ session }) {
   const userId = session?.user?.id;
   const { fetchAllBatDongSanYeuThich } = useBatDongSan();
   const { data } = useQuery({
-    queryKey: [["userId", userId]],
+    queryKey: [['userId', userId]],
     queryFn: () => fetchAllBatDongSanYeuThich(userId),
     staleTime: 60 * 1000 * 1,
     keepPreviousData: true,
   });
 
-  console.log(data);
   const [isDefault, setIsDefault] = useState(true);
   const [isDefaultPrice, setIsDefaultPrice] = useState(true);
 
@@ -61,23 +60,23 @@ export function ListComponent({ session }) {
         </div>
         <div className="flex flex-row">
           <p className="text-[14px] text-neutral-800 flex my-auto mr-2 font-semibold">
-            Sắp xếp :{" "}
+            Sắp xếp :{' '}
           </p>
           <Dropdown>
             <DropdownTrigger>
               <Button
-                variant={"outline"}
-                size={"sm"}
+                variant={'outline'}
+                size={'sm'}
                 className="bg-white text-neutral-800 text-base hover:bg-gray-100 hover:text-neutral active:scale-75 transition ease-in-out duration-200"
               >
                 <HiSortAscending />
               </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="Filter">
-              <DropdownItem key={"day"} color={"default"} onClick={sort}>
+              <DropdownItem key={'day'} color={'default'} onClick={sort}>
                 Theo ngày đăng
               </DropdownItem>
-              <DropdownItem key={"price"} color={"default"} onClick={sortPrice}>
+              <DropdownItem key={'price'} color={'default'} onClick={sortPrice}>
                 Theo giá
               </DropdownItem>
             </DropdownMenu>

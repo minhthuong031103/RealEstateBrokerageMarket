@@ -11,9 +11,6 @@ export async function POST(request: Request) {
     });
     // const billing_url = `${process.env.NEXT_PUBLIC_SITE_URL}/agency/goi-dich-vu`;
 
-    console.log('🚀 ~ file: route.ts:14 ~ POST ~ body:', body);
-    console.log('🚀 ~ file: route.ts:16 ~ POST ~ user:', user);
-
     if (!user) return new Response('Unauthorized', { status: 401 });
     try {
       const stripeSession = await stripe.paymentIntents.create({
@@ -29,10 +26,7 @@ export async function POST(request: Request) {
           luotVip: body?.luotVip,
         },
       });
-      console.log(
-        '🚀 ~ file: route.ts:32 ~ POST ~ stripeSession:',
-        stripeSession
-      );
+
       return new Response(
         JSON.stringify({ clientSecret: stripeSession.client_secret }),
         {

@@ -20,7 +20,6 @@ export const UserProfile = ({ session }) => {
       const res = await getRequest({
         endPoint: `/api/user?userId=${session?.user?.id}`,
       });
-      console.log("🚀 ~ file: UserProfile.tsx:17 ~ queryFn: ~ res:", res);
       return res;
     },
   });

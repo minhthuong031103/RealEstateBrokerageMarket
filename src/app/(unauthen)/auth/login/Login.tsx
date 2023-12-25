@@ -47,8 +47,6 @@ const Login = ({ className }: { className?: string }) => {
     },
   });
   async function onSubmit(data) {
-    console.log(data);
-
     setIsLoading(true);
     const res = await signIn('credentials', {
       email: data.email,
@@ -63,10 +61,8 @@ const Login = ({ className }: { className?: string }) => {
       return;
     }
 
-    console.log(res);
     if (!res?.error) router.push('/');
     setIsLoading(false);
-    console.log(res);
   }
   if (isLoading)
     return (

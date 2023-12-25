@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 
 export default withAuth(
   function middleware(request: NextRequestWithAuth) {
-    console.log(request.nextauth.token);
     // if (
     //   request.nextUrl.pathname.startsWith('/api/admin') &&
     //   request.nextauth.token?.role !== 'admin'
@@ -12,8 +11,6 @@ export default withAuth(
 
     //   //rewrite means redirect to the url but the url shown will still be the same before
     // }
-    console.log(request.nextauth.token);
-    console.log('requesttttttttttttttttttttttttttt');
     if (!request.nextauth.token) {
       return NextResponse.redirect(new URL('/auth/login', request.url));
     }
@@ -23,8 +20,6 @@ export default withAuth(
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
       authorized: ({ token }) => {
-        console.log(token);
-        console.log('authorizedddddddddddd');
         return !!token; //have to be boolean
         //the function middleware above will run only if the authorized function return true
         // it if is false, will be redirected to the page in the pages object

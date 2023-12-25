@@ -1,19 +1,19 @@
 // import ConversationList from '@components/ConversationList';
-import { getSession } from "@/lib/auth";
-import dynamic from "next/dynamic";
+import { getSession } from '@/lib/auth';
+import { getRequest } from '@/lib/fetch';
+import dynamic from 'next/dynamic';
 const ConversationList = dynamic(
-  () => import("@/components/ConversationList"),
+  () => import('@/components/ConversationList'),
   { ssr: false }
 );
 
 export default async function layout({ children }) {
   const session = await getSession();
-  console.log("🚀 ~ file: layout.tsx:11 ~ layout ~ session:", session);
+  const user = await getRequest({
+    endPoint: '/api/user/status?userId=' + session?.user?.id,
+  });
 
-  if (
-    session?.user?.duyetKhachHang == "da_duyet" ||
-    session?.user?.duyetDoiTac == "da_duyet"
-  ) {
+  if (user?.duyetKhachHang == 'da_duyet' || user?.duyetDoiTac == 'da_duyet') {
     return (
       <div className="h-screen w-full flex flex-col lg:flex-row overflow-hidden">
         <ConversationList title="Messages" />

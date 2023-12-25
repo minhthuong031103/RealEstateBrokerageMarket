@@ -116,14 +116,7 @@ export const SelectAddress = ({
     const valuesArrayWard = Array.from(selectedWard);
     const wardCode = valuesArrayWard[0];
     const wardValue = wards.find((ward) => ward.code == wardCode)?.name;
-    console.log(
-      provinceValue,
-      districtValue,
-      wardValue,
-      streetValue,
-      houseNumberValue,
-      setDiaChiTouched
-    );
+
     if (danhMucValue === 'Căn hộ' || danhMucValue === 'Văn phòng') {
       setAddressValue(
         `Mã căn ${maCanValue}, tháp ${blockValue}, tầng ${tangSoValue} , số nhà ${houseNumberValue}, đường ${streetValue}, ${wardValue}, ${districtValue}, ${provinceValue}`

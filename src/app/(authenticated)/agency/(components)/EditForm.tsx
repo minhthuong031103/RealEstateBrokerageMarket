@@ -1,47 +1,47 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { useBatDongSan } from "@/hooks/useBatDongSan";
-import { Input, Textarea } from "@nextui-org/react";
-import { useBaiViet } from "@/hooks/useBaiViet";
-import DialogCustom from "@/components/ui/dialogCustom";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@nextui-org/react";
-import { VideoUploader } from "@/components/videoUpload/VideoUploader";
-import { DienTich } from "@/app/(authenticated)/agency/(components)/(addPost)/DienTich";
-import { SelectDanhMuc } from "./(editPost)/SelectDanhMuc";
-import { GiaBan } from "@/app/(authenticated)/agency/(components)/(addPost)/GiaBan";
-import { FileDialog } from "@/components/ui/FileDialog";
-import { ImageList } from "@/components/ui/ImageList";
-import { generateReactHelpers } from "@uploadthing/react/hooks";
-import { OurFileRouter } from "@/app/api/uploadthing/core";
-import { useQueryClient } from "@tanstack/react-query";
-import { LoaiHinh } from "./(editPost)/LoaiHinh";
-import { GiayToPhapLy } from "./(editPost)/GiayToPhapLy";
-import { CanHoForm } from "./(editPost)/(canho)/CanHoForm";
-import { set } from "date-fns";
-import { useQuery } from "@tanstack/react-query";
-import { parse } from "path";
-import { SelectAddress } from "./(editPost)/SelectAddress";
-import { TieuDe } from "@/app/(authenticated)/agency/(components)/(addPost)/TieuDe";
-import { MoTaChiTiet } from "@/app/(authenticated)/agency/(components)/(addPost)/MoTaChiTiet";
-import { NhaForm } from "./(editPost)/(nha)/NhaForm";
-import Loader from "@/components/Loader";
-import { VanPhongForm } from "./(editPost)/(vanphong)/VanPhongForm";
-import toast from "react-hot-toast";
+import React, { useEffect, useState } from 'react';
+import { useBatDongSan } from '@/hooks/useBatDongSan';
+import { Input, Textarea } from '@nextui-org/react';
+import { useBaiViet } from '@/hooks/useBaiViet';
+import DialogCustom from '@/components/ui/dialogCustom';
+import { Button } from '@/components/ui/button';
+import { Spinner } from '@nextui-org/react';
+import { VideoUploader } from '@/components/videoUpload/VideoUploader';
+import { DienTich } from '@/app/(authenticated)/agency/(components)/(addPost)/DienTich';
+import { SelectDanhMuc } from './(editPost)/SelectDanhMuc';
+import { GiaBan } from '@/app/(authenticated)/agency/(components)/(addPost)/GiaBan';
+import { FileDialog } from '@/components/ui/FileDialog';
+import { ImageList } from '@/components/ui/ImageList';
+import { generateReactHelpers } from '@uploadthing/react/hooks';
+import { OurFileRouter } from '@/app/api/uploadthing/core';
+import { useQueryClient } from '@tanstack/react-query';
+import { LoaiHinh } from './(editPost)/LoaiHinh';
+import { GiayToPhapLy } from './(editPost)/GiayToPhapLy';
+import { CanHoForm } from './(editPost)/(canho)/CanHoForm';
+import { set } from 'date-fns';
+import { useQuery } from '@tanstack/react-query';
+import { parse } from 'path';
+import { SelectAddress } from './(editPost)/SelectAddress';
+import { TieuDe } from '@/app/(authenticated)/agency/(components)/(addPost)/TieuDe';
+import { MoTaChiTiet } from '@/app/(authenticated)/agency/(components)/(addPost)/MoTaChiTiet';
+import { NhaForm } from './(editPost)/(nha)/NhaForm';
+import Loader from '@/components/Loader';
+import { VanPhongForm } from './(editPost)/(vanphong)/VanPhongForm';
+import toast from 'react-hot-toast';
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
 const EditForm = ({ id }) => {
   const queryClient = useQueryClient();
-  const { startUpload } = useUploadThing("imageUploader");
+  const { startUpload } = useUploadThing('imageUploader');
   const [isLoaded, setIsLoaded] = React.useState(false);
   const { fetchBatDongSanTheoId } = useBatDongSan();
   // const [chiTietBDS, setChiTietBDS] = useState();
-  const [tieuDe, setTieuDe] = React.useState("");
-  const [moTa, setMoTa] = React.useState("");
-  const [diaChi, setDiaChi] = React.useState("");
+  const [tieuDe, setTieuDe] = React.useState('');
+  const [moTa, setMoTa] = React.useState('');
+  const [diaChi, setDiaChi] = React.useState('');
   const [giaBan, setGiaBan] = React.useState(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [chieuDai, setChieuDai] = React.useState();
@@ -66,7 +66,7 @@ const EditForm = ({ id }) => {
   const [banVeThietKeImageFiles, setBanVeThietKeImageFiles] = React.useState(
     []
   );
-  const [videoUrl, setVideoUrl] = React.useState("");
+  const [videoUrl, setVideoUrl] = React.useState('');
   const [deletedImageProductFiles, setDeletedImageProductFiles] =
     React.useState([]);
   const [deletedImagePhapLyFiles, setDeletedImagePhapLyFiles] = React.useState(
@@ -110,10 +110,10 @@ const EditForm = ({ id }) => {
       !tieuDe ||
       !moTa
     ) {
-      toast.error("Vui lòng nhập đầy đủ thông tin ");
+      toast.error('Vui lòng nhập đầy đủ thông tin ');
       return;
     }
-    if (danhMucValue === "Căn hộ") {
+    if (danhMucValue === 'Căn hộ') {
       if (
         !phongNgu ||
         !phongTam ||
@@ -126,12 +126,12 @@ const EditForm = ({ id }) => {
         !suaChuaLanCuoi ||
         !hoanThanh
       ) {
-        toast.error("Vui lòng nhập đầy đủ thông tin");
+        toast.error('Vui lòng nhập đầy đủ thông tin');
         return;
       }
     }
 
-    if (danhMucValue === "Nhà ở") {
+    if (danhMucValue === 'Nhà ở') {
       if (
         !phongNgu ||
         !phongTam ||
@@ -141,14 +141,14 @@ const EditForm = ({ id }) => {
         !suaChuaLanCuoi ||
         !hoanThanh
       ) {
-        toast.error("Vui lòng nhập đầy đủ thông tin");
+        toast.error('Vui lòng nhập đầy đủ thông tin');
         return;
       }
     }
 
-    if (danhMucValue === "Văn phòng") {
+    if (danhMucValue === 'Văn phòng') {
       if (!noiThat || !huongCuaChinh) {
-        toast.error("Vui lòng nhập đầy đủ thông tin");
+        toast.error('Vui lòng nhập đầy đủ thông tin');
         return;
       }
     }
@@ -263,10 +263,10 @@ const EditForm = ({ id }) => {
           ? JSON.stringify([...danhSachTienNghi])
           : null,
       isChothue: thue,
-      trangThai: "Chờ duyệt",
-      // deletedImageProductFiles: deletedImageProductFiles
-      //   ? JSON.stringify([...deletedImageProductFiles])
-      //   : null,
+      trangThai: 'cho_duyet',
+      deletedImageProductFiles: deletedImageProductFiles
+        ? JSON.stringify([...deletedImageProductFiles])
+        : null,
     };
 
     if (oldloaiHinhValue === loaiHinhValue) {
@@ -276,12 +276,11 @@ const EditForm = ({ id }) => {
     const success = await onUpdateBaiViet(id, baiVietUpdated);
     if (success) {
       setIsSubmitting(true);
-      console.log("Thay đổi thông tin bài viết thành công");
     }
   };
 
   const { data: chiTietBDS } = useQuery({
-    queryKey: ["chiTietBDS", id],
+    queryKey: ['chiTietBDS', id],
     queryFn: async () => {
       const res = await fetchBatDongSanTheoId(id);
       return res?.[0];
@@ -290,10 +289,6 @@ const EditForm = ({ id }) => {
 
   useEffect(() => {
     if (chiTietBDS) {
-      console.log(
-        "🚀 ~ file: EditForm.tsx:191 ~ useEffect ~ chiTietBDS:",
-        chiTietBDS
-      );
       setDanhMucValue(chiTietBDS?.loaiHinh?.loaiBDS?.name);
       if (chiTietBDS?.isChothue === true) {
         setThue(true);
@@ -325,8 +320,6 @@ const EditForm = ({ id }) => {
       setDienTichGarage(chiTietBDS?.dienTichGarage);
       setDienTichHoBoi(chiTietBDS?.dienTichHoBoi);
       setIsLoaded(true);
-      console.log(chiTietBDS);
-      console.log(danhMucValue);
     }
   }, [chiTietBDS]);
 
@@ -379,7 +372,7 @@ const EditForm = ({ id }) => {
             setPhapLyImageFiles={setPhapLyImageFiles}
             setDeletedImagePhapLyFiles={setDeletedImagePhapLyFiles}
           />
-          {danhMucValue === "Căn hộ" && (
+          {danhMucValue === 'Căn hộ' && (
             <CanHoForm
               setHuongBanCong={setHuongBanCong}
               setHuongCuaChinh={setHuongCuaChinh}
@@ -407,7 +400,7 @@ const EditForm = ({ id }) => {
             />
           )}
           {
-            danhMucValue === "Nhà ở" && (
+            danhMucValue === 'Nhà ở' && (
               <NhaForm
                 setHuongBanCong={setHuongBanCong}
                 setHuongCuaChinh={setHuongCuaChinh}
@@ -436,7 +429,7 @@ const EditForm = ({ id }) => {
             // <CanHoForm />
           }
           {
-            danhMucValue === "Văn phòng" && (
+            danhMucValue === 'Văn phòng' && (
               <VanPhongForm
                 setNoiThat={setNoiThat}
                 noiThatValue={noiThat}
@@ -456,7 +449,7 @@ const EditForm = ({ id }) => {
             <div className="border-1 border-gray-400 w-full h-64 overflow-hidden rounded-md">
               {productImageFiles?.length ? (
                 <ImageList
-                  className={"w-full h-64"}
+                  className={'w-full h-64'}
                   files={productImageFiles}
                   height={32}
                   width={32}

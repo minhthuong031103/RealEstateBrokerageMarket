@@ -16,7 +16,6 @@ const options: AuthOptions = {
       clientId: String(process.env.DISCORD_CLIENT_ID),
       clientSecret: String(process.env.DISCORD_CLIENT_SECRET),
       async profile(profile) {
-        console.log('profile in discord: ', profile);
         //cai profile nay se truyen xuong jwt function
         const user = await prisma.user.findUnique({
           where: {
@@ -46,7 +45,6 @@ const options: AuthOptions = {
       clientId: String(process.env.GITHUB_CLIENT_ID),
       clientSecret: String(process.env.GITHUB_CLIENT_SECRET),
       async profile(profile) {
-        console.log('inside prfileeeeeeeeeeeeeee');
         //cai profile nay se truyen xuong jwt function
         const user = await prisma.user.findUnique({
           where: {
@@ -82,7 +80,6 @@ const options: AuthOptions = {
         },
       },
       async profile(profile) {
-        console.log('inside prfileeeeeeeeeeeeeee');
         //cai profile nay se truyen xuong jwt function
         const user = await prisma.user.findUnique({
           where: {
@@ -144,8 +141,6 @@ const options: AuthOptions = {
 
   callbacks: {
     async signIn(params) {
-      console.log('paramssssssssssssssssssssssssssssssssssssssssssssss: ');
-      console.log(params);
       if (!params?.user?.id || parseInt(params?.user?.id) === -1) {
         const payload = jwt.sign(
           { email: params?.user?.email, name: params?.user?.name },
@@ -159,9 +154,6 @@ const options: AuthOptions = {
     },
     //first it run the jwt function, the jwt function will return the token , then in the session function we can access the token
     async jwt({ token, user, trigger, session }) {
-      console.log('user in jwt: ');
-      console.log(token);
-      console.log(user);
       if (trigger === 'update') {
         return { ...token, ...session.user };
       }
