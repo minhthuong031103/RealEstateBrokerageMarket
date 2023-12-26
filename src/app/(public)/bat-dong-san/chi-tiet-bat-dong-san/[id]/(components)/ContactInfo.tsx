@@ -60,7 +60,8 @@ export function ContactInfo({ doiTacInfo, nhan }) {
         <p className="text-sm mt-4 w-full font-semibold text-emerald-500">
           Bất động sản đã hoàn thành giao dịch
         </p>
-      ) : session?.data?.user?.duyetKhachHang == 'da_duyet' ? (
+      ) : session?.data?.user?.duyetKhachHang == 'da_duyet' &&
+        session?.data?.user?.id != doiTacInfo.id ? (
         <Button
           onClick={() => {
             goToConversation(doiTacInfo.id, session?.data?.user?.id);
@@ -70,9 +71,11 @@ export function ContactInfo({ doiTacInfo, nhan }) {
           Liên hệ
         </Button>
       ) : (
-        <p className="text-sm mt-4 w-full font-semibold text-red-400">
-          Tài khoản của bạn chưa được duyệt để liên hệ
-        </p>
+        session?.data?.user?.id != doiTacInfo?.id && (
+          <p className="text-sm mt-4 w-full font-semibold text-red-400">
+            Tài khoản của bạn chưa được duyệt để liên hệ
+          </p>
+        )
       )}
     </div>
   );

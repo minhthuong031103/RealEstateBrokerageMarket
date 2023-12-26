@@ -1,29 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { SelectAddress } from "./SelectAddress";
-import { LoaiHinh } from "./LoaiHinh";
-import { CanHoForm } from "./(canho)/CanHoForm";
-import { DienTich } from "./DienTich";
-import { GiayToPhapLy } from "./GiayToPhapLy";
-import { GiaBan } from "./GiaBan";
-import { TieuDe } from "./TieuDe";
-import { MoTaChiTiet } from "./MoTaChiTiet";
-import { Button } from "@/components/ui/button";
-import toast from "react-hot-toast";
-import { useBaiViet } from "@/hooks/useBaiViet";
-import { VideoUploader } from "@/components/videoUpload/VideoUploader";
-import { FileDialog } from "@/components/ui/FileDialog";
-import { generateReactHelpers } from "@uploadthing/react/hooks";
-import { OurFileRouter } from "@/app/api/uploadthing/core";
-import DialogCustom from "@/components/ui/dialogCustom";
-import { Spinner } from "@nextui-org/react";
-import { ImageList } from "@/components/ui/ImageList";
-import { DatePicker } from "@/components/ui/date-picker";
-import { NhaForm } from "./(nha)/NhaForm";
-import { Nhan } from "./Nhan";
-import { VanPhongForm } from "./(vanphong)/VanPhongForm";
+import React, { useEffect, useState } from 'react';
+import { SelectAddress } from './SelectAddress';
+import { LoaiHinh } from './LoaiHinh';
+import { CanHoForm } from './(canho)/CanHoForm';
+import { DienTich } from './DienTich';
+import { GiayToPhapLy } from './GiayToPhapLy';
+import { GiaBan } from './GiaBan';
+import { TieuDe } from './TieuDe';
+import { MoTaChiTiet } from './MoTaChiTiet';
+import { Button } from '@/components/ui/button';
+import toast from 'react-hot-toast';
+import { useBaiViet } from '@/hooks/useBaiViet';
+import { VideoUploader } from '@/components/videoUpload/VideoUploader';
+import { FileDialog } from '@/components/ui/FileDialog';
+import { generateReactHelpers } from '@uploadthing/react/hooks';
+import { OurFileRouter } from '@/app/api/uploadthing/core';
+import DialogCustom from '@/components/ui/dialogCustom';
+import { Spinner } from '@nextui-org/react';
+import { ImageList } from '@/components/ui/ImageList';
+import { DatePicker } from '@/components/ui/date-picker';
+import { NhaForm } from './(nha)/NhaForm';
+import { Nhan } from './Nhan';
+import { VanPhongForm } from './(vanphong)/VanPhongForm';
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
@@ -33,9 +33,9 @@ export const BaiVietForm = ({
   setOpen,
   setIsMuaLeModalOpen,
 }) => {
-  const { startUpload } = useUploadThing("imageUploader");
+  const { startUpload } = useUploadThing('imageUploader');
 
-  const [addressValue, setAddressValue] = React.useState("");
+  const [addressValue, setAddressValue] = React.useState('');
   const [loaiHinhValue, setLoaiHinhValue] = React.useState(null);
   const [chieuDai, setChieuDai] = React.useState();
   const [chieuRong, setChieuRong] = React.useState();
@@ -54,18 +54,18 @@ export const BaiVietForm = ({
   const [productImageFiles, setProductImagesFile] = React.useState([]);
   const [phapLyImageFiles, setPhapLyImageFiles] = React.useState([]);
   const [banVeThietKe, setBanVeThietKe] = React.useState([]);
-  const [videoUrl, setVideoUrl] = React.useState("");
+  const [videoUrl, setVideoUrl] = React.useState('');
   const [suaChuaLanCuoi, setSuaChuaLanCuoi] = React.useState();
   const [hoanThanh, setHoanThanh] = React.useState();
   const [danhSachTienNghi, setDanhSachTienNghi] = React.useState([]);
-  const [dienTichGarage, setDienTichGarage] = React.useState("");
-  const [dienTichHoBoi, setDienTichHoBoi] = React.useState("");
+  const [dienTichGarage, setDienTichGarage] = React.useState('');
+  const [dienTichHoBoi, setDienTichHoBoi] = React.useState('');
   const [nhan, setNhan] = React.useState();
   const { onCreateBaiViet } = useBaiViet();
 
   const onSubmit = async () => {
     if (productImageFiles.length <= 0) {
-      toast.error("Vui lòng chọn hình ảnh bất động sản");
+      toast.error('Vui lòng chọn hình ảnh bất động sản');
       return;
     }
 
@@ -79,7 +79,7 @@ export const BaiVietForm = ({
       !tieuDe ||
       !moTa
     ) {
-      toast.error("Vui lòng nhập đầy đủ thông tin ");
+      toast.error('Vui lòng nhập đầy đủ thông tin ');
       return;
     }
 
@@ -105,10 +105,10 @@ export const BaiVietForm = ({
       !tieuDe ||
       !moTa
     ) {
-      toast.error("Vui lòng nhập đầy đủ thông tin ");
+      toast.error('Vui lòng nhập đầy đủ thông tin ');
       return;
     }
-    if (danhMucValue === "Căn hộ") {
+    if (danhMucValue === 'Căn hộ') {
       if (
         !phongNgu ||
         !phongTam ||
@@ -118,12 +118,12 @@ export const BaiVietForm = ({
         !suaChuaLanCuoi ||
         !hoanThanh
       ) {
-        toast.error("Vui lòng nhập đầy đủ thông tin");
+        toast.error('Vui lòng nhập đầy đủ thông tin');
         return;
       }
     }
 
-    if (danhMucValue === "Nhà ở") {
+    if (danhMucValue === 'Nhà ở') {
       if (
         !phongNgu ||
         !phongTam ||
@@ -134,26 +134,29 @@ export const BaiVietForm = ({
         !suaChuaLanCuoi ||
         !hoanThanh
       ) {
-        toast.error("Vui lòng nhập đầy đủ thông tin");
+        toast.error('Vui lòng nhập đầy đủ thông tin');
         return;
       }
     }
 
-    if (danhMucValue === "Văn phòng") {
+    if (danhMucValue === 'Văn phòng') {
       if (!noiThat || !huongCuaChinh) {
-        toast.error("Vui lòng nhập đầy đủ thông tin");
+        toast.error('Vui lòng nhập đầy đủ thông tin');
         return;
       }
+    }
+    if (!productImageFiles || productImageFiles.length < 7) {
+      toast.error('Vui lòng chọn ít nhất 7 hình ảnh');
+      return;
     }
     setIsSubmitting(true);
-
     // let productImages;
     // let phapLyImages;
     const [productImages, phapLyImages, banVeImages] = await Promise.all([
       startUpload([...productImageFiles]).then((res) => {
         const formattedImages = res?.map((image) => ({
           id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
+          name: image.key.split('_')[1] ?? image.key,
           url: image.url,
         }));
         return formattedImages ?? null;
@@ -161,7 +164,7 @@ export const BaiVietForm = ({
       startUpload([...phapLyImageFiles]).then((res) => {
         const formattedImages = res?.map((image) => ({
           id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
+          name: image.key.split('_')[1] ?? image.key,
           url: image.url,
         }));
         return formattedImages ?? null;
@@ -169,7 +172,7 @@ export const BaiVietForm = ({
       startUpload([...banVeThietKe]).then((res) => {
         const formattedImages = res?.map((image) => ({
           id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
+          name: image.key.split('_')[1] ?? image.key,
           url: image.url,
         }));
         return formattedImages ?? null;
@@ -197,18 +200,18 @@ export const BaiVietForm = ({
       suaChuaLanCuoi: suaChuaLanCuoi ? new Date(suaChuaLanCuoi) : null,
       huongCuaChinh: huongCuaChinh,
       soTang: soTang ? parseInt(soTang) : null,
-      // hinhAnhSanPham: productImages ? JSON.stringify([...productImages]) : null,
-      // hinhAnhGiayTo: phapLyImages ? JSON.stringify([...phapLyImages]) : null,
+      hinhAnhSanPham: productImages ? JSON.stringify([...productImages]) : null,
+      hinhAnhGiayTo: phapLyImages ? JSON.stringify([...phapLyImages]) : null,
       danhSachTienNghi:
         danhSachTienNghi.length > 0
           ? JSON.stringify([...danhSachTienNghi])
           : null,
-      // hinhAnhBanVeThietKe: banVeImages
-      //   ? JSON.stringify([...banVeImages])
-      //   : null,
+      hinhAnhBanVeThietKe: banVeImages
+        ? JSON.stringify([...banVeImages])
+        : null,
       isChothue: isChoThue,
-      // video: videoUrl,
-      trangThai: "cho_duyet",
+      video: videoUrl,
+      trangThai: 'cho_duyet',
     };
 
     const success = await onCreateBaiViet(baiViet);
@@ -242,7 +245,7 @@ export const BaiVietForm = ({
         setPhapLy={setPhapLy}
       />
 
-      {danhMucValue === "Căn hộ" && (
+      {danhMucValue === 'Căn hộ' && (
         <CanHoForm
           setHuongBanCong={setHuongBanCong}
           setHuongCuaChinh={setHuongCuaChinh}
@@ -267,7 +270,7 @@ export const BaiVietForm = ({
       )}
 
       {
-        danhMucValue === "Nhà ở" && (
+        danhMucValue === 'Nhà ở' && (
           <NhaForm
             setHuongBanCong={setHuongBanCong}
             setHuongCuaChinh={setHuongCuaChinh}
@@ -293,7 +296,7 @@ export const BaiVietForm = ({
       }
 
       {
-        danhMucValue === "Văn phòng" && (
+        danhMucValue === 'Văn phòng' && (
           <VanPhongForm
             setNoiThat={setNoiThat}
             setHuongCuaChinh={setHuongCuaChinh}
@@ -310,7 +313,7 @@ export const BaiVietForm = ({
         <div className="border-1 border-gray-400 w-full h-64 overflow-hidden rounded-md">
           {productImageFiles?.length ? (
             <ImageList
-              className={"w-full h-64"}
+              className={'w-full h-64'}
               files={productImageFiles}
               height={32}
               width={32}

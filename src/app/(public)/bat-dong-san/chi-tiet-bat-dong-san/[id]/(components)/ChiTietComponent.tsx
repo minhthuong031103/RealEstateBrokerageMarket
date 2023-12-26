@@ -1,25 +1,26 @@
-"use client";
-import Loader from "@/components/Loader";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { useBatDongSan } from "@/hooks/useBatDongSan";
-import { parseJSON } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
-import { BiSolidArrowFromBottom } from "react-icons/bi";
-import { BsCheck2 } from "react-icons/bs";
-import { ContactInfo } from "./ContactInfo";
-import { ImagePost } from "./ImagePost";
-import { LikeShareGroup } from "./LikeShareGroup";
-import MapComponent from "./MapComponent";
+'use client';
+import Loader from '@/components/Loader';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { useBatDongSan } from '@/hooks/useBatDongSan';
+import { parseJSON } from '@/lib/utils';
+import React, { useEffect, useState } from 'react';
+import { BiSolidArrowFromBottom } from 'react-icons/bi';
+import { BsCheck2 } from 'react-icons/bs';
+import { ContactInfo } from './ContactInfo';
+import { ImagePost } from './ImagePost';
+import { LikeShareGroup } from './LikeShareGroup';
+import MapComponent from './MapComponent';
+import { useSession } from 'next-auth/react';
 const CURRENCY_FORMAT = new Intl.NumberFormat(undefined, {
-  currency: "VND",
-  style: "currency",
+  currency: 'VND',
+  style: 'currency',
 });
 
 async function getLatLonForCity(location: string) {
   try {
     const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-      location + ", Vietnam"
+      location + ', Vietnam'
     )}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
     const geocodeResponse = await fetch(geocodeUrl);
     const geocodeData = await geocodeResponse.json();
@@ -39,6 +40,7 @@ export type ToaDoDiaChi = {
 };
 
 export default function ChiTietComponent({ id }) {
+  const session = useSession();
   const [chiTietBDS, setChiTietBDS] = useState();
   const [toaDo, setToaDo] = useState<ToaDoDiaChi>();
   const { fetchBatDongSanTheoId } = useBatDongSan();
@@ -87,6 +89,7 @@ export default function ChiTietComponent({ id }) {
                   <LikeShareGroup
                     userIdOfWriter={chiTietBDS?.userId}
                     postId={parseInt(id)}
+                    session={session}
                   />
                 </div>
               </div>
@@ -98,14 +101,14 @@ export default function ChiTietComponent({ id }) {
                   <div className="flex flex-row flex-wrap gap-4">
                     <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
                       {chiTietBDS?.isChothue === false
-                        ? "Đăng bán"
-                        : "Cho thuê"}
+                        ? 'Đăng bán'
+                        : 'Cho thuê'}
                     </div>
                     <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
                       {chiTietBDS?.loaiHinh?.name}
                     </div>
-                    {chiTietBDS?.loaiHinh?.loaiBDS?.name === "Căn hộ" ||
-                    chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
+                    {chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Căn hộ' ||
+                    chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Nhà ở' ? (
                       <>
                         <div className="rounded bg-gray-50 text-gray-600 text-[14px] py-2 px-8">
                           Nhà tắm: {chiTietBDS?.soPhongTam}
@@ -152,7 +155,7 @@ export default function ChiTietComponent({ id }) {
                         {chiTietBDS?.dienTich} m<sup>2</sup>
                       </div>
                     </div>
-                    {chiTietBDS?.loaiHinh?.loaiBDS?.name !== "Đất" ? (
+                    {chiTietBDS?.loaiHinh?.loaiBDS?.name !== 'Đất' ? (
                       <>
                         <div className="flex flex-row">
                           <div className="w-1/2">Nội thất:</div>
@@ -175,7 +178,7 @@ export default function ChiTietComponent({ id }) {
                         </div>
                       </div>
                     )}
-                    {chiTietBDS?.loaiHinh?.loaiBDS?.name === "Căn hộ" ? (
+                    {chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Căn hộ' ? (
                       <>
                         <div className="flex flex-row">
                           <div className="w-1/2">Hướng ban công:</div>
@@ -222,8 +225,8 @@ export default function ChiTietComponent({ id }) {
                           <div className="w-1/2 font-semibold">
                             {
                               new Date(chiTietBDS?.hoanThanh)
-                                .toLocaleDateString("en-GB")
-                                .split("/")[2]
+                                .toLocaleDateString('en-GB')
+                                .split('/')[2]
                             }
                           </div>
                         </div>
@@ -232,13 +235,13 @@ export default function ChiTietComponent({ id }) {
                           <div className="w-1/2 font-semibold">
                             {
                               new Date(chiTietBDS?.suaChuaLanCuoi)
-                                .toLocaleDateString("en-GB")
-                                .split("/")[2]
+                                .toLocaleDateString('en-GB')
+                                .split('/')[2]
                             }
                           </div>
                         </div>
                       </>
-                    ) : chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ? (
+                    ) : chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Nhà ở' ? (
                       <>
                         <div className="flex flex-row">
                           <div className="w-1/2">Phòng tắm:</div>
@@ -273,8 +276,8 @@ export default function ChiTietComponent({ id }) {
                           <div className="w-1/2 font-semibold">
                             {
                               new Date(chiTietBDS?.hoanThanh)
-                                .toLocaleDateString("en-GB")
-                                .split("/")[2]
+                                .toLocaleDateString('en-GB')
+                                .split('/')[2]
                             }
                           </div>
                         </div>
@@ -283,8 +286,8 @@ export default function ChiTietComponent({ id }) {
                           <div className="w-1/2 font-semibold">
                             {
                               new Date(chiTietBDS?.suaChuaLanCuoi)
-                                .toLocaleDateString("en-GB")
-                                .split("/")[2]
+                                .toLocaleDateString('en-GB')
+                                .split('/')[2]
                             }
                           </div>
                         </div>
@@ -300,7 +303,7 @@ export default function ChiTietComponent({ id }) {
                     </div>
                   </div>
                 </div>
-                {chiTietBDS?.loaiHinh?.loaiBDS?.name !== "Đất" ? (
+                {chiTietBDS?.loaiHinh?.loaiBDS?.name !== 'Đất' ? (
                   <div className="mt-8 mb-8 w-full rounded-md bg-white border-[1px] shadow p-8">
                     <div className="text-gray-600 font-semibold">Tiện nghi</div>
                     <div className="mt-4 lg:w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-600 text-[14px]">
@@ -330,8 +333,8 @@ export default function ChiTietComponent({ id }) {
                     title={chiTietBDS?.tieuDe}
                   />
                 </div>
-                {chiTietBDS?.loaiHinh?.loaiBDS?.name === "Nhà ở" ||
-                chiTietBDS?.loaiHinh?.loaiBDS?.name === "Căn hộ" ? (
+                {chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Nhà ở' ||
+                chiTietBDS?.loaiHinh?.loaiBDS?.name === 'Căn hộ' ? (
                   <div className="mt-8 mb-8 w-full rounded-md bg-white border-[1px] shadow p-8">
                     <div className="flex flex-row justify-between flex-wrap">
                       <div className="text-gray-600 font-semibold">
@@ -341,7 +344,7 @@ export default function ChiTietComponent({ id }) {
                     <img
                       src={parseJSON(chiTietBDS?.hinhAnhBanVeThietKe)[0]?.url}
                       className="mt-8 w-full rounded-md h-[360px] md:h-[540px] lg:h-[630px]"
-                      style={{ objectFit: "cover" }}
+                      style={{ objectFit: 'cover' }}
                     />
                   </div>
                 ) : null}
@@ -356,7 +359,7 @@ export default function ChiTietComponent({ id }) {
             /> */}
                   <iframe
                     className="mt-8 rounded-md w-full h-[270px] md:h-[450px] lg:h-[540px]"
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: 'cover' }}
                     src={chiTietBDS?.video}
                   ></iframe>
                 </div>
@@ -374,7 +377,7 @@ export default function ChiTietComponent({ id }) {
                 window.scrollTo({
                   top: 0,
                   left: 0,
-                  behavior: "smooth",
+                  behavior: 'smooth',
                 })
               }
               className="w-full flex flex-row gap-2 justify-center mb-8 font-medium text-[18px] bg-red-400 text-white p-4 rounded-md"

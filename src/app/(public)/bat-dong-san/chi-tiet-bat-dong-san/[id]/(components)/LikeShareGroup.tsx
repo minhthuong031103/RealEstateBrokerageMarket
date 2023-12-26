@@ -1,16 +1,17 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
-import { Snippet } from "@nextui-org/react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { useEffect, useState } from "react";
-import { useBatDongSan } from "@/hooks/useBatDongSan";
+'use client';
+import { Button } from '@/components/ui/button';
+import { AiOutlineHeart, AiOutlineShareAlt } from 'react-icons/ai';
+import { Snippet } from '@nextui-org/react';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { useEffect, useState } from 'react';
+import { useBatDongSan } from '@/hooks/useBatDongSan';
 export function LikeShareGroup({ userIdOfWriter, postId, session }) {
   const { checkTonTaiYeuThich, themVaoYeuThich, xoaKhoiYeuThich } =
     useBatDongSan();
-  const userId = session?.user?.id ? session?.user?.id : -1;
+  const userId = session?.data?.user?.id ? session?.data?.user?.id : -1;
+
   const [isExists, setIsExists] = useState(true);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState('');
   useEffect(() => {
     const checkExist = async () => {
       await checkTonTaiYeuThich(userId, postId).then((data) => {

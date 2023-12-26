@@ -24,6 +24,69 @@ export async function GET(request: Request) {
   const minSquare = searchParams.get('minSquare');
   const maxSquare = searchParams.get('maxSquare');
 
+  const query = {
+    tieuDe: {
+      contains: searchWord || '',
+    },
+    nhan: {
+      contains: branch || '',
+    },
+    loaiHinh: {
+      loaiBDS: {
+        name: {
+          contains: type || '',
+        },
+      },
+      name: {
+        contains: loaiCanHo || loaiNhaO || loaiVanPhong || loaiDat || '',
+      },
+    },
+    trangThai: {
+      equals: 'da_duyet',
+    },
+    diaChi: {
+      contains: location || '',
+    },
+
+    ...(isRent !== null
+      ? {
+          isChothue: {
+            equals: isRent === 'true',
+          },
+        }
+      : {}),
+    ...(huongBanCong !== null
+      ? { huongBanCong: { equals: huongBanCong } }
+      : {}),
+    ...(huongCuaChinh !== null
+      ? { huongCuaChinh: { equals: huongCuaChinh } }
+      : {}),
+    ...(huongDat !== null ? { huongDat: { equals: huongDat } } : {}),
+    ...(soPhongNgu !== null
+      ? {
+          soPhongNgu: {
+            equals: parseInt(soPhongNgu),
+          },
+        }
+      : {}),
+    ...(soPhongTam !== null
+      ? {
+          soPhongTam: {
+            equals: parseInt(soPhongTam),
+          },
+        }
+      : {}),
+
+    gia: {
+      gte: minPrice ? parseInt(minPrice) : 0,
+      lte: maxPrice ? parseInt(maxPrice) : Number.MAX_SAFE_INTEGER,
+    },
+    dienTich: {
+      gte: minSquare ? parseInt(minSquare) : 0,
+      lte: maxSquare ? parseInt(maxSquare) : Number.MAX_SAFE_INTEGER,
+    },
+  };
+
   const bds = await prisma.baiViet.findMany({
     include: {
       loaiHinh: {
@@ -35,133 +98,13 @@ export async function GET(request: Request) {
     },
     skip: (page - 1) * limit,
     take: limit,
-    where: {
-      tieuDe: {
-        contains: searchWord || '',
-      },
-      nhan: {
-        contains: branch || '',
-      },
-      loaiHinh: {
-        loaiBDS: {
-          name: {
-            contains: type || '',
-          },
-        },
-        name: {
-          contains: loaiCanHo || loaiNhaO || loaiVanPhong || loaiDat || '',
-        },
-      },
-      trangThai: {
-        equals: 'da_duyet',
-      },
-      diaChi: {
-        contains: location || '',
-      },
-
-      ...(isRent !== null
-        ? {
-            isChothue: {
-              equals: isRent === 'true',
-            },
-          }
-        : {}),
-      ...(huongBanCong !== null
-        ? { huongBanCong: { equals: huongBanCong } }
-        : {}),
-      ...(huongCuaChinh !== null
-        ? { huongCuaChinh: { equals: huongCuaChinh } }
-        : {}),
-      ...(huongDat !== null ? { huongDat: { equals: huongDat } } : {}),
-      ...(soPhongNgu !== null
-        ? {
-            soPhongNgu: {
-              equals: parseInt(soPhongNgu),
-            },
-          }
-        : {}),
-      ...(soPhongTam !== null
-        ? {
-            soPhongTam: {
-              equals: parseInt(soPhongTam),
-            },
-          }
-        : {}),
-
-      gia: {
-        gte: minPrice ? parseInt(minPrice) : 0,
-        lte: maxPrice ? parseInt(maxPrice) : Number.MAX_SAFE_INTEGER,
-      },
-      dienTich: {
-        gte: minSquare ? parseInt(minSquare) : 0,
-        lte: maxSquare ? parseInt(maxSquare) : Number.MAX_SAFE_INTEGER,
-      },
-    },
+    where: query,
   });
   const countItem = await prisma.baiViet.count({
-    where: {
-      tieuDe: {
-        contains: searchWord || '',
-      },
-      nhan: {
-        contains: branch || '',
-      },
-      loaiHinh: {
-        loaiBDS: {
-          name: {
-            contains: type || '',
-          },
-        },
-        name: {
-          contains: loaiCanHo || loaiNhaO || loaiVanPhong || loaiDat || '',
-        },
-      },
-      trangThai: {
-        equals: 'Đã duyệt',
-      },
-      diaChi: {
-        contains: location || '',
-      },
-
-      ...(isRent !== null
-        ? {
-            isChothue: {
-              equals: isRent === 'true',
-            },
-          }
-        : {}),
-      ...(huongBanCong !== null
-        ? { huongBanCong: { equals: huongBanCong } }
-        : {}),
-      ...(huongCuaChinh !== null
-        ? { huongCuaChinh: { equals: huongCuaChinh } }
-        : {}),
-      ...(huongDat !== null ? { huongDat: { equals: huongDat } } : {}),
-      ...(soPhongNgu !== null
-        ? {
-            soPhongNgu: {
-              equals: parseInt(soPhongNgu),
-            },
-          }
-        : {}),
-      ...(soPhongTam !== null
-        ? {
-            soPhongTam: {
-              equals: parseInt(soPhongTam),
-            },
-          }
-        : {}),
-
-      gia: {
-        gte: minPrice ? parseInt(minPrice) : 0,
-        lte: maxPrice ? parseInt(maxPrice) : Number.MAX_SAFE_INTEGER,
-      },
-      dienTich: {
-        gte: minSquare ? parseInt(minSquare) : 0,
-        lte: maxSquare ? parseInt(maxSquare) : Number.MAX_SAFE_INTEGER,
-      },
-    },
+    where: query,
   });
+  console.log('🚀 ~ file: route.ts:167 ~ GET ~ countItem:', countItem);
+  console.log('🚀 ~ file: route.ts:167 ~ GET ~ countItem:', countItem);
   const data = {
     data: bds,
     totalPages: Math.ceil(countItem / limit),

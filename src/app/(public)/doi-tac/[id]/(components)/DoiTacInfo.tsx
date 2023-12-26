@@ -54,7 +54,8 @@ export const DoiTacInfo = ({ id }) => {
         <IoLocationOutline className="text-[24px]" />
         {doiTacInformation?.diaChi}
       </div>
-      {session?.data?.user?.duyetKhachHang === 'da_duyet' ? (
+      {session?.data?.user?.duyetKhachHang === 'da_duyet' &&
+      session?.data?.user?.id != doiTacInformation?.id ? (
         <Button
           onClick={() => {
             goToConversation(id, session?.data?.user?.id);
@@ -64,9 +65,11 @@ export const DoiTacInfo = ({ id }) => {
           Liên hệ
         </Button>
       ) : (
-        <p className="text-sm mt-4 w-full font-semibold text-red-400">
-          Tài khoản của bạn chưa được duyệt để liên hệ
-        </p>
+        session?.data?.user?.id != doiTacInformation?.id && (
+          <p className="text-sm mt-4 w-full font-semibold text-red-400">
+            Tài khoản của bạn chưa được duyệt để liên hệ
+          </p>
+        )
       )}
       {/* <Button
         onClick={() => {
