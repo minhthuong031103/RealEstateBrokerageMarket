@@ -62,6 +62,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   const { data, error, isFetching, fetchNextPage, hasNextPage } =
     useInfiniteMessagesQuery(pageSize);
+  console.log('🚀 ~ file: ConversationList.tsx:64 ~ data:', data);
 
   // if()
   return (

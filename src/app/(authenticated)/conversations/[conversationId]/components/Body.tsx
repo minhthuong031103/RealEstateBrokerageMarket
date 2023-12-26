@@ -1,31 +1,31 @@
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client";
+'use client';
 
 // import axios from 'axios';
 // import { useEffect, useRef } from 'react';
-import { useChatSocket } from "@/hooks/useChatSocket";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
-import useConversation from "@hooks/useConversation";
-import MessageBox from "./MessageBox";
-import React, { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useChatSocket } from '@/hooks/useChatSocket';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import useConversation from '@hooks/useConversation';
+import MessageBox from './MessageBox';
+import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-import toast from "react-hot-toast";
-import { HiPaperAirplane, HiPhoto } from "react-icons/hi2";
-import { ImageDialog } from "@/components/imageDialog";
-import { z } from "zod";
-import { useImage } from "@/hooks/useImage";
-import DialogCustom from "@/components/ui/dialogCustom";
-import { Spinner } from "@nextui-org/react";
-import { ImageListChat } from "@/components/imageList/ImageListChat";
-import NewMessage from "./NewMessage";
+import toast from 'react-hot-toast';
+import { HiPaperAirplane, HiPhoto } from 'react-icons/hi2';
+import { ImageDialog } from '@/components/imageDialog';
+import { z } from 'zod';
+import { useImage } from '@/hooks/useImage';
+import DialogCustom from '@/components/ui/dialogCustom';
+import { Spinner } from '@nextui-org/react';
+import { ImageListChat } from '@/components/imageList/ImageListChat';
+import NewMessage from './NewMessage';
 
 const Body = ({ session }) => {
   const [isUploading, setIsUploading] = useState(false);
 
   const [isSent, setIsSent] = useState(true);
-  const [newMessage1, setNewMessage1] = useState("");
+  const [newMessage1, setNewMessage1] = useState('');
   const [imageFiles, setImageFiles] = useState([]);
   const { onUploadImage } = useImage();
   const [formData, setFormData] = useState({
@@ -34,9 +34,9 @@ const Body = ({ session }) => {
   //Create ZodSchema
   const fileSchema = z.instanceof(File);
   const imageJSONSchema = z.object({
-    id: z.string().min(1, "Image must not be empty"),
-    name: z.string().min(1, "Image must not be empty"),
-    url: z.string().min(1, "Image must not be empty"),
+    id: z.string().min(1, 'Image must not be empty'),
+    name: z.string().min(1, 'Image must not be empty'),
+    url: z.string().min(1, 'Image must not be empty'),
   });
   const imageSchema = z.union([fileSchema, imageJSONSchema]);
   const formDataSchema = z.object({
@@ -47,7 +47,7 @@ const Body = ({ session }) => {
   const [lastToastId, setLastToastId] = useState<any>();
   // Getting conversationId from the query parameters
   const updateMessages = (newMessage) => {
-    queryClient.setQueryData(["messages", conversationId], (prevData) => {
+    queryClient.setQueryData(['messages', conversationId], (prevData) => {
       if (prevData?.pages[0]) {
         const newData = {
           pages: [
@@ -81,47 +81,47 @@ const Body = ({ session }) => {
     conversationId,
     callback: (data) => {
       //o day se handle message duoc gui toi
-      queryClient.refetchQueries(["messages", conversationId]);
+      queryClient.refetchQueries(['messages', conversationId]);
       setIsSent(true);
-      const i = toast.custom((t) => (
-        <div
-          className={`${
-            t.visible
-              ? "animate-appearance-in"
-              : "animate-appearance-out duration-200"
-          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-        >
-          <div className="flex-1 w-0 p-4">
-            <div className="flex items-start">
-              <div className="flex-shrink-0 pt-0.5">
-                <img
-                  className="h-10 w-10 rounded-full"
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=6GHAjsWpt9&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                  alt=""
-                />
-              </div>
-              <div className="ml-3 flex-1">
-                <p className="text-sm font-medium text-gray-900">You</p>
-                <p className="mt-1 text-sm text-gray-500">Sent Successful!</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex border-l border-gray-200">
-            <button
-              onClick={() => toast.dismiss(t.id)}
-              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      ));
+      // const i = toast.custom((t) => (
+      //   <div
+      //     className={`${
+      //       t.visible
+      //         ? "animate-appearance-in"
+      //         : "animate-appearance-out duration-200"
+      //     } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+      //   >
+      //     <div className="flex-1 w-0 p-4">
+      //       <div className="flex items-start">
+      //         <div className="flex-shrink-0 pt-0.5">
+      //           <img
+      //             className="h-10 w-10 rounded-full"
+      //             src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=6GHAjsWpt9&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+      //             alt=""
+      //           />
+      //         </div>
+      //         <div className="ml-3 flex-1">
+      //           <p className="text-sm font-medium text-gray-900">You</p>
+      //           <p className="mt-1 text-sm text-gray-500">Sent Successful!</p>
+      //         </div>
+      //       </div>
+      //     </div>
+      //     <div className="flex border-l border-gray-200">
+      //       <button
+      //         onClick={() => toast.dismiss(t.id)}
+      //         className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      //       >
+      //         Close
+      //       </button>
+      //     </div>
+      //   </div>
+      // ));
 
-      setTimeout(() => {
-        setLastToastId(i);
-      }, 2000);
+      // setTimeout(() => {
+      //   setLastToastId(i);
+      // }, 2000);
 
-      queryClient.refetchQueries(["conversations"]);
+      queryClient.refetchQueries(['conversations']);
       setTimeout(() => {
         setTemporaryMessages([]);
       }, 100);
@@ -131,7 +131,7 @@ const Body = ({ session }) => {
   });
   const useInfiniteMessagesQuery = (conversationId, pageSize) => {
     return useInfiniteQuery(
-      ["messages", conversationId],
+      ['messages', conversationId],
       ({ pageParam }) =>
         fetchMessages({ conversationId, cursor: pageParam, pageSize }),
       {
@@ -145,7 +145,7 @@ const Body = ({ session }) => {
   const pageSize = 8;
   const { data, error, isFetching, fetchNextPage, hasNextPage } =
     useInfiniteMessagesQuery(conversationId, pageSize);
-  const [newMessage, setNewMessage] = useState("");
+  const [newMessage, setNewMessage] = useState('');
   const [temporaryMessages, setTemporaryMessages] = useState([]);
   const handleNewMessageChange = (e) => {
     setNewMessage(e.target.value);
@@ -162,7 +162,7 @@ const Body = ({ session }) => {
           setIsUploading(true);
           const formData1 = new FormData();
           imageFiles.forEach((file) => {
-            formData1.append("images", file);
+            formData1.append('images', file);
           });
 
           const response = await onUploadImage({
@@ -183,14 +183,14 @@ const Body = ({ session }) => {
             // Iterate over the images array and emit a socket event for each image
             images.forEach((image) => {
               const newMessage = {
-                content: "Hình ảnh", // Assuming you want to send the image URL as content
+                content: 'Hình ảnh', // Assuming you want to send the image URL as content
                 userId: session.user.id,
                 conversationId,
                 fileUrl: image.url, // Replace 'yourConversationId' with the actual conversation ID
               };
               const temporaryMessage = {
                 id: temporaryMessages.length + 1, // Generate a unique ID for the temporary message
-                content: "Hình ảnh",
+                content: 'Hình ảnh',
                 userId: session.user.id,
                 conversationId,
                 fileUrl: image.url,
@@ -198,10 +198,10 @@ const Body = ({ session }) => {
               setTemporaryMessages([...temporaryMessages, temporaryMessage]);
               updateMessages([temporaryMessage]);
               // Emit the 'newMessage' event with the newMessage object
-              socket.emit("newMessage", newMessage);
+              socket.emit('newMessage', newMessage);
             });
           } catch (error) {
-            console.error("Error parsing JSON:", error);
+            console.error('Error parsing JSON:', error);
           }
           // setIsUploading(false);
           // const temporaryMessage = {
@@ -231,13 +231,13 @@ const Body = ({ session }) => {
         };
         setTemporaryMessages([...temporaryMessages, temporaryMessage]);
         updateMessages([temporaryMessage]);
-        socket.emit("newMessage", {
+        socket.emit('newMessage', {
           content: newMessage,
           userId: session.user.id,
           conversationId,
         });
 
-        setNewMessage("");
+        setNewMessage('');
       }
     }
   };
@@ -295,8 +295,8 @@ const Body = ({ session }) => {
               fetchNextPage();
             }}
             style={{
-              display: "flex",
-              flexDirection: "column-reverse",
+              display: 'flex',
+              flexDirection: 'column-reverse',
             }}
             inverse={true}
             hasMore={hasNextPage || false}

@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 function FindMore() {
   const router = useRouter();
   const forwardToBDS = () => {
-    router.push("/bat-dong-san");
+    router.push('/bat-dong-san');
   };
   return (
     <section
@@ -18,9 +18,9 @@ function FindMore() {
       <div className="group rounded-md overflow-hidden relative h-[500px] w-full">
         <img
           src={
-            "https://th.bing.com/th/id/R.a8a00a966f9f8ad01dacf533d725733d?rik=MFjrFVXN7m8XSg&riu=http%3a%2f%2fcdn.justluxe.com%2farticles%2fimages%2fnews%2fbeverlyhillshome1958338i.jpg&ehk=fXH%2f%2fZI2GpK%2f%2bwO%2b6NX%2fugc8jR%2bNIdOHIDGzssS6jOA%3d&risl=&pid=ImgRaw&r=0"
+            'https://r4.wallpaperflare.com/wallpaper/846/173/87/5c1cbaf96bcec-wallpaper-98e65da890c0cc28802c611ed89204da.jpg'
           }
-          alt={"Tìm kiếm thêm"}
+          alt={'Tìm kiếm thêm'}
           className="object-cover w-full h-full"
         />
         <div className="px-5 absolute inset-0 z-20 flex flex-col items-center justify-center">
