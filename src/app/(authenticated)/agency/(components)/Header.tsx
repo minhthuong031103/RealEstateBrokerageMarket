@@ -2,7 +2,6 @@
 
 import { Button } from "@nextui-org/react";
 import Logo from "@/components/logo";
-import { BellIcon } from "@radix-ui/react-icons";
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 import {
@@ -51,10 +50,6 @@ function Header({ session }) {
             <FiMessageSquare className="w-4 h-4" />
           </Button>
         </Link>
-
-        <Button isIconOnly aria-label="Like" radius="full">
-          <BellIcon />
-        </Button>
         <Dropdown
           shouldBlockScroll={true}
           onOpenChange={(open) => {
