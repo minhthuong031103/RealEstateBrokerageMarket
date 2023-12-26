@@ -95,7 +95,7 @@ const Login = ({ className }: { className?: string }) => {
                   />
                 </div>
                 <div className="flex flex-col gap-3 ">
-                  <Label>Password</Label>
+                  <Label>Mật khẩu</Label>
                   <FormField
                     control={form.control}
                     name="password"

@@ -224,11 +224,11 @@ const NavigationMenuDemo = ({ session }) => {
         ) : (
           <Link href={'/auth/login'}>
             <Button
-              className="w-[70px] ml-2 border-1 font-medium border-red-400 text-red-400 hover:bg-red-400 hover:text-white transition ease-in-out hover:scale-105 border-solid"
+              className=" ml-2 border-1 font-medium border-red-400 text-red-400 hover:bg-red-400 hover:text-white transition ease-in-out hover:scale-105 border-solid"
               variant="bordered"
               radius="sm"
             >
-              Login
+              Đăng nhập
             </Button>
           </Link>
         )}
