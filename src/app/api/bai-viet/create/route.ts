@@ -11,30 +11,26 @@ export async function POST(req: Request) {
       name: body.loaiHinh,
     },
   });
-  const updateData =
-    body?.nhan == 'Nổi bật'
+  const updateData = {
+    luot: {
+      decrement: 1,
+    },
+    ...(body?.nhan === 'Nổi bật'
       ? {
           luotVip: {
             decrement: 1,
           },
-          luot: {
-            decrement: 1,
-          },
         }
-      : body?.nhan == 'Yêu thích'
+      : {}),
+    ...(body?.nhan === 'Yêu thích'
       ? {
           luotChuyenNghiep: {
             decrement: 1,
           },
-          luot: {
-            decrement: 1,
-          },
         }
-      : {
-          luot: {
-            decrement: 1,
-          },
-        };
+      : {}),
+  };
+
   const [baiViet, created] = await prisma.$transaction([
     prisma.baiViet.create({
       data: {
