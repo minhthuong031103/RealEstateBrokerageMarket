@@ -88,8 +88,7 @@ function AgencyInfo({ session }) {
             Giấy tờ cá nhân / đại diện tổ chức
           </h1>
           <div className="flex flex-row flex-wrap gap-10 justify-center md:justify-start">
-            {userInfo?.giayPhepKinhDoanh !== "" &&
-            !userInfo?.giayPhepKinhDoanh ? (
+            {userInfo?.anhGiayPhepKinhDoanh !== null ? (
               <div className="flex flex-col gap-y-3">
                 <div className="font-bold text-sm">Giấy phép kinh doanh</div>
                 <div className="w-full flex justify-start">
