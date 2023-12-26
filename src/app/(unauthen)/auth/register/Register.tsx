@@ -1,33 +1,33 @@
-"use client";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+'use client';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import {
   cn,
   regexPasswordNumber,
   regexPasswordSpecial,
   regexPasswordUpperCase,
-} from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { useEffect, useState } from "react";
-import { useAuth } from "@/hooks/useAuth";
-import Loader from "@/components/Loader";
-import Link from "next/link";
+} from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { useEffect, useState } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import Loader from '@/components/Loader';
+import Link from 'next/link';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FileDialog } from "@/components/ui/FileDialog";
-import { postRequest } from "@/lib/fetch";
-import { Card, CardBody, Checkbox, Chip } from "@nextui-org/react";
-import { Zoom } from "@/components/ui/zoom-image";
+} from '@/components/ui/form';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FileDialog } from '@/components/ui/FileDialog';
+import { postRequest } from '@/lib/fetch';
+import { Card, CardBody, Checkbox, Chip } from '@nextui-org/react';
+import { Zoom } from '@/components/ui/zoom-image';
 
 //quan ly form: react-hook-form
 //validate form: zod
@@ -37,31 +37,31 @@ const formSchema = z
     password: z
       .string()
       .min(1, {
-        message: "Vui lòng nhập mật khẩu",
+        message: 'Vui lòng nhập mật khẩu',
       })
-      .min(8, { message: "Mật khẩu phải có ít nhất 8 ký tự" })
+      .min(8, { message: 'Mật khẩu phải có ít nhất 8 ký tự' })
       .regex(regexPasswordSpecial, {
-        message: "Mật khẩu phải có ít nhất 1 ký tự đặc biệt",
+        message: 'Mật khẩu phải có ít nhất 1 ký tự đặc biệt',
       })
       .regex(regexPasswordNumber, {
-        message: "Mật khẩu phải có ít nhất 1 chữ số",
+        message: 'Mật khẩu phải có ít nhất 1 chữ số',
       })
       .regex(regexPasswordUpperCase, {
-        message: "Mật khẩu phải có ít nhất 1 chữ hoa",
+        message: 'Mật khẩu phải có ít nhất 1 chữ hoa',
       }),
     email: z
       .string()
       .min(1, {
-        message: "Vui lòng nhập email",
+        message: 'Vui lòng nhập email',
       })
-      .email({ message: "Email không hợp lệ" }),
+      .email({ message: 'Email không hợp lệ' }),
     confirmPassword: z.string().min(1, {
-      message: "Vui lòng nhập lại mật khẩu",
+      message: 'Vui lòng nhập lại mật khẩu',
     }),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Mật khẩu xác nhận không khớp",
-    path: ["confirmPassword"],
+    message: 'Mật khẩu xác nhận không khớp',
+    path: ['confirmPassword'],
   });
 const Register = ({
   className,
@@ -73,21 +73,21 @@ const Register = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: payload.email || "",
-      password: "",
-      confirmPassword: "",
+      email: payload.email || '',
+      password: '',
+      confirmPassword: '',
     },
   });
   const { onRegister } = useAuth();
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const [isSelected, setIsSelected] = useState(false);
   const [cmndMatTruoc, setCmndMatTruoc] = useState([]);
-  const [maSoCmnd, setMaSoCmnd] = useState("");
+  const [maSoCmnd, setMaSoCmnd] = useState('');
   const [cmndMatSau, setCmndMatSau] = useState([]);
   const [portrait, setPortrait] = useState([]);
   useEffect(() => {
     if (payload?.email && payload?.name) {
-      toast.error("Tài khoản của bạn chưa được đăng ký, vui lòng đăng ký");
+      toast.error('Tài khoản của bạn chưa được đăng ký, vui lòng đăng ký');
     }
   }, []);
   const [show, setShow] = useState({
@@ -100,48 +100,48 @@ const Register = ({
       try {
         if (cmndMatTruoc?.[0]) {
           const formData = new FormData();
-          formData.append("image", cmndMatTruoc[0]);
+          formData.append('image', cmndMatTruoc[0]);
           const res = await postRequest({
-            endPoint: "https://api.fpt.ai/vision/idr/vnm",
+            endPoint: 'https://api.fpt.ai/vision/idr/vnm',
             formData: formData,
             isFormData: true,
             customHeaders: {
-              "api-key": "wHLMat4wv3zPgFqXHU1abvGSEaHz9Qi3",
+              'api-key': 'VfJbF7YsRFRwJY6VoimYoxK8boydrA9G',
             },
           });
           if (res?.errorCode == 0 && res?.data?.[0]) {
             setMaSoCmnd(res?.data?.[0]?.id);
             setName(res?.data[0]?.name);
           } else {
-            toast.error("Không thể nhận dạng CMND mặt trước");
+            toast.error('Không thể nhận dạng CMND mặt trước');
           }
         }
       } catch (e) {
-        toast.error("Không thể nhận dạng CMND mặt trước");
+        toast.error('Không thể nhận dạng CMND mặt trước');
       }
     };
     getOcr();
   }, [cmndMatTruoc]);
 
   async function onSubmit(data) {
-    if (!name || name === "") {
-      toast.error("Vui lòng nhập họ tên");
+    if (!name || name === '') {
+      toast.error('Vui lòng nhập họ tên');
     }
     if (!cmndMatTruoc?.length || !cmndMatSau?.length) {
-      toast.error("Vui lòng tải lên ảnh CMND mặt trước và mặt sau");
+      toast.error('Vui lòng tải lên ảnh CMND mặt trước và mặt sau');
       return;
     }
     if (!portrait?.length) {
-      toast.error("Vui lòng tải lên ảnh chân dung chủ căn cước");
+      toast.error('Vui lòng tải lên ảnh chân dung chủ căn cước');
       return;
     }
     if (!maSoCmnd) {
-      toast.error("Vui lòng nhập mã số CMND");
+      toast.error('Vui lòng nhập mã số CMND');
       return;
     }
     if (!isSelected) {
       toast.error(
-        "Vui lòng đọc điều khoản chính sách ở trang chủ và chấp thuận với chính sách của chúng tôi"
+        'Vui lòng đọc điều khoản chính sách ở trang chủ và chấp thuận với chính sách của chúng tôi'
       );
       return;
     }
@@ -151,11 +151,11 @@ const Register = ({
     });
 
     // Append cmndMatTruoc and cmndMatSau to the formData
-    formData.append("cmndMatTruoc", cmndMatTruoc[0]);
-    formData.append("cmndMatSau", cmndMatSau[0]);
-    formData.append("anhChanDung", portrait[0]);
-    formData.append("maSoCmnd", maSoCmnd);
-    formData.append("name", name);
+    formData.append('cmndMatTruoc', cmndMatTruoc[0]);
+    formData.append('cmndMatSau', cmndMatSau[0]);
+    formData.append('anhChanDung', portrait[0]);
+    formData.append('maSoCmnd', maSoCmnd);
+    formData.append('name', name);
     setIsLoading(true);
     onRegister(formData, () => {
       setIsLoading(false);
@@ -170,7 +170,7 @@ const Register = ({
   return (
     <div className="w-full flex flex-col items-center justify-center">
       <div
-        className={cn("grid gap-6 w-[80%] md:w-[70%] lg:w-[60%] ", className)}
+        className={cn('grid gap-6 w-[80%] md:w-[70%] lg:w-[60%] ', className)}
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -207,7 +207,7 @@ const Register = ({
                           <FormControl>
                             <Input
                               placeholder="Nhập mật khẩu"
-                              type={show.password ? "text" : "password"}
+                              type={show.password ? 'text' : 'password'}
                               value={field.value}
                               onChange={field.onChange}
                               renderRight={
@@ -246,7 +246,7 @@ const Register = ({
                           <FormControl>
                             <Input
                               placeholder="Xác nhận mật khẩu"
-                              type={show.confirmPassword ? "text" : "password"}
+                              type={show.confirmPassword ? 'text' : 'password'}
                               value={field.value}
                               onChange={field.onChange}
                               renderRight={
@@ -315,7 +315,7 @@ const Register = ({
                   <div className="flex flex-col gap-3 ">
                     <Label>Ảnh chân dung</Label>
                     <div className="  w-full flex justify-center h-36">
-                      <Zoom key={1} className={"w-full"}>
+                      <Zoom key={1} className={'w-full'}>
                         <img
                           src={portrait[0]?.preview}
                           alt={portrait[0]?.name}
@@ -338,7 +338,7 @@ const Register = ({
                   <Label>Ảnh CMND mặt trước</Label>
 
                   <div className=" flex justify-center h-36">
-                    <Zoom key={2} className={"w-full "}>
+                    <Zoom key={2} className={'w-full '}>
                       <img
                         src={cmndMatTruoc[0]?.preview}
                         alt={cmndMatTruoc[0]?.name}
@@ -361,7 +361,7 @@ const Register = ({
                 <div className="flex flex-col gap-3 ">
                   <Label>Ảnh CMND mặt sau</Label>
                   <div className=" flex justify-center h-36 ">
-                    <Zoom key={2} className={"w-full "}>
+                    <Zoom key={2} className={'w-full '}>
                       <img
                         src={cmndMatSau[0]?.preview}
                         alt={cmndMatSau[0]?.name}
@@ -401,7 +401,7 @@ const Register = ({
         </Form>
       </div>
       <p className=" mt-10 text-center text-sm text-muted-foreground">
-        Đã có tài khoản?{" "}
+        Đã có tài khoản?{' '}
         <Link className=" font-bold underline text-black" href="/auth/login">
           Đăng nhập
         </Link>

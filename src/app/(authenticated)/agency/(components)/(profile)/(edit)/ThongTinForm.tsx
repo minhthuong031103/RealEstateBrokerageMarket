@@ -1,27 +1,27 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { SelectAddress } from "./SelectAddress";
-import { generateReactHelpers } from "@uploadthing/react/hooks";
-import { OurFileRouter } from "@/app/api/uploadthing/core";
-import { FileDialog } from "@/components/ui/FileDialog";
-import { Button } from "@/components/ui/button";
-import { useDoiTac } from "@/hooks/useDoiTac";
-import { PartnerName } from "./PartnerName";
-import { PhoneNumber } from "./PhoneNumber";
-import toast from "react-hot-toast";
-import { Zoom } from "@/components/ui/zoom-image";
-import { postRequest } from "@/lib/fetch";
-import { Card, CardBody, Chip, Input } from "@nextui-org/react";
-import { Label } from "@/components/ui/label";
+import React, { useEffect, useState } from 'react';
+import { SelectAddress } from './SelectAddress';
+import { generateReactHelpers } from '@uploadthing/react/hooks';
+import { OurFileRouter } from '@/app/api/uploadthing/core';
+import { FileDialog } from '@/components/ui/FileDialog';
+import { Button } from '@/components/ui/button';
+import { useDoiTac } from '@/hooks/useDoiTac';
+import { PartnerName } from './PartnerName';
+import { PhoneNumber } from './PhoneNumber';
+import toast from 'react-hot-toast';
+import { Zoom } from '@/components/ui/zoom-image';
+import { postRequest } from '@/lib/fetch';
+import { Card, CardBody, Chip, Input } from '@nextui-org/react';
+import { Label } from '@/components/ui/label';
 
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
 export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
-  const { startUpload } = useUploadThing("imageUploader");
+  const { startUpload } = useUploadThing('imageUploader');
 
-  const [addressValue, setAddressValue] = React.useState("");
-  const [phoneNumber, setPhoneNumber] = React.useState("");
+  const [addressValue, setAddressValue] = React.useState('');
+  const [phoneNumber, setPhoneNumber] = React.useState('');
   const [nationalIDFrontImageFile, setNationalIDFrontImageFile] =
     React.useState([]);
   const [nationalIDBackImageFile, setNationalIDBackImageFile] = React.useState(
@@ -34,35 +34,35 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
   const [anhChanDungImageFiles, setAnhChanDungImageFiles] = React.useState([]);
   const [nameDoiTac, setNameDoiTac] = React.useState();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [defaultAvatar, setDefaultAvatar] = React.useState("");
-  const [defaultPortrait, setDefaultPortrait] = React.useState("");
-  const [defaultFrontID, setDefaultFrontID] = React.useState("");
-  const [defaultBackID, setDefaultBackID] = React.useState("");
-  const [defaultLawPaper, setDefaultLawPaper] = React.useState("");
-  const [maSoCmnd, setMaSoCmnd] = useState("");
+  const [defaultAvatar, setDefaultAvatar] = React.useState('');
+  const [defaultPortrait, setDefaultPortrait] = React.useState('');
+  const [defaultFrontID, setDefaultFrontID] = React.useState('');
+  const [defaultBackID, setDefaultBackID] = React.useState('');
+  const [defaultLawPaper, setDefaultLawPaper] = React.useState('');
+  const [maSoCmnd, setMaSoCmnd] = useState('');
 
   useEffect(() => {
     const getOcr = async () => {
       try {
         if (nationalIDFrontImageFile?.[0]) {
           const formData = new FormData();
-          formData.append("image", nationalIDFrontImageFile[0]);
+          formData.append('image', nationalIDFrontImageFile[0]);
           const res = await postRequest({
-            endPoint: "https://api.fpt.ai/vision/idr/vnm",
+            endPoint: 'https://api.fpt.ai/vision/idr/vnm',
             formData: formData,
             isFormData: true,
             customHeaders: {
-              "api-key": "wHLMat4wv3zPgFqXHU1abvGSEaHz9Qi3",
+              'api-key': 'VfJbF7YsRFRwJY6VoimYoxK8boydrA9G',
             },
           });
           if (res?.errorCode == 0 && res?.data?.[0]) {
             setMaSoCmnd(res?.data?.[0]?.id);
           } else {
-            toast.error("Không thể nhận dạng CMND mặt trước");
+            toast.error('Không thể nhận dạng CMND mặt trước');
           }
         }
       } catch (e) {
-        toast.error("Không thể nhận dạng CMND mặt trước");
+        toast.error('Không thể nhận dạng CMND mặt trước');
       }
     };
     getOcr();
@@ -72,7 +72,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
 
   const onSubmit = async () => {
     if (!addressValue || !phoneNumber || !nameDoiTac) {
-      toast.error("Vui lòng nhập tất cả thông tin");
+      toast.error('Vui lòng nhập tất cả thông tin');
       return;
     }
 
@@ -106,7 +106,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
       startUpload([...avatarImageFiles]).then((res) => {
         const formattedImages = res?.map((image) => ({
           id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
+          name: image.key.split('_')[1] ?? image.key,
           url: image.url,
         }));
         return formattedImages ?? null;
@@ -114,7 +114,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
       startUpload([...nationalIDFrontImageFile]).then((res) => {
         const formattedImages = res?.map((image) => ({
           id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
+          name: image.key.split('_')[1] ?? image.key,
           url: image.url,
         }));
         return formattedImages ?? null;
@@ -122,7 +122,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
       startUpload([...nationalIDBackImageFile]).then((res) => {
         const formattedImages = res?.map((image) => ({
           id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
+          name: image.key.split('_')[1] ?? image.key,
           url: image.url,
         }));
         return formattedImages ?? null;
@@ -130,7 +130,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
       startUpload([...giayPhepKinhDoanhImageFiles]).then((res) => {
         const formattedImages = res?.map((image) => ({
           id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
+          name: image.key.split('_')[1] ?? image.key,
           url: image.url,
         }));
         return formattedImages ?? null;
@@ -138,7 +138,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
       startUpload([...anhChanDungImageFiles]).then((res) => {
         const formattedImages = res?.map((image) => ({
           id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
+          name: image.key.split('_')[1] ?? image.key,
           url: image.url,
         }));
         return formattedImages ?? null;
@@ -150,7 +150,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
       diaChi: addressValue,
       phoneNumber: phoneNumber,
       maSoCmnd: maSoCmnd,
-      duyetDoiTac: "cho_duyet",
+      duyetDoiTac: 'cho_duyet',
       avatar: avatarImage ? avatarImage[0]?.url : defaultAvatar,
       anhCCCDTruoc: nationalIDFrontImage
         ? nationalIDFrontImage[0]?.url
@@ -191,7 +191,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
         </div>
         <div className="w-full flex flex-col gap-3 justify-center items-center">
           <div className="border-2 border-red-400 rounded-full w-[180px] md:w-[270px] h-[180px] md:h-[270px] overflow-hidden">
-            <Zoom key={1} className={"w-full "}>
+            <Zoom key={1} className={'w-full '}>
               <img
                 src={
                   avatarImageFiles[0]?.preview ||
@@ -238,8 +238,8 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
           Mã số CCCD <span className="text-red-500">*</span>
         </Label>
         <Input
-          isInvalid={maSoCmnd !== "" ? false : true}
-          errorMessage={`${maSoCmnd !== "" ? "" : "Vui lòng nhập mã số CCCD"}`}
+          isInvalid={maSoCmnd !== '' ? false : true}
+          errorMessage={`${maSoCmnd !== '' ? '' : 'Vui lòng nhập mã số CCCD'}`}
           className="w-full"
           variant="bordered"
           radius="sm"
@@ -257,7 +257,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
             Hình ảnh chân dung <span className="text-red-500">*</span>
           </div>
           <div className=" w-28 h-36 border-2 rounded">
-            <Zoom key={4} className={"w-full "}>
+            <Zoom key={4} className={'w-full '}>
               <img
                 src={
                   anhChanDungImageFiles[0]?.preview ||
@@ -283,7 +283,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
             Hình ảnh CCCD mặt trước <span className="text-red-500">*</span>
           </div>
           <div className=" w-56 h-36 border-2 rounded">
-            <Zoom key={1} className={"w-full "}>
+            <Zoom key={1} className={'w-full '}>
               <img
                 src={
                   nationalIDFrontImageFile[0]?.preview ||
@@ -309,7 +309,7 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
             Hình ảnh CCCD mặt sau <span className="text-red-500">*</span>
           </div>
           <div className=" w-56 h-36 border-2 rounded">
-            <Zoom key={2} className={"w-full "}>
+            <Zoom key={2} className={'w-full '}>
               <img
                 src={
                   nationalIDBackImageFile[0]?.preview ||
@@ -330,13 +330,13 @@ export const ThongTinForm = ({ loaiDoiTac, userInfo }) => {
             disabled={false}
           />
         </div>
-        {loaiDoiTac === "doanhnghiep" ? (
+        {loaiDoiTac === 'doanhnghiep' ? (
           <div className="flex flex-col gap-y-3 w-28">
             <div className="font-bold text-sm w-44">
               Hình ảnh giấy phép <span className="text-red-500">*</span>
             </div>
             <div className=" w-28 h-36 border-2 rounded">
-              <Zoom key={3} className={"w-full "}>
+              <Zoom key={3} className={'w-full '}>
                 <img
                   src={
                     giayPhepKinhDoanhImageFiles[0]?.preview ||
