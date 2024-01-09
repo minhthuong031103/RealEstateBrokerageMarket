@@ -38,6 +38,7 @@ export function LikeShareGroup({ userIdOfWriter, postId, session }) {
     };
     await xoaKhoiYeuThich(data);
   };
+  console.log(userId, userIdOfWriter);
   return (
     <div className="flex flex-row space-x-4">
       {userId !== userIdOfWriter && isExists && userId !== -1 ? (

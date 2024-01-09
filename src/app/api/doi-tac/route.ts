@@ -19,7 +19,8 @@ export async function GET(request: Request) {
     where:{
       role: {
         contains: "doi_tac"
-      }
+      },
+      duyetDoiTac: "da_duyet",
     }
   });
   const data = {
